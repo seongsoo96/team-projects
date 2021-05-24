@@ -1,0 +1,367 @@
+@charset "UTF-8";
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+body {
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.center{
+	text-align:center;
+}
+
+header{
+	/* header태그의 전체적인 설정 */
+ 	background: #FFFFFF;
+ 	text-align: center;
+ 	width: 980px;
+ 	margin: 0 auto;
+ 	padding: 15px;
+ 	/* border: 1px solid #ccc; */
+ 	
+}
+header > div{
+	display:inline-block;
+	float: left;
+	/* border: 1px solid #ccc; */
+
+}
+
+.hdropdown{
+	/* ul태그의 기본 리스트스타일 없애기 */
+	/* 기본 리스트스타일: disc */
+	list-style-type: none;
+	/* 기본 여백 제거 */
+	padding: 0px;
+	margin: 0px;
+}
+
+
+.hdropdown > li{
+	/* 수평으로 일렬 배치하기 */
+	float: left;
+	background: #FFFFFF;
+	/* 크기 (배경색 포함) 변경하기 */
+	/* padding: 20px 5px; */
+	/* 줄 간격을 이용한 높이 조절 */
+	line-height: 40px;
+	/* 테두리를 이용한 메뉴 항목 구분선 만들기 */
+	/* border-right: 1px solid #FFFFFF; */
+	/* 서브메뉴(absolute)의 위치 기준점 설정 */
+	margin-left: 20px;
+	position: relative;
+	text-align: left;
+}
+
+.hdropdown > li > a{
+	color: #1E2227;
+	/* 글자 꾸밈선 없애기(underline) */
+	text-decoration: none;
+	/* 글자 스타일 지정 */
+	font-size: 20px;
+	margin: 0 5px;
+}
+
+.hdropdown > li > ul{
+	/* HTM 계층구조에서 빼내는 설정  */
+	/* 부모요소인 <li>태그의 컨텐츠 영역에서 벗어나게 된다 */
+	position: absolute;
+	/* ul태그 기본 리스파일 (disc) 제거 */
+	list-style-type: none;
+	/* ul태그 기본 여백 제거 */
+	padding: 0;
+	margin: 0;
+	
+	/* 서브메뉴의 위치 설정 */
+	left: 5px;
+	/* 서브메뉴영역의 너비 */
+	width: 180px;
+}
+.hdropdown > li:hover > a{
+	color: #4EE2EC;
+	
+}
+.hdropdown > li:hover > ul > li{
+	height: 40px;
+	font-size: 20px;
+	line-height:40px;
+	transition: all 0.5s ease-out;
+}
+
+
+
+.hdropdown > li > ul > li{
+	/* 배경색 지정 */
+	background: #143642;
+	/* 항목의 크기 키우기 */
+	/* padding: 2px 5px;  */
+	/* 텍스트 들여쓰기 */
+	padding-left: 10px; 
+	
+	/* 평소에 화면에서 안보이도록 설정하기 */
+	height: 0;
+	font-size: 0;
+	line-height:0;
+	
+}
+.hdropdown > li > ul > li > a{
+	/* 배경색 지정 */
+	background: #FFFFFF;
+	
+	/* 글자색 지정 */
+	color: #143642;
+	/* 꾸밈선 제거(underline) */
+	text-decoration: none;
+	/* 부모요소<li>항목을 자식요소 <a>로 가득 채우기 */
+	display: block; 
+	/* 변화 시작, 종료 둘 다 적용 */
+	/* transition: background 2s, color 1s; */
+	
+}
+
+.hdropdown > li > ul > li > a:hover{
+	/* 글자색 변경 */
+	color: #4EE2EC;
+	/* 배경색 변경 */
+	background: #FFFFFF;
+
+
+}
+input[id="keyword"]{
+	width: 400px;
+	margin: 10px;
+}
+#wrapper-section{
+  width:980px;
+  margin:50px auto;
+  height:450px;
+
+}
+#wrapper-section > div.left{
+	width: 65%;
+	height: 100%;
+	/* border: 1px solid #ccc; */
+	text-align: center;
+}
+#wrapper-section > div.left > div{
+	display: inline-block;
+	text-align: center;
+	margin: 5px 20px;
+}
+
+
+
+#wrapper-section > div.right{
+	width: 35%;
+	height: 100%;
+	font-size: 15px;
+	/* border: 1px solid #ccc; */
+	text-align: center;
+}
+
+#wrapper-section > div.right > ol > li{
+	margin-bottom: 20px;
+	text-align: left;
+	
+}
+
+#wrapper-section > div > img{
+	border: 1px solid #ccc;
+}
+
+
+#wrapper-main{
+  width:980px;
+  margin:50px auto;
+  height:400px;
+  position:relative;
+  color:#fff;
+  text-shadow:rgba(0,0,0,0.1) 2px 2px 0px;  
+}
+
+
+#slider-wrap{
+  width: 100%;
+  height: 100%;
+  position:relative;
+  overflow:hidden;
+  margin: 140px auto;
+}
+
+#slider-wrap ul#slider{
+  list-style-type: none;
+	/* 기본 여백 제거 */
+  padding: 0px;
+  margin: 0px;
+  width:100%;
+  height:100%;
+  z-index : -1;
+  position:absolute;
+}
+
+#slider-wrap ul#slider li{
+  float:left;
+  position:relative;
+  width:980px;
+  height:400px;
+}
+
+#slider-wrap ul#slider li > div{
+  position:absolute;
+  top:20px;
+  left:35px;  
+}
+
+#slider-wrap ul#slider li > div h3{
+  font-size:36px;
+  text-transform:uppercase; 
+}
+
+#slider-wrap ul#slider li > div span{
+  font-size:21px;
+}
+
+#slider-wrap ul#slider li a > img{
+  display:block;
+  width:100%;
+  height: 100%;
+}
+
+
+/*btns*/
+.btns{
+  position:absolute;
+  width:50px;
+  height:60px;
+  top:50%;
+  margin-top:-25px;
+  line-height:57px;
+  text-align:center;
+  cursor:pointer; 
+  background:rgba(0,0,0,0.1);
+  z-index:100;
+  
+  
+  -webkit-user-select: none;  
+  -moz-user-select: none; 
+  -khtml-user-select: none; 
+  -ms-user-select: none;
+  
+  -webkit-transition: all 0.1s ease;
+  -moz-transition: all 0.1s ease;
+  -o-transition: all 0.1s ease;
+  -ms-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+
+.btns:hover{
+  background:rgba(0,0,0,0.3); 
+}
+
+#next{right:-50px; border-radius:7px 0px 0px 7px;}
+#previous{left:-50px; border-radius:0px 7px 7px 7px;}
+#counter{
+  top: 30px; 
+  right:35px; 
+  width:auto;
+  position:absolute;
+}
+
+#slider-wrap.active #next{right:0px;}
+#slider-wrap.active #previous{left:0px;}
+
+
+/*bar*/
+#pagination-wrap{
+  min-width:20px;
+  margin-top:350px;
+  margin-left: auto; 
+  margin-right: auto;
+  height:15px;
+  position:relative;
+  text-align:center;
+}
+
+#pagination-wrap ul {
+  width:100%;
+}
+
+#pagination-wrap ul li{
+  margin: 0 10px;
+  display: inline-block;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#fff;
+  opacity:0.5;
+  position:relative;
+  top:0;
+  cursor:pointer;
+}
+
+#pagination-wrap ul li.active{
+  width:20px;
+  height:20px;
+  top:3px;
+  opacity:1;
+  box-shadow:rgba(0,0,0,0.1) 1px 1px 0px; 
+}
+#pagination-wrap2{
+  min-width:20px;
+  margin-top:350px;
+  margin-left: auto; 
+  margin-right: auto;
+  height:15px;
+  position:relative;
+  text-align:center;
+}
+
+#pagination-wrap2 ul {
+  width:100%;
+}
+
+#pagination-wrap2 ul li{
+  margin: 0 10px;
+  display: inline-block;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#4EE2EC;
+  opacity:0.5;
+  position:relative;
+  top:0;
+  cursor:pointer;
+}
+
+#pagination-wrap2 ul li.active{
+  width:20px;
+  height:20px;
+  top:3px;
+  opacity:1;
+  box-shadow:rgba(0,0,0,0.1) 1px 1px 0px; 
+}
+
+
+
+/*ANIMATION*/
+#slider-wrap ul, #pagination-wrap ul li{
+  -webkit-transition: all 0.3s cubic-bezier(1,.01,.32,1);
+  -moz-transition: all 0.3s cubic-bezier(1,.01,.32,1);
+  -o-transition: all 0.3s cubic-bezier(1,.01,.32,1);
+  -ms-transition: all 0.3s cubic-bezier(1,.01,.32,1);
+  transition: all 0.3s cubic-bezier(1,.01,.32,1); 
+}
+
+
+footer{
+	/* footer의 전체적인 설정 */
+	/*border: 1px solid #ccc;*/
+ 	background: #FFFFFF;
+ 	width: 980px;
+ 	margin: 0 auto;
+ 	padding: 15px;
+ 	
+}

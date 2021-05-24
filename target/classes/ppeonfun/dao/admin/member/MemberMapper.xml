@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="ppeonfun.dao.admin.member.MemberDao">
+ 	<resultMap type="ppeonfun.dto.Member" id="member">
+  		<result column="m_no" property="mNo"/>
+		<result column="m_id" property="mId"/>
+		<result column="m_password" property="mPassword"/>
+		<result column="m_name" property="mName"/>
+		<result column="m_phone" property="mPhone"/>
+		<result column="m_email" property="mEmail"/>
+		<result column="m_nick" property="mNick"/>
+		<result column="m_gender" property="mGender"/>
+		<result column="m_birth" property="mBirth"/>
+		<result column="m_signup" property="mSignup"/>
+		<result column="m_bank" property="mBank"/>
+		<result column="m_account" property="mAccount"/>
+		<result column="m_caution" property="mCaution"/>
+		<result column="m_grade" property="mGrade"/>
+		<result column="m_post" property="mPost"/>
+		<result column="m_address" property="mAddress"/>
+		<result column="m_detail_address" property="mDetailAddress"/>
+		<result column="m_delete_state" property="mDeleteState"/>
+		<result column="m_social" property="mSocial"/>
+  	</resultMap>
+  	
+  	<select id="selectLoginGrade" resultMap="member" parameterType="ppeonfun.dto.Member">
+  	SELECT m_grade FROM member WHERE m_no=#{mNo} 
+  	</select>
+ </mapper>
