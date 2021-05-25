@@ -52,11 +52,20 @@ $(document).ready(function(){
   pagination2();
   
   //hide/show controls/btns when hover
-
+	
+	$('#moveProject').click(function(){
+		console.log('img1');
+		console.log(pos);
+		var link=$('#slider-wrap ul li:eq('+pos+') a').attr('href');
+		console.log(link);
+		
+		$(location).attr("href", link);
+    });
+	
   	$('#slider-wrap').hover(
     	function(){ $(this).addClass('active'); clearInterval(autoSlider);}, 
-    	function(){ $(this).removeClass('active'); autoSlider = setInterval(slideRight, 3000);}
-  	);
+    	function(){ $(this).removeClass('active'); autoSlider = setInterval(slideRight, 3000);
+    });
   	
     $('#pagination-wrap ul li').click(function(){
     	var index= $('#pagination-wrap ul li').index(this);

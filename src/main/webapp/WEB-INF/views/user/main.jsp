@@ -14,7 +14,7 @@
                 <div>
                     <h3>Slide #1</h3>
                     <span>Sub-title #1</span>
-                </div>                
+                </div>  
 				<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/960a96/000?text=11111" ></a>
              </li>
              <li>
@@ -56,6 +56,8 @@
           <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
           <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
           <div id="counter"></div>
+          
+          <span id="moveProject" class="moveProject"><i class="fas fa-info-circle fa-2x"></i></span>
           
           <div id="pagination-wrap">
             <ul>

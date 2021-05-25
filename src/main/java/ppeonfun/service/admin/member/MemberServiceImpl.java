@@ -22,6 +22,5 @@ public class MemberServiceImpl implements MemberService {
 		return adminMemberDao.selectLoginGrade(member);
 		
 	}
-	
-	
+		
 }

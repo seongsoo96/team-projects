@@ -230,6 +230,13 @@ input[id="keyword"]{
   height: 100%;
 }
 
+#moveProject{
+	top: 8px;
+	left: 32px;
+	cursor:pointer;
+	position:absolute;
+	
+}
 
 /*btns*/
 .btns{
