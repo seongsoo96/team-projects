@@ -13,7 +13,7 @@ import ppeonfun.util.Encryption;
 public class MemberServiceImpl implements MemberService {
 	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 	
-	@Autowired MemberDao memberDao;
+	@Autowired private MemberDao memberDao;
 	@Override
 	public Member encryption(Member member) {
 		logger.info("암호화 실행");

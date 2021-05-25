@@ -15,13 +15,14 @@ public class Information {
 	private Date iCreateDate;
 	private String iState;
 	private int iSize;
-	private String iContent_type;
+	private String iContentType;
+	
 	@Override
 	public String toString() {
 		return "Information [iNo=" + iNo + ", pNo=" + pNo + ", iTitle=" + iTitle + ", iMoney=" + iMoney
 				+ ", iOriginName=" + iOriginName + ", iStoredName=" + iStoredName + ", iCategory=" + iCategory
 				+ ", iStartDate=" + iStartDate + ", iEndDate=" + iEndDate + ", iCreateDate=" + iCreateDate + ", iState="
-				+ iState + ", iSize=" + iSize + ", iContent_type=" + iContent_type + "]";
+				+ iState + ", iSize=" + iSize + ", iContentType=" + iContentType + "]";
 	}
 	public int getiNo() {
 		return iNo;
@@ -95,12 +96,15 @@ public class Information {
 	public void setiSize(int iSize) {
 		this.iSize = iSize;
 	}
-	public String getiContent_type() {
-		return iContent_type;
+	public String getiContentType() {
+		return iContentType;
 	}
-	public void setiContent_type(String iContent_type) {
-		this.iContent_type = iContent_type;
+	public void setiContentType(String iContentType) {
+		this.iContentType = iContentType;
 	}
+	
+	
+	
 	
 	
 	

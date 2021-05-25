@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="ppeonfun.dao.user.member.MemberDao">
- 	<resultMap type="ppeonfun.dto.Member" id="member">
+ 	<resultMap type="ppeonfun.dto.Member" id="Member">
   		<result column="m_no" property="mNo"/>
 		<result column="m_id" property="mId"/>
 		<result column="m_password" property="mPassword"/>
@@ -25,8 +25,10 @@
 		<result column="m_delete_state" property="mDeleteState"/>
 		<result column="m_social" property="mSocial"/>
   	</resultMap>
+  	
+  	
  	
- 	<select id="selectLogin" resultMap="member" parameterType="ppeonfun.dto.Member">
+ 	<select id="selectLogin" resultMap="Member" parameterType="ppeonfun.dto.Member">
  	SELECT m_no, m_nick, m_id, m_grade FROM member
  	WHERE m_id=#{mId} AND m_password=#{mPassword}
  	</select>

@@ -1,55 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 <script type="text/javascript" src="/resources/js/mainPage.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#ajax").click(function(){
+		console.log("#ajax clicked")
+		$.ajax({
+			type: "get" //요청 메소드
+			,url: "/main/ajax" //요청 URL
+			,data: {} //요청 파라미터
+			,dataType:"JSON" //응답받은 데이터의 형식
+			,success:function(res){ //AJAX성공 시 콜백 함수
+				console.log("성공")
+				console.log(res)
+				
+			}
+			,error: function(){ //AJAX실패 시 콜백 함수
+				console.log("실패")
+			}
+		})
+	})
+	
+});
 
+</script>
 <section>
 <div id="wrapper-main">
       <div id="slider-wrap">
           <ul id="slider">
-             <li>
+          	 <c:forEach items="${list2 }" var="info">
+          	 <li>
                 <div>
-                    <h3>Slide #1</h3>
-                    <span>Sub-title #1</span>
+                    <h3>${info.iTitle }</h3>
+                    <span>${info.iCategory }</span>
                 </div>  
-				<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/960a96/000?text=11111" ></a>
+				<c:choose>
+				<c:when test = "${fn:contains(info.iStoredName, 'test')}">
+					<a href="https://www.google.com/"><img src="/resources/img/${info.iStoredName }"/></a>
+				</c:when>
+				<c:otherwise>
+					<a href="https://www.google.com/"><img src="/upload/${info.iStoredName }"/></a>
+				</c:otherwise>
+			</c:choose>
              </li>
-             <li>
-                <div>
-                    <h3>Slide #2</h3>
-                    <span>Sub-title #2</span>
-                </div>
-				<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/D27328/000?text=22222"></a>
-             </li>
-             
-             <li>
-                <div>
-                    <h3>Slide #3</h3>
-                    <span>Sub-title #3</span>
-                </div>
-				<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/FF607F/000?text=33333"></a>
-             </li>
-             
-             <li>
-                <div>
-                    <h3>Slide #4</h3>
-                    <span>Sub-title #4</span>
-                </div>
-				<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/0A6E0A/000?text=44444"></a>
-             </li>
-             
-             <li>
-                <div>
-                    <h3>Slide #5</h3>
-                    <span>Sub-title #5</span>
-                </div>
-				<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/0064CD/000?text=55555"></a>
-             </li>
-             
-             
+          	 </c:forEach>
           </ul>
           
            <!--controls-->
@@ -67,30 +65,31 @@
    </div>
 </section>
 <section id="wrapper-section">
-<div class="left">
-	<div>
-	<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/FF607F/000?text=11111" width="200" height="150"></a>
-	<p>제목1</p>
-	</div>
-	<div>
-	<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/D27328/000?text=22222" width="200" height="150"></a>
-	<p>제목2</p>
-	</div>
-	<div>
-	<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/FF607F/000?text=33333" width="200" height="150"></a>
-	<p>제목3</p>
-	</div>
-	<div>
-	<a href="https://www.google.com/"><img src="https://fakeimg.pl/350x200/0A6E0A/000?text=44444" width="200" height="150"></a>
-	<p>제목4</p>
-	</div>
+<div id="targetAjax" class="left">
+	<c:forEach items="${list }" var="info">
+		<div>
+			<c:choose>
+				<c:when test = "${fn:contains(info.iStoredName, 'test')}">
+					<a href="https://www.google.com/"><img src="/resources/img/${info.iStoredName }" width="200" height="150"/></a>
+				</c:when>
+				<c:otherwise>
+					<a href="https://www.google.com/"><img src="/upload/${info.iStoredName }" width="200" height="150"/></a>
+				</c:otherwise>
+			</c:choose>
+			<p>${info.iTitle }</p>
+		</div>
+	</c:forEach>
+	
 	<div id="pagination-wrap2">
-            <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+			<ul>
+			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="page">
+			<c:if test="${paging.curPage eq page }">
+				<a href="/main?curPage=${page }" ><li class="active"></li></a>
+			</c:if>
+			<c:if test="${paging.curPage ne page }">
+				<a href="/main?curPage=${page }" ><li></li></a>
+			</c:if>
+			</c:forEach>
             </ul>
     </div>
 </div>

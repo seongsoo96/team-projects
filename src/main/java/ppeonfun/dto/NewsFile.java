@@ -9,12 +9,12 @@ public class NewsFile {
 	private String nfStoredName;
 	private Date nfCreateDate;
 	private int nfSize;
-	private String nfContentYype;
+	private String nfContentType;
 	@Override
 	public String toString() {
 		return "NewsFile [nfNo=" + nfNo + ", nNo=" + nNo + ", nfOriginName=" + nfOriginName + ", nfStoredName="
-				+ nfStoredName + ", nfCreateDate=" + nfCreateDate + ", nfSize=" + nfSize + ", nfContentYype="
-				+ nfContentYype + "]";
+				+ nfStoredName + ", nfCreateDate=" + nfCreateDate + ", nfSize=" + nfSize + ", nfContentType="
+				+ nfContentType + "]";
 	}
 	public int getNfNo() {
 		return nfNo;
@@ -52,12 +52,13 @@ public class NewsFile {
 	public void setNfSize(int nfSize) {
 		this.nfSize = nfSize;
 	}
-	public String getNfContentYype() {
-		return nfContentYype;
+	public String getNfContentType() {
+		return nfContentType;
 	}
-	public void setNfContentYype(String nfContentYype) {
-		this.nfContentYype = nfContentYype;
+	public void setNfContentType(String nfContentType) {
+		this.nfContentType = nfContentType;
 	}
+	
 	
 	
 }

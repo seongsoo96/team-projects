@@ -18,7 +18,7 @@ import ppeonfun.service.user.member.MemberService;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	@Autowired MemberService memberService;
+	@Autowired private MemberService memberService;
 	
 	@RequestMapping(value="/loginForm", method=RequestMethod.GET)
 	public void loginForm() {

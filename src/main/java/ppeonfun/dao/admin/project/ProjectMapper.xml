@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ppeonfun.dao.admin.project.ProjectDao">
+  	<resultMap type="ppeonfun.dto.Project" id="Project">
+  		<result column="p_no" property="pNo"/>
+		<result column="m_no" property="mNo" />
+		<result column="p_name" property="pName" />
+		<result column="p_requirements" property="pRequirements" />
+		<result column="p_information" property="pInformation" />
+		<result column="p_story" property="pStory" />
+		<result column="p_reward" property="pReward" />
+		<result column="p_maker" property="pMaker" />
+		<result column="p_state" property="pState" />
+		<result column="p_progress_state" property="pProgressState" />
+		<result column="p_caution" property="pCaution" />
+		<result column="p_like" property="pLike" />
+		<result column="p_create_date" property="pCreateDate" />
+  	</resultMap>
+  	
+  	<select id="selectAll" resultMap="Project" parameterType="ppeonfun.util.Paging">
+  	SELECT*FROM(
+		SELECT rownum rnum, P.* FROM(
+		        SELECT *
+            FROM project 
+            order by p_no desc
+    	) P
+	)R
+	WHERE rnum BETWEEN #{startNo} AND #{endNo}	
+  	</select>
+  	
+  	<select id="selectCntAll" resultType="int">
+  		SELECT count(*) FROM project
+  	</select>
+  	
+  	
+  	
+  	
+  </mapper>

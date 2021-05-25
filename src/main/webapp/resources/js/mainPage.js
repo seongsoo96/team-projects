@@ -48,8 +48,6 @@ $(document).ready(function(){
   //pagination
   pagination();
   
-  //pagination2
-  pagination2();
   
   //hide/show controls/btns when hover
 	
@@ -72,11 +70,6 @@ $(document).ready(function(){
     	slideChoice(index)
     });
   	
-    $('#pagination-wrap2 ul li').click(function(){
-    	var index= $('#pagination-wrap2 ul li').index(this);
-    	slideChoice2(index)
-    });
-  
   
 
 });//DOCUMENT READY
@@ -119,9 +112,4 @@ function countSlides(){
 function pagination(){
   $('#pagination-wrap ul li').removeClass('active');
   $('#pagination-wrap ul li:eq('+pos+')').addClass('active');
-}
-    
-function pagination2(){
-	  $('#pagination-wrap2 ul li').removeClass('active');
-	  $('#pagination-wrap2 ul li:eq('+pos2+')').addClass('active');
 }
