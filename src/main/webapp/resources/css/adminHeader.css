@@ -63,8 +63,9 @@ body {
 header{
 	/* header태그의 전체적인 설정 */
  	background: #FFFFFF;
- 	width: 980px;
+ 	width: 1280px;
  	padding-left: 60px;
+ 	margin: 0 auto;
  	/* border: 1px solid #ccc; */
  	
 }
@@ -168,6 +169,19 @@ header{
 
 
 }
+#chartTarget{
+	width : 1280px;
+	height : 400px;
+	
+}
+#chartTarget > div{
+	display:inline-block;
+	width : 370px;
+	height : 400px;
+	
+	
+}
+
 #navigation{
 	display:relative;
 	width: 100%;
@@ -184,11 +198,10 @@ input[id="keyword"]{
 	margin: 10px;
 }
 #content {
-  position: flax;
-  width: 980px;
+  width: 1280px;
   background: #FFFFFF;
-  margin-top: 30px;
-  margin-left: 0px;
+  margin: 30px auto;
+  text-align: center;
 }
 .move{
 	transform: translate(200px, 0px);
@@ -205,5 +218,7 @@ footer{
  	background: #FFFFFF;
  	width: 100%;
  	margin-top: 30px;
+ 	margin-left: 335px;
+ 	text-align:left;
  	
 }

@@ -4,9 +4,34 @@
 
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp"></c:import>
 
-<div id="content"> 
-<h1>CSS 슬라이드</h1>
-    <p>우리나라의 말이 중국과 달라 문자가 서로 통하지 않는데 이런 이유로 어리석은 백성이 말하고자 하는 바가 있어도 마침내 제 뜻을 능히 펴지 못하는 사람이 많다. 내가 이를 불쌍히 여겨 새로 스물여덟 자를 만드니 사람마다 하여금 쉽게 익혀 매일 쓰기에 편안하게 하고자 할 따름이다.</p>
+<div id="content">
+	<select class="pull-right"  onchange="if(this.value) location.href=(this.value);">
+		<option value="http://www.naver.com">네이버</option>
+		<option value="http://www.google.com">구글</option>
+		<option value="http://www.daum.net">다음</option>
+		<option value="http://www.naver.com">네이버</option>
+	</select>
+	<div class="container">
+		<div id="chartTarget">
+			<div>LineChart</div>
+			<div>BarChart</div>
+			<div>DonutChart</div>
+		</div>
+		
+		<div id="tableTarget">
+		<h1 class="pull-left">결제 리스트</h1>	
+		<table class="table table-hover table-striped table-condensed">
+			<tr>
+				<th class="text-center" style="width: 25%">결제 번호</th>
+				<th class="text-center" style="width: 25%">결제 이름</th>
+				<th class="text-center" style="width: 25%">결제 금액</th>
+				<th class="text-center" style="width: 25%">결제 여부</th>
+			</tr>
+			
+			
+		</table>
+		</div>
+	</div>
 </div>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
