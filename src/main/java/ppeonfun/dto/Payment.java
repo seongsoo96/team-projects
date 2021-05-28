@@ -6,6 +6,7 @@ public class Payment {
 	private int paymNo;
 	private int mNo;
 	private int pNo;
+	private int reNo;
 	private String paymName;
 	private Date paymDate;
 	private int paymAmount;
@@ -15,9 +16,10 @@ public class Payment {
 	private String paymState;
 	@Override
 	public String toString() {
-		return "Payment [paymNo=" + paymNo + ", mNo=" + mNo + ", pNo=" + pNo + ", paymName=" + paymName + ", paymDate="
-				+ paymDate + ", paymAmount=" + paymAmount + ", paymApplyNum=" + paymApplyNum + ", paymImpUid="
-				+ paymImpUid + ", paymMerchantUid=" + paymMerchantUid + ", paymState=" + paymState + "]";
+		return "Payment [paymNo=" + paymNo + ", mNo=" + mNo + ", pNo=" + pNo + ", reNo=" + reNo + ", paymName="
+				+ paymName + ", paymDate=" + paymDate + ", paymAmount=" + paymAmount + ", paymApplyNum=" + paymApplyNum
+				+ ", paymImpUid=" + paymImpUid + ", paymMerchantUid=" + paymMerchantUid + ", paymState=" + paymState
+				+ "]";
 	}
 	public int getPaymNo() {
 		return paymNo;
@@ -36,6 +38,12 @@ public class Payment {
 	}
 	public void setpNo(int pNo) {
 		this.pNo = pNo;
+	}
+	public int getReNo() {
+		return reNo;
+	}
+	public void setReNo(int reNo) {
+		this.reNo = reNo;
 	}
 	public String getPaymName() {
 		return paymName;

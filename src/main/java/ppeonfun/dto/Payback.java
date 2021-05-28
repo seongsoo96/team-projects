@@ -4,8 +4,7 @@ import java.util.Date;
 
 public class Payback {
 	private int paybNo;
-	private int mNo;
-	private int pNo;
+	private int paymNo;
 	private int paybAmount;
 	private int paybTaxFree;
 	private int paybChecksum;
@@ -14,15 +13,13 @@ public class Payback {
 	private String paybRefundHolder;
 	private String paybRefundBank;
 	private String paybRefundAccount;
-	private String paybImpUid;
-	private String paybMerchantUid;
+	
 	@Override
 	public String toString() {
-		return "Payback [paybNo=" + paybNo + ", mNo=" + mNo + ", pNo=" + pNo + ", paybAmount=" + paybAmount
-				+ ", paybTaxFree=" + paybTaxFree + ", paybChecksum=" + paybChecksum + ", paybDate=" + paybDate
-				+ ", paybReason=" + paybReason + ", paybRefundHolder=" + paybRefundHolder + ", paybRefundBank="
-				+ paybRefundBank + ", paybRefundAccount=" + paybRefundAccount + ", paybImpUid=" + paybImpUid
-				+ ", paybMerchantUid=" + paybMerchantUid + "]";
+		return "Payback [paybNo=" + paybNo + ", paymNo=" + paymNo + ", paybAmount=" + paybAmount + ", paybTaxFree="
+				+ paybTaxFree + ", paybChecksum=" + paybChecksum + ", paybDate=" + paybDate + ", paybReason="
+				+ paybReason + ", paybRefundHolder=" + paybRefundHolder + ", paybRefundBank=" + paybRefundBank
+				+ ", paybRefundAccount=" + paybRefundAccount + "]";
 	}
 	public int getPaybNo() {
 		return paybNo;
@@ -30,17 +27,11 @@ public class Payback {
 	public void setPaybNo(int paybNo) {
 		this.paybNo = paybNo;
 	}
-	public int getmNo() {
-		return mNo;
+	public int getPaymNo() {
+		return paymNo;
 	}
-	public void setmNo(int mNo) {
-		this.mNo = mNo;
-	}
-	public int getpNo() {
-		return pNo;
-	}
-	public void setpNo(int pNo) {
-		this.pNo = pNo;
+	public void setPaymNo(int paymNo) {
+		this.paymNo = paymNo;
 	}
 	public int getPaybAmount() {
 		return paybAmount;
@@ -90,18 +81,7 @@ public class Payback {
 	public void setPaybRefundAccount(String paybRefundAccount) {
 		this.paybRefundAccount = paybRefundAccount;
 	}
-	public String getPaybImpUid() {
-		return paybImpUid;
-	}
-	public void setPaybImpUid(String paybImpUid) {
-		this.paybImpUid = paybImpUid;
-	}
-	public String getPaybMerchantUid() {
-		return paybMerchantUid;
-	}
-	public void setPaybMerchantUid(String paybMerchantUid) {
-		this.paybMerchantUid = paybMerchantUid;
-	}
+	
 	
 	
 }

@@ -13,7 +13,10 @@ public class Paging {
 
 	private int startNo; //화면에 보이는 게시글의 시작 번호	
 	private int endNo; //화면에 보이는 게시글의 끝 번호
-
+	
+	private String search; //검색 내용
+	private String category; //카테고리
+	
 	public Paging() {
 		
 	}
@@ -85,7 +88,6 @@ public class Paging {
 	}
 	
 	
-	
 	@Override
 	public String toString() {
 		return "Paging [curPage=" + curPage + ", totalCount=" + totalCount + ", listCount=" + listCount + ", totalPage="
@@ -147,4 +149,22 @@ public class Paging {
 		this.endNo = endNo;
 	}
 
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+	
+	
 }
