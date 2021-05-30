@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ppeonfun.dao.admin.main.MainDao">
+  	<select id="selectAlarmCntAll" resultType="int">
+  	SELECT count(*) as cnt
+	FROM information 
+	inner join alarm
+	on information.p_no = alarm.p_no
+  	</select>
+  	
+  	<select id="selectFavoriteCntAll" resultType="int">
+  	SELECT count(*) as cnt
+	FROM project 
+	inner join information
+	on information.p_no = project.p_no
+  	</select>
+  	
+  	<select id="selectPaybackCntAll" resultType="int">
+  	SELECT count(*) as cnt
+	FROM payment 
+	inner join information
+	on information.p_no = payment.p_no
+	inner join payback
+	on payback.paym_no = payment.paym_no
+  	</select>
+  	
+  	<select id="selectPaymentCntAll" resultType="int">
+  	SELECT count(*) as cnt FROM payment 
+	inner join information
+	on information.p_no = payment.p_no
+  	</select>
+  	
+  	<select id="selectStatAlarm" resultType="hashmap">
+	  	SELECT i_category as category, count(*) as count FROM information 
+		inner join alarm
+		on information.p_no = alarm.p_no
+		group by i_category
+  	</select>
+  	
+  	<select id="selectStatFavorite" resultType="hashmap">
+	  	SELECT i_category as category, sum(p_like) as count FROM project 
+		inner join information
+		on information.p_no = project.p_no
+		group by i_category
+  	</select>
+  	
+  	<select id="selectStatPayback" resultType="hashmap">
+	  	SELECT i_category as category, sum(payb_amount) as count FROM payment 
+		inner join information
+		on information.p_no = payment.p_no
+		inner join payback
+		on payback.paym_no = payment.paym_no
+		group by i_category
+  	</select>
+  	
+  	<select id="selectStatPayment" resultType="hashmap">
+	  	SELECT i_category as category, sum(paym_amount) as count FROM payment 
+		inner join information
+		on information.p_no = payment.p_no
+		group by i_category
+  	</select>
+  	
+  	
+  	<select id="selectAllPayment" resultType="hashmap" parameterType="ppeonfun.util.Paging">
+  	SELECT*FROM(
+		SELECT rownum rnum, P.* FROM(
+		        SELECT *
+            FROM payment 
+            inner join information
+            on information.p_no = payment.p_no
+            order by paym_no desc
+    	) P
+	)R
+	WHERE rnum BETWEEN #{startNo} AND #{endNo}
+  	</select>
+  	
+  	<select id="selectAllPayback" resultType="hashmap" parameterType="ppeonfun.util.Paging">
+  	SELECT*FROM(
+		SELECT rownum rnum, P.* FROM(
+		        SELECT *
+            FROM payment 
+            inner join information
+            on information.p_no = payment.p_no
+            inner join payback
+            on payback.paym_no = payment.paym_no
+            order by payment.paym_no desc
+    	) P
+	)R
+	WHERE rnum BETWEEN #{startNo} AND #{endNo}
+  	</select>
+  	
+  	<select id="selectAllFavorite" resultType="hashmap" parameterType="ppeonfun.util.Paging">
+  	SELECT*FROM(
+		SELECT rownum rnum, P.* FROM(
+		        SELECT *
+           FROM project 
+           inner join information
+           on information.p_no = project.p_no
+            order by p_like desc
+    	) P
+	)R
+	WHERE rnum BETWEEN #{startNo} AND #{endNo}
+  	</select>
+  	
+  	<select id="selectAllAlarm" resultType="hashmap" parameterType="ppeonfun.util.Paging">
+  	SELECT*FROM(
+		SELECT rownum rnum, P.* FROM(
+		        SELECT *
+            FROM information 
+            inner join alarm
+            on information.p_no = alarm.p_no
+            order by a_no desc
+    	) P
+	)R
+	WHERE rnum BETWEEN #{startNo} AND #{endNo}
+  	</select>
+  </mapper>
