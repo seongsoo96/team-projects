@@ -17,6 +17,31 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/header.css">
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	//검색 버튼 클릭
+	$("#btnSearch").click(function(){
+		searchEnter()
+	})
+})
+
+//엔터 누르면 검색
+function searchEnter(){
+	var keyword = $("#keyword").val()
+	
+	console.log("keyword" + keyword)
+	
+	if(keyword === ""){
+		alert("검색어를 입력하세요")
+	} else {
+		$(location).attr("href", "/search?keyword=" + keyword)
+	}
+}
+</script>
+
+
 </head>
 <body>
 <header>
@@ -38,12 +63,19 @@
 	</ul>
 	
 	<!--메인 검색창  -->
+<!-- 	<div> -->
+<!-- 		<form action="/search" method="get" id ="form" > -->
+<!-- 			<input type="text" id="keyword" name="keyword" placeholder="어떤 프로젝트를 찾고 계신가요"/> -->
+<!-- 			<button><i class="fas fa-search"></i></button> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
+	
+	<!--메인 검색창  -->
 	<div>
-		<form action="/search" method="get" id ="form" >
-			<input type="text" id="keyword" name="keyword" placeholder="어떤 프로젝트를 찾고 계신가요"/>
-			<button><i class="fas fa-search"></i></button>
-		</form>
-	</div>	
+		<input type="text" id="keyword" onkeypress="if( event.keyCode == 13 ){searchEnter();}"
+			placeholder="어떤 프로젝트를 찾고 계신가요"/>
+		<button id="btnSearch"><i class="fas fa-search"></i></button>
+	</div>
 	
 	
 	<!-- 로그인 -->
