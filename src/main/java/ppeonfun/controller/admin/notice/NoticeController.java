@@ -149,6 +149,11 @@ public class NoticeController {
 		return null;
 	}
 	
+	@RequestMapping(value="/delete")
+	public String delete() {
+		return null;
+	}
+	
 	
 	
 	
