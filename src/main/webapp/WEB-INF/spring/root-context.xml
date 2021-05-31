@@ -23,6 +23,10 @@
 				<value>classpath:/ppeonfun/dao/**/*Mapper.xml</value>
 			</array>
 		</property>
+		
+		<property name="configLocation">
+			<value>classpath:/mybatis-config.xml</value>
+		</property>
 	</bean>
 	
 	<!-- 마이바티스 쿼리 프록시(Proxy) -->

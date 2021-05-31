@@ -86,7 +86,7 @@ function searchEnter(){
 					<a href="#" style="color:black;" class="fa fa-user fa-3x"></a>
 					<ul>
 						<li><a href="/user/member/loginForm">로그인</a></li>
-						<li><a href="#">회원가입</a></li>
+						<li><a href="/user/member/joinForm">회원가입</a></li>
 						<li><a href="#">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>
