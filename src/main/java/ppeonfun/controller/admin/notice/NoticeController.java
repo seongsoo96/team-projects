@@ -79,7 +79,7 @@ public class NoticeController {
 		//글 쓰기 수행
 		noticeService.write(board, fileList);
 		
-		return "redirect:/admin/notice/view";
+		return "redirect:/admin/notice/list";
 	}
 	
 	@RequestMapping(value="/view")
@@ -106,6 +106,47 @@ public class NoticeController {
 		
 		//viewName 지정
 		return "admin/notice/noticeView";
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.GET)
+	public String updateForm( int bNo, Model model ) {
+		//가져온 값 확인 - 완료
+//		logger.info("얻어온 bNo값 확인 : {}", bNo);
+		
+		//얻어온 값으로 전체 공지사항 정보 얻어오기
+		Board board = noticeService.getViewForUpdate(bNo);
+		
+		//얻어온 board 객체 정보 확인
+//		logger.info("얻어온 board 전체 정보 확인 : {}", board);
+		
+		//model값으로 공지사항 객체 설정
+		model.addAttribute("board", board);
+		
+		//해당 게시글의 첨부파일 불러오기
+		List<BoardFile> flist = noticeService.getFiles(bNo);
+		
+		//model값으로 첨부파일 리스트 설정
+		model.addAttribute("flist", flist);
+		
+		//viewName 설정
+		return "admin/notice/noticeUpdate";
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public String update( Board board, MultipartHttpServletRequest mtfRequest) {
+//		logger.info("얻어온 board객체 정보 확인 {}", board);
+		
+		//다중 첨부파일 리스트로 변환
+		List<MultipartFile> flist = mtfRequest.getFiles("file");
+		
+//		for( MultipartFile i : flist ) {
+//			logger.info("각각의 다중 첨부파일 정보 확인 {}", i);
+//		}
+		
+		//글 수정 메소드 호출
+		noticeService.getViewForUpdate(board, flist);
+		
+		return null;
 	}
 	
 	

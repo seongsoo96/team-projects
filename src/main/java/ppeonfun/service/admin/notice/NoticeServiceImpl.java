@@ -109,7 +109,7 @@ public class NoticeServiceImpl implements NoticeService {
 			bf.setBfContentType(file.getContentType());
 			
 			
-			noticeDao.insertBoardFile( bf );
+			noticeDao.insertBoardFiles( bf );
 		
 		} // for문 end (다중 첨부파일)
 		
@@ -127,6 +127,23 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public List<BoardFile> getFiles(int bNo) {
 		return noticeDao.selectFilesByBoardno(bNo);
+	}
+
+	@Override
+	public Board getViewForUpdate(int bNo) {
+		return noticeDao.selectOneByBoardno(bNo);
+	}
+
+	@Override
+	@Transactional
+	public void getViewForUpdate(Board board, List<MultipartFile> flist) {
+		//글 수정 메소드 호출
+		noticeDao.updateBoard(board);
+		
+		//첨부파일 삭제 및 신규 삽입 메소드 호출
+		noticeDao.deleteBoardFiles(board);
+		
+		noticeDao.insertBoardFiles(flist);
 	}
 	
 } // Class end

@@ -21,7 +21,16 @@
 
 <label>${viewBoard.B_CONTENT }</label><br><br>
 
+<c:forEach var="f" items="${flist }">
+<img src="/resources/upload/${f.bfStoredName }" style="height: 200px; width: 300px;">
+</c:forEach>
+<br><br>
 
+<c:if test="${viewBoard.M_NO eq sessionScope.mNo}">
+<button onclick="location.href='/admin/notice/update?bNo=${viewBoard.B_NO}'">수정</button>
+<button onclick="location.href='/admin/notice/delete'">삭제</button>
+</c:if>
+<button onclick="location.href='/admin/notice/list'">목록</button>
 </div>
 
 </div> <%-- anbody end --%>

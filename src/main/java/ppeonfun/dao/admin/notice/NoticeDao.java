@@ -3,6 +3,8 @@ package ppeonfun.dao.admin.notice;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
 import ppeonfun.util.Paging;
@@ -37,7 +39,7 @@ public interface NoticeDao {
 	 * 
 	 * @param bf - 신규 공지사항의 다중 첨부파일 정보 객체
 	 */
-	public void insertBoardFile(BoardFile bf);
+	public void insertBoardFiles(BoardFile bf);
 
 	/**
 	 * 게시글 상세보기 시 조회수를 1 증가시킨다
@@ -62,6 +64,30 @@ public interface NoticeDao {
 	 * @return 게시글 번호가 일치하는 첨부파일들의 리스트
 	 */
 	public List<BoardFile> selectFilesByBoardno(int bNo);
+
+	/**
+	 * 상세보기 -> 수정 클릭 시 해당 공지사항의 정보를 얻어온다
+	 * 
+	 * @param bNo - 수정할 공지사항의 글 번호
+	 * @return 글 번호에 해당하는 공지사항의 전체 정보
+	 */
+	public Board selectOneByBoardno(int bNo);
+
+	/**
+	 * 수정된 공지사항을 기존의 데이터에 덮어씌운다
+	 * 
+	 * @param board - 수정된 제목과 내용을 담고있는 객체
+	 */
+	public void updateBoard(Board board);
+
+	/**
+	 * 수정하기
+	 * 
+	 * @param board
+	 */
+	public void deleteBoardFiles(Board board);
+
+	public void insertBoardFiles(List<MultipartFile> flist);
 
 
 

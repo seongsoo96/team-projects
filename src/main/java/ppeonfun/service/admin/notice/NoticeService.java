@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
@@ -51,6 +52,22 @@ public interface NoticeService {
 	 * @return 게시글 번호가 일치하는 첨부파일들의 리스트
 	 */
 	public List<BoardFile> getFiles(int bNo);
+
+	/**
+	 * 상세보기 -> 수정 클릭 시 해당 공지사항의 정보를 얻어온다
+	 * 
+	 * @param bNo - 수정할 공지사항의 글 번호
+	 * @return 글 번호에 해당하는 공지사항의 전체 정보
+	 */
+	public Board getViewForUpdate(int bNo);
+
+	/**
+	 * 공지사항 수정 페이지에서 입력된 값들을 기존의 데이터에 덮어씌운다
+	 * 
+	 * @param board - 수정된 제목과 내용이 담겨있는 객체
+	 * @param mtfRequest - 수정된 다중 첨부파일이 담겨있는 객체
+	 */
+	public void getViewForUpdate(Board board, List<MultipartFile> flist);
 
 
 

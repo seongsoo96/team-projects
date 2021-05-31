@@ -57,7 +57,7 @@
 		VALUES ( #{bNo}, #{mNo}, #{bTitle}, #{bContent}, 'N' )
   	</insert>
    
-	<insert id="insertBoardFile" parameterType="ppeonfun.dto.BoardFile">
+	<insert id="insertBoardFiles" parameterType="ppeonfun.dto.BoardFile">
 		INSERT INTO board_file ( bf_fileno, b_no, bf_origin_name, bf_stored_name, bf_size, bf_content_type )
 		VALUES ( board_file_seq.nextval, #{bNo}, #{bfOriginName}, #{bfStoredName}, #{bfSize}, #{bfContentType} )
 	</insert>
@@ -79,5 +79,15 @@
 		WHERE b_no = #{bNo} AND board.m_no = member.m_no
 	</select>
 	
+	<select id="selectOneByBoardno" parameterType="int" resultMap="Board">
+		SELECT * FROM board
+		WHERE b_no = #{bNo}
+	</select>
+	
+	<update id="updateBoard" parameterType="ppeonfun.dto.Board">
+		UPDATE board
+		SET b_title = #{bTitle}, b_content = #{bContent}
+		WHERE b_no = #{bNo}
+	</update>
 	
 </mapper>
