@@ -55,8 +55,8 @@ svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 	<!-- 1. 서포터, 메이커 버튼 -->
 	<div class="mypage-header">
 		<div class="switch-btns-box">
-			<button type="button" class="btnSupporter" id="supporter">서포터</button>
-			<button type="button" class="btnMaker" id="maker">메이커</button>
+			<button type="button" class="btnSupporter" id="btnSupporter">서포터</button>
+			<button type="button" class="btnMaker" id="btnMaker">메이커</button>
 		</div>
 	</div>
 	
@@ -232,17 +232,22 @@ $(document).ready(function() {
 	<%-- home 초기값: 메이커 모드 -> 메이커 메뉴만 보이도록 설정 --%>
 	$("#maker-menu").show()
 	$("#supporter-menu").hide()
+	$("#btnMaker").css('color','#4EE2EC')
 	
 	<%-- '서포터' 버튼 클릭 시 서포터 메뉴만 보이도록 설정 --%>
-	$("#supporter").click(function () {
+	$("#btnSupporter").click(function () {
 		$("#maker-menu").hide()
 		$("#supporter-menu").show()
+		$("#btnMaker").css('color','black')
+		$(this).css('color','#4EE2EC')
 	})
 	
 	<%-- '메이커' 버튼 클릭 시 메이커 메뉴만 보이도록 설정 --%>
-	$("#maker").click(function () {
+	$("#btnMaker").click(function () {
 		$("#maker-menu").show()
 		$("#supporter-menu").hide()
+		$("#btnSupporter").css('color','black')
+		$(this).css('color','#4EE2EC')
 	})
 })
 </script>
