@@ -14,7 +14,7 @@ svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 .mypage-header {position:relative; border:1px solid; width:100%; height:50px;}
 .mypage-header .switch-btns-box {position:absolute; right:60px; border:3px solid red; height:100%;}
 .mypage-header .switch-btns-box > button {font-size:15px; background-color:white; transition-duration:0.4s; border:2px solid green; width:80px; height:100%;}
-.mypage-header .switch-btns-box > button:hover {color:#4EE2EC; border:none;}
+.mypage-header .switch-btns-box > button:hover {color:#4EE2EC;}
 
 /* 본문(프로필, 바로가기메뉴) 영역 */
 .mypage-contents-wrap{border:1px solid coral; height:650px;}
