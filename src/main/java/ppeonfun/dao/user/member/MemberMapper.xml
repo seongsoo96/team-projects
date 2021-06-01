@@ -28,9 +28,46 @@
   	
   	
  	
- 	<select id="selectLogin" resultMap="Member" parameterType="ppeonfun.dto.Member">
+ 	<select id="selectLogin" resultType="Member" parameterType="ppeonfun.dto.Member">
  	SELECT m_no, m_nick, m_id, m_grade FROM member
- 	WHERE m_id=#{mId} AND m_password=#{mPassword}
+ 	WHERE m_id=#{mId} AND m_password=#{mPassword} AND m_social = '사이트'
+ 	</select>
+ 	
+ 	<select id="selectIdCheck" resultType="int" parameterType="Member">
+ 	SELECT count(*) FROM member WHERE m_id=#{mId} AND m_social = '사이트'
+ 	</select>
+ 	
+ 	<select id="selectNickCheck" resultType="int" parameterType="Member">
+ 	SELECT count(*) FROM member WHERE m_nick=#{mNick} AND m_social = '사이트'
+ 	</select>
+ 	
+ 	<insert id="insertMember" parameterType="Member">
+ 	<selectKey order="BEFORE" resultType="int" keyProperty="mNo">
+			SELECT member_seq.nextval FROM dual
+	</selectKey>
+	
+		insert into member(m_no,m_id, m_password,m_name,m_phone,m_email,m_nick,m_gender,m_birth,m_bank,m_account,m_grade,m_post,m_address,m_detail_address,m_delete_state,m_social) 
+		values(#{mNo}, #{mId},#{mPassword},#{mName},#{mPhone}, #{mEmail},#{mNick},#{mGender}, #{mBirth},#{mBank},#{mAccount},#{mGrade},#{mPost},#{mAddress}, #{mDetailAddress}, #{mDeleteState}, #{mSocial})
+	
+ 	</insert>
+ 	<insert id="insertKakaMember" parameterType="Member">
+ 	<selectKey order="BEFORE" resultType="int" keyProperty="mNo">
+			SELECT member_seq.nextval FROM dual
+	</selectKey>
+ 	insert into member(m_no,m_id,m_name,m_email,m_nick,m_gender,m_grade,m_delete_state,m_social) 
+	values(#{mNo}, #{mId},#{mName}, #{mEmail},#{mNick},#{mGender},#{mGrade}, #{mDeleteState}, #{mSocial})
+ 	</insert>
+ 	
+ 	<select id="selectKaKaoIdCheck" parameterType="String" resultType="int">
+ 		SELECT count(*) FROM member WHERE m_id=#{email} AND m_social = 'kakao'
+ 	</select>
+ 	
+ 	<select id="selectKakaoMno" parameterType="String" resultType="int">
+ 		SELECT m_no FROM member WHERE m_id=#{email} AND m_social = 'kakao'
+ 	</select>
+ 	
+ 	<select id="selectId" parameterType="String" resultType="String">
+ 		SELECT m_id FROM member WHERE m_email=#{email} AND m_social = '사이트'
  	</select>
  	
  </mapper>  
