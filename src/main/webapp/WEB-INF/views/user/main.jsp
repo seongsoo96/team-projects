@@ -6,26 +6,26 @@
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 <script type="text/javascript" src="/resources/js/mainPage.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#ajax").click(function(){
-		console.log("#ajax clicked")
-		$.ajax({
-			type: "get" //요청 메소드
-			,url: "/main/ajax" //요청 URL
-			,data: {} //요청 파라미터
-			,dataType:"JSON" //응답받은 데이터의 형식
-			,success:function(res){ //AJAX성공 시 콜백 함수
-				console.log("성공")
-				console.log(res)
-				
-			}
-			,error: function(){ //AJAX실패 시 콜백 함수
-				console.log("실패")
-			}
-		})
-	})
-	
-});
+function pagingSelect(pagingNumber) {
+	$.ajax({
+		type: "get"
+		, url: "/main/ajax"
+		, dataType: "html"
+		, data: {
+			curPage: pagingNumber
+		}
+		, success: function(res){
+			console.log("success")
+			console.log(pagingNumber)
+			$("#targetAjax").html(res);
+			
+		}
+		, error: function() {
+			console.log("error");
+		}
+	});
+}
+
 
 </script>
 <section>
@@ -84,10 +84,10 @@ $(document).ready(function(){
 			<ul>
 			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="page">
 			<c:if test="${paging.curPage eq page }">
-				<a href="/main?curPage=${page }" ><li class="active"></li></a>
+				<a onclick="pagingSelect(${page})"><li class="active"></li></a>
 			</c:if>
 			<c:if test="${paging.curPage ne page }">
-				<a href="/main?curPage=${page }" ><li></li></a>
+				<a onclick="pagingSelect(${page})"><li></li></a>
 			</c:if>
 			</c:forEach>
             </ul>

@@ -54,7 +54,10 @@ public class MainController {
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		
-		return "jsonView";
+		logger.info("ajax list {}", list);
+		logger.info("ajax paging {}", paging);
+		
+		return "/user/ajax/mainProject";
 	}
 	
 }

@@ -29,6 +29,11 @@ header > div{
 	/* border: 1px solid #ccc; */
 
 }
+.container{
+	width: 980px;
+	margin-top:150px;
+	
+}
 
 .hdropdown{
 	/* ul태그의 기본 리스트스타일 없애기 */

@@ -3,35 +3,118 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp"></c:import>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChartBar)
+google.charts.setOnLoadCallback(drawChartColumn);
+google.charts.setOnLoadCallback(drawChartDonut)
+function drawChartBar() {
+var data = new google.visualization.DataTable();
+    
+	data.addColumn('string', 'Topping');
+	data.addColumn('number', '${category}');
+	
+	data.addRows([
+		<c:forEach items="${map }" var="stat" varStatus="st">
+		['${stat.CATEGORY }', ${stat.COUNT }]
+		
+		<c:if test="${not st.last }">,</c:if>
+	</c:forEach>
+	]);
+var options = {'title':'${category}',
+               'width':370,
+               'height':400,
+               legend : {
+       			position : 'top' // 항목 표시 여부 (현재 설정은 안함)
+       		   },
+               };
+var chart = new google.visualization.BarChart(document.getElementById('bar_chart'));
+chart.draw(data, options);
+}
 
+
+function drawChartColumn() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Topping');
+		data.addColumn('number', '${category}');
+		data.addRows([
+			<c:forEach items="${map }" var="stat" varStatus="st">
+			['${stat.CATEGORY }', ${stat.COUNT }]
+			<c:if test="${not st.last }">,</c:if>
+			</c:forEach>
+		]);
+
+
+	var options = {'title':'${category}',
+	               'width':370,
+	               'height':400,
+	               legend : {
+	       			position : 'top' // 항목 표시 여부 (현재 설정은 안함)
+	       			}
+				};
+
+
+	var chart = new google.visualization.ColumnChart(document.getElementById('column_chart'));
+	chart.draw(data, options);
+}
+
+function drawChartDonut() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Topping');
+		data.addColumn('number', '${category}');
+		data.addRows([
+			<c:forEach items="${map }" var="stat" varStatus="st">
+			['${stat.CATEGORY }', ${stat.COUNT }]
+			<c:if test="${not st.last }">,</c:if>
+			</c:forEach>
+		]);
+
+
+	var options = {'title':'${category}',
+	               'width':370,
+	               'height':400,
+	                pieHole: 0.2
+					};
+
+
+	var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
+	chart.draw(data, options);
+}
+
+</script>
 <div id="content">
+	
 	<select class="pull-right"  onchange="if(this.value) location.href=(this.value);">
-		<option value="http://www.naver.com">네이버</option>
-		<option value="http://www.google.com">구글</option>
-		<option value="http://www.daum.net">다음</option>
-		<option value="http://www.naver.com">네이버</option>
+		<option value="" disabled="disabled">선택</option>
+		
+		<option value="/admin/main?category=payment" <c:if test="${category eq 'payment'}">selected="selected"</c:if>>결제</option>
+		<option value="/admin/main?category=payback" <c:if test="${category eq 'payback'}">selected="selected"</c:if>>환불</option>
+		<option value="/admin/main?category=favorite" <c:if test="${category eq 'favorite'}">selected="selected"</c:if>>좋아요</option>
+		<option value="/admin/main?category=alarm" <c:if test="${category eq 'alarm'}">selected="selected"</c:if>>알림</option>
 	</select>
 	<div class="container">
 		<div id="chartTarget">
-			<div>LineChart</div>
-			<div>BarChart</div>
-			<div>DonutChart</div>
+			<div id="bar_chart">BarChart</div>
+			<div id="donut_chart">DonutChart</div>
+			<div id="column_chart">ColumnChart</div>
 		</div>
 		
-		<div id="tableTarget">
-		<h1 class="pull-left">결제 리스트</h1>	
-		<table class="table table-hover table-striped table-condensed">
-			<tr>
-				<th class="text-center" style="width: 25%">결제 번호</th>
-				<th class="text-center" style="width: 25%">결제 이름</th>
-				<th class="text-center" style="width: 25%">결제 금액</th>
-				<th class="text-center" style="width: 25%">결제 여부</th>
-			</tr>
-			
-			
-		</table>
-		</div>
+		<c:choose>
+			<c:when test="${category eq 'payment'}">
+				<c:import url="/WEB-INF/views/admin/statistics/payment.jsp"/>
+			</c:when>
+			<c:when test="${category eq 'payback'}">
+				<c:import url="/WEB-INF/views/admin/statistics/payback.jsp"/>
+			</c:when>
+			<c:when test="${category eq 'alarm'}">
+				<c:import url="/WEB-INF/views/admin/statistics/alarm.jsp"/>
+			</c:when>
+			<c:when test="${category eq 'favorite'}">
+				<c:import url="/WEB-INF/views/admin/statistics/favorite.jsp"/>
+			</c:when>
+		</c:choose>
 	</div>
 </div>
-
+<c:import url="/WEB-INF/views/layout/paging.jsp"></c:import>
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>

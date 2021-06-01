@@ -37,7 +37,7 @@ public class MemberController {
 		}
 		
 		if(member.getmGrade()!=null&&"M".equals(member.getmGrade())) {
-			return "/admin/main";
+			return "redirect:/admin/main";
 		}
 			
 		
@@ -51,6 +51,10 @@ public class MemberController {
 		
 		return "redirect:/";
 	}
-	
-	
+	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
+	public void joinForm() {
+		logger.info("/joinForm [GET] 실행");
+		
+		
+	}
 }

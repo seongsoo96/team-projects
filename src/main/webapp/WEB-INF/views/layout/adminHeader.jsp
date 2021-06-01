@@ -45,7 +45,7 @@ $(document).ready(function(){
 	  <nav>
 	    <div>Core</div>
 	    <ul>
-	      <li><a href="#">Dashboard</a></li>
+	      <li><a href="/admin/main">Dashboard</a></li>
 	    </ul>
 	    <div>List</div>
 	    <ul>
