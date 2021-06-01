@@ -34,18 +34,26 @@ public class NoticeController {
 	public String list(
 			@RequestParam(value="curPage", defaultValue="0") int cPage 
 			, @RequestParam(value="category", defaultValue="") String category
-			, @RequestParam(value="keyword", defaultValue="") String keyword
+			, @RequestParam(value="search", defaultValue="") String search
 			, Model model) {
 //		logger.info("/admin/notice/list [GET] 요청 완료");
+		logger.info("얻어온 category : {}", category);
+		logger.info("얻어온 search : {}", search);
 		
 		//카테고리, 검색어 기반 페이징 적용 (없을 시 defaulValue로 전체 글 페이징 적용)
-		Paging paging = noticeService.getPaging(cPage, category, keyword);
+		Paging paging = noticeService.getPaging(cPage, category, search);
+		
+		logger.info("검색 후 paging값 확인 : {}", paging);
 		
 		//model값으로 paging객체 설정
 		model.addAttribute("paging", paging);
 		
 		//공지사항 리스트 얻어오기
-		List<HashMap<String, Object>> nlist = noticeService.getList(paging);
+		List<HashMap<String, Object>> nlist = noticeService.getList(paging, category, search);
+		
+//		for(HashMap<String, Object> i : nlist) {
+//			logger.info("리스트 값 확인 : {}", i);
+//		}
 		
 		//model값으로 공지사항 리스트 설정
 		model.addAttribute("nlist", nlist);
@@ -73,8 +81,8 @@ public class NoticeController {
 		board.setmNo(mNo);
 		
 		//얻어온 값 확인 - 완료
-//		logger.info("얻어온 board값 확인 : {}", board);
-//		logger.info("얻어온 다중 파일 정보 확인 : {}", fileList);
+		logger.info("얻어온 board값 확인 : {}", board);
+		logger.info("얻어온 다중 파일 정보 확인 : {}", fileList);
 		
 		//글 쓰기 수행
 		noticeService.write(board, fileList);
@@ -134,27 +142,29 @@ public class NoticeController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update( Board board, MultipartHttpServletRequest mtfRequest) {
-//		logger.info("얻어온 board객체 정보 확인 {}", board);
+		logger.info("얻어온 board객체 정보 확인 {}", board);
 		
 		//다중 첨부파일 리스트로 변환
 		List<MultipartFile> flist = mtfRequest.getFiles("file");
 		
-//		for( MultipartFile i : flist ) {
-//			logger.info("각각의 다중 첨부파일 정보 확인 {}", i);
-//		}
+		for( MultipartFile i : flist ) {
+			logger.info("각각의 다중 첨부파일 정보 확인 {}", i);
+		}
 		
 		//글 수정 메소드 호출
-		noticeService.getViewForUpdate(board, flist);
+		noticeService.updateBoardAndFiles(board, flist);
 		
-		return null;
+		return "redirect:/admin/notice/list";
 	}
 	
 	@RequestMapping(value="/delete")
-	public String delete() {
-		return null;
+	public String delete(Board board) {
+//		logger.info("/admin/notice/delete 요청 완료");
+		
+		//해당 글 번호의 공지사항 삭제
+		noticeService.deleteBoard(board);
+		
+		return "redirect:/admin/notice/list";
 	}
-	
-	
-	
 	
 }

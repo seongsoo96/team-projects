@@ -18,7 +18,7 @@ public interface NoticeService {
 	 * @param cPage - 현재 페이지 정보
 	 * @return 얻어온 현재 페이지 값을 기준으로 받은 paging정보 객체
 	 */
-	public Paging getPaging(int cPage, String category, String keyword);
+	public Paging getPaging(int cPage, String category, String search);
 
 	/**
 	 * 관리자 로그인 -> 공지사항 관리 메뉴 클릭 시
@@ -26,7 +26,7 @@ public interface NoticeService {
 	 * 
 	 * @return 전체 공지사항 리스트
 	 */
-	public List<HashMap<String, Object>> getList(Paging paging);
+	public List<HashMap<String, Object>> getList(Paging paging, String category, String search);
 
 	/**
 	 * 
@@ -67,7 +67,14 @@ public interface NoticeService {
 	 * @param board - 수정된 제목과 내용이 담겨있는 객체
 	 * @param mtfRequest - 수정된 다중 첨부파일이 담겨있는 객체
 	 */
-	public void getViewForUpdate(Board board, List<MultipartFile> flist);
+	public void updateBoardAndFiles(Board board, List<MultipartFile> flist);
+
+	/**
+	 * 상세보기에서 삭제 클릭 시 해당 공지사항을 삭제한다
+	 * 
+	 * @param bNo - 삭제할 글 번호
+	 */
+	public void deleteBoard(Board board);
 
 
 

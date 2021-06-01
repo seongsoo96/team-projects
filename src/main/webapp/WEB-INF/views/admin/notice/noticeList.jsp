@@ -12,9 +12,14 @@
 <hr>
 
 <div class="anbody">
+
+<div class="write">
+	<button id="BtnWrite" class="BtnWrite" onclick="location.href='/admin/notice/write'">글쓰기</button>
+</div><br> <%-- write end --%>
+
 <table class="antable">
 <tr>
-	<th style="width: 15%">공지사항 번호</th>
+	<th style="width: 15%">글 번호</th>
 	<th style="width: 45%">제목</th>
 	<th style="width: 15%">닉네임</th>
 	<th style="width: 15%">작성일</th>
@@ -31,15 +36,24 @@
 </c:forEach>
 </table>
 
-<div class="write">
-	<button id="BtnWrite" class="BtnWrite" onclick="location.href='/admin/notice/write'">새글 쓰기</button>
-</div> <%-- write end --%>
 
 </div> <%-- anbody end --%>
 
-</div> <%-- content end --%>
-
 <c:import url="/WEB-INF/views/admin/notice/noticePaging.jsp" />
+
+<form action="/admin/notice/list" method="post">
+<div id="search">
+	<select class="dropbox" name="category">
+		<option value="mix">제목+내용</option>
+		<option value="title">제목만</option>
+		<option value="content">내용만</option>
+	</select>
+	<input type="text" class="search" name="search" placeholder="검색어를 입력해주세요"  />
+	<button class="searchBtn">검색</button>
+</div>
+</form>
+
+</div> <%-- content end --%>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp" />
 

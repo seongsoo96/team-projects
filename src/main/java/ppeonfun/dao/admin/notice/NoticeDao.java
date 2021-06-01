@@ -3,12 +3,14 @@ package ppeonfun.dao.admin.notice;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
 import ppeonfun.util.Paging;
 
+@Repository("admin.NoticeDao")
 public interface NoticeDao {
 
 	/**
@@ -25,7 +27,7 @@ public interface NoticeDao {
 	 * 
 	 * @return 전체 공지사항 리스트
 	 */
-	public List<HashMap<String, Object>> selectAll(Paging paging);
+	public List<HashMap<String, Object>> selectAll(HashMap<String, Object> map);
 
 	/**
 	 * 신규 작성요청된 공지사항을 DB에 삽입한다
@@ -81,13 +83,18 @@ public interface NoticeDao {
 	public void updateBoard(Board board);
 
 	/**
-	 * 수정하기
+	 * 공지사항 수정 시에 해당 글의 첨부파일을 삽입하기 전에 전부 삭제한다
 	 * 
-	 * @param board
+	 * @param board - 첨부파일을 삭제할 글 번호가 담겨있는 객체
 	 */
 	public void deleteBoardFiles(Board board);
 
-	public void insertBoardFiles(List<MultipartFile> flist);
+	/**
+	 * 상세보기에서 삭제버튼을 누르면 해당 공지사항을 삭제한다
+	 * 
+	 * @param bNo - 삭제할 공지사항의 글 번호
+	 */
+	public void deleteByBoardno(Board board);
 
 
 

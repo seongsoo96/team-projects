@@ -31,21 +31,36 @@
 	<select id="selectCntAll" parameterType="hashmap" resultType="int">
 		SELECT count(*) FROM board
 		WHERE b_grade = 'N'
-		<if test="category != null and !category.equals('')">
-			AND REGEXP_LIKE ( #{category}, #{keyword} )
+		<if test="category.equals('mix')">
+			AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+		</if>
+		<if test="category.equals('title')">
+			AND REGEXP_LIKE ( b_title, #{search} )
+		</if>
+		<if test="category.equals('content')">
+			AND REGEXP_LIKE ( b_content, #{search} )
 		</if>
 	</select>
 
-	<select id="selectAll" parameterType="ppeonfun.util.Paging" resultType="hashmap">
+	<select id="selectAll" parameterType="hashmap" resultType="hashmap">
 		SELECT * FROM (
 			SELECT rownum rnum, N.* FROM (
 				SELECT board.*, member.m_nick 
 				FROM board, member
 				WHERE b_grade = 'N' AND board.m_no = member.m_no
 				ORDER BY b_no DESC
-			) N
+			) N WHERE 1=1
+			<if test="category.equals('mix')">
+				AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+			</if>
+			<if test="category.equals('title')">
+				AND REGEXP_LIKE ( b_title, #{search} )
+			</if>
+			<if test="category.equals('content')">
+				AND REGEXP_LIKE ( b_content, #{search} )
+			</if>
 		) NOTICE
-		WHERE rnum BETWEEN #{startNo} AND #{endNo}
+		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
 	</select>
    
 	<insert id="insertNotice" parameterType="ppeonfun.dto.Board">
@@ -89,5 +104,16 @@
 		SET b_title = #{bTitle}, b_content = #{bContent}
 		WHERE b_no = #{bNo}
 	</update>
+   
+	<delete id="deleteBoardFiles" parameterType="ppeonfun.dto.Board">
+		DELETE FROM board_file
+		WHERE b_no = #{bNo}
+	</delete>
+   
+	<delete id="deleteByBoardno" parameterType="ppeonfun.dto.Board">
+		DELETE FROM board
+		WHERE b_no = #{bNo}
+	</delete>
+   
 	
 </mapper>
