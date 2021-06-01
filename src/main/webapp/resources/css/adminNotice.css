@@ -1,0 +1,152 @@
+@charset "UTF-8";
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+/* a태그 속성 설정 */
+a:visited, a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+/* 페이지 제목 */
+h1 {
+	text-align: left !important;
+}
+
+/* #content 하위 내 속성을 정할 div */
+.anbody {
+	width: 1200px;
+	margin-left: 0;
+	text-align: left !important;
+}
+
+/* table 설정 ("admin/notice/list.jsp") */
+.antable {
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 20px;
+}
+
+tr {
+	height: 35px;
+}
+
+th, td {
+	text-align: center;
+	border-bottom: 1px solid #f6f6f6;
+}
+
+th {
+	background-color: #C4FFFF;
+}
+
+.BtnWrite {
+	background-color: #cccccc6b;
+	border-radius: 10px;
+	padding: 5px 20px;
+	border-width: inherit;
+	
+}
+
+/* noticeView.jsp */
+.back {
+	text-align: left;
+}
+
+.backlist {
+	font-size: 12pt;
+	color: #4EEDED;
+	cursor: pointer;
+}
+
+.viewTitle {
+	font-size: 25pt;
+	font-weight: 500;
+}
+
+.CdAndHit {
+	border-bottom: 1px solid #ccc;
+}
+
+.CdAndHit > label {
+	color: #9797978a;
+	font-weight: 500;
+}
+
+.HitLabel {
+	color: #9797978a;
+	font-weight: 500;
+}
+
+.viewContent {
+	min-height: 200px;
+}
+
+.imgbox {
+	height: 200px;
+	width: 100%;
+}
+
+.imgbox > img {
+	height: 200px;
+	width: 300px;
+}
+
+.viewbtn {
+	border: none;
+	padding: 5px 15px;
+}
+
+/* noticeWrite.jsp */
+.nTitle {
+	width: 100%;
+}
+
+.bTitle {
+	width: 80%;
+	height: 40px;
+	font-size: 13pt;
+}
+
+.nContent {
+	width: 100%;
+	margin: 0px 0px 0px -111px;
+}
+
+.buttonbox {
+	margin-left: 440px;
+	padding-top: 20px;
+}
+
+.dropbox {
+	margin: 0 5px;
+	width: 100px;
+	height: 30px;
+	border-color: ivory;
+}
+
+.btnbox {
+	margin-left: 50%;
+}
+
+.search {
+	width: 200px;
+	height: 30px;
+	border-color: snow;
+}
+
+.searchBtn {
+	width: 50px;
+	height: 30.5px;
+	margin-left: -4px;
+	background-color: #C4FFFF;
+	border: none;
+}
+
+.write {
+	text-align: right;
+}
