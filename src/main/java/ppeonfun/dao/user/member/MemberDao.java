@@ -56,6 +56,23 @@ public interface MemberDao {
 	 * @return - 아이디 찾기
 	 */
 	public String selectId(String mEmail);
+	/**
+	 * 이메일 체크
+	 * @param email - 이메일 값
+	 * @return - 이메일 중복 여부
+	 */
+	public int selectEmailCheck(String email);
+	/**
+	 * 패스워드 변경
+	 * @param member - id와 이메일
+	 */
+	public void updatePassword(Member member);
+	/**
+	 * 이메일 검색
+	 * @param member - id
+	 * @return 아이디를 통한 이메일 검색
+	 */
+	public Member selectEmail(Member member);
 
 
 	

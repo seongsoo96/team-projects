@@ -420,7 +420,6 @@ $(document).ready(function(){
     });	
     $("#btnReset").click(function(){
     	 $("#id").attr("readonly", false);
-    	 $("#authNumber").attr("value", "");
     	 $("#emailAuth").attr("readonly", false);
     	 $("#nickname").attr("readonly", false);
     	 idCheck= false;
@@ -495,15 +494,40 @@ $(document).ready(function(){
 	 		}
 	 	});		
    	})
-   	
+   	$("#btnEmailCheck").click(function(){
+   		var email = $("#email").val();
+   		$.ajax({
+	 		type: "post"
+	 		, url: "/user/member/email/check"
+	 		, dataType: "json"
+	 		, data: {
+	 			email: email
+	 		}
+	 		, success: function(res){
+	 			console.log("success")
+	 			console.log(res.isEmail)
+	 			if(res.isEmail){ //중복일 경우
+	 				modalContents.text("이메일이 중복 되어있습니다.");
+	 	        	modal.modal('show');
+	 			}else{//중복이 아닌경우
+	 				$("#email").attr("readonly", true);
+	 				$("#btnEmailCheck ").attr("disabled",true);
+	 				$("#btnEmail").attr("disabled", false);
+	 			}
+	 		}
+	 		, error: function() {
+	 			console.log("error");
+	 		}
+	 	});	
+   	})
    	
    	
    	$("#btnEmail").click(function(){
    		var email = $("#email").val();
-   		$("#email").attr("readonly", true);
+   		
    		$.ajax({
 	 		type: "post"
-	 		, url: "/user/member/email"
+	 		, url: "/user/member/email/send"
 	 		, dataType: "json"
 	 		, data: {
 	 			email: email
@@ -511,10 +535,6 @@ $(document).ready(function(){
 	 		, success: function(res){
 	 			
 	 			console.log("success")
-	 			console.log(res)
-	 			console.log(res.authKey);
-	 			
-	 			$("#authNumber").attr("value", res.authKey);
 	 			
 	 		}
 	 		, error: function() {
@@ -522,20 +542,38 @@ $(document).ready(function(){
 	 		}
 	 	});		
    	})
-   	
-   	$("#btnEmailAuth").click(function(){
+   		
+   		$("#btnEmailAuth").click(function(){
    		var divEmailAuth = $('#divEmailAuth');
-   		if($("#authNumber").val() == $("#emailAuth").val()){
-   			console.log("인증 완료");
-   			authNumber=true;
-   			$("#emailAuth").attr("readonly", true);
-   			divEmailAuth.removeClass("has-error");
-   			divEmailAuth.addClass("has-success");
-   		}else{
-   			authNumber=false;
-   			divEmailAuth.removeClass("has-success");
-   			divEmailAuth.addClass("has-error");
-   		}
+   		var authKey = $("#emailAuth").val();
+   		
+   		$.ajax({
+	 		type: "post"
+	 		, url: "/user/member/email/auth"
+	 		, dataType: "json"
+	 		, data: {
+	 			emailAuth: authKey
+	 		}
+	 		, success: function(res){
+	 			//인증 성공
+	 			if(res.isAuth){
+	 				console.log("인증 완료");
+	 				authNumber=true;
+	 	   			$("#emailAuth").attr("readonly", true);
+	 	   			divEmailAuth.removeClass("has-error");
+	 	   			divEmailAuth.addClass("has-success");
+	 			}else{ //인증 실패
+	 				authNumber=false;
+	 	   			divEmailAuth.removeClass("has-success");
+	 	   			divEmailAuth.addClass("has-error");
+	 			}
+	 			
+	 		}
+	 		, error: function() {
+	 			console.log("error");
+	 		}
+	 	});
+   		
    	})
    
     
@@ -611,8 +649,7 @@ function execDaumPostcode() {
             </div><!-- /.modal -->
             <!--// 모달창 -->
             <hr/>
-    <form class="form-horizontal" role="form" method="post" action="/user/member/join">
-    			<input type="hidden" id="authNumber" name="authNumber" /> 
+    <form class="form-horizontal" role="form" method="post" action="/user/member/join"> 
                 <div class="form-group">
                     <label for="provision" class="col-lg-2 control-label">회원가입약관</label>
                     <div class="col-lg-10" id="provision">
@@ -770,8 +807,9 @@ PpeonFun는 원칙적으로 이용자의 개인정보를 회원 탈퇴 시 지�
                 <div class="form-group" id="divEmail">
                     <label for="inputEmail" class="col-lg-2 control-label">이메일</label>
                     <div class="col-lg-10">
-                        <input type="email" class="form-control" style="display:inline-block; width:87%;" id="email" name="mEmail" data-rule-required="true" placeholder="이메일" maxlength="40">
-                        <button type="button" id="btnEmail" class="btn btn-default" style="padding-top:5px; margin-bottom:5px;">이메일 인증</button>
+                        <input type="email" class="form-control" style="display:inline-block; width:75%;" id="email" name="mEmail" data-rule-required="true" placeholder="이메일" maxlength="40">
+                        <button type="button" id="btnEmailCheck" class="btn btn-default" style="padding-top:5px; margin-bottom:5px;">이메일 중복</button>
+                        <button type="button" id="btnEmail" class="btn btn-default" style="padding-top:5px; margin-bottom:5px;" disabled>이메일 인증</button>
                     </div>
                 </div>
                 

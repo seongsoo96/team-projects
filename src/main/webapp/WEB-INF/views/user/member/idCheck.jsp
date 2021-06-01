@@ -8,7 +8,7 @@
 .container {
     width: 980px;
 }
-#loginForm {
+#idCheckForm {
 	width: 400px;
 	margin: 100px auto;
 }
@@ -17,13 +17,7 @@
 	height: 45px;
 	margin: 5px 15px;
 }
-.img{
-	width:100%
-}
-#btnKaKao{
-	background: url(/resources/img/kakaoLoginLarge.png) no-repeat;
-	height: 45px;
-}
+
 
 </style>
  <script type="text/javascript">
@@ -54,31 +48,18 @@ $(document).ready(function() {
 <div class="container">
 	
 	<div>
-		<form id="loginForm" action="/user/member/login" method="post">
+		<form id="idCheckForm" action="/user/member/password/reset" method="get">
 			<div class="form-group">
-				<h2>로그인</h2>
+				<h2>아이디 입력</h2>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-10">
 					<label for="mId">아이디</label>
 					<input type="text" class="form-control" id="mId" name="mId" placeholder="아이디를 입력하세요"/><br>
 				</div>
-				<div class="col-sm-10">
-					<label for="mPassword">비밀번호</label>
-					<input type="password" class="form-control" id="mPassword" name="mPassword" placeholder="비밀번호(영문, 숫자, 특수 문자 포함 8자 이상)"/><br>
-				</div>
 			</div>
-			<button type="button" id="btnLogin" class="btn btn-primary button">로그인</button>
+			<button type="button" id="btnLogin" class="btn btn-primary button">아이디 확인</button>
 	     	<button type="button" id="btnCancel" class="btn btn-danger button">뒤로가기</button>
-			<a href="/user/member/kakao/loginForm"><button type="button" id="btnKaKao" class="btn button button"></button></a>
-
-			<div class="form-group">
-   					<div class="col-sm-10">
-		      			<a href="/user/member/joinSelect">회원가입</a> |
-		      			<a href="/user/member/idFind">아이디 찾기</a> |
-		      			<a href="/user/member/idCheckForm">비밀번호 재설정</a>
-    				</div>
-    		</div>
 		</form>
 	</div>
 

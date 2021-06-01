@@ -38,18 +38,13 @@ $(document).ready(function() {
    		$("#email").attr("readonly", true);
    		$.ajax({
 	 		type: "post"
-	 		, url: "/user/member/email"
+	 		, url: "/user/member/email/send"
 	 		, dataType: "json"
 	 		, data: {
 	 			email: email
 	 		}
 	 		, success: function(res){
 	 			
-	 			console.log("success")
-	 			console.log(res)
-	 			console.log(res.authKey);
-	 			
-	 			$("#authNumber").attr("value", res.authKey);
 	 			
 	 		}
 	 		, error: function() {
@@ -60,17 +55,35 @@ $(document).ready(function() {
    	
    	$("#btnEmailAuth").click(function(){
    		var divEmailAuth = $('#divEmailAuth');
-   		if($("#authNumber").val() == $("#emailAuth").val()){
-   			console.log("인증 완료");
-   			authNumber=true;
-   			$("#emailAuth").attr("readonly", true);
-   			divEmailAuth.removeClass("has-error");
-   			divEmailAuth.addClass("has-success");
-   		}else{
-   			authNumber=false;
-   			divEmailAuth.removeClass("has-success");
-   			divEmailAuth.addClass("has-error");
-   		}
+   		var authKey = $("#emailAuth").val();
+   		
+   		$.ajax({
+	 		type: "post"
+	 		, url: "/user/member/email/auth"
+	 		, dataType: "json"
+	 		, data: {
+	 			emailAuth: authKey
+	 		}
+	 		, success: function(res){
+	 			//인증 성공
+	 			if(res.isAuth){
+	 				console.log("인증 완료");
+	 				authNumber=true;
+	 	   			$("#emailAuth").attr("readonly", true);
+	 	   			divEmailAuth.removeClass("has-error");
+	 	   			divEmailAuth.addClass("has-success");
+	 			}else{ //인증 실패
+	 				authNumber=false;
+	 	   			divEmailAuth.removeClass("has-success");
+	 	   			divEmailAuth.addClass("has-error");
+	 			}
+	 			
+	 		}
+	 		, error: function() {
+	 			console.log("error");
+	 		}
+	 	});
+   		
    	})
 
 });
@@ -98,8 +111,7 @@ $(document).ready(function() {
             <!--// 모달창 -->
             <hr/>
     <h3>아이디 찾기</h3>
-	<form action="/user/member/idFind" method="post">
-	<input type="hidden" id="authNumber" name="authNumber" /> 
+	<form action="/user/member/idFind" method="post"> 
 	<div class="idfind-form">
 		<div class="form-group" id="divEmail">
 			<label for="email" class="col-lg-2 control-label">이메일</label>

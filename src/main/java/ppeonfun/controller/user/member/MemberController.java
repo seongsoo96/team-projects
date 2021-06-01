@@ -32,7 +32,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/loginForm", method=RequestMethod.GET)
 	public void loginForm() {
-		logger.info("/login 실행");
+		logger.info("/loginForm 실행");
 	}
 	
 	@RequestMapping(value="/joinSelect", method=RequestMethod.GET)
@@ -96,10 +96,7 @@ public class MemberController {
 	public String kakaoLogout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		memberService.kakaoLogout((String)session.getAttribute("accessToken"));
 		session.invalidate();
-//		Cookie[] cookies = request.getCookies();
-//		for(int i=0; i<cookies.length; i++) {
-//			logger.info("이름:{}, 값:{}", cookies[i].getName(), cookies[i].getValue());
-//		}
+
 		
 		return "redirect:/";
 	}
@@ -177,16 +174,71 @@ public class MemberController {
 		model.addAttribute("isNick", isNick);
 		return "jsonView";
 	}
-	
-	
-	@RequestMapping(value="/email", method= RequestMethod.POST)
-	public String sendEmail(String email, Model model) {
-		logger.info("이메일 클릭 {}", email);
-		String authKey = memberService.sendAuthMail(email);
-        
-		model.addAttribute("authKey", authKey);
+	@RequestMapping(value="/email/check", method= RequestMethod.POST)
+	public String emailCheck(String email, Model model) {
+		boolean isEmail = memberService.emailCheck(email);
+		//true면 이메일 중복 o
+		//false면 이메일 중복 x
+		model.addAttribute("isEmail", isEmail);
+		
 		return "jsonView";
 	}
+	
+	@RequestMapping(value="/email/send", method= RequestMethod.POST)
+	public String sendEmail(String email, HttpSession session) {
+		logger.info("이메일 클릭 {}", email);
+		String authKey = memberService.sendAuthMail(email);
+        session.setAttribute("authKey", authKey);
+		
+		return "jsonView";
+	}
+	
+	@RequestMapping(value="/email/auth", method= RequestMethod.POST)
+	public String emailAuth(HttpSession session, String emailAuth, Model model) {
+		logger.info("인증 클릭 {}", emailAuth);
+		String authKey = (String)session.getAttribute("authKey");
+        //인증 성공
+		if(authKey!=null&&authKey.equals(emailAuth)) {
+			model.addAttribute("isAuth", true);
+			//세션 제거
+			session.removeAttribute("authKey");
+		}else { //인증 실패
+			model.addAttribute("isAuth", false);
+		}
+		
+		return "jsonView";
+	}
+	@RequestMapping(value="/idCheckForm", method=RequestMethod.GET)
+	public String idCheckForm() {
+		logger.info("/idCheckForm [GET]");
+		
+		
+		return "/user/member/idCheck";
+	}
+	
+	@RequestMapping(value="/password/reset", method=RequestMethod.GET)
+	public String passwordResetForm(Member member, Model model,HttpSession session) {
+		logger.info("/password/reset [GET]");
+		member=memberService.getEmail(member);
+		
+		logger.info("email {}", member.getmEmail());
+		logger.info("id {}", member.getmId());
+		session.setAttribute("mId", member.getmId());
+		model.addAttribute("member",member);
+		return "/user/member/passwordReset";
+	}
+	
+	@RequestMapping(value="/password/reset", method=RequestMethod.POST)
+	public String passwordReset(Member member, HttpSession session) {
+		logger.info("/password/reset [POST]");
+		member = memberService.encryption(member);
+		member.setmId((String)session.getAttribute("mId"));
+		
+		memberService.passwordReset(member);
+		
+		return "redirect:/user/member/loginForm";
+	}
+	
 	
 	
 	

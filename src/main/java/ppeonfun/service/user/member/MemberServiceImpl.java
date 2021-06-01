@@ -352,5 +352,26 @@ public class MemberServiceImpl implements MemberService {
 	public String idFind(String mEmail) {
 		return memberDao.selectId(mEmail);
 	}
+	
+	@Override
+	public boolean emailCheck(String email) {
+		boolean isEmail = false;
+		if(memberDao.selectEmailCheck(email) > 0) { //아이디 존재
+			isEmail = true;
+		}
+		
+		return isEmail;
+	}
+	
+	@Override
+	public void passwordReset(Member member) {
+		memberDao.updatePassword(member);
+	}
+	
+	@Override
+	public Member getEmail(Member member) {
+		member=memberDao.selectEmail(member);
+		return member;
+	}
     
 }

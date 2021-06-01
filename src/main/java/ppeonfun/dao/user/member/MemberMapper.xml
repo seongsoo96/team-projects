@@ -70,6 +70,17 @@
  		SELECT m_id FROM member WHERE m_email=#{email} AND m_social = '사이트'
  	</select>
  	
+ 	<select id="selectEmailCheck" parameterType="String" resultType="int">
+ 		SELECT count(*) FROM member WHERE m_email=#{email} AND m_social = '사이트'
+ 	</select>
+ 	
+ 	<update id="updatePassword" parameterType="Member">
+ 		update member set m_password=#{mPassword} where m_id = #{mId}
+ 	</update>
+ 	<select id="selectEmail" resultType="Member" parameterType="Member">
+ 		SELECT m_email, m_id FROM member WHERE m_id = #{mId}
+ 	</select>
+ 	
  </mapper>  
     
   

@@ -103,5 +103,22 @@ public interface MemberService {
 	 * @return - 아이디 값
 	 */
 	public String idFind(String mEmail);
+	/**
+	 * 이메일 중복 체크
+	 * @param email - 검사할 이메일
+	 * @return - 이메일 중복 여부
+	 */
+	public boolean emailCheck(String email);
+	/**
+	 * 비밀번호 재설정
+	 * @param member - id와 암호화된 password
+	 */
+	public void passwordReset(Member member);
+	/**
+	 * 이메일 받아오기
+	 * @param member - id를 통한 email 반환
+	 * @return 이메일 반환
+	 */
+	public Member getEmail(Member member);
 
 }
