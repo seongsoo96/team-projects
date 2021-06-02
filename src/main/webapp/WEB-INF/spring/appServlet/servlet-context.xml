@@ -46,6 +46,8 @@
 		<beans:property name="order" value="0"/>
 	</beans:bean>
 	
+	<beans:bean id="down" class="ppeonfun.util.DownloadView" />
+	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 메모리에서 파일을 처리하는 최대 사이즈 제한 : 1MB -->
 		<beans:property name="maxInMemorySize" value="1048576"/>

@@ -27,10 +27,15 @@ function submitContents( elClickedObj ) {
 </script>
 
 <div id="content">
-<h1>공지사항 쓰기</h1>
+
+<div class="anbody2">
+<div class="buttonbox">
+<label class="headname">공지사항 쓰기</label>
+<input class="viewbtn pull-right" type="button" onclick="history.go(-1)" value="취소" />
+<button class="viewbtn pull-right">완료</button>
+</div>
 <hr>
 
-<div class="anbody">
 <form action="/admin/notice/write" method="post" enctype="multipart/form-data">
 <div class="nTitle"><input type="text" name="bTitle" class="bTitle" placeholder="제목을 입력해주세요." required /></div><br>
 <div class="nContent"><textarea cols="140" rows="15" id="bContent" name="bContent" placeholder="내용을 입력해주세요." required></textarea></div><br><br>
@@ -58,12 +63,6 @@ function setThumbnail(event) {
 
 <div id="image_container" ></div> 
 
-
-
-<div class="buttonbox">
-<button>완료</button>
-<input type="button" onclick="history.go(-1)" value="취소" />
-</div>
 </form>
 </div> <%-- anbody end --%>
 

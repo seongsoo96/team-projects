@@ -134,6 +134,11 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
+	public BoardFile getFile(int bfFileno) {
+		return noticeDao.selectBybfFileno(bfFileno);
+	}
+	
+	@Override
 	public Board getViewForUpdate(int bNo) {
 		return noticeDao.selectOneByBoardno(bNo);
 	}
@@ -197,5 +202,5 @@ public class NoticeServiceImpl implements NoticeService {
 		//해당 공지사항 삭제
 		noticeDao.deleteByBoardno(board);
 	}
-	
+
 } // Class end
