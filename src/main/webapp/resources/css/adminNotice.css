@@ -2,14 +2,19 @@
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 /* a태그 속성 설정 */
-a:visited, a:link {
+.titleLink:visited, .titleLink:link {
 	color: black;
 	text-decoration: none;
 }
 
-a:hover {
+.titleLink:hover {
 	color: black;
 	text-decoration: underline;
+}
+
+.headname {
+	font-size: 25pt;
+	font-weight: 500;
 }
 
 /* 페이지 제목 */
@@ -18,8 +23,14 @@ h1 {
 }
 
 /* #content 하위 내 속성을 정할 div */
-.anbody {
+.anbody1 {
 	width: 1200px;
+	margin-left: 0;
+	text-align: left !important;
+}
+
+.anbody2 {
+	width: 1000px;
 	margin-left: 0;
 	text-align: left !important;
 }
@@ -53,7 +64,7 @@ th {
 }
 
 /* noticeView.jsp */
-.back {
+.back{
 	text-align: left;
 }
 
@@ -83,22 +94,24 @@ th {
 }
 
 .viewContent {
-	min-height: 200px;
+	min-height: 250px;
 }
 
 .imgbox {
 	height: 200px;
 	width: 100%;
+	text-align: left;
 }
 
-.imgbox > img {
+.imgclick {
 	height: 200px;
 	width: 300px;
 }
 
 .viewbtn {
 	border: none;
-	padding: 5px 15px;
+	padding: 5px 20px;
+	margin-right: 20px;
 }
 
 /* noticeWrite.jsp */
@@ -110,16 +123,23 @@ th {
 	width: 80%;
 	height: 40px;
 	font-size: 13pt;
+	border: 1.5px solid white;
+}
+
+.bTitle:focus {
+	outline: none;
+	border: 1.5px solid #4EEDED;
+	transition: border 3s;
 }
 
 .nContent {
 	width: 100%;
-	margin: 0px 0px 0px -111px;
+	margin: 0px 0px 0px -10px;
 }
 
 .buttonbox {
-	margin-left: 440px;
 	padding-top: 20px;
+	text-align: left;
 }
 
 .dropbox {
@@ -127,10 +147,6 @@ th {
 	width: 100px;
 	height: 30px;
 	border-color: ivory;
-}
-
-.btnbox {
-	margin-left: 50%;
 }
 
 .search {

@@ -11,7 +11,7 @@
 <h1>공지사항 관리</h1>
 <hr>
 
-<div class="anbody">
+<div class="anbody1">
 
 <div class="write">
 	<button id="BtnWrite" class="BtnWrite" onclick="location.href='/admin/notice/write'">글쓰기</button>
@@ -28,7 +28,7 @@
 <c:forEach var="n" items="${nlist }">
 	<tr>
 		<td>${n.B_NO }</td>
-		<td><a href="/admin/notice/view?bNo=${n.B_NO }">${n.B_TITLE }</a></td>
+		<td><a class="titleLink" href="/admin/notice/view?bNo=${n.B_NO }">${n.B_TITLE }</a></td>
 		<td>${n.M_NICK }</td>
 		<td><fmt:formatDate value="${n.B_CREATE_DATE }" type="date" pattern="yyyy-MM-dd" /></td>
 		<td>${n.B_HIT }</td>

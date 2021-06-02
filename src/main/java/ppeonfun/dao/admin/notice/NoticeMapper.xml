@@ -88,6 +88,11 @@
 		WHERE b_no = #{bNo}
 	</select>
 	
+	<select id="selectBybfFileno" parameterType="int" resultMap="BoardFile">
+		SELECT * FROM board_file
+		WHERE bf_fileno = #{bfFileno}
+	</select>
+	
 	<select id="selectByBoardno" parameterType="int" resultType="hashmap">
 		SELECT board.*, member.m_nick
 		FROM board, member

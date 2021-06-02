@@ -32,7 +32,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/list")
 	public String list(
-			@RequestParam(value="curPage", defaultValue="0") int cPage 
+			@RequestParam(value="curPage", defaultValue="0") int cPage
 			, @RequestParam(value="category", defaultValue="") String category
 			, @RequestParam(value="search", defaultValue="") String search
 			, Model model) {
@@ -71,7 +71,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String write(Board board, MultipartHttpServletRequest mtfRequest, HttpSession session, Model model) {
+	public String write( Board board, MultipartHttpServletRequest mtfRequest, HttpSession session, Model model) {
 //		logger.info("/admin/notice/write [POST] 요청 완료");
 		
 		//얻어온 다중 파일 리스트에 담기 - 완료
@@ -114,6 +114,20 @@ public class NoticeController {
 		
 		//viewName 지정
 		return "admin/notice/noticeView";
+	}
+	
+	@RequestMapping(value="/download")
+	public String download( 
+			@RequestParam(value="fileno") int bfFileno
+			, Model model ) {
+		
+		//특정 파일번호로 해당 파일의 전체 정보를 얻어온다
+		BoardFile bf = noticeService.getFile(bfFileno);
+		
+		//model값으로 download할 파일정보 설정
+		model.addAttribute("bf", bf);
+		
+		return "down";
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)

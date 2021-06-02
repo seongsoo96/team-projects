@@ -66,6 +66,14 @@ public interface NoticeDao {
 	 * @return 게시글 번호가 일치하는 첨부파일들의 리스트
 	 */
 	public List<BoardFile> selectFilesByBoardno(int bNo);
+	
+	/**
+	 * 상세보기에서 첨부파일 다운로드를 위해 파일번호로 해당 파일의 전체 데이터를 얻어온다
+	 * 
+	 * @param bfFileno - 조회할 파일의 파일번호
+	 * @return 파일번호가 일치하는 파일 전체 정보
+	 */
+	public BoardFile selectBybfFileno(int bfFileno);
 
 	/**
 	 * 상세보기 -> 수정 클릭 시 해당 공지사항의 정보를 얻어온다
@@ -95,6 +103,7 @@ public interface NoticeDao {
 	 * @param bNo - 삭제할 공지사항의 글 번호
 	 */
 	public void deleteByBoardno(Board board);
+
 
 
 

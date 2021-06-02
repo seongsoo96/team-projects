@@ -5,7 +5,7 @@
 
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp" />
 
-<link rel="stylesheet" href="/resources/css/adminNotice.css">
+<link rel="stylesheet" href="/resources/css/adminNotice.css" type="text/css">
 
 <div id="content">
 
@@ -15,22 +15,24 @@
 
 <div class="anbody">
 
-<div class="nview">
+<div>
 
-<div><label class="viewTitle">${viewBoard.B_TITLE }</label></div>
-<div><label>${viewBoard.M_NICK }</label></div>
-<div class="CdAndHit"><label>
+<div style="text-align: left;"><label class="viewTitle">${viewBoard.B_TITLE }</label></div>
+<div style="text-align: left;"><label>${viewBoard.M_NICK }</label></div>
+<div class="CdAndHit" style="text-align: left;"><label>
 <fmt:formatDate value="${viewBoard.B_CREATE_DATE }" type="both" pattern="yyyy.MM.dd. HH:mm" />
 </label>&nbsp;&nbsp;&nbsp;
 <label class="HitLabel">조회 ${viewBoard.B_HIT }</label></div><br>
 
-<div class="viewContent"><label>${viewBoard.B_CONTENT }</label></div>
+<div class="viewContent" style="text-align: left;"><label>${viewBoard.B_CONTENT }</label></div>
 
 </div>
 
-<div class="imgbox">
+<div class="imgbox" style="text-align: left;">
 <c:forEach var="f" items="${flist }">
+<a href="/admin/notice/download?fileno=${f.bfFileno }">
 <img class="imgclick" src="/resources/upload/${f.bfStoredName }">
+</a>
 </c:forEach>
 </div>
 <br>
