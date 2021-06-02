@@ -14,6 +14,7 @@
 		<property name="password" value="1234"/>
 	</bean>
 	
+	
 	<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- dataSource로 등록된 빈에 설정된 DB연결정보 이용하기 -->
 		<property name="dataSource" ref="dataSource"/>
