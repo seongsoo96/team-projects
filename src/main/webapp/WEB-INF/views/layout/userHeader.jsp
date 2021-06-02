@@ -27,7 +27,7 @@
 	</div>
 	
 	<ul class="hdropdown">
-		<li><a href="#">펀딩하기</a></li>
+		<li><a href="/user/project/list">펀딩하기</a></li>
 		<li><a href="#">오픈예정</a></li>
 		<li>
 			<a href="#">더보기</a>
@@ -56,7 +56,7 @@
 					<ul>
 						<li><a href="/user/member/kakao/logout">카카오 로그아웃</a></li>
 						<li><a href="/user/mypage/home">마이페이지</a></li>
-						<li><a href="#">프로젝트 펀딩하기</a></li>
+						<li><a href="/user/project/list">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -68,7 +68,7 @@
 					<ul>
 						<li><a href="/user/member/loginForm">로그인</a></li>
 						<li><a href="/user/member/joinSelect">회원가입</a></li>
-						<li><a href="#">프로젝트 펀딩하기</a></li>
+						<li><a href="/user/project/list">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>
 			</ul>	
@@ -80,7 +80,7 @@
 					<ul>
 						<li><a href="/user/member/logout">로그아웃</a></li>
 						<li><a href="/user/mypage/home">마이페이지</a></li>
-						<li><a href="#">프로젝트 펀딩하기</a></li>
+						<li><a href="/user/project/list">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>
 			</ul>
