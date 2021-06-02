@@ -21,4 +21,19 @@ public interface MypageService {
 	 */
 	public void updateMypageFile(int mNo, MultipartFile file);
 
+
+	/**
+	 * 해당 회원번호의 프로필 사진을 삭제한다.
+	 * @param 		회원번호
+	 */
+	public void deleteProfileImg(int mNo);
+
+
+	/**
+	 * 해당 회원번호의 소개글을 수정한다.
+	 * @param introduce
+	 * @param mNo
+	 */
+	public void updateMyIntroByNo(String introduce, int mNo);
+	
 }

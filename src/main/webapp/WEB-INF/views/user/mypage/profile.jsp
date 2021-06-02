@@ -6,7 +6,7 @@
 <style type="text/css">
 /* 프로필 사진 */
 .profile-img {position:relative; height:170px; text-align:center;}
-.profile-img img {width:130px; height:130px; border:2px solid tomato; margin:15px 0;}
+.profile-img img {width:130px; height:130px; border:2px solid tomato; margin:15px 0; border-radius:50%;}
 
 /* 요소 가운데 정렬 및 글씨 크기 지정 */
 .edit-img-btns, .my-introduce, .submit-btns {text-align:center; font-size:16px;}
@@ -27,52 +27,63 @@
 	<h3>프로필 수정</h3>
 	<hr>
 	
-	<form>
+	<form action="/user/mypage/profile" method="post">
 	<div class="profile-img">
-		<c:if test="${isExistsImg }">
-			<%-- <img src="/upload/${profile.myStoredName }"> --%>
-			<img src="/resources/img/test1.png">
+		<c:if test="${not isDefaultImg }">
+			<img src="/upload/profile/${profile.myStoredName }" id="myimg">
 		</c:if>
-		<c:if test="${not isExistsImg }">
-			<img src="/resources/img/test1.png">
+		<c:if test="${isDefaultImg }">
+			<img src="/resources/img/${profile.myOriginName }" id="myimg">
 		</c:if>
 	</div>
 	<div class="edit-img-btns">
-		<input type="file" id="profileImgFile" name="profileImgFile" accept="image/*" style="display:none;" />
-		<c:if test="${isExistsImg }">
-		<button type="button" id="btnChangeImg">바꾸기</button>
+		<input type="file" id="profileImgFile" accept="image/*" style="display:none;" />
+		<button type="button" id="btnChangeImg">수정</button>
 		<button type="button" id="btnDeleteImg" onclick="deleteImg()">삭제</button>
-		</c:if>
-		<c:if test="${not isExistsImg }">
-			<button type="button">프로필 사진 등록</button>
-		</c:if>
 	</div>
 	<div class="my-introduce">
 		<h4>간단한 한 마디로 나를 소개 해주세요.</h4>
-		<textarea id="introduce" name="introduce">${profile.myIntroduce }</textarea>
+		<c:if test="${not empty profile.myIntroduce }">
+			<textarea id="introduce" name="introduce">${profile.myIntroduce }</textarea>
+		</c:if>
+		<c:if test="${empty profile.myIntroduce }">
+			<textarea id="introduce" name="introduce"></textarea>
+		</c:if>
 	</div>
 	<div class="submit-btns">
-		<button type="button">취소</button>
-		<button type="button">확인</button>
+		<button type="button" id="btnCancle">취소</button>
+		<button type="button" id="btnComplete">확인</button>
 	</div>
 	</form>
-</div>
+	
+</div><!-- div.container -->
 
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	/* '바꾸기' 클릭 시 파일 업로드 */
+	// '수정' 클릭 시 파일 업로드
 	$("#btnChangeImg").click(function() {
 		$("#profileImgFile").click()
 	})
 	
-	/* 파일 첨부 시 changeImg() 함수 호출 */
+	// 파일 첨부 시 changeImg() 함수 호출
 	$("#profileImgFile").on('change', changeImg)
+	
+	// '확인' 클릭 시 introduce 전송
+	$("#btnComplete").click(function() {
+		$("form").submit()
+	})
+	
+	// '취소' 클릭 시 마이페이지 홈으로 이동
+	$("#btnCancle").click(function() {
+		location.href = "/user/mypage/home"
+	})
 	
 })
 </script>
 <script type="text/javascript">
 function changeImg(e) {
+	console.log("***changeImg START***")
 	console.log(e)
 	console.log(e.target.files[0])
 	
@@ -115,8 +126,8 @@ function changeImg(e) {
 		, dataType: "json" 
 		, success: function(res) {
 			console.log("ajax 성공")
-			$("img").attr('src', '/resources/img/test2.png')
-			console.log(res)
+			console.log("파일명", res.myStoredName)
+			$("#myimg").attr( 'src', ('/upload/profile/' + res.myStoredName) )
 		}
 		, error: function(res) {
 			console.log("ajax 실패")
@@ -124,11 +135,23 @@ function changeImg(e) {
 	})
 	
 }
-
+</script>
+<script type="text/javascript">
 function deleteImg() {
 	console.log("***deleteImg START***")
 	
+	$.ajax({
+		type: "get"
+		, url: "/user/mypage/profile/delajax"
+		, dataType: "json"
+		, success: function(res) {
+			console.log("ajax 성공")
+			$("#myimg").attr('src', ('/resources/img/' + res.myStoredName) )
+		}
+		, error: function(res) {
+			console.log("ajax 실패")
+		}
+	})	
 }
 </script>
-
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

@@ -66,13 +66,11 @@ svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 		<div class="profile-box">
 			<!-- 2-1-1. 프로필 사진 -->
 			<a href="/user/mypage/profile">
-			<c:if test="${isExistsImg }">
-				<img class="profile-img" src="/resources/img/${profileImg }" alt="프로필사진">
-				<%-- 프로필 수정 구현 후 아래 코드로 바꿀 것 -->
-				<%-- <img class="profile-img" src="/upload/${profileImg }" alt="프로필사진"> --%>
+			<c:if test="${not isDefaultImg }">
+				<img class="profile-img" src="/upload/profile/${profile.myStoredName }" alt="프로필사진">
 			</c:if>
-			<c:if test="${not isExistsImg }">
-				<img  class="profile-img" src="/resources/img/${profileImg }" alt="프로필사진">
+			<c:if test="${isDefaultImg }">
+				<img class="profile-img" src="/resources/img/${profile.myOriginName }" alt="프로필사진">
 			</c:if>
 			</a>
 			<!-- 2-1-2. 닉네임-->
