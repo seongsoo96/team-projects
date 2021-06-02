@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import ppeonfun.dto.SearchFilter;
+
 @Repository("user.SearchDao")
 public interface SearchDao {
 	
@@ -23,5 +25,15 @@ public interface SearchDao {
 	 * @return
 	 */
 	List<HashMap<String, Object>> selectSearchList(HashMap<String, Object> map);
+	
+	/**
+	 * 필터가 포함된 전체 프로젝트 수 조회
+	 * 
+	 * @param sf
+	 * @return
+	 */
+	int selectCntAllByFilter(HashMap<String, Object> map);
+
+	List<HashMap<String, Object>> selectSearchListByFilter(HashMap<String, Object> map);
 
 }

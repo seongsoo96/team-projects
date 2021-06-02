@@ -3,6 +3,7 @@ package ppeonfun.service.user.search;
 import java.util.HashMap;
 import java.util.List;
 
+import ppeonfun.dto.SearchFilter;
 import ppeonfun.util.SearchPaging;
 
 public interface SearchService {
@@ -27,5 +28,16 @@ public interface SearchService {
 	 * @return
 	 */
 	List<HashMap<String, Object>> list(SearchPaging paging, String keyword);
+	
+	/**
+	 * 필터 검색 해제 더보기 위한 페이징
+	 * 
+	 * @param inData - curPage가 들어있는 객체
+	 * @param sf - 필터 정보가 들어있는 객체
+	 * @return
+	 */
+	SearchPaging getPaging(SearchPaging inData, SearchFilter sf);
+
+	List<HashMap<String, Object>> list(SearchPaging paging, SearchFilter sf);
 
 }
