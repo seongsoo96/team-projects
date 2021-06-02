@@ -11,7 +11,7 @@
 
 
 <div class="text-center">
-	<ul class="pagination pagination-sm">
+	<ul class="pagination">
 	
 		<%-- 첫 페이지로 이동 --%>
 		<c:if test="${paging.curPage ne 1 }" >
