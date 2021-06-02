@@ -55,7 +55,7 @@
 					<a href="#" style="color:black;" class="fa fa-user fa-3x"></a>
 					<ul>
 						<li><a href="/user/member/kakao/logout">카카오 로그아웃</a></li>
-						<li><a href="#">마이페이지</a></li>
+						<li><a href="/user/mypage/home">마이페이지</a></li>
 						<li><a href="#">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>
@@ -79,7 +79,7 @@
 					<a href="#" class="fa fa-user fa-3x"></a>
 					<ul>
 						<li><a href="/user/member/logout">로그아웃</a></li>
-						<li><a href="#">마이페이지</a></li>
+						<li><a href="/user/mypage/home">마이페이지</a></li>
 						<li><a href="#">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>
