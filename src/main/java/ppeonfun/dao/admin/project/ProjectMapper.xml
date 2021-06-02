@@ -35,7 +35,22 @@
   		SELECT count(*) FROM project
   	</select>
   	
+  	<select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
   	
+  	<select id="selectProject" resultType="Project" parameterType="Project">
+  		SELECT * FROM project WHERE p_no=#{pNo}
+  	</select>
   	
+  	<insert id="insertProject" parameterType="Project">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="pNo">
+  			SELECT project_SEQ.nextval FROM dual
+  		</selectKey>
+  		INSERT INTO project(p_no,m_no,p_name) VALUES(#{pNo}, #{mNo}, '프로젝트이름'||#{pNo})
+  	</insert>
   	
   </mapper>
