@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
 import ppeonfun.service.user.mypage.MypageService;
 
@@ -29,6 +30,8 @@ public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 	
 	@Autowired private MypageService mypageService;
+	
+	//마이페이지 홈---------------------------------------------------------------------------------
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public void getMypage(HttpSession session, Model model) {
@@ -45,6 +48,9 @@ public class MypageController {
 		
 		model.addAttribute("profile", profileimg);
 	}
+	
+	
+	//마이페이지 프로필------------------------------------------------------------------------------
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public void editMyProfile(HttpSession session, Model model) {
@@ -113,5 +119,23 @@ public class MypageController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	//마이페이지 회원정보수정--------------------------------------------------------------------------
+
+	@RequestMapping(value="/detail", method=RequestMethod.GET)
+	public void detailHome() {
+		logger.info("***** /user/mypage/detail START *****");
+	}
+	
+	@RequestMapping(value="/info", method=RequestMethod.GET)
+	public void viewMyInfo(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/info [GET] START *****");
+		
+		Member member = mypageService.getMemberInfo((int) session.getAttribute("mNo"));
+		logger.info("회원정보:{}", member);
+		
+		model.addAttribute("mInfo", member);
 	}
 }

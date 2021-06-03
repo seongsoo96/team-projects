@@ -2,6 +2,7 @@ package ppeonfun.service.user.mypage;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
 
 public interface MypageService {
@@ -35,5 +36,13 @@ public interface MypageService {
 	 * @param mNo
 	 */
 	public void updateMyIntroByNo(String introduce, int mNo);
+
+
+	/**
+	 * 해당 회원번호의 기본 정보를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		기본 정보가 담긴 DTO
+	 */
+	public Member getMemberInfo(int mNo);
 	
 }

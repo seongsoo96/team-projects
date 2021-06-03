@@ -34,6 +34,11 @@
  	WHERE my_no = #{myNo}
  	</update>
  	
+ 	<select id="selectMemberByNo" parameterType="int" resultType="ppeonfun.dto.Member">
+ 	SELECT m_phone, m_email, m_bank, m_account, m_post, m_address, m_detail_address
+ 	FROM member
+ 	WHERE m_no = #{mNo}
+ 	</select>
  </mapper>  
     
   

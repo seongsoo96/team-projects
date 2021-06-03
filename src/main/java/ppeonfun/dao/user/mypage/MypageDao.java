@@ -3,6 +3,7 @@ package ppeonfun.dao.user.mypage;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
 
 @Repository("user.MypageDao")
@@ -28,6 +29,14 @@ public interface MypageDao {
 	 * @param mypage	소개글 데이터가 담긴 DTO
 	 */
 	public void updateMypageIntro(MyPage mypage);
+
+
+	/**
+	 * 회원번호로 회원 정보를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		회원 정보가 담긴 DTO
+	 */
+	public Member selectMemberByNo(int mNo);
 
 
 }

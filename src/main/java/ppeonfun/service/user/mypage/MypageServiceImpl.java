@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dao.user.mypage.MypageDao;
+import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
 
 @Service("user.MypageService")
@@ -123,5 +124,10 @@ public class MypageServiceImpl implements MypageService {
 		mypage.setMyIntroduce(introduce);
 		
 		mypageDao.updateMypageIntro(mypage);
+	}
+
+	@Override
+	public Member getMemberInfo(int mNo) {
+		return mypageDao.selectMemberByNo(mNo);
 	}
 }
