@@ -14,7 +14,7 @@
 
 <style>
 input[type="checkbox"] {
-	display: none;
+	display: ;
 }
 </style>
 
@@ -24,8 +24,8 @@ $(function() {
   $( "#slider-range1" ).slider({
     range: true,
     min: 0,
-    max: 100,
-    values: [ 0, 100 ],
+    max: 10000,
+    values: [ 0, 10000 ],
     slide: function( event, ui ) {
       $( "#amount1" ).val( ui.values[ 0 ] + "%" + " - " + ui.values[ 1 ] + "%");
     }
@@ -47,34 +47,71 @@ $(function() {
   $( "#amount2" ).val( $( "#slider-range2" ).slider( "values", 0 ) +
     "원 - " + $( "#slider-range2" ).slider( "values", 1 ) + "원" );
 });
+
+
+
+
+
+
 </script>
 
 
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	//카테고리 필터 클릭
+	
+	//필터 클릭
 	$(".filterbtn").click(function(){
 		$(this).toggleClass('filter_clicked')
 		
 		if($(this).hasClass('filter_clicked')){
 			$(this).css('border-color', '#00c4c4')
 			$(this).next().prop("checked", true)
+			
+			//필터 리스트 추가
+			$(".modal_filter_list").append(
+				$('<div class="filtered_item">' 
+						+ $(this).text()
+						+ '<button class="item_remove_btn">'
+							+ '<i class="icon close">X</i>'
+						+ '</button>'	
+				+ '</div>')
+			)
 		} else {
 			$(this).next().prop("checked", false)
 			$(this).css('border-color', '#fff')
+			
+			//필터 리스트 제거
+			$('div[class="filtered_item"]:contains("' + $(this).text() + '")').remove()
 		}
+		
+		//필터 리스트 X 클릭
+		$('.item_remove_btn').click(function(){
+			console.log("클릭")
+			
+			$('div[class="filtered_item"]:contains("' + $(this).parent().text() + '")').remove()
+			$('button[class="filterbtn"]:contains("' + $(this).parent().text() + '")').next().prop("checked", false)
+			$('button[class="filterbtn"]:contains("' + $(this).parent().text() + '")').css('border-color', '#fff')
+		})
+// 		<button class="filterbtn">오픈예정</button>
+// 		<input type="checkbox" name="step" value="a" />
+		
+		
 	})
 	
 	//필터 초기화
 	$('#reset').click(function(){
 		$('.filterbtn').removeClass('filter_clicked')
+		$('.filterbtn').next().prop("checked", false)
+		$('.filterbtn').css('border-color', '#fff')
+		$(".modal_filter_list").empty()
 		
-		if($('.filterbtn').hasClass('filter_clicked')){
-			$('.filterbtn').css('border-color', '#00c4c4')
-		} else {
-			$('.filterbtn').css('border-color', '#fff')
-		}
+		
+// 		if($('.filterbtn').hasClass('filter_clicked')){
+// 			$('.filterbtn').css('border-color', '#00c4c4')
+// 			$('.filterbtn').next().prop("checked", true)
+// 		} else {
+// 		}
 		
 	})
 	
@@ -207,6 +244,10 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 				console.log("성공")
 				$('.SearchList_result_wrap').append(res)
 				
+				console.log("필터 적용 눌렀을때 대입 전 totalCount : " + totalCount)
+				
+				$('.totalCount').text(totalCount)
+				
 				cnt = cnt + 9
 				
 				
@@ -267,11 +308,9 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 						<span>필터</span>
 						<button class="filter_close"><i class="icon close">X</i></button>
 					</div>
-					<div class="modal_filter_list">
-						<div></div>
-					</div>
+					<div class="modal_filter_list"></div>
 				</div>
-				<hr>
+			<hr>
 			<div class="filter_modal_content">
 				<div class="filter_box">
 					<p>펀딩단계</p>			
@@ -362,7 +401,7 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 
 	<div class="SearchList_wrap">
 		<div class="SearchList">
-			<p>프로젝트 <span>${paging.totalCount }</span>개</p>
+			<p>프로젝트 <span class="totalCount">${paging.totalCount }</span>개</p>
 			<div class="SearchList_result_wrap">
 				<c:forEach items="${searchList }" var="list">
 					<div class="SearchList_result_project">
@@ -402,7 +441,8 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 					<button id="btnViewMore" type="button" class="view_more button less" onclick="filterSubmit()">
 						더보기
 						<em class="listCount">9</em>
-						<em>/${paging.totalCount }</em>
+						<em>/</em>
+						<em class="totalCount">${paging.totalCount }</em>
 						<i class="icon expand_more"></i>
 					</button>
 				</c:otherwise>

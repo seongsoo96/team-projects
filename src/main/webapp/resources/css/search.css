@@ -1,5 +1,10 @@
 @charset "UTF-8";
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+* {
+	box-sizing: border-box;
+}
+
 .container {
     width: 980px;
 }
@@ -79,6 +84,58 @@
     font-style: normal;
     font-variant: normal;
 }
+.SearchBox_shadow .filter_modal .filter_modal_header 
+.modal_filter_list {
+	display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #f0f2f5;
+    overflow: auto!important;
+    color: red;
+}
+.SearchBox_shadow .filter_modal .filter_modal_header 
+.modal_filter_list .filtered_item {
+    height: 32px;
+    line-height: 26px;
+    padding: 0 12px;
+    margin-right: 6px;
+    margin-bottom: 8px;
+    border-radius: 16px;
+    border: 1px solid #f0f2f5;
+    background-color: #f0f2f5;
+    font-size: 13px;
+    color: #60656a;
+}
+.SearchBox_shadow .filter_modal .filter_modal_header
+.modal_filter_list .filtered_item .item_remove_btn {
+    margin-left: 4px;
+    color: #60656a;
+    background-color: #f0f2f5;
+    vertical-align: bottom;
+    cursor: pointer;
+    border: 0;
+}
+.SearchBox_shadow .filter_modal .filter_modal_header
+.modal_filter_list .filtered_item .item_remove_btn i {
+	font-size: 13px!important;
+    line-height: unset!important;
+}
+.SearchBox_shadow .filter_modal .filter_modal_header
+.modal_filter_list .filtered_item .item_remove_btn i::before {
+    display: inline-block;
+    margin-top: -.2em;
+    vertical-align: middle;
+    text-transform: none;
+    line-height: 1;
+    font-family: wadizicon!important;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+}
+
+
+
 
 
 
