@@ -122,8 +122,8 @@ public class MypageController {
 	}
 	
 	
-	//마이페이지 회원정보수정--------------------------------------------------------------------------
-
+	//마이페이지 회원정보수정--------------------------------------------------------------------
+	
 	@RequestMapping(value="/detail", method=RequestMethod.GET)
 	public void detailHome() {
 		logger.info("***** /user/mypage/detail START *****");
@@ -137,5 +137,14 @@ public class MypageController {
 		logger.info("회원정보:{}", member);
 		
 		model.addAttribute("mInfo", member);
+	}
+	
+	@RequestMapping(value="/info", method=RequestMethod.POST)
+	public void updateMyInfo(HttpSession session, Member member) {
+		logger.info("***** /user/mypage/info [POST] START *****");
+		
+		member.setmNo((int) session.getAttribute("mNo"));
+		logger.info("업데이트 된 회원정보 확인:{}", member);
+		
 	}
 }
