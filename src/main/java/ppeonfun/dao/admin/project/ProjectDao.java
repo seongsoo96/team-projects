@@ -22,4 +22,24 @@ public interface ProjectDao {
 	 */
 	
 	public int selectCntAll();
+	/**
+	 * 프로젝트 소유자 반환
+	 * @param project - 프로젝트 번호 
+	 * @return 프로젝트 소유자
+	 */
+	public String selectByName(Project project);
+	/**
+	 * 프로젝트 조회 
+	 * @param project - 프로젝트 번호 
+	 * @return 프로젝트 번호에 따른 조회
+	 */
+	public Project selectProject(Project project);
+	
+	/**
+	 * 프로젝트 삽입
+	 * @param project - 프로젝트를 삽입할 객체
+	 */
+	public void insertProject(Project project);
+	
+	
 }

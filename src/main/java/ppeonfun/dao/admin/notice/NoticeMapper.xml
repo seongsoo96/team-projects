@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ppeonfun.dao.admin.notice.NoticeDao">
+
+	<resultMap type="ppeonfun.dto.Board" id="Board">
+		<id column="b_no" property="bNo" />
+      
+		<result column="m_no" property="mNo" />
+		<result column="b_title" property="bTitle" />
+		<result column="b_content" property="bContent" />
+		<result column="b_create_date" property="bCreateDate" />
+		<result column="b_hit" property="bHit" />
+		<result column="b_grade" property="bGrade" />
+	</resultMap>
+	
+	<resultMap type="ppeonfun.dto.BoardFile" id="BoardFile">
+		<id column="bf_fileno" property="bfFileno" />
+		
+		<result column="b_no" property="bNo" />
+		<result column="bf_origin_name" property="bfOriginName" />
+		<result column="bf_stored_name" property="bfStoredName" />
+		<result column="bf_create_date" property="bfCreateDate" />
+		<result column="bf_size" property="bfSize" />
+		<result column="bf_content_type" property="bfContentType" />
+	</resultMap>
+   
+	<select id="selectCntAll" parameterType="hashmap" resultType="int">
+		SELECT count(*) FROM board
+		WHERE b_grade = 'N'
+		<if test="category.equals('mix')">
+			AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+		</if>
+		<if test="category.equals('title')">
+			AND REGEXP_LIKE ( b_title, #{search} )
+		</if>
+		<if test="category.equals('content')">
+			AND REGEXP_LIKE ( b_content, #{search} )
+		</if>
+	</select>
+
+	<select id="selectAll" parameterType="hashmap" resultType="hashmap">
+		SELECT * FROM (
+			SELECT rownum rnum, N.* FROM (
+				SELECT board.*, member.m_nick 
+				FROM board, member
+				WHERE b_grade = 'N' AND board.m_no = member.m_no
+				ORDER BY b_no DESC
+			) N WHERE 1=1
+			<if test="category.equals('mix')">
+				AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+			</if>
+			<if test="category.equals('title')">
+				AND REGEXP_LIKE ( b_title, #{search} )
+			</if>
+			<if test="category.equals('content')">
+				AND REGEXP_LIKE ( b_content, #{search} )
+			</if>
+		) NOTICE
+		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+	</select>
+   
+	<insert id="insertNotice" parameterType="ppeonfun.dto.Board">
+		<selectKey order="BEFORE" resultType="int" keyProperty="bNo">
+			SELECT board_seq.nextval FROM dual
+		</selectKey>
+   		
+		INSERT INTO board ( b_no, m_no, b_title, b_content, b_grade)
+		VALUES ( #{bNo}, #{mNo}, #{bTitle}, #{bContent}, 'N' )
+  	</insert>
+   
+	<insert id="insertBoardFiles" parameterType="ppeonfun.dto.BoardFile">
+		INSERT INTO board_file ( bf_fileno, b_no, bf_origin_name, bf_stored_name, bf_size, bf_content_type )
+		VALUES ( board_file_seq.nextval, #{bNo}, #{bfOriginName}, #{bfStoredName}, #{bfSize}, #{bfContentType} )
+	</insert>
+	
+	<update id="updatebHit" parameterType="int">
+		UPDATE board
+		SET b_Hit = b_Hit + 1
+		WHERE b_no = #{bNo}
+	</update>
+	
+	<select id="selectFilesByBoardno" parameterType="int" resultMap="BoardFile">
+		SELECT * FROM board_file
+		WHERE b_no = #{bNo}
+	</select>
+	
+	<select id="selectBybfFileno" parameterType="int" resultMap="BoardFile">
+		SELECT * FROM board_file
+		WHERE bf_fileno = #{bfFileno}
+	</select>
+	
+	<select id="selectByBoardno" parameterType="int" resultType="hashmap">
+		SELECT board.*, member.m_nick
+		FROM board, member
+		WHERE b_no = #{bNo} AND board.m_no = member.m_no
+	</select>
+	
+	<select id="selectOneByBoardno" parameterType="int" resultMap="Board">
+		SELECT * FROM board
+		WHERE b_no = #{bNo}
+	</select>
+	
+	<update id="updateBoard" parameterType="ppeonfun.dto.Board">
+		UPDATE board
+		SET b_title = #{bTitle}, b_content = #{bContent}
+		WHERE b_no = #{bNo}
+	</update>
+   
+	<delete id="deleteBoardFiles" parameterType="ppeonfun.dto.Board">
+		DELETE FROM board_file
+		WHERE b_no = #{bNo}
+	</delete>
+   
+	<delete id="deleteByBoardno" parameterType="ppeonfun.dto.Board">
+		DELETE FROM board
+		WHERE b_no = #{bNo}
+	</delete>
+   
+	
+</mapper>

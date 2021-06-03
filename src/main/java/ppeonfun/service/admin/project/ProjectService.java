@@ -19,5 +19,25 @@ public interface ProjectService {
 	 * @return 프로젝트 반환
 	 */
 	public List<Project> selectAllProject(Paging paging);
+	
+	/**
+	 * 프로젝트 소유자 이름 반환
+	 * @param project - 프로젝트 번호
+	 * @return 프로젝트 소유자
+	 */
+	public String selectByName(Project project);
+	/**
+	 * 프로젝트 
+	 * @param project
+	 * @return
+	 */
+	public Project selectProject(Project project);
+	
+	/**
+	 * 생성한 프로젝트 반환
+	 * @param mNo - 생성자 번호
+	 * @return - 생성한 프로젝트 반환
+	 */
+	public Project input(int mNo);
 
 }

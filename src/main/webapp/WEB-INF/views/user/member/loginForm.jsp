@@ -70,13 +70,13 @@ $(document).ready(function() {
 			</div>
 			<button type="button" id="btnLogin" class="btn btn-primary button">로그인</button>
 	     	<button type="button" id="btnCancel" class="btn btn-danger button">뒤로가기</button>
-			<button type="button" id="btnKaKao" class="btn button button"></button>
+			<a href="/user/member/kakao/loginForm"><button type="button" id="btnKaKao" class="btn button button"></button></a>
 
 			<div class="form-group">
    					<div class="col-sm-10">
-		      			<a href="#">회원가입</a> |
-		      			<a href="#">아이디 찾기</a> |
-		      			<a href="#">비밀번호 재설정</a>
+		      			<a href="/user/member/joinSelect">회원가입</a> |
+		      			<a href="/user/member/idFind">아이디 찾기</a> |
+		      			<a href="/user/member/idCheckForm">비밀번호 재설정</a>
     				</div>
     		</div>
 		</form>
