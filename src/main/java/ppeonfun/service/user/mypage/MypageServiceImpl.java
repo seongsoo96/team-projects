@@ -52,12 +52,19 @@ public class MypageServiceImpl implements MypageService {
 		
 		//원본 파일명
 		String originName = file.getOriginalFilename();
-		String uid = UUID.randomUUID().toString().split("-")[3];
-
+		logger.info("새 원본 파일명:{}", originName);
+		
 		//확장자 추출
 		int lastDot = originName.lastIndexOf('.');
 		String ext = originName.substring(lastDot+1);
 		originName = originName.substring(0, lastDot);
+
+		//원본 파일 이름이 35byte 초과 시 substring
+		if(originName.getBytes().length > 35) {
+			originName = originName.substring(0,10);
+			logger.info("새 원본 파일명 substring:{}", originName);
+		} 
+ 		String uid = UUID.randomUUID().toString().split("-")[3];
 
 		//저장할 파일명
 		String storedName = (originName + uid + "." + ext);
