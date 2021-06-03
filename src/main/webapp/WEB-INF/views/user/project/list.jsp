@@ -32,47 +32,47 @@
 <div class="container">
 <div class="category">
 	<div class="box">
-		<a href="#"><img class="img-circle" src="/resources/img/test2.png"></a>
+		<a href="/user/project/list"><img class="img-circle" src="/resources/img/test2.png"></a>
 		<p>전체보기</p>
 	</div>
 	<div class="box">
-		<a href="#"><img class="img-circle" src="/resources/img/test1.png"></a>
+		<a href="/user/project/list?category=테크/가전"><img class="img-circle" src="/resources/img/test1.png"></a>
 		<p>테크/가전</p>
 	</div>
 	<div class="box" >
-		<a href="#"><img class="img-circle" src="/resources/img/test3.png"></a>
+		<a href="/user/project/list?category=반려동물"><img class="img-circle" src="/resources/img/test3.png"></a>
 		<p>반려동물</p>
 	</div>
 	<div class="box" >
-		<a href="#"><img class="img-circle" src="/resources/img/test4.jpg"></a>
+		<a href="/user/project/list?category=출판"><img class="img-circle" src="/resources/img/test4.jpg"></a>
 		<p>출판</p>
 	</div>
 	<div class="box" >
-		<a href="#"><img class="img-circle" src="/resources/img/test5.png"></a>
+		<a href="/user/project/list?category=후원"><img class="img-circle" src="/resources/img/test5.png"></a>
 		<p>기부/후원</p>
 	</div>
 	<div class="box" >
-		<a href="#"><img class="img-circle" src="/resources/img/test2.png"></a>
+		<a href="/user/project/list?category=푸드"><img class="img-circle" src="/resources/img/test2.png"></a>
 		<p>푸드</p>
 	</div>
 	<div class="box" >
-		<a href="#"><img class="img-circle" src="/resources/img/test1.png"></a>
+		<a href="/user/project/list?category=운동"><img class="img-circle" src="/resources/img/test1.png"></a>
 		<p>운동</p>
 	</div>
 	<div class="box" >
-		<a href="#"><img class="img-circle" src="/resources/img/test3.png"></a>
+		<a href="/user/project/list?category=여행"><img class="img-circle" src="/resources/img/test3.png"></a>
 		<p>여행</p>
 	</div>
 	<div class="box" >
-		<a href="#"><img class="img-circle" src="/resources/img/test4.jpg"></a>
+		<a href="/user/project/list?category=뷰티"><img class="img-circle" src="/resources/img/test4.jpg"></a>
 		<p>뷰티</p>
 	</div>
 	<div class="box" >
-		<a href="#"><img class="img-circle" src="/resources/img/test5.png"></a>
+		<a href="/user/project/list?category=패션"><img class="img-circle" src="/resources/img/test5.png"></a>
 		<p>패션</p>
 	</div>
 	<div class="box" >
-		<a href="#"><img class="img-circle" src="/resources/img/test1.png"></a>
+		<a href="/user/project/list?category=디자인소품"><img class="img-circle" src="/resources/img/test1.png"></a>
 		<p>디자인소품</p>
 	</div>
 </div>
@@ -82,16 +82,16 @@
 	    <div class="thumbnail">
 	      <c:choose>
 	      	<c:when test = "${fn:contains(info.iStoredName, 'test')}">
-	      		<a href="/user/story/view?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" ></a>
+	      		<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" ></a>
 	      	</c:when>
 	      	<c:otherwise>
-	      		<a href="/user/story/view?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }"></a>
+	      		<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }"></a>
 	      	</c:otherwise>
 	      </c:choose>
 	      <div class="caption">
 	        <h3>${info.iTitle }</h3>
 	        <p>${info.iCategory }</p>
-	        <p><a href="/user/story/view?pNo=${info.pNo }" class="btn btn-primary" role="button">보기</a> 
+	        <p><a href="/story?pNo=${info.pNo }" class="btn" style="background: #4EE2EC; color: #FFFFFF" role="button">펀딩하기</a> 
 	      </div>
 	    </div>
 	  </div>

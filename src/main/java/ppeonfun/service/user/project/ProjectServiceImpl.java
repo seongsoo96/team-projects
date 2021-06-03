@@ -20,12 +20,12 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Paging getPaging(Paging inData) {
 		//전체 개수
-		int totalCount = projectDao.selectCntAll();
+		int totalCount = projectDao.selectCntAll(inData);
 		logger.info("totalCount: {}", totalCount);
-
+		
 		//Paging객체 생성
 		Paging paging = new Paging(totalCount, inData.getCurPage(),6);
-		
+		paging.setCategory(inData.getCategory());
 		return paging;
 	}
 	@Override
