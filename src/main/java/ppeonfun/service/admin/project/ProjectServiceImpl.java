@@ -36,4 +36,25 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return projectDao.selectAll(paging);
 	}
+	
+	@Override
+	public String selectByName(Project project) {
+		
+		return projectDao.selectByName(project);
+	}
+	
+	@Override
+	public Project selectProject(Project project) {
+		return projectDao.selectProject(project);
+	}
+	
+	@Override
+	public Project input(int mNo) {
+		Project project = new Project();
+		project.setmNo(mNo);
+		projectDao.insertProject(project);
+		project=projectDao.selectProject(project);
+		
+		return project;
+	}
 }

@@ -8,7 +8,7 @@
 <title>PpeonFun</title>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src='https://developers.kakao.com/sdk/js/kakao.min.js'></script>
 <link rel="stylesheet" href="/resources/css/header.css">
 </head>
 <body>
@@ -48,13 +49,25 @@
 	
 	<!-- 로그인 -->
 	<c:choose>
+		<c:when test="${!empty accessToken }">
+		<ul class="hdropdown right">
+				<li>
+					<a href="#" style="color:black;" class="fa fa-user fa-3x"></a>
+					<ul>
+						<li><a href="/user/member/kakao/logout">카카오 로그아웃</a></li>
+						<li><a href="/user/mypage/home">마이페이지</a></li>
+						<li><a href="#">프로젝트 펀딩하기</a></li>
+					</ul>
+				</li>
+			</ul>
+		</c:when>
 		<c:when test="${empty mNo }">
 			<ul class="hdropdown right">
 				<li>
 					<a href="#" style="color:black;" class="fa fa-user fa-3x"></a>
 					<ul>
 						<li><a href="/user/member/loginForm">로그인</a></li>
-						<li><a href="/user/member/joinForm">회원가입</a></li>
+						<li><a href="/user/member/joinSelect">회원가입</a></li>
 						<li><a href="#">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>
@@ -66,7 +79,7 @@
 					<a href="#" class="fa fa-user fa-3x"></a>
 					<ul>
 						<li><a href="/user/member/logout">로그아웃</a></li>
-						<li><a href="#">마이페이지</a></li>
+						<li><a href="/user/mypage/home">마이페이지</a></li>
 						<li><a href="#">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>

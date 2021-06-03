@@ -6,6 +6,10 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	//모달을 전역변수로 선언
+	var authNumber = false;
+	var nickCheck = false;
+	var idCheck = false;
+	
     var modalContents = $(".modal-contents");
     var modal = $("#defaultModal");
     var regExPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/; //비밀번호 정규식
@@ -39,12 +43,12 @@ $(document).ready(function(){
         
         var divId = $('#divId');
         
-        if($('#id').val()==""){
+        if($('#id').val()!="" && idCheck){
+        	divId.removeClass("has-error");
+            divId.addClass("has-success");
+        }else{
             divId.removeClass("has-success");
             divId.addClass("has-error");
-        }else{
-            divId.removeClass("has-error");
-            divId.addClass("has-success");
         }
     });
     
@@ -157,7 +161,14 @@ $(document).ready(function(){
         }
     });
     
-    
+    $('#btnEmail').click(function(){
+    	var divEmailAuth = $('#divEmailAuth');
+    	divEmailAuth.css('display', 'block');
+    	
+    	
+    })
+	
+	
     //------- validation 검사
     $( "form" ).submit(function( event ) {
         
@@ -216,6 +227,32 @@ $(document).ready(function(){
         }else{
             divId.removeClass("has-error");
             divId.addClass("has-success");
+        }
+        
+        //아이디 중복 검사
+        if(!idCheck){
+        	modalContents.text("아이디 중복을 확인해주세요");
+            modal.modal('show');
+            divId.removeClass("has-success");
+            divId.addClass("has-error");
+            $('#id').focus();
+            return false;
+        }else{
+            divId.removeClass("has-error");
+            divId.addClass("has-success");
+        }
+        
+      //아이디 중복 검사
+        if(!nickCheck){
+        	modalContents.text("닉네임 중복을 확인해주세요");
+            modal.modal('show');
+            divNickname.removeClass("has-success");
+            divNickname.addClass("has-error");
+            $('#nick').focus();
+            return false;
+        }else{
+        	divNickname.removeClass("has-error");
+        	divNickname.addClass("has-success");
         }
         
         //패스워드 검사
@@ -371,11 +408,176 @@ $(document).ready(function(){
         	divDetailAddress.addClass("has-success");
         }
         
+        if(!authNumber){
+        	modalContents.text("이메일 인증을 완료해주세요");
+        	modal.modal('show');
+        	
+        	return false;
+        }
+        
         
     
     });	
+    $("#btnReset").click(function(){
+    	 $("#id").attr("readonly", false);
+    	 $("#emailAuth").attr("readonly", false);
+    	 $("#nickname").attr("readonly", false);
+    	 idCheck= false;
+    	 authNumber= false;
+    	 nickCheck=false;
+    })
+    
+    
+   	$("#btnIdCheck").click(function(){
+   		var id = $("#id").val();
+   		var divId = $('#divId');
+	   	$.ajax({
+	 		type: "post"
+	 		, url: "/user/member/idCheck"
+	 		, dataType: "json"
+	 		, data: {
+	 			mId: id
+	 		}
+	 		, success: function(res){
+	 			
+	 			console.log("success")
+	 			console.log(id)
+	 			console.log(res)
+	 			idCheck= res.isId;
+	 			console.log(idCheck);
+	 			
+	 			if(idCheck){
+	 				divId.removeClass("has-error");
+	 	            divId.addClass("has-success");
+	 	            $("#id").attr("readonly", true);
+	 			}else{
+	 				divId.removeClass("has-success");
+	 				divId.addClass("has-error");
+	 			}
+	 			
+	 		}
+	 		, error: function() {
+	 			console.log("error");
+	 		}
+	 	});		
+   	}) 
+   	$("#btnNickCheck").click(function(){
+   		var nick = $("#nickname").val();
+   		var divNickname = $('#divNickname');
+   		$.ajax({
+	 		type: "post"
+	 		, url: "/user/member/nickCheck"
+	 		, dataType: "json"
+	 		, data: {
+	 			mNick: nick
+	 		}
+	 		, success: function(res){
+	 			
+	 			console.log("success")
+	 			console.log(nick)
+	 			console.log(res)
+	 			nickCheck= res.isNick;
+	 			console.log(nickCheck);
+	 			
+	 			if(nickCheck){
+	 				divNickname.removeClass("has-error");
+	 				divNickname.addClass("has-success");
+	 	            $("#nickname").attr("readonly", true);
+	 			}else{
+	 				divNickname.removeClass("has-success");
+	 				divNickname.addClass("has-error");
+	 			}
+	 			
+	 		}
+	 		, error: function() {
+	 			console.log("error");
+	 		}
+	 	});		
+   	})
+   	$("#btnEmailCheck").click(function(){
+   		var email = $("#email").val();
+   		$.ajax({
+	 		type: "post"
+	 		, url: "/user/member/email/check"
+	 		, dataType: "json"
+	 		, data: {
+	 			email: email
+	 		}
+	 		, success: function(res){
+	 			console.log("success")
+	 			console.log(res.isEmail)
+	 			if(res.isEmail){ //중복일 경우
+	 				modalContents.text("이메일이 중복 되어있습니다.");
+	 	        	modal.modal('show');
+	 			}else{//중복이 아닌경우
+	 				$("#email").attr("readonly", true);
+	 				$("#btnEmailCheck ").attr("disabled",true);
+	 				$("#btnEmail").attr("disabled", false);
+	 			}
+	 		}
+	 		, error: function() {
+	 			console.log("error");
+	 		}
+	 	});	
+   	})
+   	
+   	
+   	$("#btnEmail").click(function(){
+   		var email = $("#email").val();
+   		
+   		$.ajax({
+	 		type: "post"
+	 		, url: "/user/member/email/send"
+	 		, dataType: "json"
+	 		, data: {
+	 			email: email
+	 		}
+	 		, success: function(res){
+	 			
+	 			console.log("success")
+	 			
+	 		}
+	 		, error: function() {
+	 			console.log("error");
+	 		}
+	 	});		
+   	})
+   		
+   		$("#btnEmailAuth").click(function(){
+   		var divEmailAuth = $('#divEmailAuth');
+   		var authKey = $("#emailAuth").val();
+   		
+   		$.ajax({
+	 		type: "post"
+	 		, url: "/user/member/email/auth"
+	 		, dataType: "json"
+	 		, data: {
+	 			emailAuth: authKey
+	 		}
+	 		, success: function(res){
+	 			//인증 성공
+	 			if(res.isAuth){
+	 				console.log("인증 완료");
+	 				authNumber=true;
+	 	   			$("#emailAuth").attr("readonly", true);
+	 	   			divEmailAuth.removeClass("has-error");
+	 	   			divEmailAuth.addClass("has-success");
+	 			}else{ //인증 실패
+	 				authNumber=false;
+	 	   			divEmailAuth.removeClass("has-success");
+	 	   			divEmailAuth.addClass("has-error");
+	 			}
+	 			
+	 		}
+	 		, error: function() {
+	 			console.log("error");
+	 		}
+	 	});
+   		
+   	})
+   
+    
 })
-
 function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -447,7 +649,7 @@ function execDaumPostcode() {
             </div><!-- /.modal -->
             <!--// 모달창 -->
             <hr/>
-    <form class="form-horizontal" role="form" method="post" action="javascript:alert( 'success!' );">
+    <form class="form-horizontal" role="form" method="post" action="/user/member/join"> 
                 <div class="form-group">
                     <label for="provision" class="col-lg-2 control-label">회원가입약관</label>
                     <div class="col-lg-10" id="provision">
@@ -569,7 +771,7 @@ PpeonFun는 원칙적으로 이용자의 개인정보를 회원 탈퇴 시 지�
                     <label for="inputId" class="col-lg-2 control-label">아이디</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control onlyAlphabetAndNumber" style="display:inline-block; width:87%;" id="id" name="mId" data-rule-required="true" placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
-                    	<button class="btn btn-default" style="padding-top:5px; margin-bottom:5px;">아이디 중복</button>
+                    	<button type="button" id="btnIdCheck" class="btn btn-default" style="padding-top:5px; margin-bottom:5px;" >아이디 중복</button>
                     </div>
                     
                 </div>
@@ -596,22 +798,34 @@ PpeonFun는 원칙적으로 이용자의 개인정보를 회원 탈퇴 시 지�
                 <div class="form-group" id="divNickname">
                     <label for="inputNickname" class="col-lg-2 control-label">별명</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="nickname" name="mNick" data-rule-required="true" placeholder="별명" maxlength="15">
+                        <input type="text" class="form-control" style="display:inline-block; width:87%;" id="nickname" name="mNick" data-rule-required="true" placeholder="별명" maxlength="15">
+                    	<button type="button" id="btnNickCheck" class="btn btn-default" style="padding-top:5px; margin-bottom:5px;" >닉네임 중복</button>
                     </div>
                 </div>
+                
                 
                 <div class="form-group" id="divEmail">
                     <label for="inputEmail" class="col-lg-2 control-label">이메일</label>
                     <div class="col-lg-10">
-                        <input type="email" class="form-control" style="display:inline-block; width:87%;" id="email" name="mEmail" data-rule-required="true" placeholder="이메일" maxlength="40">
-                        <button class="btn btn-default" style="padding-top:5px; margin-bottom:5px;">이메일 인증</button>
+                        <input type="email" class="form-control" style="display:inline-block; width:75%;" id="email" name="mEmail" data-rule-required="true" placeholder="이메일" maxlength="40">
+                        <button type="button" id="btnEmailCheck" class="btn btn-default" style="padding-top:5px; margin-bottom:5px;">이메일 중복</button>
+                        <button type="button" id="btnEmail" class="btn btn-default" style="padding-top:5px; margin-bottom:5px;" disabled>이메일 인증</button>
                     </div>
                 </div>
+                
+                <div class="form-group" id="divEmailAuth" style="display:none;">
+                    <label for="emailAuth" class="col-lg-2 control-label">인증번호</label>
+                    <div class="col-lg-10">
+                        <input type="text" id="emailAuth"  class="form-control onlyNumber" style="display:inline-block; width:87%;" name="emailAuth" data-rule-required="true" placeholder="인증번호" maxlength="6">
+                        <button type="button" id="btnEmailAuth" class="btn btn-default" style="padding-top:5px; margin-bottom:5px;">인증하기</button>
+                    </div>
+                </div>
+                
+                
                 <div class="form-group" id="divPhoneNumber">
                     <label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
                     <div class="col-lg-10">
-                        <input type="tel" class="form-control onlyNumber" style="display:inline-block; width:87%;" id="phoneNumber" name="mPhone" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
-                        <button class="btn btn-default" style="padding-top:5px; margin-bottom:5px;">핸드폰 인증</button>
+                        <input type="tel" class="form-control onlyNumber" id="phoneNumber" name="mPhone" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
                     </div>
                 </div>
                 <div class="form-group">
@@ -627,7 +841,7 @@ PpeonFun는 원칙적으로 이용자의 개인정보를 회원 탈퇴 시 지�
                 <div class="form-group" id="divBirth">
                     <label for="birth" class="col-lg-2 control-label">생년월일</label>
                     <div class="col-lg-10">
-                        <input type="date" class="form-control" id="birth" name="mBirth" data-rule-required="true" placeholder="생년 월일을 선택하세요">
+                        <input type="date" class="form-control" id="birth" name="birth" data-rule-required="true" placeholder="생년 월일을 선택하세요">
                     </div>
                 </div>
                 
@@ -669,8 +883,8 @@ PpeonFun는 원칙적으로 이용자의 개인정보를 회원 탈퇴 시 지�
                 <div class="form-group" id="divPost">
 				    <label for="post" class="col-sm-2 control-label">우편주소</label>
 					 <div class="col-lg-10">
-					<input type="text" class="form-control"  class="form-control" style="display:inline-block; width:87%;" id="post" name="mPost" placeholder="우편번호" readonly>
-					<button class="btn btn-default" style="padding-top:5px; margin-bottom:5px;" onclick="execDaumPostcode()">우편번호 찾기</button>
+					<input type="text" class="form-control"  class="form-control" style="display:inline-block; width:85%;" id="post" name="mPost" placeholder="우편번호" readonly>
+					<button type="button" class="btn btn-default" style="padding-top:5px; margin-bottom:5px;" onclick="execDaumPostcode()">우편번호 찾기</button>
 					</div>
 				</div>
                 
@@ -694,8 +908,8 @@ PpeonFun는 원칙적으로 이용자의 개인정보를 회원 탈퇴 시 지�
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
                         <button type="submit" class="btn btn-primary">회원가입</button>
-                        <a href="/main"><button type="submit" class="btn btn-info">메인</button></a>
-                        <button type="reset" class="btn btn-danger">다시 입력하기</button>
+                        <a href="/main"><button type="button" class="btn btn-info">메인</button></a>
+                        <button id="btnReset" type="reset" class="btn btn-danger">다시 입력하기</button>
                     </div>
                 </div>
             </form>
