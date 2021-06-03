@@ -12,12 +12,6 @@
 <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <!-- <link rel="stylesheet" href="jqueryui/style.css"> -->
 
-<style>
-input[type="checkbox"] {
-	display: ;
-}
-</style>
-
 
 <script>
 $(function() {
@@ -49,10 +43,6 @@ $(function() {
 });
 
 
-
-
-
-
 </script>
 
 
@@ -68,7 +58,7 @@ $(document).ready(function() {
 			$(this).css('border-color', '#00c4c4')
 			$(this).next().prop("checked", true)
 			
-			//필터 리스트 추가
+			//모달 필터 리스트 추가
 			$(".modal_filter_list").append(
 				$('<div class="filtered_item">' 
 						+ $(this).text()
@@ -89,12 +79,13 @@ $(document).ready(function() {
 		$('.item_remove_btn').click(function(){
 			console.log("클릭")
 			
-			$('div[class="filtered_item"]:contains("' + $(this).parent().text() + '")').remove()
-			$('button[class="filterbtn"]:contains("' + $(this).parent().text() + '")').next().prop("checked", false)
-			$('button[class="filterbtn"]:contains("' + $(this).parent().text() + '")').css('border-color', '#fff')
+			var filter = $(this).parent().text().slice(0, -1)
+			console.log(filter)
+			
+			$('div[class="filtered_item"]:contains("' + filter + '")').remove()
+			$('button:contains("' + filter + '")').next().prop("checked", false)
+			$('button:contains("' + filter + '")').css('border-color', '#fff')
 		})
-// 		<button class="filterbtn">오픈예정</button>
-// 		<input type="checkbox" name="step" value="a" />
 		
 		
 	})
@@ -106,12 +97,6 @@ $(document).ready(function() {
 		$('.filterbtn').css('border-color', '#fff')
 		$(".modal_filter_list").empty()
 		
-		
-// 		if($('.filterbtn').hasClass('filter_clicked')){
-// 			$('.filterbtn').css('border-color', '#00c4c4')
-// 			$('.filterbtn').next().prop("checked", true)
-// 		} else {
-// 		}
 		
 	})
 	
@@ -129,7 +114,21 @@ $(document).ready(function() {
 		$('.SearchList_result_wrap').empty();
 		filterSubmit(cp);
 		$('.SearchBox_shadow').addClass('hidden')
+		
+		//필터 리스트 추가
+		$(".filter_list").append(
+			$('<div class="filter_item">' 
+					+ $(this).text()
+					+ '<button><i class="icon close">x</i></button>'
+			+ '</div>')
+		)	
 	})
+
+	
+// 	<div class="filter_item">
+// 		달성률 25%~100%
+// 		<button><i class="icon close">x</i></button>
+// 	</div>
 	
 	
 	
@@ -282,21 +281,21 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 				<div class="button_wrap">
 					<button class="filter_open">
 						<i class="icon"></i>
-						"필터"
+						필터
 					</button>
 				</div>
 				<div class="filter_list">
 					<div class="filter_item">
-						"달성률 25%~100%"
-						<button>x</button>
+						달성률 25%~100%
+						<button><i class="icon close">x</i></button>
 					</div>
 					<div class="filter_item">
-						"달성률 25%~100%"
-						<button>X</button>
+						달성률 25%~100%
+						<button><i class="icon close">x</i></button>
 					</div>
 					<div class="filter_item">
-						"달성률 25%~100%"
-						<button>x</button>
+						달성률 25%~100%
+						<button><i class="icon close">x</i></button>
 					</div>
 				</div>
 			</div><!-- .SearchBox_filter_area -->

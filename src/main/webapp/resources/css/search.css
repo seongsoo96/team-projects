@@ -5,9 +5,20 @@
 	box-sizing: border-box;
 }
 
+input[type="checkbox"] {
+	display: none;
+}
+
 .container {
     width: 980px;
 }
+
+
+
+
+
+
+
 
 .SearchBox_inner {
 	padding: 0px 0 25px 0;
@@ -21,6 +32,83 @@
 .SearchBox_title span {
 	color: #babdc0;
 }
+
+
+.SearchBox_filter_area {
+	display: flex;
+    align-items: center;
+}
+.SearchBox_filter_area .button_wrap {
+    background: #fff;
+    padding-right: 24px;
+}
+.SearchBox_filter_area .button_wrap button {
+    background-color: #00c4c4;
+    color: #fff;
+    width: 85px;
+    padding: 0 16px;
+    height: 36px;
+    line-height: 34px;
+    font-size: 15px;
+    transition-property: background-color,border-color,color,opacity;
+    transition-duration: .2s;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 3px;
+    cursor: pointer;
+    vertical-align: middle;
+    font-weight: 400;
+    box-sizing: border-box!important;
+    -webkit-appearance: none;
+    display: inline-block;
+    text-decoration: none;
+}
+.SearchBox_filter_area .button_wrap i {
+    background-color: #00c4c4;
+    color: #fff;
+    width: 85px;
+}
+
+
+.SearchBox_filter_area .filter_list {
+    width: calc(100% - 85px);
+    display: block;
+    white-space: nowrap;
+}
+.SearchBox_filter_area .filter_list .filter_item {
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 12px;
+    margin-right: 6px;
+    border-radius: 16px;
+    border: 1px solid #f0f2f5;
+    background-color: #f0f2f5;
+    font-size: 13px;
+    color: #60656a;
+}
+.SearchBox_filter_area .filter_list .filter_item button {
+    margin-left: 4px;
+    vertical-align: bottom;
+    cursor: pointer;
+    border: 0;
+    background-color: #f0f2f5;
+}
+.SearchBox_filter_area .filter_list .filter_item button i:before {
+    display: inline-block;
+    margin-top: -.2em;
+    vertical-align: middle;
+    text-transform: none;
+    line-height: 1;
+    font-family: wadizicon!important;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+}
+
+
+
 
 .SearchBox_shadow {
    	position: fixed;
@@ -68,6 +156,8 @@
 .modal_close_btn_wrap button {
 	font-size: 24px;
     cursor: pointer;
+    border: 0;
+    background-color: #fff;
 }
 
 .SearchBox_shadow .filter_modal .filter_modal_header
