@@ -3,23 +3,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp"></c:import>
+<style type="text/css">
+hr{
+	margin-top:80px;
+}
+.fa-plus{
+	color:#4EE2EC;
+}
+#projectWrite{
+	cursor: pointer;
+}
+
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	$("#projectWrite").click(function(){
+		var result = confirm('프로젝트를 생성 하시겠습니까?');
+		if(result){
+			$(location).attr("href", "/admin/project/write");
+		}
+	})	
+})
+
+</script>
 
 <div id="content"> 
-<h1>프로젝트 관리</h1>
+<h1 class="pull-left">프로젝트 관리 &nbsp;<a id="projectWrite"><i class="fas fa-plus"></i></a></h1>
 <hr>
 
 <table class="table table-striped table-hover table-condensed">
 <thead>
 	<tr>
-		<th style="width: 20%">프로젝트 이름</th>
-		<th style="width: 5%">요건</th>
-		<th style="width: 5%">정보</th>
-		<th style="width: 10%">스토리</th>
-		<th style="width: 10%">리워드</th>
-		<th style="width: 10%">메이커</th>
-		<th style="width: 15%">승인 상태</th>
-		<th style="width: 15%">진행 상태</th>
-		<th style="width: 20%">생성 날짜</th>
+		<th style="width: 20%; text-align:center;">프로젝트 이름</th>
+		<th style="width: 5%; text-align:center;">요건</th>
+		<th style="width: 5%; text-align:center;">정보</th>
+		<th style="width: 10%; text-align:center;">스토리</th>
+		<th style="width: 10%; text-align:center;">리워드</th>
+		<th style="width: 10%; text-align:center;">메이커</th>
+		<th style="width: 15%; text-align:center;">승인 상태</th>
+		<th style="width: 15%; text-align:center;">진행 상태</th>
+		<th style="width: 20%; text-align:center;">생성 날짜</th>
 	</tr>
 </thead>
 <tbody>

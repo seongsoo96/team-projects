@@ -19,8 +19,6 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Override
 	public Paging getPaging(Paging inData) {
-		
-		
 		//전체 개수
 		int totalCount = projectDao.selectCntAll();
 		logger.info("totalCount: {}", totalCount);
@@ -35,5 +33,26 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> selectAllProject(Paging paging) {
 		
 		return projectDao.selectAll(paging);
+	}
+	
+	@Override
+	public String selectByName(Project project) {
+		
+		return projectDao.selectByName(project);
+	}
+	
+	@Override
+	public Project selectProject(Project project) {
+		return projectDao.selectProject(project);
+	}
+	
+	@Override
+	public Project input(int mNo) {
+		Project project = new Project();
+		project.setmNo(mNo);
+		projectDao.insertProject(project);
+		project=projectDao.selectProject(project);
+		
+		return project;
 	}
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="ppeonfun.dao.user.mypage.MypageDao">
+ 	<resultMap type="ppeonfun.dto.MyPage" id="MyPage">
+		<result column="my_no" property="myNo"/>
+		<result column="my_origin_name" property="myOriginName"/>
+		<result column="my_stored_name" property="myStoredName"/>
+		<result column="my_introduce" property="myIntroduce"/>
+		<result column="my_size" property="mySize"/>
+		<result column="my_content_type" property="myContentType"/>
+  	</resultMap>
+  	
+ 	
+ 	<select id="selectMypageBymNo" resultMap="MyPage" parameterType="int">
+ 	SELECT my_no, my_origin_name, my_stored_name
+ 			, my_introduce, my_size, my_content_type
+ 	FROM mypage
+ 	WHERE my_no= #{mNo}
+ 	</select>
+ 	
+ 	<update id="updateMypage" parameterType="ppeonfun.dto.MyPage">
+ 	UPDATE mypage
+ 	SET my_origin_name = #{myOriginName}, my_stored_name = #{myStoredName}
+ 		, my_size = #{mySize}, my_content_type = #{myContentType}
+ 	WHERE my_no = #{myNo}
+ 	</update>
+ 	
+ 	<update id="updateMypageIntro" parameterType="ppeonfun.dto.MyPage">
+ 	UPDATE mypage
+ 	SET my_introduce = #{myIntroduce}
+ 	WHERE my_no = #{myNo}
+ 	</update>
+ 	
+ </mapper>  
+    
+  
