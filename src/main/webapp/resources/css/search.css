@@ -4,6 +4,10 @@
 * {
 	box-sizing: border-box;
 }
+button {
+    margin: 0;
+    border: 0;
+}
 
 .container {
     width: 980px;
@@ -108,11 +112,8 @@
 .SearchBox_shadow .filter_modal .filter_modal_header
 .modal_filter_list .filtered_item .item_remove_btn {
     margin-left: 4px;
-    color: #60656a;
-    background-color: #f0f2f5;
     vertical-align: bottom;
     cursor: pointer;
-    border: 0;
 }
 .SearchBox_shadow .filter_modal .filter_modal_header
 .modal_filter_list .filtered_item .item_remove_btn i {
