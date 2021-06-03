@@ -12,7 +12,8 @@
 	
 	<!-- Application Loggers -->
 	<logger name="ppeonfun">
-		<level value="info" />
+<!-- 		<level value="info" /> -->
+		<level value="debug" />
 	</logger>
 	
 	<!-- 마이바티스 쿼리 Logger -->
