@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
+import ppeonfun.dto.Comments;
+import ppeonfun.dto.Recommend;
 import ppeonfun.util.Paging;
 
 public interface NoticeService {
@@ -54,6 +56,14 @@ public interface NoticeService {
 	public List<BoardFile> getFiles(int bNo);
 
 	/**
+	 * 해당 게시글의 총 추천수를 얻어온다
+	 * 
+	 * @param bNo - 추천수를 조회할 게시글 번호
+	 * @return 게시글의 추천 수
+	 */
+	public int getRecommend(int bNo);
+	
+	/**
 	 * 상세보기에서 첨부파일 다운로드를 위해 파일번호로 해당 파일의 전체 데이터를 얻어온다
 	 * 
 	 * @param bfFileno - 조회할 파일의 파일번호
@@ -84,7 +94,37 @@ public interface NoticeService {
 	 */
 	public void deleteBoard(Board board);
 
+	/**
+	 * 해당 회원이 해당 글을 추천했는지 안했는지 알아온다
+	 * 
+	 * @param rec - recommend 테이블에서 조회할 회원 번호와 게시글 번호
+	 * @return 있을 경우 true, 없을 경우 false
+	 */
+	public boolean checkRecommend(Recommend rec);
 
+	/**
+	 * 해당 게시글의 총 추천수를 조회한다
+	 * 
+	 * @param rec - 총 추천수를 조회하기 위한 글 번호를 가지고있는 객체
+	 * @return 해당 게시글의 총 추천 수
+	 */
+	public int getRecommend(Recommend rec);
+
+	/**
+	 * 로그인 한 회원이 해당 글을 추천했는지 안했는지 여부를 알아온다
+	 * 
+	 * @param recommend - 해당 글 번호와 로그인한 회원의 회원 번호
+	 * @return 해당 글을 추천했을 경우 true, 아닐 경우 false
+	 */
+	public boolean chkRecommended(Recommend recommend);
+
+	/**
+	 * 해당 글의 모든 댓글을 불러온다
+	 * 
+	 * @param bNo - 조회한 글의 글 번호
+	 * @return 글 번호에 해당하는 모든 댓글 리스트
+	 */
+	public List<Comments> getCommentList(int bNo);
 
 
 }

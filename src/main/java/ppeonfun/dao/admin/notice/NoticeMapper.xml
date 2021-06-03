@@ -27,37 +27,57 @@
 		<result column="bf_size" property="bfSize" />
 		<result column="bf_content_type" property="bfContentType" />
 	</resultMap>
+	
+	<resultMap type="ppeonfun.dto.Comments" id="Comments">
+		<id column="c_no" property="cNo" />
+		
+		<result column="b_no" property="bNo" />
+		<result column="m_no" property="mNo" />
+		<result column="c_content" property="cContent" />
+		<result column="c_create_date" property="cCreateDate" />
+	</resultMap>
    
 	<select id="selectCntAll" parameterType="hashmap" resultType="int">
 		SELECT count(*) FROM board
 		WHERE b_grade = 'N'
-		<if test="category.equals('mix')">
+		<if test="category.equals('mix') and !''.equals(search)">
 			AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
 		</if>
-		<if test="category.equals('title')">
+		<if test="category.equals('title') and !''.equals(search)">
 			AND REGEXP_LIKE ( b_title, #{search} )
 		</if>
-		<if test="category.equals('content')">
+		<if test="category.equals('content') and !''.equals(search)">
 			AND REGEXP_LIKE ( b_content, #{search} )
+		</if>
+		<if test="''.equals(search)">
+			AND 1=1
 		</if>
 	</select>
 
 	<select id="selectAll" parameterType="hashmap" resultType="hashmap">
 		SELECT * FROM (
 			SELECT rownum rnum, N.* FROM (
-				SELECT board.*, member.m_nick 
+				SELECT board.*, member.m_nick , (
+					SELECT count(*) FROM recommend
+					WHERE recommend.b_no = board.b_no
+				) AS RECOMMEND
 				FROM board, member
 				WHERE b_grade = 'N' AND board.m_no = member.m_no
 				ORDER BY b_no DESC
 			) N WHERE 1=1
-			<if test="category.equals('mix')">
-				AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+			<if test="!search.equals('')">
+				<if test="category.equals('mix')">
+					AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+				</if>
+				<if test="category.equals('title')">
+					AND REGEXP_LIKE ( b_title, #{search} )
+				</if>
+				<if test="category.equals('content')">
+					AND REGEXP_LIKE ( b_content, #{search} )
+				</if>
 			</if>
-			<if test="category.equals('title')">
-				AND REGEXP_LIKE ( b_title, #{search} )
-			</if>
-			<if test="category.equals('content')">
-				AND REGEXP_LIKE ( b_content, #{search} )
+			<if test="search.equals('')">
+				AND 1=1
 			</if>
 		) NOTICE
 		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
@@ -85,6 +105,11 @@
 	
 	<select id="selectFilesByBoardno" parameterType="int" resultMap="BoardFile">
 		SELECT * FROM board_file
+		WHERE b_no = #{bNo}
+	</select>
+	
+	<select id="selectCntRecommend" parameterType="int" resultType="int">
+		SELECT count(*) FROM recommend
 		WHERE b_no = #{bNo}
 	</select>
 	
@@ -119,6 +144,30 @@
 		DELETE FROM board
 		WHERE b_no = #{bNo}
 	</delete>
-   
+	
+	<select id="selectCntRec" parameterType="ppeonfun.dto.Recommend" resultType="int">
+		SELECT count(*) FROM recommend
+		WHERE b_no = #{bNo} AND m_no = #{mNo}
+	</select>
+	
+	<insert id="insertRec" parameterType="ppeonfun.dto.Recommend">
+		INSERT INTO recommend ( b_no, m_no )
+		VALUES ( #{bNo}, #{mNo} )
+	</insert>
+	
+	<delete id="deleteRec" parameterType="ppeonfun.dto.Recommend">
+		DELETE FROM recommend
+		WHERE b_no = #{bNo} AND m_no = #{mNo}
+	</delete>
+	
+	<select id="selectRecByBno" parameterType="ppeonfun.dto.Recommend" resultType="int">
+		SELECT count(*) FROM recommend
+		WHERE b_no = #{bNo}
+	</select>
+	
+	<select id="selectComments" parameterType="int" resultMap="Comments">
+		SELECT * FROM comments
+		WHERE b_no = #{bNo}
+	</select>
 	
 </mapper>

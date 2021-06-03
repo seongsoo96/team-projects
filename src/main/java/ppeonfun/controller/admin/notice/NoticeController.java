@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
+import ppeonfun.dto.Comments;
+import ppeonfun.dto.Recommend;
 import ppeonfun.service.admin.notice.NoticeService;
 import ppeonfun.util.Paging;
 
@@ -50,10 +52,6 @@ public class NoticeController {
 		
 		//공지사항 리스트 얻어오기
 		List<HashMap<String, Object>> nlist = noticeService.getList(paging, category, search);
-		
-//		for(HashMap<String, Object> i : nlist) {
-//			logger.info("리스트 값 확인 : {}", i);
-//		}
 		
 		//model값으로 공지사항 리스트 설정
 		model.addAttribute("nlist", nlist);
@@ -91,15 +89,15 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/view")
-	public String view(int bNo, Model model) {
+	public String view(int bNo, HttpSession session, Model model) {
 //		logger.info("/admin/notice/view [GET] 요청 완료");
-		logger.info("얻어온 게시글 번호 확인 : {}", bNo);
+//		logger.info("얻어온 게시글 번호 확인 : {}", bNo);
 		
 		//해당하는 게시글 번호의 모든 정보 가져오기
 		HashMap<String, Object> viewBoard = noticeService.getView(bNo);
 		
 		//얻어온 게시글 정보 확인하기
-		logger.info("얻어온 게시글 정보 확인하기 : {}", viewBoard);
+//		logger.info("얻어온 게시글 정보 확인하기 : {}", viewBoard);
 		
 		//model값으로 게시글 정보 설정
 		model.addAttribute("viewBoard", viewBoard);
@@ -107,10 +105,32 @@ public class NoticeController {
 		//첨부파일 리스트 얻어오기
 		List<BoardFile> flist = noticeService.getFiles(bNo);
 		
-		logger.info("얻어온 첨부파일 정보 확인하기 : {}", flist);
+//		logger.info("얻어온 첨부파일 정보 확인하기 : {}", flist);
 		
 		//model값으로 첨부파일 정보 설정
 		model.addAttribute("flist", flist);
+		
+		//해당 게시글의 추천수 얻어오기
+		int rec = noticeService.getRecommend(bNo);
+		
+		//model값으로 추천수 정의
+		model.addAttribute("rec", rec);
+		
+		//로그인 한 유저가 해당 글을 추천했는지 안했는지 확인
+		int mNo = (int) session.getAttribute("mNo");
+		Recommend recommend = new Recommend();
+		recommend.setbNo(bNo);
+		recommend.setmNo(mNo);
+		boolean chkRec = noticeService.chkRecommended(recommend);
+		
+		//model값으로 추천여부 정의
+		model.addAttribute("chkRec", chkRec);
+		
+		//해당 글의 댓글 불러오기
+		List<Comments> clist = noticeService.getCommentList(bNo);
+		
+		//model값으로 댓글 정의
+		model.addAttribute("clist", clist);
 		
 		//viewName 지정
 		return "admin/notice/noticeView";
@@ -128,6 +148,28 @@ public class NoticeController {
 		model.addAttribute("bf", bf);
 		
 		return "down";
+	}
+	
+	@RequestMapping(value="/recommend")
+	public String recommend (Recommend rec, HttpSession session, Model model) {
+		int mNo = (int) session.getAttribute("mNo");
+		rec.setmNo(mNo);
+		
+		//recommend 테이블에 값 넣기
+		boolean checkRec = noticeService.checkRecommend(rec);
+		
+		logger.info("얻어온 checkRec의 값 : {}", checkRec);
+		
+		model.addAttribute("chkrec", checkRec);
+		
+		//해당 게시글의 총 추천수를 얻어와야 한다
+		int totalRec = noticeService.getRecommend(rec);
+		
+		logger.info("해당 게시글의 총 조회수 : {}", totalRec);
+		
+		model.addAttribute("rec", totalRec);
+		
+		return "admin/notice/noticeRecResult";
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)

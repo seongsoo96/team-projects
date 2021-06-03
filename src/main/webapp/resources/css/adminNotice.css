@@ -44,6 +44,7 @@ h1 {
 
 tr {
 	height: 35px;
+	border-radius: 10px;
 }
 
 th, td {
@@ -70,6 +71,7 @@ th {
 
 .backlist {
 	font-size: 12pt;
+	font-weight: 500;
 	color: #4EEDED;
 	cursor: pointer;
 }
@@ -117,6 +119,7 @@ th {
 /* noticeWrite.jsp */
 .nTitle {
 	width: 100%;
+	border-bottom: 1px solid #f6f6f6;
 }
 
 .bTitle {
@@ -129,7 +132,7 @@ th {
 .bTitle:focus {
 	outline: none;
 	border: 1.5px solid #4EEDED;
-	transition: border 3s;
+	transition: border 1s;
 }
 
 .nContent {
@@ -143,7 +146,7 @@ th {
 }
 
 .dropbox {
-	margin: 0 5px;
+	margin: 0px 5px;
 	width: 100px;
 	height: 30px;
 	border-color: ivory;

@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ppeonfun.dao.admin.notice.NoticeDao;
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
+import ppeonfun.dto.Comments;
+import ppeonfun.dto.Recommend;
 import ppeonfun.util.Paging;
 
 @Service("admin.NoticeService")
@@ -132,6 +134,11 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<BoardFile> getFiles(int bNo) {
 		return noticeDao.selectFilesByBoardno(bNo);
 	}
+	
+	@Override
+	public int getRecommend(int bNo) {
+		return noticeDao.selectCntRecommend(bNo);
+	}
 
 	@Override
 	public BoardFile getFile(int bfFileno) {
@@ -201,6 +208,38 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		//해당 공지사항 삭제
 		noticeDao.deleteByBoardno(board);
+	}
+
+	@Override
+	public boolean checkRecommend(Recommend rec) {
+		int res = noticeDao.selectCntRec(rec);
+		if( res == 1 ) {
+			noticeDao.deleteRec(rec);
+			return true;
+		} else {
+			noticeDao.insertRec(rec);
+			return false;
+		}
+	}
+
+	@Override
+	public int getRecommend(Recommend rec) {
+		return noticeDao.selectRecByBno(rec);
+	}
+
+	@Override
+	public boolean chkRecommended(Recommend recommend) {
+		int res = noticeDao.selectCntRec(recommend);
+		if( res == 1 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public List<Comments> getCommentList(int bNo) {
+		return noticeDao.selectComments(bNo);
 	}
 
 } // Class end
