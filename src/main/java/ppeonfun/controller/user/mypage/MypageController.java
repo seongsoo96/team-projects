@@ -147,6 +147,7 @@ public class MypageController {
 		logger.info("수정된 회원정보 확인:{}", member);
 		
 		mypageService.updateMemberInfo(member);
+		session.setAttribute("mNick", member.getmNick());
 		
 		return "redirect:/user/mypage/detail";
 	}
