@@ -69,7 +69,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	
 	@Override
-	public List<HashMap<String, Object>> getArrayList(Paging paging, String category, String search, boolean orderby) {
+	public List<HashMap<String, Object>> getArrayList(Paging paging, String category, String search, int orderby) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("paging", paging);
 		map.put("category", category);
@@ -81,20 +81,6 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return alist;
 	}
-	
-//	@Override
-//	public List<HashMap<String, Object>> getReverseList(Paging paging, String category, String search, boolean orderby) {
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		map.put("paging", paging);
-//		map.put("category", category);
-//		map.put("search", search);
-//		map.put("orderby", orderby);
-//		
-//		//전체 공지사항 목록 가져오기
-//		List<HashMap<String, Object>> alist = noticeDao.selectAllByReverse(map);
-//		
-//		return alist;
-//	}
 
 	@Override
 	@Transactional

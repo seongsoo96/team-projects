@@ -82,7 +82,7 @@ $(document).ready(function(){
 			<button class="viewbtn" onclick="location.href='/admin/notice/update?bNo=${viewBoard.B_NO}'">수정</button>
 			<button class="viewbtn" onclick="location.href='/admin/notice/delete?bNo=${viewBoard.B_NO}'">삭제</button>
 		</c:if>
-	<button class="viewbtn" onclick="history.go(-1)">목록</button>
+	<button class="viewbtn" onclick="location.href='/admin/notice/list'">목록</button>
 	</div>
 
 </div> <%-- anbody end --%>

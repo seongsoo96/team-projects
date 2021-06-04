@@ -21,27 +21,28 @@
 	<th style="width: 10%">닉네임</th>
 	<th style="width: 10%">작성일</th>
 	<th style="width: 5%">조회</th>
-	<th style="width: 5%; cursor: pointer;" onclick="array(${orderby})">좋아요▼</th>
+	<th style="width: 5%;"> <%-- onclick="array(${orderby})" --%>
+	<a class="arrayLink" href="/admin/notice/list?curPage=${paging.curPage }&orderby=${orderby }">좋아요▼</a></th>
 </tr>
 <%-- 현재시간을 변환(yyyyMMdd)하여 변수에 저장 --%>
 <fmt:formatDate value="<%=new Date() %>" pattern="yyMMdd" var="nowStr" />
-<c:forEach var="a" items="${alist }">
-<fmt:formatDate value="${a.B_CREATE_DATE }" pattern="yyMMdd" var="brdStr" />
+<c:forEach var="n" items="${nlist }">
+<fmt:formatDate value="${n.B_CREATE_DATE }" pattern="yyMMdd" var="brdStr" />
 	<tr>
-		<td>${a.B_NO }</td>
+		<td>${n.B_NO }</td>
 		<td style="text-align: left; padding-left: 25px;">
-		<a class="titleLink" href="/admin/notice/view?bNo=${a.B_NO }">${a.B_TITLE }</a></td>
-		<td>${a.M_NICK }</td>
+		<a class="titleLink" href="/admin/notice/view?bNo=${n.B_NO }">${n.B_TITLE }</a></td>
+		<td>${n.M_NICK }</td>
 		<td>
 		<c:if test="${brdStr eq nowStr }">
-			<fmt:formatDate value="${a.B_CREATE_DATE }" type="time" pattern="HH:mm" />
+			<fmt:formatDate value="${n.B_CREATE_DATE }" type="time" pattern="HH:mm" />
 		</c:if>
 		<c:if test="${brdStr lt nowStr }">
-			<fmt:formatDate value="${a.B_CREATE_DATE }" type="date" pattern="yyyy.MM.dd" />
+			<fmt:formatDate value="${n.B_CREATE_DATE }" type="date" pattern="yyyy.MM.dd" />
 		</c:if>
 		</td>
-		<td>${a.B_HIT }</td>
-		<td>${a.RECOMMEND }</td>
+		<td>${n.B_HIT }</td>
+		<td>${n.RECOMMEND }</td>
 	</tr>
 </c:forEach>
 </table>

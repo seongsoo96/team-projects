@@ -37,59 +37,63 @@ public class NoticeController {
 			@RequestParam(value="curPage", defaultValue="0") int cPage
 			, @RequestParam(value="category", defaultValue="") String category
 			, @RequestParam(value="search", defaultValue="") String search
+			, @RequestParam(value="orderby", defaultValue="1") int orderby
 			, Model model) {
 //		logger.info("/admin/notice/list [GET] 요청 완료");
-		logger.info("얻어온 category : {}", category);
-		logger.info("얻어온 search : {}", search);
+//		logger.info("얻어온 category : {}", category);
+//		logger.info("얻어온 search : {}", search);
 		
 		//카테고리, 검색어 기반 페이징 적용 (없을 시 defaulValue로 전체 글 페이징 적용)
 		Paging paging = noticeService.getPaging(cPage, category, search);
-		
-		logger.info("검색 후 paging값 확인 : {}", paging);
 		
 		//model값으로 paging객체 설정
 		model.addAttribute("paging", paging);
 		
 		//공지사항 리스트 얻어오기
-		List<HashMap<String, Object>> nlist = noticeService.getList(paging, category, search);
+//		List<HashMap<String, Object>> nlist = noticeService.getList(paging, category, search);
+//		
+//		//model값으로 공지사항 리스트 설정
+//		model.addAttribute("nlist", nlist);
 		
-		//model값으로 공지사항 리스트 설정
-		model.addAttribute("nlist", nlist);
+		logger.info("/admin/notice/list에서 orderby값 확인 : {}", orderby);
 		
-		//viewName 설정
-		return "admin/notice/noticeList";
-	}
-	
-	@RequestMapping(value="/array")
-	public String array(
-			@RequestParam(value="curPage", defaultValue="0") int cPage
-			, @RequestParam(value="category", defaultValue="") String category
-			, @RequestParam(value="search", defaultValue="") String search
-			, @RequestParam(value="orderby", defaultValue="true") boolean orderby
-			, Model model) {
-		Paging paging = noticeService.getPaging(cPage, category, search);
-		model.addAttribute("paging", paging);
-		
-		logger.info("/admin/notice/array 에서 얻어온 orderby 값 : {}", orderby);
-		
-		// orderby를 클릭할 때마다 값을 true와 false 번갈아가게 하여
-		// ASC와 DESC상태를 번갈아 보여준다
-		if(orderby) {
-			List<HashMap<String, Object>> alist = noticeService.getArrayList(paging, category, search, orderby);
-			model.addAttribute("alist", alist);
-			orderby = false;
-			logger.info("/admin/notice/array 이후 orderby 값 : {}", orderby);
+		if(orderby == 2) {
+			List<HashMap<String, Object>> nlist = noticeService.getArrayList(paging, category, search, orderby);
+			model.addAttribute("nlist", nlist);
+			model.addAttribute("paging", paging);
+			orderby = 3;
 			model.addAttribute("orderby", orderby);
 			
-		} else if(!orderby){
-			List<HashMap<String, Object>> alist = noticeService.getArrayList(paging, category, search, orderby);
-			model.addAttribute("alist", alist);
-			orderby = true;
-			logger.info("/admin/notice/array 이후 orderby 값 : {}", orderby);
+			logger.info("추천수 내림차순 정렬");
+			
+			return "admin/notice/noticeList";
+			
+		} else if(orderby == 3){
+			List<HashMap<String, Object>> nlist = noticeService.getArrayList(paging, category, search, orderby);
+			model.addAttribute("nlist", nlist);
+			model.addAttribute("paging", paging);
+			orderby = 2;
 			model.addAttribute("orderby", orderby);
+			
+			logger.info("추천수 오름차순 정렬");
+			
+			return "admin/notice/noticeList";
+		} else {
+			//공지사항 리스트 얻어오기
+			List<HashMap<String, Object>> nlist = noticeService.getList(paging, category, search);
+			
+			//model값으로 공지사항 리스트 설정
+			model.addAttribute("nlist", nlist);
+			model.addAttribute("paging", paging);
+			orderby = 2;
+			model.addAttribute("orderby", orderby);
+			
+			logger.info("날짜순 내림차순 정렬");
+			
+			return "admin/notice/noticeList";
 		}
+			
 		
-		return "admin/notice/noticeArrayList";
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.GET)
@@ -111,8 +115,8 @@ public class NoticeController {
 		board.setmNo(mNo);
 		
 		//얻어온 값 확인 - 완료
-		logger.info("얻어온 board값 확인 : {}", board);
-		logger.info("얻어온 다중 파일 정보 확인 : {}", fileList);
+//		logger.info("얻어온 board값 확인 : {}", board);
+//		logger.info("얻어온 다중 파일 정보 확인 : {}", fileList);
 		
 		//글 쓰기 수행
 		noticeService.write(board, fileList);
@@ -190,14 +194,14 @@ public class NoticeController {
 		//recommend 테이블에 값 넣기
 		boolean checkRec = noticeService.checkRecommend(rec);
 		
-		logger.info("얻어온 checkRec의 값 : {}", checkRec);
+//		logger.info("얻어온 checkRec의 값 : {}", checkRec);
 		
 		model.addAttribute("chkrec", checkRec);
 		
 		//해당 게시글의 총 추천수를 얻어와야 한다
 		int totalRec = noticeService.getRecommend(rec);
 		
-		logger.info("해당 게시글의 총 조회수 : {}", totalRec);
+//		logger.info("해당 게시글의 총 조회수 : {}", totalRec);
 		
 		model.addAttribute("rec", totalRec);
 		
@@ -230,14 +234,14 @@ public class NoticeController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update( Board board, MultipartHttpServletRequest mtfRequest) {
-		logger.info("얻어온 board객체 정보 확인 {}", board);
+//		logger.info("얻어온 board객체 정보 확인 {}", board);
 		
 		//다중 첨부파일 리스트로 변환
 		List<MultipartFile> flist = mtfRequest.getFiles("file");
 		
-		for( MultipartFile i : flist ) {
-			logger.info("각각의 다중 첨부파일 정보 확인 {}", i);
-		}
+//		for( MultipartFile i : flist ) {
+//			logger.info("각각의 다중 첨부파일 정보 확인 {}", i);
+//		}
 		
 		//글 수정 메소드 호출
 		noticeService.updateBoardAndFiles(board, flist);

@@ -92,12 +92,14 @@
 				) AS RECOMMEND
 				FROM board, member
 				WHERE b_grade = 'N' AND board.m_no = member.m_no
-				<if test="orderby">
-				ORDER BY RECOMMEND DESC, B_CREATE_DATE DESC
+				ORDER BY 
+				<if test="orderby == 2">
+					RECOMMEND DESC,
 				</if>
-				<if test="!orderby">
-				ORDER BY RECOMMEND ASC, B_CREATE_DATE DESC
+				<if test="orderby == 3">
+					RECOMMEND ASC,
 				</if>
+				b_no DESC
 			) N WHERE 1=1
 			<if test="!search.equals('')">
 				<if test="category.equals('mix')">
@@ -185,8 +187,8 @@
 	</select>
 	
 	<insert id="insertRec" parameterType="ppeonfun.dto.Recommend">
-		INSERT INTO recommend ( b_no, m_no )
-		VALUES ( #{bNo}, #{mNo} )
+		INSERT INTO recommend ( r_no, b_no, m_no )
+		VALUES ( recommend_seq.nextval, #{bNo}, #{mNo} )
 	</insert>
 	
 	<delete id="deleteRec" parameterType="ppeonfun.dto.Recommend">

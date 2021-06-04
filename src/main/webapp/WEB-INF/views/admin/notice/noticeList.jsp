@@ -8,22 +8,13 @@
 
 <link rel="stylesheet" href="/resources/css/adminNotice.css">
 
-<!-- <script type="text/javascript">
-$(document).ready(function(){
-	$("#arrayRec").click(function(){
-		
-	})
-})
-</script> -->
-
 <script type="text/javascript">
-function array(orderbychk){
-	console.log("추천수 정렬 확인");
+/* function array(orderbychk){
 	console.log( "얻어온 orderby의 값 : " + orderbychk );
 	
 	$.ajax({
 		type: "GET"
-		, url: "/admin/notice/array"
+		, url: "/admin/notice/list"
 		, data: {
 			orderby: orderbychk
 		}
@@ -35,10 +26,48 @@ function array(orderbychk){
 			
 		}
 	})
-}
+} */
+
+/* function goPage(cPage, Cat, Sch, Ord){
+	$.ajax({
+		type: "GET"
+		, url: "/admin/notice/list"
+		, data: {
+			curPage: cPage,
+			category: Cat,
+			search: Sch,
+			orderby: Ord
+		}
+		, dataType: ""
+		, success: function(res){
+			
+		}
+		, error: function(res){
+			
+		}
+	})
+} */
+
+/* function prePage(curPage1, category1, search1, orderby1){
+	$.ajax({
+		type: "POST"
+		, url: "/admin/notice/list"
+		, data: {
+			curPage: curPage1,
+			category: category1,
+			search: search1,
+			orderby: orderby1
+		}
+		, dataType: ""
+		, success: function(res){
+			
+		}
+		, error: function(res){
+			
+		}
+	})
+} */
 </script>
-
-
 
 <div id="content">
 <h1>공지사항 관리</h1>
@@ -57,7 +86,8 @@ function array(orderbychk){
 	<th style="width: 10%">닉네임</th>
 	<th style="width: 10%">작성일</th>
 	<th style="width: 5%">조회</th>
-	<th style="width: 5%; cursor: pointer;" onclick="array(${orderby})">좋아요▼</th>
+	<th style="width: 5%;" <%-- onclick="array(${orderby})" --%>>
+	<a class="arrayLink" href="/admin/notice/list?curPage=${paging.curPage }&orderby=${orderby }">좋아요▼</a></th>
 </tr>
 <%-- 현재시간을 변환(yyyyMMdd)하여 변수에 저장 --%>
 <fmt:formatDate value="<%=new Date() %>" pattern="yyMMdd" var="nowStr" />

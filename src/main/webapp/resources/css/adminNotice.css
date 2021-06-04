@@ -12,6 +12,16 @@
 	text-decoration: underline;
 }
 
+.arrayLink:visited, .arrayLink:link {
+	color: black;
+	text-decoration: none;
+}
+
+.arrayLink:hover {
+	color: black;
+	text-decoration: underline;
+}
+
 .headname {
 	font-size: 25pt;
 	font-weight: 500;
