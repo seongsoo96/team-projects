@@ -135,4 +135,9 @@ public class MypageServiceImpl implements MypageService {
 	public void updateMemberInfo(Member member) {
 		mypageDao.updateMemberInfo(member);
 	}
+
+	@Override
+	public String getSocialInfo(int mNo) {
+		return mypageDao.selectMsocialByNo(mNo);
+	}
 }

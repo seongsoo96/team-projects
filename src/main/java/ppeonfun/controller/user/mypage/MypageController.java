@@ -125,8 +125,14 @@ public class MypageController {
 	//마이페이지 회원정보수정--------------------------------------------------------------------
 	
 	@RequestMapping(value="/detail", method=RequestMethod.GET)
-	public void detailHome() {
+	public void detailHome(HttpSession session, Model model) {
 		logger.info("***** /user/mypage/detail START *****");
+		
+		//사이트 로그인 , 소셜 로그인에 따라 jsp 다르게 하기 위해 정보 조회
+		String joinInfo = mypageService.getSocialInfo((int) session.getAttribute("mNo"));
+		if(!"사이트".equals(joinInfo)) {	//카카오 로그인 회원인 경우
+			model.addAttribute("isSocialKakao", true);
+		}
 	}
 	
 	@RequestMapping(value="/info", method=RequestMethod.GET)
@@ -150,5 +156,12 @@ public class MypageController {
 		session.setAttribute("mNick", member.getmNick());
 		
 		return "redirect:/user/mypage/detail";
+	}
+	
+	@RequestMapping(value="/chpw", method=RequestMethod.GET)
+	public void updateMyInfo() {
+		logger.info("***** /user/mypage/chpw [GET] START *****");
+		
+		
 	}
 }

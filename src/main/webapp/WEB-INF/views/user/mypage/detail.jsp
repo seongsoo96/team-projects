@@ -11,27 +11,62 @@
 </style>
 
 <div class="container">
+	<!-- 모달창 -->
+	<div class="modal fade" id="pwModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">현재 비밀번호를 확인합니다.</h4>
+				</div>
+				<div class="modal-body form-inline">
+					<div class="form-group">
+						<label for="prespw" style="margin:0 40px">현재 비밀번호 입력</label>
+						<input type="password" class="form-control" id="prespw" style="width:340px">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" id="btnPwComplete">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<h3>회원정보수정</h3>
 	<hr>
 	
-	<div class="text-center">
+	<div class="text-center" style="height:250px;">
 		<div><button type="button" id="default-info">기본 정보 수정</button></div>
-		<div><button type="button" id="changepw">비밀번호 변경</button></div>
+		<div><button type="button" id="changepw" data-toggle="modal" data-target="#pwModal">비밀번호 변경</button></div>
 		<a href="/user/mypage/unsubscribe">회원탈퇴</a>	
 	</div>
+	
 </div>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	//카카오 가입자인 경우
+	var isSocialKakao = ${isSocialKakao }
+	console.log("카카오 로그인인지?:", isSocialKakao)
+	
+	if( isSocialKakao ) {
+		$("#changepw").hide()
+	}
 	
 	//'기본 정보 수정' 버튼 클릭 했을 때
 	$("#default-info").click(function() {
 		location.href = "/user/mypage/info"
 	})
 	
-	//'비밀번호 변경' 버튼 클릭 했을 때
-	$("#changepw").click(function() {
-		location.href = "/user/mypage/chpw"
+	// 비밀번호 변경 모달에서 확인 버튼 클릭 했을 때
+	$("#btnPwComplete").click(function() {
+		
+		$.ajax({
+			
+		})
+		
+		/* location.href = "/user/mypage/chpw" */
 	})
 })
 </script>

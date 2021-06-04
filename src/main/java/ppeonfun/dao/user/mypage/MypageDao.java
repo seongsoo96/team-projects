@@ -46,4 +46,12 @@ public interface MypageDao {
 	public void updateMemberInfo(Member member);
 
 
+	/**
+	 * member 테이블의 social을 조회한다.
+	 * @param mNo	회원번호
+	 * @return		social
+	 */
+	public String selectMsocialByNo(int mNo);
+
+
 }

@@ -51,5 +51,13 @@ public interface MypageService {
 	 * @param member	수정된 기본 정보가 담긴 DTO	
 	 */
 	public void updateMemberInfo(Member member);
+
+
+	/**
+	 * 사이트 / 카카오 가입 정보를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		가입 정보(사이트 / 카카오)
+	 */
+	public String getSocialInfo(int mNo);
 	
 }

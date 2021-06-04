@@ -47,6 +47,12 @@
  		, m_address = #{mAddress}, m_detail_address = #{mDetailAddress}
  	WHERE m_no = #{mNo}
  	</update>
+ 	
+ 	<select id="selectMsocialByNo" parameterType="int" resultType="String">
+ 	SELECT m_social
+ 	FROM member
+ 	WHERE m_no = #{mNo}
+ 	</select>
  </mapper>  
     
   
