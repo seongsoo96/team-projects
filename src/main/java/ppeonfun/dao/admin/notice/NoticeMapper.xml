@@ -82,6 +82,40 @@
 		) NOTICE
 		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
 	</select>
+	
+	<select id="selectAllByArray" parameterType="hashmap" resultType="hashmap">
+		SELECT * FROM (
+			SELECT rownum rnum, N.* FROM (
+				SELECT board.*, member.m_nick , (
+					SELECT count(*) FROM recommend
+					WHERE recommend.b_no = board.b_no
+				) AS RECOMMEND
+				FROM board, member
+				WHERE b_grade = 'N' AND board.m_no = member.m_no
+				<if test="orderby">
+				ORDER BY RECOMMEND DESC, B_CREATE_DATE DESC
+				</if>
+				<if test="!orderby">
+				ORDER BY RECOMMEND ASC, B_CREATE_DATE DESC
+				</if>
+			) N WHERE 1=1
+			<if test="!search.equals('')">
+				<if test="category.equals('mix')">
+					AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+				</if>
+				<if test="category.equals('title')">
+					AND REGEXP_LIKE ( b_title, #{search} )
+				</if>
+				<if test="category.equals('content')">
+					AND REGEXP_LIKE ( b_content, #{search} )
+				</if>
+			</if>
+			<if test="search.equals('')">
+				AND 1=1
+			</if>
+		) NOTICE
+		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+	</select>
    
 	<insert id="insertNotice" parameterType="ppeonfun.dto.Board">
 		<selectKey order="BEFORE" resultType="int" keyProperty="bNo">
@@ -166,8 +200,8 @@
 	</select>
 	
 	<select id="selectComments" parameterType="int" resultMap="Comments">
-		SELECT * FROM comments
-		WHERE b_no = #{bNo}
+		SELECT comments.*, member.m_nick FROM member, comments
+		WHERE member.m_no = comments.m_no AND comments.b_no = #{bNo}
 	</select>
 	
 </mapper>

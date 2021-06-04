@@ -31,6 +31,26 @@ public interface NoticeService {
 	public List<HashMap<String, Object>> getList(Paging paging, String category, String search);
 
 	/**
+	 * 공지사항 목록에서 추천수를 누르면 추천수 정렬이 된 리스트를 보여준다
+	 * 
+	 * @param paging - 페이지네이션에 적용할 페이징 객체
+	 * @param category - 검색기준( 제목+내용, 제목, 내용 )
+	 * @param search - 검색어
+	 * @return
+	 */
+	public List<HashMap<String, Object>> getArrayList(Paging paging, String category, String search, boolean orderby);
+
+	/**
+	 * 공지사항 목록에서 추천수를 누르면 추천수 정렬이 된 리스트를 보여준다
+	 * 
+	 * @param paging - 페이지네이션에 적용할 페이징 객체
+	 * @param category - 검색기준( 제목+내용, 제목, 내용 )
+	 * @param search - 검색어
+	 * @return
+	 */
+//	public List<HashMap<String, Object>> getReverseList(Paging paging, String category, String search, boolean orderby);
+	
+	/**
 	 * 
 	 * 
 	 * @param board
@@ -126,5 +146,6 @@ public interface NoticeService {
 	 */
 	public List<Comments> getCommentList(int bNo);
 
+	
 
 }

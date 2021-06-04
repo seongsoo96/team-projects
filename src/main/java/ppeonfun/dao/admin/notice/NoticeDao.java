@@ -30,7 +30,15 @@ public interface NoticeDao {
 	 * @return 전체 공지사항 리스트
 	 */
 	public List<HashMap<String, Object>> selectAll(HashMap<String, Object> map);
-
+	
+	/**
+	 * 공지사항 리스트에서 추천수 탭을 누르면 추천수 정렬이 된다
+	 * 
+	 * @param map - 페이징, 검색기준, 검색어가 모두 들어있는 객체
+	 * @return
+	 */
+	public List<HashMap<String, Object>> selectAllByArray(HashMap<String, Object> map);
+	
 	/**
 	 * 신규 작성요청된 공지사항을 DB에 삽입한다
 	 * 
@@ -155,5 +163,6 @@ public interface NoticeDao {
 	 */
 	public List<Comments> selectComments(int bNo);
 
+	
 
 }

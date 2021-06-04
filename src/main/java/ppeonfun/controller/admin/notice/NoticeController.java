@@ -60,6 +60,38 @@ public class NoticeController {
 		return "admin/notice/noticeList";
 	}
 	
+	@RequestMapping(value="/array")
+	public String array(
+			@RequestParam(value="curPage", defaultValue="0") int cPage
+			, @RequestParam(value="category", defaultValue="") String category
+			, @RequestParam(value="search", defaultValue="") String search
+			, @RequestParam(value="orderby", defaultValue="true") boolean orderby
+			, Model model) {
+		Paging paging = noticeService.getPaging(cPage, category, search);
+		model.addAttribute("paging", paging);
+		
+		logger.info("/admin/notice/array 에서 얻어온 orderby 값 : {}", orderby);
+		
+		// orderby를 클릭할 때마다 값을 true와 false 번갈아가게 하여
+		// ASC와 DESC상태를 번갈아 보여준다
+		if(orderby) {
+			List<HashMap<String, Object>> alist = noticeService.getArrayList(paging, category, search, orderby);
+			model.addAttribute("alist", alist);
+			orderby = false;
+			logger.info("/admin/notice/array 이후 orderby 값 : {}", orderby);
+			model.addAttribute("orderby", orderby);
+			
+		} else if(!orderby){
+			List<HashMap<String, Object>> alist = noticeService.getArrayList(paging, category, search, orderby);
+			model.addAttribute("alist", alist);
+			orderby = true;
+			logger.info("/admin/notice/array 이후 orderby 값 : {}", orderby);
+			model.addAttribute("orderby", orderby);
+		}
+		
+		return "admin/notice/noticeArrayList";
+	}
+	
 	@RequestMapping(value="/write", method=RequestMethod.GET)
 	public String writeForm() {
 //		logger.info("/admin/notice/write [GET] 요청 완료");
@@ -222,5 +254,7 @@ public class NoticeController {
 		
 		return "redirect:/admin/notice/list";
 	}
+	
+
 	
 }

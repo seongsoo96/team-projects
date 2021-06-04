@@ -70,11 +70,11 @@ $(document).ready(function(){
 			<label class="arrayDesc" style="font-weight: 400; cursor: pointer;">등록순</label>&nbsp;
 			<label class="arrayAsc" style="font-weight: 400; cursor: pointer;">최신순</label>
 		</div>
-		
-		
-		
-		
-		
+		<div class="comment_list">
+			<c:forEach var="c" items="${clist }">
+				
+			</c:forEach>
+		</div>
 	</div>
 	
 	<div class="btnbox">

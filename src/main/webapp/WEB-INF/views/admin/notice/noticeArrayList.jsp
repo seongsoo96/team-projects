@@ -4,43 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/layout/adminHeader.jsp" />
 
-<link rel="stylesheet" href="/resources/css/adminNotice.css">
-
-<!-- <script type="text/javascript">
-$(document).ready(function(){
-	$("#arrayRec").click(function(){
-		
-	})
-})
-</script> -->
-
-<script type="text/javascript">
-function array(orderbychk){
-	console.log("추천수 정렬 확인");
-	console.log( "얻어온 orderby의 값 : " + orderbychk );
-	
-	$.ajax({
-		type: "GET"
-		, url: "/admin/notice/array"
-		, data: {
-			orderby: orderbychk
-		}
-		, dataType: ""
-		, success: function(res){
-			$("#content").html(res)
-		}
-		, error: function(res){
-			
-		}
-	})
-}
-</script>
-
-
-
-<div id="content">
 <h1>공지사항 관리</h1>
 <hr>
 
@@ -61,23 +25,23 @@ function array(orderbychk){
 </tr>
 <%-- 현재시간을 변환(yyyyMMdd)하여 변수에 저장 --%>
 <fmt:formatDate value="<%=new Date() %>" pattern="yyMMdd" var="nowStr" />
-<c:forEach var="n" items="${nlist }">
-<fmt:formatDate value="${n.B_CREATE_DATE }" pattern="yyMMdd" var="brdStr" />
+<c:forEach var="a" items="${alist }">
+<fmt:formatDate value="${a.B_CREATE_DATE }" pattern="yyMMdd" var="brdStr" />
 	<tr>
-		<td>${n.B_NO }</td>
+		<td>${a.B_NO }</td>
 		<td style="text-align: left; padding-left: 25px;">
-		<a class="titleLink" href="/admin/notice/view?bNo=${n.B_NO }">${n.B_TITLE }</a></td>
-		<td>${n.M_NICK }</td>
+		<a class="titleLink" href="/admin/notice/view?bNo=${a.B_NO }">${a.B_TITLE }</a></td>
+		<td>${a.M_NICK }</td>
 		<td>
 		<c:if test="${brdStr eq nowStr }">
-			<fmt:formatDate value="${n.B_CREATE_DATE }" type="time" pattern="HH:mm" />
+			<fmt:formatDate value="${a.B_CREATE_DATE }" type="time" pattern="HH:mm" />
 		</c:if>
 		<c:if test="${brdStr lt nowStr }">
-			<fmt:formatDate value="${n.B_CREATE_DATE }" type="date" pattern="yyyy.MM.dd" />
+			<fmt:formatDate value="${a.B_CREATE_DATE }" type="date" pattern="yyyy.MM.dd" />
 		</c:if>
 		</td>
-		<td>${n.B_HIT }</td>
-		<td>${n.RECOMMEND }</td>
+		<td>${a.B_HIT }</td>
+		<td>${a.RECOMMEND }</td>
 	</tr>
 </c:forEach>
 </table>
@@ -99,8 +63,3 @@ function array(orderbychk){
 </div>
 
 </form>
-
-</div> <%-- content end --%>
-
-<c:import url="/WEB-INF/views/layout/footer.jsp" />
-

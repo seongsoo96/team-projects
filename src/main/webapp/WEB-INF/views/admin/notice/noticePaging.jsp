@@ -41,7 +41,7 @@
 		<c:forEach var="i" begin="${paging.startPage }" end="${paging.endPage }" step="1">
 			<c:choose>
 				<c:when test="${i eq paging.curPage }">
-					<li class="active"><a href="/admin/notice/list?curPage=${i }&${category}&${search}"
+					<li><a href="/admin/notice/list?curPage=${i }&${category}&${search}"
 					style="color: #4EEDED; marging: 0px 5px;">${i }</a></li>
 				</c:when>
 				<c:otherwise>
@@ -61,10 +61,9 @@
 		<%-- 다음 페이징 리스트로 가기 --%>
 		<c:choose>
 			<c:when test="${paging.endPage ne paging.totalPage }">
-				<li><a href="/admin/notice/list?curPage=${paging.startPage + paging.pageCount }&${category}&${search}">&raquo;</a></li>
+				<li><a href="/admin/notice/list?curPage=${paging.startPage + paging.pageCount }&${category}&${search}">다음 &gt;</a></li>
 			</c:when>
 			<c:otherwise>
-				<li class="disabled"><a>다음 &gt;</a></li>
 			</c:otherwise>
 		</c:choose>
 
