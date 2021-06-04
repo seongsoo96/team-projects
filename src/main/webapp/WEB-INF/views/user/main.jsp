@@ -33,14 +33,14 @@ function pagingSelect(pagingNumber) {
       <div id="slider-wrap">
           <ul id="slider">
           	 <c:forEach items="${list2 }" var="info">
-          	 <li>
+          	 <li class="text-center">
                 <div>
                     <h3>${info.iTitle }</h3>
                     <span>${info.iCategory }</span>
                 </div>  
 				<c:choose>
 				<c:when test = "${fn:contains(info.iStoredName, 'test')}">
-					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/logo.png" style="width: 400px; height: 400px; margin: 0 auto;"></a>
 				</c:when>
 				<c:otherwise>
 					<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }"/></a>
@@ -70,7 +70,7 @@ function pagingSelect(pagingNumber) {
 		<div>
 			<c:choose>
 				<c:when test = "${fn:contains(info.iStoredName, 'test')}">
-					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" width="200" height="150"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/subLogo.png" width="200" height="150"/></a>
 				</c:when>
 				<c:otherwise>
 					<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }" width="200" height="150"/></a>

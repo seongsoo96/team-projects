@@ -82,7 +82,7 @@
 	    <div class="thumbnail">
 	      <c:choose>
 	      	<c:when test = "${fn:contains(info.iStoredName, 'test')}">
-	      		<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" ></a>
+	      		<a href="/story?pNo=${info.pNo }"><img src="/resources/img/subLogo.png" ></a>
 	      	</c:when>
 	      	<c:otherwise>
 	      		<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }"></a>

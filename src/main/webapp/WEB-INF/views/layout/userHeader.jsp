@@ -103,7 +103,7 @@ function searchEnter(){
 <header>
 	<!-- 로고 -->
 	<div>
-		<a href = "/"><img src="/resources/img/test1.png" width="100" height="40" alt="PpeonFun"  title="PpeonFun"> </a>
+		<a href = "/"><img src="/resources/img/logo.png" style="border-radius: 50%;" width="50" height="50" alt="PpeonFun"  title="PpeonFun"> </a>
 	</div>
 	
 	<ul class="hdropdown">
