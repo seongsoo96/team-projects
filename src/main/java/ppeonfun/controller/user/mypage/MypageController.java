@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
+import ppeonfun.service.user.member.MemberService;
 import ppeonfun.service.user.mypage.MypageService;
 
 
@@ -30,6 +31,7 @@ public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 	
 	@Autowired private MypageService mypageService;
+	@Autowired private MemberService memberService;
 	
 	//마이페이지 홈---------------------------------------------------------------------------------
 	
@@ -158,9 +160,25 @@ public class MypageController {
 		return "redirect:/user/mypage/detail";
 	}
 	
-	@RequestMapping(value="/chpw", method=RequestMethod.GET)
+	@RequestMapping(value="/checkpw", method=RequestMethod.POST)
+	public String checkPassword(HttpSession session, Member member, Model model) {
+		logger.info("***** /user/mypage/checkpw [POST] START *****");
+		
+		//암호화 처리
+		member = memberService.encryption(member);
+		member.setmNo((int) session.getAttribute("mNo"));
+		
+		//현재 정보와 일치하는지 check
+		boolean isSameValue = mypageService.checkPassword(member);
+		
+		model.addAttribute("isSameValue", isSameValue);
+		return "jsonView";
+		
+	}
+	
+	@RequestMapping(value="/changepw", method=RequestMethod.GET)
 	public void updateMyInfo() {
-		logger.info("***** /user/mypage/chpw [GET] START *****");
+		logger.info("***** /user/mypage/changepw [GET] START *****");
 		
 		
 	}

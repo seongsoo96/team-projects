@@ -59,5 +59,13 @@ public interface MypageService {
 	 * @return		가입 정보(사이트 / 카카오)
 	 */
 	public String getSocialInfo(int mNo);
+
+
+	/**
+	 * 입력값과 테이블의 컬럼값이 일치하는지 비교한다.
+	 * @param member	비밀번호 암호화 값이 담긴 DTO
+	 * @return			일치하면 true, 일치하지 않으면 false
+	 */
+	public boolean checkPassword(Member member);
 	
 }

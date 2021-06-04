@@ -54,4 +54,12 @@ public interface MypageDao {
 	public String selectMsocialByNo(int mNo);
 
 
+	/**
+	 * 입력값과 일치하는 데이터 행을 조회한다.
+	 * @param member	비밀번호 입력값이 담긴 DTO
+	 * @return			일치하는 행의 수
+	 */
+	public int selectCntmPw(Member member);
+
+
 }

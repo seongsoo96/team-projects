@@ -53,6 +53,12 @@
  	FROM member
  	WHERE m_no = #{mNo}
  	</select>
+ 	
+ 	<select id="selectCntmPw" parameterType="ppeonfun.dto.Member" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM member
+ 	WHERE m_no = #{mNo} AND m_password = #{mPassword}
+ 	</select>
  </mapper>  
     
   

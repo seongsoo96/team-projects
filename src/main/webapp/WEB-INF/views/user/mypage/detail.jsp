@@ -22,6 +22,7 @@
 					<div class="form-group">
 						<label for="prespw" style="margin:0 40px">현재 비밀번호 입력</label>
 						<input type="password" class="form-control" id="prespw" style="width:340px">
+						<div id="checkPwMsg" style="color:#a94442; margin-left:195px"></div>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -59,14 +60,25 @@ $(document).ready(function() {
 		location.href = "/user/mypage/info"
 	})
 	
-	// 비밀번호 변경 모달에서 확인 버튼 클릭 했을 때
+	// 비밀번호 변경 모달에서 '확인' 버튼 클릭 했을 때
 	$("#btnPwComplete").click(function() {
-		
+		console.log("변경 확인 클릭!")
 		$.ajax({
+			type: "post"
+	    	, url: "/user/mypage/checkpw"
+	    	, dataType: "json"
+	    	, data: {mPassword: $("#prespw").val() }
+	    	, success: function(res) {
+	    		if(res.isSameValue) {//비밀번호 일치 시
+	    			location.href = "/user/mypage/changepw"
+	    		} else {
+	    			$("#checkPwMsg").html("비밀번호가 일치하지 않습니다.")
+	    		}
+	    	}
+	    	, error: function() { console.log("비밀번호 일치 확인 실패") }
 			
 		})
 		
-		/* location.href = "/user/mypage/chpw" */
 	})
 })
 </script>

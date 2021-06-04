@@ -140,4 +140,12 @@ public class MypageServiceImpl implements MypageService {
 	public String getSocialInfo(int mNo) {
 		return mypageDao.selectMsocialByNo(mNo);
 	}
+
+	@Override
+	public boolean checkPassword(Member member) {
+		int cnt = mypageDao.selectCntmPw(member);
+		
+		if(cnt > 0) return true;
+		else return false;
+	}
 }
