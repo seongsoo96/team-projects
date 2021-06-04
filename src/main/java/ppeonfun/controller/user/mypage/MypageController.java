@@ -38,7 +38,7 @@ public class MypageController {
 		logger.info("***** /user/mypage/home START *****");
 		MyPage profileimg = mypageService.getProfileImg((int) session.getAttribute("mNo"));
 		String storedName = profileimg.getMyStoredName();
-
+		
 		//저장된 프로필 사진이 기본 이미지인 경우
 		if("member.png".equals(storedName)) {
 			model.addAttribute("isDefaultImg", true);
@@ -140,11 +140,14 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value="/info", method=RequestMethod.POST)
-	public void updateMyInfo(HttpSession session, Member member) {
+	public String updateMyInfo(HttpSession session, Member member) {
 		logger.info("***** /user/mypage/info [POST] START *****");
 		
 		member.setmNo((int) session.getAttribute("mNo"));
-		logger.info("업데이트 된 회원정보 확인:{}", member);
+		logger.info("수정된 회원정보 확인:{}", member);
 		
+		mypageService.updateMemberInfo(member);
+		
+		return "redirect:/user/mypage/detail";
 	}
 }

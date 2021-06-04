@@ -39,4 +39,11 @@ public interface MypageDao {
 	public Member selectMemberByNo(int mNo);
 
 
+	/**
+	 * 회원 정보를 수정한다.
+	 * @param member	회원 기본 정보가 담긴 DTO
+	 */
+	public void updateMemberInfo(Member member);
+
+
 }

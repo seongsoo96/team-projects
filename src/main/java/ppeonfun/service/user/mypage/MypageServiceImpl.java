@@ -130,4 +130,9 @@ public class MypageServiceImpl implements MypageService {
 	public Member getMemberInfo(int mNo) {
 		return mypageDao.selectMemberByNo(mNo);
 	}
+
+	@Override
+	public void updateMemberInfo(Member member) {
+		mypageDao.updateMemberInfo(member);
+	}
 }

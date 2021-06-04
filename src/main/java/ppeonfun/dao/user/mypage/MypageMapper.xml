@@ -39,6 +39,14 @@
  	FROM member
  	WHERE m_no = #{mNo}
  	</select>
+
+ 	<update id="updateMemberInfo" parameterType="ppeonfun.dto.Member">
+ 	UPDATE member
+ 	SET m_nick = #{mNick}, m_email = #{mEmail}, m_phone = #{mPhone}
+ 		, m_bank = #{mBank}, m_account = #{mAccount}, m_post = #{mPost}
+ 		, m_address = #{mAddress}, m_detail_address = #{mDetailAddress}
+ 	WHERE m_no = #{mNo}
+ 	</update>
  </mapper>  
     
   

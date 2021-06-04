@@ -90,28 +90,29 @@
 			</span>
 			<span class="change-bank form-inline">
 				<select class="form-control" style="width:25%; margin:0;" id="bank" name="mBank">
-					<option>KB국민은행</option>		  
-					<option>SC제일은행</option>		
-					<option>경남은행</option>			
-					<option>광주은행</option>			
-					<option>기업은행</option>			
-					<option>농협</option>			
-					<option>대구은행</option>			
-					<option>부산은행</option>		
-					<option>산업은행</option>			
-					<option>새마을금고</option>			
-					<option>수협</option>			
-					<option>신한은행</option>			
-					<option>신협</option>			
-					<option>외환은행</option>			
-					<option>우리은행</option>			
-					<option>우체국</option>			
-					<option>전북은행</option>			
-					<option>축협 </option>			
-					<option>카카오뱅크</option> 		
-					<option>케이뱅크</option>			
-					<option>하나은행(서울은행)</option>		
-					<option>한국씨티은행(한미은행)</option> 
+					<option selected>은행</option>
+					<option value="KB국민은행">KB국민은행</option>		  
+					<option value="SC제일은행">SC제일은행</option>		
+					<option value="경남은행">경남은행</option>			
+					<option value="광주은행">광주은행</option>			
+					<option value="기업은행">기업은행</option>			
+					<option value="농협">농협</option>			
+					<option value="대구은행">대구은행</option>			
+					<option value="부산은행">부산은행</option>		
+					<option value="산업은행">산업은행</option>			
+					<option value="새마을금고">새마을금고</option>			
+					<option value="수협">수협</option>			
+					<option value="신한은행">신한은행</option>			
+					<option value="신협">신협</option>			
+					<option value="외환은행">외환은행</option>			
+					<option value="우리은행">우리은행</option>			
+					<option value="우체국">우체국</option>			
+					<option value="전북은행">전북은행</option>			
+					<option value="축협">축협 </option>			
+					<option value="카카오뱅크">카카오뱅크</option> 		
+					<option value="케이뱅크">케이뱅크</option>			
+					<option value="하나은행(서울은행)">하나은행(서울은행)</option>		
+					<option value="한국씨티은행(한미은행)">한국씨티은행(한미은행)</option> 
     			</select>
 				<input type="text" class="form-control onlyNumber" id="account" name="mAccount" style="width:25%;" placeholder="계좌번호(숫자만)"/>
 			</span>		
@@ -140,6 +141,7 @@
 		<label for="detailaddress" class="col-sm-2 control-label">상세 주소</label>
 		<div class="col-lg-8">
 			<input type="text" class="form-control" id="detailAddress" name="mDetailAddress"value="${mInfo.mDetailAddress }" disabled="disabled" />
+			<span id="dAddressMsg" style="color:#a94442;"></span>
 		</div>
 		<div class="col-lg-2">
 			<input type="text" class="form-control" id="extraAddress" placeholder="참고항목" readonly>
@@ -155,6 +157,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+
 	// 초기 값: 변경란 모두 hide
 	$(".change-nick").hide()
 	$("#inputNickStatus").hide()
@@ -216,8 +219,39 @@ $(document).ready(function() {
 	
 	// '확인' 클릭 시 폼 데이터 전송
 	$("#btnComplete").click(function() {
+		
+		//값이 수정되지 않은 경우 기존 값을 value로 삽입
+		if($("#nickname").val() == "") {
+			$("#nickname").val("${mNick }")
+		} 
+		
+		if($("#email").val() == "") {
+			$("#email").val("${mInfo.mEmail }")
+		} 
+		
+		if($("#phoneNumber").val() == "") {
+			$("#phoneNumber").val("${mInfo.mPhone }")
+		} 
+		
+		if($("#bank").val() == "은행") {
+			var prebank = "${mInfo.mBank }"
+			console.log("기존은행:", prebank)
+			
+			$("#bank").val(prebank).prop('selected', true)
+		} 
+		
+		if($("#account").val() == "") {
+			$("#account").val("${mInfo.mAccount }")
+		}
+		
+		if($("#detailAddress").val() == "") {
+			$("#dAddressMsg").html("상세 주소를 입력해주세요.")
+			return
+		}
+		
 		$("form").submit()
 	})
+	
 	
 	//----------------------------------------
 	
@@ -261,6 +295,11 @@ $(document).ready(function() {
         	changePhone.removeClass("has-error");
         	changePhone.addClass("has-success");
         }
+    });
+	
+	//상세주소 입력 시 메시지 hide
+	$("#detailAddress").keyup(function(event){
+		$("#dAddressMsg").html("")
     });
 	
 	//----------------------------------------

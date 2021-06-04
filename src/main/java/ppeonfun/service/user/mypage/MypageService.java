@@ -44,5 +44,12 @@ public interface MypageService {
 	 * @return		기본 정보가 담긴 DTO
 	 */
 	public Member getMemberInfo(int mNo);
+
+
+	/**
+	 * 회원의 수정된 기본 정보를 업데이트한다.
+	 * @param member	수정된 기본 정보가 담긴 DTO	
+	 */
+	public void updateMemberInfo(Member member);
 	
 }
