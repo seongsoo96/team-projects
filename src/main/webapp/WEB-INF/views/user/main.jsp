@@ -40,10 +40,10 @@ function pagingSelect(pagingNumber) {
                 </div>  
 				<c:choose>
 				<c:when test = "${fn:contains(info.iStoredName, 'test')}">
-					<a href="https://www.google.com/"><img src="/resources/img/${info.iStoredName }"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }"/></a>
 				</c:when>
 				<c:otherwise>
-					<a href="https://www.google.com/"><img src="/upload/${info.iStoredName }"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }"/></a>
 				</c:otherwise>
 			</c:choose>
              </li>
@@ -70,10 +70,10 @@ function pagingSelect(pagingNumber) {
 		<div>
 			<c:choose>
 				<c:when test = "${fn:contains(info.iStoredName, 'test')}">
-					<a href="https://www.google.com/"><img src="/resources/img/${info.iStoredName }" width="200" height="150"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" width="200" height="150"/></a>
 				</c:when>
 				<c:otherwise>
-					<a href="https://www.google.com/"><img src="/upload/${info.iStoredName }" width="200" height="150"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }" width="200" height="150"/></a>
 				</c:otherwise>
 			</c:choose>
 			<p>${info.iTitle }</p>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="ppeonfun.dao.user.supporter.SupporterDao">
+
+	<resultMap type="ppeonfun.dto.SupporterJoin" id="SupporterJoin">
+		<result column="su_no" property="suNo"/>
+		<result column="p_no" property="pNo"/>
+		<result column="m_no" property="mNo"/>
+		<result column="re_no" property="reNo"/>
+		<result column="su_create_date" property="suCreateDate"/>
+		<result column="su_add_money" property="suAddMoney"/>
+		<result column="m_id" property="mId"/>
+		<result column="re_money" property="reMoney"/>
+		<result column="my_origin_name" property="myOriginName"/>
+		<result column="my_stored_name" property="myStoredName"/>
+	</resultMap>
+	
+	<resultMap type="ppeonfun.dto.Information" id="Information">
+		<result column="i_no" property="iNo"/>
+		<result column="p_no" property="pNo"/>
+		<result column="i_title" property="iTitle"/>
+		<result column="i_mondy" property="iMoney"/>
+		<result column="i_origin_name" property="iOriginName"/>
+		<result column="i_stored_name" property="iStoredName"/>
+		<result column="i_category" property="iCategory"/>
+		<result column="i_start_date" property="iStartDate"/>
+		<result column="i_end_date" property="iEndDate"/>
+		<result column="i_create_date" property="iCreateDate"/>
+		<result column="i_state" property="iState"/>
+		<result column="i_size" property="iSize"/>
+		<result column="i_content_type" property="iContentType"/>
+	</resultMap>
+
+	<select id="selectCntSupporter" parameterType="ppeonfun.dto.Supporter" resultType="int">
+		SELECT count(*)
+		FROM supporter
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<select id="selectList" parameterType="ppeonfun.dto.SupporterJoin" resultMap="SupporterJoin">
+		SELECT m_id, re_money, su_add_money
+		FROM member m, reward r, supporter s
+		WHERE s.m_no = m.m_no and s.re_no = r.re_no and s.p_no = #{pNo }
+		ORDER BY su_create_date desc
+	</select>
+	
+	<select id="selectRemainDay" parameterType="ppeonfun.dto.SupporterJoin" resultType="int">
+		select 
+		    to_date(to_char(i_end_date, 'YYYYMMDD')) - to_date(to_char(sysdate, 'YYYYMMDD'))
+		from information
+		where p_no = #{pNo }	
+	</select>
+	
+	<select id="selectTotalAmount" parameterType="ppeonfun.dto.SupporterJoin" resultType="int">
+		SELECT sum(re_money + su_add_money)
+		FROM reward r, supporter s
+		WHERE s.re_no = r.re_no and s.p_no = #{pNo }			
+	</select>
+	
+	<select id="selectInfo" parameterType="ppeonfun.dto.Information" resultMap="Information">
+		select i_category, i_title 
+		from information
+		where p_no = #{pNo }		
+	</select>
+
+</mapper>
