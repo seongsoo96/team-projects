@@ -240,6 +240,11 @@ public class NoticeServiceImpl implements NoticeService {
 	public int getRecommend(Recommend rec) {
 		return noticeDao.selectRecByBno(rec);
 	}
+	
+	@Override
+	public void writeCmt(Comments cmt) {
+		noticeDao.insertCmt(cmt);
+	}
 
 	@Override
 	public boolean chkRecommended(Recommend recommend) {
@@ -252,9 +257,10 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<Comments> getCommentList(int bNo) {
+	public List<HashMap<String, Object>> getCommentList(int bNo) {
 		return noticeDao.selectComments(bNo);
 	}
+
 
 
 } // Class end

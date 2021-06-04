@@ -156,12 +156,20 @@ public interface NoticeDao {
 	public int selectRecByBno(Recommend rec);
 
 	/**
+	 * 새로 작성한 댓글을 DB에 삽입한다
+	 * 
+	 * @param cmt - 새로 작성한 댓글 정보가 담겨있는 객체
+	 */
+	public void insertCmt(Comments cmt);
+	
+	/**
 	 * 해당 글의 모든 댓글을 불러온다
 	 * 
 	 * @param bNo - 조회한 글의 글 번호
 	 * @return 글 번호에 해당하는 모든 댓글 리스트
 	 */
-	public List<Comments> selectComments(int bNo);
+	public List<HashMap<String, Object>> selectComments(int bNo);
+
 
 	
 

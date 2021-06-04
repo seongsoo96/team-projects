@@ -55,45 +55,32 @@ public class NoticeController {
 //		//model값으로 공지사항 리스트 설정
 //		model.addAttribute("nlist", nlist);
 		
-		logger.info("/admin/notice/list에서 orderby값 확인 : {}", orderby);
+//		logger.info("/admin/notice/list에서 orderby값 확인 : {}", orderby);
 		
 		if(orderby == 2) {
 			List<HashMap<String, Object>> nlist = noticeService.getArrayList(paging, category, search, orderby);
 			model.addAttribute("nlist", nlist);
-			model.addAttribute("paging", paging);
 			orderby = 3;
 			model.addAttribute("orderby", orderby);
-			
-			logger.info("추천수 내림차순 정렬");
-			
-			return "admin/notice/noticeList";
 			
 		} else if(orderby == 3){
 			List<HashMap<String, Object>> nlist = noticeService.getArrayList(paging, category, search, orderby);
 			model.addAttribute("nlist", nlist);
-			model.addAttribute("paging", paging);
-			orderby = 2;
+			orderby = 1;
 			model.addAttribute("orderby", orderby);
 			
-			logger.info("추천수 오름차순 정렬");
-			
-			return "admin/notice/noticeList";
 		} else {
 			//공지사항 리스트 얻어오기
 			List<HashMap<String, Object>> nlist = noticeService.getList(paging, category, search);
 			
 			//model값으로 공지사항 리스트 설정
 			model.addAttribute("nlist", nlist);
-			model.addAttribute("paging", paging);
 			orderby = 2;
 			model.addAttribute("orderby", orderby);
 			
-			logger.info("날짜순 내림차순 정렬");
-			
-			return "admin/notice/noticeList";
 		}
 			
-		
+		return "admin/notice/noticeList";
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.GET)
@@ -163,7 +150,9 @@ public class NoticeController {
 		model.addAttribute("chkRec", chkRec);
 		
 		//해당 글의 댓글 불러오기
-		List<Comments> clist = noticeService.getCommentList(bNo);
+		List<HashMap<String, Object>> clist = noticeService.getCommentList(bNo);
+		
+		logger.info("clist 데이터 확인 : {}", clist);
 		
 		//model값으로 댓글 정의
 		model.addAttribute("clist", clist);
@@ -206,6 +195,33 @@ public class NoticeController {
 		model.addAttribute("rec", totalRec);
 		
 		return "admin/notice/noticeRecResult";
+	}
+	
+	@RequestMapping(value="/comment/insert")
+	public String comment(Comments cmt, Model model) {
+//		logger.info("받아온 cmt객체 정보 확인 : {}", cmt);
+		
+		//새로 입력한 댓글 DB에 삽입
+		noticeService.writeCmt(cmt);
+		
+		int bNo = cmt.getbNo();
+		
+		//새로 입력한 댓글을 포함한 댓글 리스트 조회
+		List<HashMap<String, Object>> cmtList = noticeService.getCommentList(bNo);
+		
+		//model값 전달
+		model.addAttribute("cmtList", cmtList);
+		
+		return "admin/notice/noticeCmtUpdate";
+	}
+	
+	@RequestMapping(value="/comment/update")
+	public String CmtUpdateForm(int cNo, Model model) {
+		//해당 댓글 번호의 전체 정보 얻어오기
+//		Comments cmt = noticeService.getUpdateData(cNo);
+		
+		
+		return null;
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)

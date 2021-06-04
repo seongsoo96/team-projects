@@ -121,6 +121,13 @@ public interface NoticeService {
 	public int getRecommend(Recommend rec);
 
 	/**
+	 * 새로 작성한 댓글을 DB에 삽입한다
+	 * 
+	 * @param cmt - 새로 작성한 댓글 정보가 담겨있는 객체
+	 */
+	public void writeCmt(Comments cmt);
+	
+	/**
 	 * 로그인 한 회원이 해당 글을 추천했는지 안했는지 여부를 알아온다
 	 * 
 	 * @param recommend - 해당 글 번호와 로그인한 회원의 회원 번호
@@ -134,7 +141,8 @@ public interface NoticeService {
 	 * @param bNo - 조회한 글의 글 번호
 	 * @return 글 번호에 해당하는 모든 댓글 리스트
 	 */
-	public List<Comments> getCommentList(int bNo);
+	public List<HashMap<String, Object>> getCommentList(int bNo);
+
 
 	
 

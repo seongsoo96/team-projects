@@ -201,7 +201,12 @@
 		WHERE b_no = #{bNo}
 	</select>
 	
-	<select id="selectComments" parameterType="int" resultMap="Comments">
+	<insert id="insertCmt" parameterType="ppeonfun.dto.Comments">
+		INSERT INTO comments ( c_no, b_no, m_no, c_content )
+		VALUES ( comments_seq.nextval, #{bNo}, #{mNo}, #{cContent} )
+	</insert>
+	
+	<select id="selectComments" parameterType="int" resultType="hashmap">
 		SELECT comments.*, member.m_nick FROM member, comments
 		WHERE member.m_no = comments.m_no AND comments.b_no = #{bNo}
 	</select>
