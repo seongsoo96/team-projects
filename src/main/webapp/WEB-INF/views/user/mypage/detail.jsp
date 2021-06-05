@@ -60,6 +60,11 @@ $(document).ready(function() {
 		location.href = "/user/mypage/info"
 	})
 	
+	//모달에서 비밀번호 입력 시 이벤트
+	$("#prespw").keyup(function() {
+		$("#checkPwMsg").html("")
+	})
+	
 	// 비밀번호 변경 모달에서 '확인' 버튼 클릭 했을 때
 	$("#btnPwComplete").click(function() {
 		console.log("변경 확인 클릭!")

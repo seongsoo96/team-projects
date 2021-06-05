@@ -177,9 +177,21 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value="/changepw", method=RequestMethod.GET)
-	public void updateMyInfo() {
+	public void viewMyPw() {
 		logger.info("***** /user/mypage/changepw [GET] START *****");
+	}
+	
+	@RequestMapping(value="/changepw", method=RequestMethod.POST)
+	public String updateMyPw(Member member, HttpSession session) {
+		logger.info("***** /user/mypage/changepw [POST] START *****");
+		logger.info("변경할 비밀번호 확인:{}", member.getmPassword());
 		
+		//암호화 처리 후 update
+		member = memberService.encryption(member);
+		member.setmNo((int) session.getAttribute("mNo"));
 		
+		mypageService.updatePassword(member);
+		
+		return "redirect:/user/mypage/home";
 	}
 }

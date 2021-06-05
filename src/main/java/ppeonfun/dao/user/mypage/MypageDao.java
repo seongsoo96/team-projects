@@ -62,4 +62,11 @@ public interface MypageDao {
 	public int selectCntmPw(Member member);
 
 
+	/**
+	 * member 테이블의 m_password를 수정한다.
+	 * @param member	새 비밀번호가 담긴 DTO
+	 */
+	public void updatePwByNo(Member member);
+
+
 }

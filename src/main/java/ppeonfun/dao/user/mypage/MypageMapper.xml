@@ -59,6 +59,12 @@
  	FROM member
  	WHERE m_no = #{mNo} AND m_password = #{mPassword}
  	</select>
+ 	
+ 	<update id="updatePwByNo" parameterType="ppeonfun.dto.Member">
+ 	UPDATE member
+ 	SET m_password = #{mPassword}
+ 	WHERE m_no = #{mNo}
+ 	</update>
  </mapper>  
     
   

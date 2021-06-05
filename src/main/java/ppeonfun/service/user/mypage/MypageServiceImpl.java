@@ -148,4 +148,9 @@ public class MypageServiceImpl implements MypageService {
 		if(cnt > 0) return true;
 		else return false;
 	}
+
+	@Override
+	public void updatePassword(Member member) {
+		mypageDao.updatePwByNo(member);
+	}
 }
