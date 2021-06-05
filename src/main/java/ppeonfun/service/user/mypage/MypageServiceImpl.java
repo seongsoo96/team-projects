@@ -153,4 +153,14 @@ public class MypageServiceImpl implements MypageService {
 	public void updatePassword(Member member) {
 		mypageDao.updatePwByNo(member);
 	}
+
+	@Override
+	public String getEmailBymNo(int mNo) {
+		return mypageDao.selectmEmailBymNo(mNo);
+	}
+
+	@Override
+	public void updateDeleteState(int mNo) {
+		mypageDao.updateDeleteStateBymNo(mNo);
+	}
 }

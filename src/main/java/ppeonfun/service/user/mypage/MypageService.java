@@ -74,5 +74,20 @@ public interface MypageService {
 	 * @param member	새 비밀번호가 담긴 DTO
 	 */
 	public void updatePassword(Member member);
+
+
+	/**
+	 * 회원번호로 회원의 이메일 주소를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		이메일
+	 */
+	public String getEmailBymNo(int mNo);
+
+
+	/**
+	 * 회원의 탈퇴 신청을 업데이트한다.
+	 * @param mNo	회원번호
+	 */
+	public void updateDeleteState(int mNo);
 	
 }

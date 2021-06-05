@@ -65,6 +65,18 @@
  	SET m_password = #{mPassword}
  	WHERE m_no = #{mNo}
  	</update>
+ 	
+ 	<select id="selectmEmailBymNo" parameterType="int" resultType="String">
+ 	SELECT m_email
+ 	FROM member
+ 	WHERE m_no = #{mNo}
+ 	</select>
+ 	
+ 	<update id="updateDeleteStateBymNo" parameterType="int">
+ 	UPDATE member
+ 	SET m_delete_state = 'Y'
+ 	WHERE m_no = #{mNo}
+ 	</update>
  </mapper>  
     
   

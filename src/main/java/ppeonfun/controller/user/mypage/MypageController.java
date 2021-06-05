@@ -194,4 +194,29 @@ public class MypageController {
 		
 		return "redirect:/user/mypage/home";
 	}
+	
+	@RequestMapping(value="/unsubscribe", method=RequestMethod.GET)
+	public void viewUnsubscribe(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/unsubscribe [GET] START *****");
+		
+		String mEmail = mypageService.getEmailBymNo((int) session.getAttribute("mNo"));
+		model.addAttribute("mEmail", mEmail);
+		
+	}
+	
+	@RequestMapping(value="/unsubscribe", method=RequestMethod.POST)
+	public String postUnsubscribe(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/unsubscribe [POST] START *****");
+		
+		//m_delete_state N -> Y 로 UPDATE
+		mypageService.updateDeleteState((int) session.getAttribute("mNo"));
+		
+		//사이트 로그인 , 소셜 로그인에 따라 로그아웃 다르게 하기 위해 정보 조회
+		String joinInfo = mypageService.getSocialInfo((int) session.getAttribute("mNo"));
+		if(!"사이트".equals(joinInfo)) {	//카카오 로그인 회원인 경우
+			model.addAttribute("isSocialKakao", true);
+		}
+		
+		return "jsonView";
+	}
 }

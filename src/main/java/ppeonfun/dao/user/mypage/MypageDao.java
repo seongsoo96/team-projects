@@ -69,4 +69,19 @@ public interface MypageDao {
 	public void updatePwByNo(Member member);
 
 
+	/**
+	 * 회원번호로 member 테이블의 m_email을 조회한다.
+	 * @param mNo	회원번호
+	 * @return		m_email
+	 */
+	public String selectmEmailBymNo(int mNo);
+
+
+	/**
+	 * member 테이블의 m_delete_state를 업데이트한다.
+	 * @param mNo	회원 탈퇴를 신청한 회원번호
+	 */
+	public void updateDeleteStateBymNo(int mNo);
+
+
 }
