@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <c:forEach var="c" items="${cmtList }">
 	<div id="comment${c.C_NO }" class="comment">
 		<label class="comment_nick">${c.M_NICK }</label><br>

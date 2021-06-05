@@ -152,7 +152,7 @@ public class NoticeController {
 		//해당 글의 댓글 불러오기
 		List<HashMap<String, Object>> clist = noticeService.getCommentList(bNo);
 		
-		logger.info("clist 데이터 확인 : {}", clist);
+//		logger.info("clist 데이터 확인 : {}", clist);
 		
 		//model값으로 댓글 정의
 		model.addAttribute("clist", clist);
@@ -198,7 +198,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/comment/insert")
-	public String comment(Comments cmt, Model model) {
+	public String CmtInsert(Comments cmt, Model model) {
 //		logger.info("받아온 cmt객체 정보 확인 : {}", cmt);
 		
 		//새로 입력한 댓글 DB에 삽입
@@ -212,16 +212,53 @@ public class NoticeController {
 		//model값 전달
 		model.addAttribute("cmtList", cmtList);
 		
+		return "admin/notice/noticeCmtInsert";
+	}
+	
+	@RequestMapping(value="/comment/update", method=RequestMethod.GET)
+	public String CmtUpdateForm(Comments cmt, Model model) {
+		//해당 댓글 번호의 전체 정보 얻어오기
+		HashMap<String, Object> comment = noticeService.getCommentForUpdate(cmt);
+		
+		//model값으로 해당 댓글 정보 설정
+		model.addAttribute("cmt", comment);
+		
+		int bNo = cmt.getbNo();
+		
+		List<HashMap<String, Object>> cmtList = noticeService.getCommentList(bNo);
+		
+		model.addAttribute("cmtList", cmtList);
+		
+		return "admin/notice/noticeCmtUpdateForm";
+	}
+	
+	@RequestMapping(value="/comment/update", method=RequestMethod.POST)
+	public String CmtUpdate(Comments cmt, Model model) {
+		//입력받은 값을 기존의 댓글 번호에 덮어씌우기
+		noticeService.updateCmt(cmt);
+		
+		//덮어씌운 후 해당 글 번호의 전체 댓글 목록 가져오기
+		int bNo = cmt.getbNo();
+		
+		List<HashMap<String, Object>> cmtList = noticeService.getCommentList(bNo);
+		
+		model.addAttribute("cmtList", cmtList);
+
 		return "admin/notice/noticeCmtUpdate";
 	}
 	
-	@RequestMapping(value="/comment/update")
-	public String CmtUpdateForm(int cNo, Model model) {
-		//해당 댓글 번호의 전체 정보 얻어오기
-//		Comments cmt = noticeService.getUpdateData(cNo);
+	@RequestMapping(value="/comment/delete")
+	public String CmtDelete(Comments cmt, Model model) {
+		//해당 댓글번호의 댓글 정보 삭제
+		noticeService.deleteCmt(cmt);
 		
+		int bNo = cmt.getbNo();
 		
-		return null;
+		List<HashMap<String, Object>> cmtList = noticeService.getCommentList(bNo);
+		
+		model.addAttribute("cmtList", cmtList);
+		
+		return "admin/notice/noticeCmtDelete";
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)

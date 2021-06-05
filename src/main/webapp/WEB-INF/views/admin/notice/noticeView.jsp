@@ -49,13 +49,13 @@ $(document).ready(function(){
 		location.href="/user/member/loginForm"
 	})
 	
-	
-	$('.btn-example').click(function(){
-        var $href = $(this).attr('id');
-        layer_popup($href);
-    });
-	
 })
+
+function layer_data(c_no){
+	var classname = "#layer"+c_no;
+	var $href = classname;
+    layer_popup($href);
+}
 
 function layer_popup(el){
 	var $el = $(el);    //레이어의 id를 $el 변수에 저장
@@ -71,30 +71,31 @@ function layer_popup(el){
 		// 화면의 중앙에 레이어를 띄운다.
 		if ($elHeight < docHeight || $elWidth < docWidth) {
 			$el.css({
-				marginTop: -$elHeight+77 ,
-				marginLeft: -$elWidth-410
+				marginTop: -$elHeight+64 ,
+				marginLeft: $elWidth+465
 			})
 		} else {
-			$el.css({top: 0, left: 0});
+			$el.css({top: 500, left: 500})
 		}
         
 
 		$(document).mouseup(function(){
-			isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+			isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 팝업 바깥 부분을 클릭하면 레이어가 닫힌다.
 			return false;
-		});
+		})
 }
 
-function updateForm(c_no){
+function CmtUpdateForm(c_no, b_no){
 	$.ajax({
 		type: "GET"
 		, url: "/admin/notice/comment/update"
 		, data: {
-			cNo : c_no
+			cNo : c_no,
+			bNo : b_no
 		}
 		, dataType: ""
 		, success: function(res){
-			
+			$("#comment_list").html(res)
 		}
 		, error: function(res){
 			
@@ -102,16 +103,18 @@ function updateForm(c_no){
 	})
 }
 	
-function updateCmt(c_no){
+function updateCmt(c_no, b_no){
 	$.ajax({
 		type: "POST"
 		, url: "/admin/notice/comment/update"
 		, data: {
-			cNo : c_no
+			cNo : c_no,
+			bNo : b_no,
+			cContent: document.getElementById("comment_updateContent").value
 		}
 		, dataType: ""
 		, success: function(res){
-			
+			$("#comment_list").html(res)
 		}
 		, error: function(res){
 			
@@ -120,8 +123,23 @@ function updateCmt(c_no){
 	})
 }
 
-function deleteCmt(cNo){
+function deleteCmt(c_no, b_no){
+	$.ajax({
+		type: "GET"
+		, url: "/admin/notice/comment/delete"
+		, data: {
+			cNo : c_no,
+			bNo : b_no
+		}
+		, dataType: ""
+		, success: function(res){
+			$("#comment_list").html(res)
+		}
+		, error: function(res){
+			
+		}
 	
+	})
 }
 </script>
 
@@ -165,18 +183,18 @@ function deleteCmt(cNo){
 			<label class="arrayAsc" style="font-weight: 400; cursor: pointer;">최신순</label>
 		</div>
 		<div id="comment_list" class="comment_list">
-			<c:forEach var="c" items="${clist }" varStatus="stat">
-				<div class="comment">
+			<c:forEach var="c" items="${clist }">
+				<div id="comment${c.C_NO }" class="comment">
 					<label class="comment_nick">${c.M_NICK }</label><br>
 					<label class="comment_content">${c.C_CONTENT }</label><br>
 					<label class="comment_date"><fmt:formatDate value="${c.C_CREATE_DATE }" pattern="yyyy.MM.dd. HH:mm" /></label>
-					<label id="#layer${stat.index }" class="btn-example">…</label>
-					<div id="layer${stat.index }" class="pop-layer">
+					<label id="#layer${c.C_NO }" class="btn-example pull-right" onclick="layer_data(${c.C_NO})">…</label>
+					<div id="layer${c.C_NO }" class="pop-layer">
 						<div class="pop-container">
 							<div class="pop-conts">
 								<c:if test="${c.M_NO eq sessionScope.mNo }">
-									<label class="pop-btn" onclick="updateForm(${c.C_NO})">수정</label><br>
-									<label class="pop-btn" onclick="deleteCmt(${c.C_NO})">삭제</label>
+									<label class="pop-btn" onclick="CmtUpdateForm(${c.C_NO}, ${c.B_NO })">수정</label><br>
+									<label class="pop-btn" onclick="deleteCmt(${c.C_NO}, ${c.B_NO })">삭제</label>
 								</c:if>
 								<c:if test="${c.M_NO ne sessionScope.mNo }">
 									<label class="pop-btn" onclick="">신고</label>

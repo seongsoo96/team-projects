@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:forEach var="c" items="${cmtList }">
+	<c:if test="${c.C_NO ne cmt.C_NO }">
+		<div id="comment${c.C_NO }" class="comment">
+			<label class="comment_nick">${c.M_NICK }</label><br>
+			<label class="comment_content">${c.C_CONTENT }</label><br>
+			<label class="comment_date"><fmt:formatDate value="${c.C_CREATE_DATE }" pattern="yyyy.MM.dd. HH:mm" /></label>
+			<label id="#layer${c.C_NO }" class="btn-example pull-right" onclick="layer_data(${c.C_NO})">…</label>
+			<div id="layer${c.C_NO }" class="pop-layer">
+				<div class="pop-container">
+					<div class="pop-conts">
+						<c:if test="${c.M_NO eq sessionScope.mNo }">
+							<label class="pop-btn" onclick="CmtUpdateForm(${c.C_NO}, ${c.B_NO })">수정</label><br>
+							<label class="pop-btn" onclick="deleteCmt(${c.C_NO}, ${c.B_NO })">삭제</label>
+						</c:if>
+						<c:if test="${c.M_NO ne sessionScope.mNo }">
+							<label class="pop-btn" onclick="">신고</label>
+						</c:if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	<c:if test="${c.C_NO eq cmt.C_NO }">
+		<div id="comment${c.C_NO }" class="comment">
+			<label class="comment_nick">${c.M_NICK }</label><br>
+			<textarea id="comment_updateContent" cols="175" rows="3">${c.C_CONTENT }</textarea><br>
+			<div>
+				<button class="okbtn-after-cmtupdate pull-right" onclick="updateCmt(${c.C_NO}, ${c.B_NO })">등록</button>
+				<button class="cnbtn-after-cmtupdate pull-right" onclick="">취소</button>
+			</div>
+		</div>
+	</c:if>
+</c:forEach>
+
+

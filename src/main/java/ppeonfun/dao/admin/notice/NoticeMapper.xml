@@ -209,6 +209,24 @@
 	<select id="selectComments" parameterType="int" resultType="hashmap">
 		SELECT comments.*, member.m_nick FROM member, comments
 		WHERE member.m_no = comments.m_no AND comments.b_no = #{bNo}
+		ORDER BY c_no ASC
 	</select>
+	
+	<select id="selectCmt" parameterType="ppeonfun.dto.Comments" resultType="hashmap">
+		SELECT comments.*, member.m_nick FROM member, comments
+		WHERE member.m_no = comments.m_no AND comments.c_no = #{cNo}
+		ORDER BY c_no ASC
+	</select>
+	
+	<update id="updateCmt" parameterType="ppeonfun.dto.Comments">
+		UPDATE comments
+		SET c_content = #{cContent}
+		WHERE c_no = #{cNo}
+	</update>
+	
+	<delete id="deleteCmt" parameterType="ppeonfun.dto.Comments">
+		DELETE FROM comments
+		WHERE c_no = #{cNo}
+	</delete>
 	
 </mapper>

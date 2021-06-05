@@ -143,7 +143,26 @@ public interface NoticeService {
 	 */
 	public List<HashMap<String, Object>> getCommentList(int bNo);
 
+	/**
+	 * 댓글 내용을 수정하기 위해 입력폼을 출력할 때 기존의 정보를 보여준다 
+	 * 
+	 * @param cmt - 기존의 댓글 정보를 불러올 댓글 번호
+	 * @return 댓글 번호가 일치하는 모든 정보를 얻어온다
+	 */
+	public HashMap<String, Object> getCommentForUpdate(Comments cmt);
 
-	
+	/**
+	 * 댓글 리스트에서 수정한 본인의 댓글을 기존 정보에 덮어씌운다
+	 * 
+	 * @param cmt - 수정할 기준이 될 댓글 번호와 내용을 담고있는 객체
+	 */
+	public void updateCmt(Comments cmt);
+
+	/**
+	 * 해당 댓글 번호의 전체 정보를 삭제한다
+	 * 
+	 * @param cmt - 삭제할 댓글의 댓글 번호를 담고있는 객체
+	 */
+	public void deleteCmt(Comments cmt);
 
 }

@@ -130,7 +130,7 @@ public class NoticeServiceImpl implements NoticeService {
 			
 			
 			noticeDao.insertBoardFiles( bf );
-		
+			
 		} // for문 end (다중 첨부파일)
 		
 	} // write method end
@@ -259,6 +259,21 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public List<HashMap<String, Object>> getCommentList(int bNo) {
 		return noticeDao.selectComments(bNo);
+	}
+
+	@Override
+	public HashMap<String, Object> getCommentForUpdate(Comments cmt) {
+		return noticeDao.selectCmt(cmt);
+	}
+
+	@Override
+	public void updateCmt(Comments cmt) {
+		noticeDao.updateCmt(cmt);
+	}
+
+	@Override
+	public void deleteCmt(Comments cmt) {
+		noticeDao.deleteCmt(cmt);
 	}
 
 
