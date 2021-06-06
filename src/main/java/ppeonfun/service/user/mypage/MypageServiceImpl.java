@@ -2,6 +2,8 @@ package ppeonfun.service.user.mypage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -162,5 +164,10 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public void updateDeleteState(int mNo) {
 		mypageDao.updateDeleteStateBymNo(mNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMyFundingList(int mNo) {
+		return mypageDao.selectMyFunding(mNo);
 	}
 }

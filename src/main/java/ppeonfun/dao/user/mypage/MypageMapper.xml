@@ -77,6 +77,22 @@
  	SET m_delete_state = 'Y'
  	WHERE m_no = #{mNo}
  	</update>
+ 	
+ 	<select id="selectMyFunding" parameterType="int" resultType="hashmap">
+	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	            PJ.p_no, PJ.m_no, PJ.p_name, PJ.p_progress_state, I.i_stored_name, I.i_end_date
+	        FROM payment PM
+	        INNER JOIN project PJ
+	            ON PM.p_no = PJ.p_no
+	        INNER JOIN information I
+	            ON PM.p_no = I.p_no
+	        WHERE PM.m_no = #{mNo} AND PM.paym_state = 'Y'
+	        ORDER BY PM.paym_date DESC
+	    ) RES
+	) WHERE rnum BETWEEN 1 AND 3
+ 	</select>
  </mapper>  
     
   

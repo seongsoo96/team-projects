@@ -1,5 +1,8 @@
 package ppeonfun.service.user.mypage;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dto.Member;
@@ -89,5 +92,13 @@ public interface MypageService {
 	 * @param mNo	회원번호
 	 */
 	public void updateDeleteState(int mNo);
+
+
+	/**
+	 * 회원이 펀딩한 최근 내역을 조회한다.
+	 * @param mNo	회원 번호
+	 * @return		최근 펀딩 내역 리스트
+	 */
+	public List<Map<String, Object>> getMyFundingList(int mNo);
 	
 }

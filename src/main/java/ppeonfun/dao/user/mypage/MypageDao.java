@@ -1,5 +1,8 @@
 package ppeonfun.dao.user.mypage;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -82,6 +85,16 @@ public interface MypageDao {
 	 * @param mNo	회원 탈퇴를 신청한 회원번호
 	 */
 	public void updateDeleteStateBymNo(int mNo);
+
+
+	/**
+	 * payment, project, information 테이블을 조인하여
+	 * 회원이 최근에 펀딩한 프로젝트 목록을 조회한다.
+	 * 
+	 * @param mNo	회원번호
+	 * @return		최근 펀딩 목록
+	 */
+	public List<Map<String, Object>> selectMyFunding(int mNo);
 
 
 }

@@ -2,6 +2,8 @@ package ppeonfun.controller.user.mypage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -219,4 +221,17 @@ public class MypageController {
 		
 		return "jsonView";
 	}
+	
+	//마이페이지 나의프로젝트--------------------------------------------------------------------
+	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
+	public void viewMyFunding(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/myfunding [GET] START *****");
+		
+		//최근 펀딩 내역 조회
+		List<Map<String, Object>> latelyList = mypageService.getMyFundingList((int) session.getAttribute("mNo"));
+		logger.info("latelyList: {}", latelyList);
+		
+		model.addAttribute("latelyList", latelyList);
+	}
+	
 }
