@@ -27,7 +27,6 @@ header > div{
 	display:inline-block;
 	float: left;
 	/* border: 1px solid #ccc; */
-
 }
 .container{
 	width: 980px;
@@ -135,6 +134,114 @@ header > div{
 
 
 }
+
+/* 검색창, 최근검색어 css */
+.searchInput {
+	position: relative;
+}
+
+.searchInput_suggest{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    width: max-content;
+}
+.searchInput_suggest_open {
+	display: block;
+    position: absolute;
+    top: 100%;
+    left: 11px;
+    background-color: #fff;
+/*     width: 100%; */
+    width: max-content;
+}
+
+.searchInput_module {
+	width: 336px;
+    height: 470px;
+    box-sizing: border-box;
+    box-shadow: 0 32px 40px -2px rgb(10 22 70 / 12%), 0 0 5px 0 rgb(10 22 70 / 6%);
+    background-color: #fff;
+}
+.searchInput_module .searchInput_recent {
+	padding: 10px;
+}
+.searchInput_module .hr {
+	display: block;
+    margin: 0 auto;
+    width: 81%;
+    height: 3px;
+    background-color: lightgray;
+    border-radius: 3px;
+}
+
+.searchInput_module_content {
+	display: flex;
+    height: calc(100% - 84px);
+    padding: 12px 0;
+    overflow: visible;
+}
+.searchInput_module_contentBox{
+	display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+}
+.searchInput_module_contentBox ul{
+	flex: 1 1 auto;
+    width: 100%;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+}
+.searchInput_module_contentBox ul li{
+	cursor: pointer;
+    display: flex;
+    align-items: stretch;
+    padding-left: 16px;
+    width: 100%;
+    height: 36px;
+	list-style: none;
+}
+.searchInput_module_contentBox ul li .content_title{    
+	display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    width: calc(100% - 37px);
+    text-align: left;
+    color: #dadce0;
+    font-size: 16px;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    padding-left: 10px;
+}
+.searchInput_module_contentBox ul li .content_title span{
+	display: inline-block;
+    color: #60656a;
+    font-size: 14px;
+    width: 100%;
+    height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+.searchInput_module_contentBox ul li .deleteBtn {
+	margin-right: 16px;
+	border: 0px solid lightgrey;
+	border-radius: 5px;
+	background-color: #fff;
+	height: 30px;
+	width: 23px;
+	margin-top: 2px;
+}
+
+
+
+
 input[id="keyword"]{
 	width: 400px;
 	margin: 10px;

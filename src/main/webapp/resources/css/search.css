@@ -92,7 +92,7 @@ input[type="checkbox"] {
 }
 .SearchBox_filter_area .filter_list .filter_item button {
     margin-left: 4px;
-    vertical-align: bottom;
+    vertical-align: sub;
     cursor: pointer;
     border: 0;
     background-color: #f0f2f5;
@@ -184,7 +184,7 @@ input[type="checkbox"] {
     flex-wrap: wrap;
     border-bottom: 1px solid #f0f2f5;
     overflow: auto!important;
-    color: red;
+/*     color: red; */
 }
 .SearchBox_shadow .filter_modal .filter_modal_header 
 .modal_filter_list .filtered_item {

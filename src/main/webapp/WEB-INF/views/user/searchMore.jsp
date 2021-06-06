@@ -7,16 +7,26 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	totalPage = '${paging.totalPage}';
-	totalCount = '${paging.totalCount}'
-
-		if(cnt < totalCount) {
-			$('.listCount').text(cnt)
-		} else {
-			$('.listCount').text(totalCount)
-			$('#btnViewMore').prop("disabled", true)
-		}
+	totalCount = '${paging.totalCount}';
+	listCount = '${paging.listCount}';
+	curPage = '${paging.curPage}';
+	
+	
+	console.log("현재 페이지 curPage : " + curPage)
+	console.log("페이지 리스트 수 listCount : " + listCount)
 	console.log("더보기 totalPage : " + totalPage)
 	console.log("더보기 totalCount : " + totalCount)
+	
+	cnt = parseInt(curPage) * parseInt(listCount)
+	console.log("변수 cnt : " + cnt)
+	
+// 		if(cnt < totalCount) {
+// 			$('.listCount').text(cnt)
+// 		} else {
+// 			$('.listCount').text(totalCount)
+// 			$('#btnViewMore').prop("disabled", true)
+// 		}
+	console.log("-----------searchMore.jsp 끝-------------")
 
 })
 </script>

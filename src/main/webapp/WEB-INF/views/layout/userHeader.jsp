@@ -20,81 +20,62 @@
 <link rel="stylesheet" href="/resources/css/header.css">
 
 <script type="text/javascript">
+
+// <ul class="keyword_ul">
+// <li class="keyword_li">
+// <button class="content_title">
+// 		<span>도구</span>
+// </button>
+// <button type="button" class="deleteBtn">
+// 		<i class="icon close">x</i>
+// </button>
+
+
+
+
+var i = 0;
+console.log("전역변수 i = "+i)
+
+
 $(document).ready(function() {
 	
 	//검색 버튼 클릭
 	$("#btnSearch").click(function(){
 		searchEnter()
 	})
+	
+	//검색창 클릭
+	$('#keyword').click(function(){
+		if($(this).next().next().hasClass('searchInput_suggest')){
+			$(".searchInput_suggest").attr('class','searchInput_suggest_open')
+		} else {
+			$(".searchInput_suggest_open").attr('class','searchInput_suggest')
+		}
+	})
 })
 
-//쿠키 생성하기
-function setCookie(cookie_name, value, days) {
-  var exdate = new Date();
-  exdate.setDate(exdate.getDate() + days);
-  // 설정 일수만큼 현재시간에 만료값으로 지정
-
-  var cookie_value = escape(value) + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
-  document.cookie = cookie_name + '=' + cookie_value;
-}
-
-//쿠키 가져오기
-function getCookie(cookie_name) {
-  var x, y;
-  var val = document.cookie.split(';');
-
-  for (var i = 0; i < val.length; i++) {
-    x = val[i].substr(0, val[i].indexOf('='));
-    y = val[i].substr(val[i].indexOf('=') + 1);
-    x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
-    if (x == cookie_name) {
-      return unescape(y); // unescape로 디코딩 후 값 리턴
-    }
-  }
-}
-
-//쿠키 추가하기
-function addCookie(id) {
-  var items = getCookie('keyword'); // 이미 저장된 값을 쿠키에서 가져오기
-  var maxItemNum = 10; // 최대 저장 가능한 아이템개수
-  var expire = 7; // 쿠키값을 저장할 기간
-  if (items) {
-    var itemArray = items.split(',');
-    if (itemArray.indexOf(id) != -1) {
-      // 이미 존재하는 경우 종료
-      console.log('Already exists.');
-    }
-    else {
-      // 새로운 값 저장 및 최대 개수 유지하기
-      itemArray.unshift(id);
-      if (itemArray.length > maxItemNum ) itemArray.length = 5;
-      items = itemArray.join(',');
-      setCookie('keyword', items, expire);
-    }
-  }
-  else {
-    // 신규 id값 저장하기
-    setCookie(keyword, 'keyword', expire);
-  }
-}
 
 
 //엔터 누르면 검색
 function searchEnter(){
 	var keyword = $("#keyword").val()
-	console.log("keyword" + keyword)
-	
 	
 	if(keyword === ""){
 		alert("검색어를 입력하세요")
 	} else {
-		addCookie('keyword')
 		
-		console.log("검색어 쿠키 : " + getCookie('keyword'))
 		
+		console.log("searchEnter() ++전 i --- : " + i)
+		i = i + 1
+		console.log("searchEnter() ++후 i --- : " + i)
+		
+		console.log("keyword"+i)
+		localStorage.setItem('keyword'+i, keyword)
 		$(location).attr("href", "/search?keyword=" + keyword)
+// 		location.href="/search?keyword="+keyword;
 	}
 }
+console.log("----searchEnter()밖의 iiii---- : " + i)
 </script>
 
 
@@ -127,10 +108,48 @@ function searchEnter(){
 <!-- 	</div> -->
 	
 	<!--메인 검색창  -->
-	<div>
-		<input type="text" id="keyword" onkeypress="if( event.keyCode == 13 ){searchEnter();}"
+	<div class="searchInput">
+		<input type="text" id="keyword" onkeypress="if( event.keyCode == 13 ) searchEnter();"
 			placeholder="어떤 프로젝트를 찾고 계신가요"/>
 		<button id="btnSearch"><i class="fas fa-search"></i></button>
+		<div class="searchInput_suggest">
+			<div class="searchInput_module">
+				<div class="searchInput_recent">
+					<span>최근검색어</span>
+				</div>
+				<div class="hr"></div>
+				<div class="searchInput_module_content">
+					<div class="searchInput_module_contentBox">
+						<ul class="keyword_ul">
+							<li class="keyword_li">
+								<button class="content_title">
+									<span>도구</span>
+								</button>
+								<button type="button" class="deleteBtn">
+									<i class="icon close">x</i>
+								</button>
+							</li>
+							<li>
+								<button class="content_title">
+									<span>도구</span>
+								</button>
+								<button type="button" class="deleteBtn">
+									<i class="icon close">x</i>
+								</button>
+							</li>
+							<li>
+								<button class="content_title">
+									<span>도구</span>
+								</button>
+								<button type="button" class="deleteBtn">
+									<i class="icon close">x</i>
+								</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	
