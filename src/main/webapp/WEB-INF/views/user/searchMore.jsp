@@ -60,8 +60,8 @@ $(document).ready(function() {
 <!-- 			<div class="SearchList_result_wrap"> -->
 				<c:forEach items="${searchList }" var="list">
 					<div class="SearchList_result_project">
-						<a href="#">
-							<img class="project_img" alt="테스트" src="/resources/img/test6.jpg">
+						<a href="/story?pNo=${list.P_NO }">
+							<img class="project_img" alt="테스트" src="/resources/img/test6.jpg"><!-- ${list.I_STORED_NAME } -->
 							<p>
 								<strong class="project_title">${list.P_NAME }</strong>
 								<small class="project_info">

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ppeonfun.dao.admin.user.UserDao">
+
+	<select id="selectCntAll" resultType="int">
+		select count(*) from member
+	</select>
+	
+	<select id="selectPageList" resultType="hashmap" parameterType="ppeonfun.util.Paging">
+		select * from (
+		    select rownum rnum, B.* from (
+		        select 
+		            m_no, m_name, m_id, m_nick, m_birth, m_email, m_caution
+		        from member
+		        where m_grade = 'U'
+		        order by m_no
+		    ) B
+		) R
+		where rnum between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="selectCntAllBySearch" resultType="int" parameterType="hashmap">
+		select count(*) from member
+		where ${category} like '%' || #{search} || '%'
+	</select>
+	
+	<select id="selectSearchPageList" resultType="hashmap" parameterType="hashmap">
+		select * from (
+		    select rownum rnum, B.* from (
+		        select 
+		             m_no, m_name, m_id, m_nick, m_birth, m_email, m_caution
+		        from member
+		        where m_grade = 'U' 
+		        and ${category} like '%' || #{search} || '%'
+		    ) B
+		) R
+		where rnum between #{paging.startNo} and #{paging.endNo}
+	</select>	
+	
+	<select id="selectByMno" resultType="hashmap" parameterType="int">
+		SELECT my.my_stored_name, m.* FROM member m, mypage my
+		where m_no = my_no
+		and m_no = #{m_no}
+	</select>
+	
+</mapper>

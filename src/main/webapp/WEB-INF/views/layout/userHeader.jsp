@@ -63,14 +63,33 @@ function searchEnter(){
 	if(keyword === ""){
 		alert("검색어를 입력하세요")
 	} else {
-		
-		
 		console.log("searchEnter() ++전 i --- : " + i)
 		i = i + 1
 		console.log("searchEnter() ++후 i --- : " + i)
 		
+// 		name.charAt(name.lenth-1)
+// 		$form = $("<form>").attr({
+// 			action: "/search",
+// 			method: "get"
+// 		}).append(
+// 			$("<input>").attr({
+// 				type:"hidden",
+// 				name:"var",
+// 				value: i
+// 			})
+// 		).append(
+// 			$("<input>").attr({
+// 				type:"hidden",
+// 				name:"keyword",
+// 				value: keyword
+// 			})
+// 		);
+// 		$(document.body).append($form);
+// 		$form.submit();
+		
+		
 		console.log("keyword"+i)
-		localStorage.setItem('keyword'+i, keyword)
+		localStorage.setItem('keyword'+i, keyword + i)
 		$(location).attr("href", "/search?keyword=" + keyword)
 // 		location.href="/search?keyword="+keyword;
 	}
@@ -112,6 +131,11 @@ console.log("----searchEnter()밖의 iiii---- : " + i)
 		<input type="text" id="keyword" onkeypress="if( event.keyCode == 13 ) searchEnter();"
 			placeholder="어떤 프로젝트를 찾고 계신가요"/>
 		<button id="btnSearch"><i class="fas fa-search"></i></button>
+<!-- 		<form action="/search" method="get"> -->
+<!-- 			<input type="text" id="keyword" name="keyword" -->
+<!-- 				placeholder="어떤 프로젝트를 찾고 계신가요"/> -->
+<!-- 			<button id="btnSearch"><i class="fas fa-search"></i></button> -->
+<!-- 		</form> -->
 		<div class="searchInput_suggest">
 			<div class="searchInput_module">
 				<div class="searchInput_recent">

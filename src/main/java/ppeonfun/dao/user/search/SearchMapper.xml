@@ -98,7 +98,7 @@
 		                ( SELECT round( sum(paym_amount) / i_money * 100, 2 ) FROM payment  WHERE p_no = p.p_no  ) rate
 		                , ( SELECT sum(paym_amount) FROM payment WHERE p_no = p.p_no) sum_amount
 		                , p.p_no, p.m_no, p_name
-		                , i_category, i_money, i_start_date, i_end_date
+		                , i_category, i_money, i_start_date, i_end_date, i_stored_name
 		            FROM project P, information I
 		            WHERE p.p_no = i.p_no
 		        ) PI
