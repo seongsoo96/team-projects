@@ -1,8 +1,11 @@
 package ppeonfun.dao.admin.information;
 
+import org.springframework.stereotype.Repository;
+
 import ppeonfun.dto.Information;
 import ppeonfun.dto.Project;
 
+@Repository("admin.InformationDao")
 public interface InformationDao {
 	/**
 	 * 기본정보 값이 있는지 확인

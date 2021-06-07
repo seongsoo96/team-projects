@@ -15,9 +15,9 @@ public interface RequirementDao {
 	 */
 	public Project selectByState(Project project);
 	/**
-	 * 기본요건 값이 있는지 확인
+	 * 상태값 반환
 	 * @param project - 프로젝트 번호
-	 * @return 기본요건의 존재 유무
+	 * @return - 프로젝트 상태값
 	 */
 	public int selectIsRequirement(Project project);
 	

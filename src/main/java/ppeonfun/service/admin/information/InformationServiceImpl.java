@@ -51,7 +51,7 @@ public class InformationServiceImpl implements InformationService {
 		}
 	
 		//파일이 저장될 경로(real path)
-		String storedPath = context.getRealPath("upload");
+		String storedPath = context.getRealPath("upload/information");
 		
 		//폴더가 존재하지 않으면 생성하기
 		File stored = new File(storedPath);

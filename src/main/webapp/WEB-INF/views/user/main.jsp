@@ -43,7 +43,7 @@ function pagingSelect(pagingNumber) {
 					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/logo.png" style="width: 400px; height: 400px; margin: 0 auto;"></a>
 				</c:when>
 				<c:otherwise>
-					<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }"/></a>
 				</c:otherwise>
 			</c:choose>
              </li>
@@ -73,7 +73,7 @@ function pagingSelect(pagingNumber) {
 					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/subLogo.png" width="200" height="150"/></a>
 				</c:when>
 				<c:otherwise>
-					<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }" width="200" height="150"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }" width="200" height="150"/></a>
 				</c:otherwise>
 			</c:choose>
 			<p>${info.iTitle }</p>
