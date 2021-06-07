@@ -36,35 +36,14 @@
 <c:if test="${not empty project.pMaker }">
 	<c:choose>
 		<c:when test="${project.pMaker eq 'W'}"><c:set var="pMaker" value="작성전" /></c:when>
-		<c:when test="${project.pMaker eq 'Y'} "><c:set var="pMaker" value="작성완료" /></c:when>
-		<c:when test="${project.pMaker eq 'N'} "><c:set var="pMaker" value="수정요청" /></c:when>
+		<c:when test="${project.pMaker eq 'Y'}"><c:set var="pMaker" value="작성완료" /></c:when>
+		<c:when test="${project.pMaker eq 'N'}"><c:set var="pMaker" value="수정요청" /></c:when>
 	</c:choose>
 </c:if>
 
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp"></c:import>
 <style type="text/css">
 
-.side_list{
-	position: absolute;
-	top:35px;
-	left:0;
-	bottom: 0;
-	border-top: 1px solid #ccc;
-	width: 200px;
-	height: 500px;
-	font-size: 20px;
-	line-height:0px;
-}
-.side_link{
-	display: block;
-	text-decoration:none;
-	text-align:center;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	padding: 40px 0;
-	border-bottom: 1px solid #ccc;
-	
-}
 .alert{
 	width: 900px;
 	float: right;
@@ -73,25 +52,14 @@
 	margin-left:220px;
 
 }
-.background{
-	background: #4EE2EC;
-	color: #FFFFFF;
-	
-}
+
 .background-white{
 	background: #FFFFFF;
 	color: #1E2227;
 	border: 1px solid #4EE2EC;
 	font-size: 35px;
 }
-.title{
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	height: 60px;
-}
-.title > h3{
-	margin-top: 0px;
-}
+
 .fa-plus-square{
 	margin-top:9px;
 	color:#4EE2EC;
@@ -104,16 +72,8 @@
 </style>
 
 <div id="content">
-<div class="side_list">
-	<div class="title">
-		<h3>${name }의<br>프로젝트 번호:${project.pNo}</h3>
-	</div>
-	<a href="#" class="side_link background">펀딩준비</a>
-	<a href="#" class="side_link">새소식</a>
-	<a href="#" class="side_link">오픈예정</a>
-	<a href="#" class="side_link">서포터</a>
-	<a href="#" class="side_link">펀딩현황</a>
-</div>
+<c:import url="/WEB-INF/views/layout/adminProjectSlide.jsp"></c:import>
+
 <div class="container">
 	<div class="alert background-white" role="alert"><span class="pull-left">기본요건&nbsp;<span class="state">${pRequirements}</span></span><a href="#"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본정보&nbsp;<span class="state">${pInformation}</span></span><a href="#"><i class="far fa-plus-square pull-right"></i></a></div>

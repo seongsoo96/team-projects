@@ -22,6 +22,12 @@
 			<!-- 인터셉터 클래스 지정 -->
 			<beans:bean class="ppeonfun.util.interceptor.admin.AdminInterceptor"/>
 		</interceptor>
+		<interceptor>
+		  <mapping path="/user/board/**"/>
+		    <exclude-mapping path="/user/board/list"/>
+			<exclude-mapping path="/user/board/view"/>
+		  <beans:bean class="ppeonfun.util.interceptor.user.UserInterceptor"/>	
+		</interceptor>
 	</interceptors>
 	
 	
