@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp" />
 
 <style type="text/css">
@@ -48,22 +48,88 @@ hr {
 
 #left {
 	/* 영역 확인용 */
-	border: 1px solid red; 
+/*   	border: 1px solid red;   */
 	float: left;
 	width: 60%;
-	height: 400px;
 	margin-left: 5px;
 /* 	padding-left: 10px; */
 }
 
+/* view 감싸는 div */
+#left .newsViewDiv {
+	padding: 16px 16px 32px;
+}
+
+/* 목록으로가기 버튼 */
+#left .newsViewDiv a .gobackBtn {
+	margin-top: 0;
+	padding: 0 16px;
+	height: 36px;
+	font-size: 15px;
+	border: 1px solid rgba(0,0,0,.15);
+	border-radius: 3px;
+	background-color: #fff;
+	vertical-align: middle;
+	line-height: 1; 
+	color: rgba(0,0,0,.54);
+	font-weight: 400;
+}
+
+/* 글 정보 영역 */
+#left .newsViewDiv .newsViewTitle {
+	margin-top: 40px;
+	margin-bottom: 16px;
+}
+
+/* 카테고리 */
+#left .newsViewDiv .newsViewTitle .news_category {
+	line-height: 18px;
+	letter-spacing: 0;
+	font-size: 12px;
+	font-weight: 700;
+	color: #495057;
+}
+
+/* 제목 */
+#left .newsViewDiv .newsViewTitle .news_title {
+	line-height: 30px;
+	letter-spacing: -.6px;
+	font-size: 20px;
+	font-weight: 700;
+	margin: 12px 0;
+}
+
+/* 작성시간 */
+#left .newsViewDiv .newsViewTitle .news_time {
+	line-height: 20px;
+	letter-spacing: 0;
+	font-size: 14px;
+	font-weight: 400;
+	color: #495057;
+}
+
+/* 새소식 내용 div */
+#left .newsViewDiv .newsDetail {
+	box-shadow: 0 1px 0 0 rgb(0 0 0 / 10%), 0 -1px 0 0 rgb(0 0 0 / 10%);
+    padding: 20px 0 40px;
+}
+
+/* 내용 */
+#left .newsViewDiv .newsDetail .newsContent {
+	line-height: 28px;
+	font-size: 16px;
+	font-weight: 400px;
+}
+
+
 #right {
-	/* 영역 확인용 */
-/* 	border: 1px solid green;  */
+	/* 영역 확인용 */ 
+/*   	border: 1px solid green;   */
 	float: right;
 	width: 35%;
-	height: 400px;
 	margin-right: 15px;
 	padding-top: 15px;
+/*  	padding-left: 5px; */
 }
 
 #right .project_state_info p {
@@ -108,6 +174,7 @@ hr {
 	padding-top: 10px;
 }
 
+/* 환불하기 */
 #right .refund {
 	margin-top: -15px;
 }
@@ -167,8 +234,8 @@ hr {
 	border: 1px solid #dadce0;
 	border-radius: 2px;
 }
-
 </style>
+
 
 <div class="container">
 <br><br><hr>
@@ -179,28 +246,52 @@ hr {
 <!-- 	</div> -->
 	<p class="text-center">${info.iCategory }</p>
 	<p class="lead text-center">${info.iTitle }</p>
-</div> <hr>
+</div><!-- #titleHeader end --> <hr>
 
-<div class="revard-nav">
+<div class="reward-nav">
 <nav id="topMenu">
 	<ul>
 		<li class="active"><a class="menuLink" href="/story?pNo=${info.pNo }">스토리</a></li>
 		<li><a class="menuLink" href="/news?pNo=${info.pNo }">새소식<span class="count">${newsCnt }</span></a></li>
 		<li><a class="menuLink" href="/community?pNo=${info.pNo }">커뮤니티<span class="count">2</span></a></li>
 		<li><a class="menuLink" href="/supporter?pNo=${info.pNo }">서포터<span class="count">${totalCnt }</span></a></li>
-		<!-- 74 나중에 프로젝트번호로 바꾸기 -->
 	</ul>
-</nav>
-</div> <hr><br>
+</nav><!-- #topMenu end -->
+</div><!-- .reward-nav end --> <hr><br>
 
 
 <div id="left">
-
+	<!-- view 감싸는 div -->
+	<div class="newsViewDiv">
+	
+		<a href="#" onclick="history.back()">
+			<button class="gobackBtn">
+				<i></i><!-- 왼쪽 화살표 아이콘 -->
+				목록으로 이동
+			</button>
+		</a>
+		
+		<div class="newsViewTitle">
+			<p>
+				<span class="news_category">${view.nCategory }</span>
+			</p>
+			<p class="news_title">${view.nTitle }</p>
+			<p class="news_time">
+				<fmt:formatDate pattern="yyyy.MM.dd HH:ss" value="${view.nCreateDate }"/>
+			</p>
+		</div>
+		
+		<div class="newsDetail">
+			<div class="newsContent">
+				${view.nContext }
+			</div>
+		</div>
+	</div><!-- .newsViewDiv end -->
 </div><!-- #left end -->
 
 
 <div id="right">
-<div class="project_state_info">
+	<div class="project_state_info">
 		<p class="remaining_day">${remainDay }일 남음</p>
 		<p class="rate_bar">
 			<em></em>
@@ -239,6 +330,7 @@ hr {
 
 <div style="clear: both;"></div>
 </div>
+
 
 <br><br>
 <c:import url="/WEB-INF/views/layout/footer.jsp" />

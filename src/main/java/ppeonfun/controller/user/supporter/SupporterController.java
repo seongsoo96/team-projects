@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ppeonfun.dto.Information;
+import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 import ppeonfun.service.user.supporter.SupporterService;
@@ -25,10 +26,11 @@ public class SupporterController {
 	
 	@RequestMapping(value = "/supporter")
 	public String supporter(
-			Information info, Supporter supporter, SupporterJoin suJoin, Model model) {
+			Information info, Supporter supporter, SupporterJoin suJoin, Model model, News news) {
 		
-		//해당 프로젝트의 제목, 카테고리
+		//해당 프로젝트의 제목, 카테고리, 목표금액
 		info = supporterService.projectInfo(info);
+//		logger.info("제목, 카테고리, 목표금액 {}", info);
 		
 		//해당 프로젝트의 총 서포터 수 구하기
 		int totalCount = supporterService.totalCount(supporter);
@@ -48,11 +50,15 @@ public class SupporterController {
 		int total_amount = supporterService.amount(suJoin);
 //		logger.info("총 펀딩 액 {}", total_amount);
 		
+		//새소식 개수
+		int newsCount = supporterService.newsCount(news);
+		
 		model.addAttribute("totalCnt", totalCount);
 		model.addAttribute("list", list);
 		model.addAttribute("remainDay", remaining_day);
 		model.addAttribute("totalAmount", total_amount);
 		model.addAttribute("info", info);
+		model.addAttribute("newsCnt", newsCount);
 		
 		return "/user/project/supporter";
 		

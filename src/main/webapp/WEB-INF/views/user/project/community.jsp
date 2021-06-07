@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp" />
 
@@ -48,22 +47,21 @@ hr {
 
 #left {
 	/* 영역 확인용 */
-	border: 1px solid red; 
+/*   	border: 1px solid red;   */
 	float: left;
 	width: 60%;
-	height: 400px;
 	margin-left: 5px;
 /* 	padding-left: 10px; */
 }
 
 #right {
-	/* 영역 확인용 */
-/* 	border: 1px solid green;  */
+	/* 영역 확인용 */ 
+/*   	border: 1px solid green;   */
 	float: right;
 	width: 35%;
-	height: 400px;
 	margin-right: 15px;
 	padding-top: 15px;
+/*  	padding-left: 5px; */
 }
 
 #right .project_state_info p {
@@ -108,6 +106,7 @@ hr {
 	padding-top: 10px;
 }
 
+/* 환불하기 */
 #right .refund {
 	margin-top: -15px;
 }
@@ -167,8 +166,8 @@ hr {
 	border: 1px solid #dadce0;
 	border-radius: 2px;
 }
-
 </style>
+
 
 <div class="container">
 <br><br><hr>
@@ -179,28 +178,27 @@ hr {
 <!-- 	</div> -->
 	<p class="text-center">${info.iCategory }</p>
 	<p class="lead text-center">${info.iTitle }</p>
-</div> <hr>
+</div><!-- #titleHeader end --> <hr>
 
-<div class="revard-nav">
+<div class="reward-nav">
 <nav id="topMenu">
 	<ul>
 		<li class="active"><a class="menuLink" href="/story?pNo=${info.pNo }">스토리</a></li>
 		<li><a class="menuLink" href="/news?pNo=${info.pNo }">새소식<span class="count">${newsCnt }</span></a></li>
 		<li><a class="menuLink" href="/community?pNo=${info.pNo }">커뮤니티<span class="count">2</span></a></li>
 		<li><a class="menuLink" href="/supporter?pNo=${info.pNo }">서포터<span class="count">${totalCnt }</span></a></li>
-		<!-- 74 나중에 프로젝트번호로 바꾸기 -->
 	</ul>
-</nav>
-</div> <hr><br>
+</nav><!-- #topMenu end -->
+</div><!-- .reward-nav end --> <hr><br>
 
 
 <div id="left">
-
+	
 </div><!-- #left end -->
 
 
 <div id="right">
-<div class="project_state_info">
+	<div class="project_state_info">
 		<p class="remaining_day">${remainDay }일 남음</p>
 		<p class="rate_bar">
 			<em></em>
@@ -239,6 +237,7 @@ hr {
 
 <div style="clear: both;"></div>
 </div>
+
 
 <br><br>
 <c:import url="/WEB-INF/views/layout/footer.jsp" />

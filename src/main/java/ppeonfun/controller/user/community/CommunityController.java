@@ -1,4 +1,4 @@
-package ppeonfun.controller.user.story;
+package ppeonfun.controller.user.community;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,33 +11,34 @@ import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
-import ppeonfun.service.user.story.StoryService;
+import ppeonfun.service.user.community.CommunityService;
 
-@Controller("user.StoryController")
-public class StoryController {
+@Controller("user.CommunityController")
+public class CommunityController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(StoryController.class);
-
-	@Autowired StoryService storyService;
+	private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
 	
-	@RequestMapping(value = "/story")
-	public String story(
+	@Autowired CommunityService communityService;
+	
+	
+	@RequestMapping(value = "/community")
+	public String community(
 			Model model, Information info, Supporter supporter, SupporterJoin suJoin, News news) {
 		
 		//해당 프로젝트의 제목, 카테고리, 목표금액
-		info = storyService.projectInfo(info);
+		info = communityService.projectInfo(info);
 		
 		//해당 프로젝트의 총 서포터 수 구하기
-		int totalCount = storyService.totalCount(supporter);
+		int totalCount = communityService.totalCount(supporter);
 		
 		//프로젝트 남은 일수 구하기
-		int remaining_day = storyService.remainDay(suJoin);
+		int remaining_day = communityService.remainDay(suJoin);
 		
 		//프로젝트의 총 펀딩 액
-		int total_amount = storyService.amount(suJoin);
+		int total_amount = communityService.amount(suJoin);
 		
 		//새소식 개수
-		int newsCount = storyService.newsCount(news);
+		int newsCount = communityService.newsCount(news);
 		
 		model.addAttribute("info", info);
 		model.addAttribute("totalCnt", totalCount);
@@ -45,7 +46,7 @@ public class StoryController {
 		model.addAttribute("totalAmount", total_amount);
 		model.addAttribute("newsCnt", newsCount);
 		
-		return "/user/project/story";
+		return "/user/project/community";
 	}
-	
+
 }

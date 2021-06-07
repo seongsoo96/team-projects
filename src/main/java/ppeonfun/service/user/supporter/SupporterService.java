@@ -3,6 +3,7 @@ package ppeonfun.service.user.supporter;
 import java.util.List;
 
 import ppeonfun.dto.Information;
+import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
@@ -47,5 +48,7 @@ public interface SupporterService {
 	 * @return
 	 */
 	public Information projectInfo(Information info);
+
+	public int newsCount(News news);
 
 }

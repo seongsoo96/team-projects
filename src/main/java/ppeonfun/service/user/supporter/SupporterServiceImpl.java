@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ppeonfun.dao.user.supporter.SupporterDao;
 import ppeonfun.dto.Information;
+import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
@@ -23,9 +24,6 @@ public class SupporterServiceImpl implements SupporterService {
 	
 	@Override
 	public int totalCount(Supporter supporter) {
-		
-//		logger.info("총 서포터 수 select");
-		
 		return supporterDao.selectCntSupporter(supporter);
 	}
 	
@@ -47,6 +45,11 @@ public class SupporterServiceImpl implements SupporterService {
 	@Override
 	public Information projectInfo(Information info) {
 		return supporterDao.selectInfo(info);
+	}
+	
+	@Override
+	public int newsCount(News news) {
+		return supporterDao.selectCntNews(news);
 	}
 
 }
