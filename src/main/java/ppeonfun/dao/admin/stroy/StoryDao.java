@@ -1,5 +1,7 @@
 package ppeonfun.dao.admin.stroy;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import ppeonfun.dto.Project;
@@ -49,6 +51,13 @@ public interface StoryDao {
 	 * @param story - 스토리 값
 	 */
 	public void updateProjectState(Story story);
+	
+	/**
+	 * 프로젝트 스토리 
+	 * @param story - 스토리 번호
+	 * @return - 스토리 파일
+	 */
+	public List<StoryFile> selectAllStroyFile(Story story);
 	
 	
 	

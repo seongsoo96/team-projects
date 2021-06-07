@@ -38,4 +38,8 @@ SELECT count(*) FROM story where p_no = #{pNo}
   	insert into story_file(sf_no,s_no,sf_origin_name,sf_stored_name,sf_size,sf_content_type) values(#{sfNo}, #{sNo}, #{sfOriginName}, #{sfStoredName}, #{sfSize}, #{sfContentType})
   </insert>
   
+  <select id="selectAllStroyFile" resultType="StoryFile" parameterType="Story">
+  	SELECT * FROM story_file WHERE s_no = #{sNo}
+  </select>
+  
 </mapper>

@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dto.Project;
 import ppeonfun.dto.Story;
+import ppeonfun.dto.StoryFile;
 
 public interface StoryService {
 	/**
@@ -47,5 +48,11 @@ public interface StoryService {
 	 */
 
 	public void inputStoryFile(Story story, List<MultipartFile> fileList);
+	/**
+	 * story파일 반환
+	 * @param story - 스토리 번호
+	 * @return - 스토리 파일 리스트
+	 */
+	public List<StoryFile> viewStoryFile(Story story);
 
 }

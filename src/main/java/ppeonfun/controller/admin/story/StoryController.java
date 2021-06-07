@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ppeonfun.dto.Project;
 import ppeonfun.dto.Story;
+import ppeonfun.dto.StoryFile;
 import ppeonfun.service.admin.story.StoryService;
 
 @Controller("admin.StoryController")
@@ -61,9 +62,7 @@ public class StoryController {
 		List<MultipartFile> fileList = mtfRequest.getFiles("file");
 		logger.info("fileList {}", fileList);
 		story.setsState("Y");
-		
-		
-		
+	
 		storyService.inputStoryFile(story,fileList);
 		
 		return "redirect:/admin/project/view?pNo="+story.getpNo();
@@ -75,9 +74,15 @@ public class StoryController {
 		
 		String name = storyService.selectByName(project);
 		Story story = storyService.viewStory(project);
+		List<StoryFile> fileList = storyService.viewStoryFile(story);
 		
+		logger.info("story {}", story);
+		for(int i=0; i<fileList.size(); i++) {
+			logger.info("storyfile {}", fileList.get(i));
+		}
 		
 		model.addAttribute("story", story);
+		model.addAttribute("storyFile", fileList);
 		model.addAttribute("name", name);
 	}
 	
