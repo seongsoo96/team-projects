@@ -5,17 +5,50 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="ppeonfun.dao.user.board.BoardDao">
-     <select id="selectCntAll" resultType="int">
+ 
+  
+<select id="selectCntAll" resultType="int" parameterType="ppeonfun.util.Paging">
       SELECT COUNT(*) FROM board
-     </select>
-     
+      WHERE 1=1 AND
+		<if test="!search.equals('')">
+			<if test="category.equals('title')">
+				b_title LIKE '%' || #{search} || '%'
+		    </if>
+			<if test="category.equals('content')">
+		        b_content  LIKE '%' || #{search} || '%'
+			</if>
+		    <if test="category.equals('totalplus')">
+		        (b_title  LIKE '%' || #{search} || '%')
+		       OR (b_content  LIKE '%' || #{search} || '%')
+		    </if>
+		 </if>
+		 <if test="search.equals('')">
+		     1=1
+		 </if>
+		     
+</select>     
 <select id="selectPageList" parameterType="ppeonfun.util.Paging" resultType="hashmap">
     
- SELECT * FROM (
+     SELECT * FROM (
          SELECT rownum rnum, B.* FROM (
             SELECT board.*, member.m_nick 
             FROM board, member
-            WHERE b_grade = 'B' AND board.m_no = member.m_no
+            WHERE b_grade = 'B' AND board.m_no = member.m_no AND
+			    <if  test="!search.equals('')">
+			    <if test="category.equals('title')">
+			        b_title  LIKE '%' || #{search} || '%'
+			    </if>
+			    <if test="category.equals('content')">
+			        b_content  LIKE '%' || #{search} || '%'
+			    </if>
+			    <if test="category.equals('totalplus')">
+			        (b_title  LIKE '%' || #{search} || '%')
+			       OR (b_content  LIKE '%' || #{search} || '%')
+			    </if>
+			 </if>
+			 <if test="search.equals('')">
+			     1=1
+			 </if>
             ORDER BY b_no DESC
          ) B
       ) BOARD
@@ -118,8 +151,35 @@
 </delete>
 
 <insert id="insertRecommend" parameterType="recommend">
-   INSERT INTO recommend(m_no, b_no )
-   VALUES (#{mNo}, #{bNo})
+   INSERT INTO recommend(r_no,m_no, b_no )
+   VALUES (recommend_SEQ.nextval, #{mNo}, #{bNo})
 </insert>
+
+<select id="selectBycomment" parameterType="board" resultType="Comments">
+   SELECT * FROM Comments
+   WHERE b_no = #{bNo}
+
+</select>
+
+<insert id="insertComments" parameterType="comments">
+  INSERT INTO Comments(c_no,b_no,m_no,c_content)
+  VALUES (comments_seq.nextval, #{bNo}, #{mNo}, #{cContent})
+</insert>
+
+<delete id="deleteComments" parameterType="comments">
+  DELETE FROM comments
+  WHERE c_no = #{cNo}
+</delete>
+
+<select id="countCommnets" parameterType="comments" resultType="int">
+  SELECT COUNT(*) FROM comments
+  WHERE c_no = #{cNo}
+</select>
+
+<select id="selectcmtlist" parameterType="comments" resultType="hashmap">
+ SELECT * FROM comments
+ WHERE c_no = #{cNo}
+</select>
+
 
   </mapper>

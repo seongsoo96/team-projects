@@ -6,7 +6,14 @@
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	 $("#search").click(function(){
+		  $("form").submit()
+	 }
+ }
 
+</script>
 
 <style type="text/css">
 table {
@@ -20,13 +27,19 @@ table, th {
 /* 게시글 제목 */
 td:nth-child(2) {
 	text-align: left;
+}	
+#searchForm{
+   text-align : center; 
 }
+
 </style>
 
 <div class="container">
 
+
 <h1>게시판</h1>
-<hr>
+<hr> 
+
 
 <table class="table table-striped table-hover">
 <thead>
@@ -59,7 +72,19 @@ td:nth-child(2) {
 <%-- 페이징 JSP --%> 
 <jsp:include page="/WEB-INF/views/layout/paging.jsp" />
 
-
+<div id="searchForm">
+   <form>
+   <div>
+     <select name="category">
+       <option value="title">제목</option>
+       <option value="content">내용</option>
+       <option value="totalplus">제목+내용</option>
+     </select>
+     <input type="text" size="20" name="search" />&nbsp;
+     <input type="submit" id="search" value="검색"/>
+   </div>
+    </form>
+</div>
 
 </div><!-- .container -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

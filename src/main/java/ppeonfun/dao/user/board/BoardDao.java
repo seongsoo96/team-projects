@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
+import ppeonfun.dto.Comments;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.Recommend;
 import ppeonfun.util.Paging;
@@ -16,7 +17,7 @@ public interface BoardDao {
      *  
      * @return 계산된 페이징 
      */
-	public int selectCntAll();
+	public int selectCntAll(Paging inDate);
 	/** 페이징이 적용된 게시글 보여주기
 	 * 
 	 * @param paging - 페이징이 적용된 게시글
@@ -87,4 +88,16 @@ public interface BoardDao {
 	public void deleteRecommend(Recommend recommend);
 	
 	public void insertRecommend(Recommend recommend);
+	
+	public List<Comments> selectBycomment(Board board);
+	
+	public void insertComments(Comments comments);
+	
+	public void deleteComments(Comments comments);
+	
+	public int countCommnets(Comments comments);
+	
+	public List<Comments> selectComments(int bNo);
+	
+	public List<HashMap<String, Object>> selectcmtlist(Comments comments);
 }
