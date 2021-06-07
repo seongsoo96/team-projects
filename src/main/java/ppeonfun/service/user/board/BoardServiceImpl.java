@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ppeonfun.dao.user.board.BoardDao;
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
+import ppeonfun.dto.Comments;
 import ppeonfun.dto.Recommend;
 import ppeonfun.service.user.main.MainServiceImpl;
 import ppeonfun.util.Paging;
@@ -32,8 +33,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Paging getPaging(Paging inDate) {
+		logger.info("inDate 값 확인 : {}",inDate);
 		//총 게시글 수 조회
-		int totalCount = boardDao.selectCntAll();
+		int totalCount = boardDao.selectCntAll(inDate);
 		
 		//페이징 계산
 		Paging paging = new Paging(totalCount,inDate.getCurPage());
@@ -73,7 +75,7 @@ public class BoardServiceImpl implements BoardService {
 			   return;
 		   }
 		//파일이 저장될 경로(real path)
-		   String storedPath = context.getRealPath("upload");
+		   String storedPath = context.getRealPath("/resources/upload");
 		   logger.info("realPath upload : {}",storedPath);
 		   //폴더가 존재하지 않으면 생성하기
 		   File stored = new File(storedPath);
@@ -152,7 +154,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		
 		//파일이 저장될 경로(real path)
-		   String storedPath = context.getRealPath("upload");
+		   String storedPath = context.getRealPath("/resources/upload");
 		   logger.info("realPath upload : {}",storedPath);
 		   //폴더가 존재하지 않으면 생성하기
 		   File stored = new File(storedPath);
@@ -230,6 +232,38 @@ public class BoardServiceImpl implements BoardService {
 			return true;
 		}
 	}
+
+	@Override
+	public List<Comments> getCommentList(Board board) {
+		
+		logger.info("board객체에 내용 확인 : {}",board);
+		return boardDao.selectBycomment(board);
+	}
+
+	@Override
+	public void insertComments(Comments comments) {
+		boardDao.insertComments(comments);
+	}
+
+	@Override
+	public boolean deleteComments(Comments comments) {
+		boardDao.deleteComments(comments);
+		
+		if(boardDao.countCommnets(comments)>0) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+
+
+
+	@Override
+	public List<HashMap<String, Object>> getCommentlist(Comments comments) {
+		return boardDao.selectcmtlist(comments);
+	}
+
+
 
 
 

@@ -1,5 +1,7 @@
 package ppeonfun.controller.user.board;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,11 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
+import ppeonfun.dto.Comments;
 import ppeonfun.dto.Recommend;
 import ppeonfun.service.user.board.BoardService;
 import ppeonfun.util.Paging;
@@ -31,23 +35,40 @@ public class BoardController {
 	@Autowired private BoardService boardService;
 	
 	@RequestMapping(value="/list")
-	public void list(Paging inDate, Model model ) {
+	public void list(
+			@RequestParam(value="curPage", defaultValue="0") int curPage, 
+			@RequestParam(value="search", defaultValue="") String search, 
+			@RequestParam(value="category", defaultValue="") String category, 
+			Model model
+			) {
 		logger.info("/board/list [GET]");
+		logger.info("search값 확인 {} :", search);
+		logger.info("category값 확인 {} :", category);
+
 		
+		Paging inDate = new Paging();
+		
+		inDate.setCategory(category);
+		inDate.setSearch(search);
+		inDate.setCurPage(curPage);
+
 		//페이징 계산
 		Paging paging = boardService.getPaging(inDate);
-		logger.info("페이징 계산 : {}", paging.toString());
+		
+		logger.info("paging값 확인 {} :", paging);
+		
+		//검색 포함한 페이징 계산	
+		paging.setSearch(inDate.getSearch());
+		paging.setCategory(inDate.getCategory());
+		
+		logger.info("inDate값 확인 {} :", inDate);
 		
 	    //해시맵으로 게시글 목록 조회
 	    List <HashMap<String, Object>> list = boardService.list(paging);
-	   
 	    logger.info("게시긂 목록 조회 확인  {} :" ,list);
-		//게시글 목록 조회
-//		List<Board> list = boardService.list(paging);
-//		for(int i=0; i<list.size(); i++) {
-//			logger.info("게시글 목록 조회 : {}",list.get(i).toString());
-//		}
-		
+	    
+	    
+
 		//모델값 전달
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
@@ -67,25 +88,14 @@ public class BoardController {
     	BoardFile viewfile =  boardService.viewfile(board);
     	logger.info("viewfile에 포함된 값 보기 : {}", viewfile);
     	
-    	
-    	//추천수 보여주기
-//    	recommend.getbNo();
-//    	logger.info("recommed안에 값 확인 : {}", recommend);
-    	
-    	//추천 상태 조회
-//    	recommend.setmNo( (Integer) session.getAttribute("mNo"));
-//    	logger.info("recommed안에 값 확인 : {}", recommend);
-    	
-    	//추천 상태 전달
-//    	boolean isrecommend = boardService.isrecommend(recommend);
-//    	logger.info("추천상태 확인 ",recommend);
+        //댓글 리스트 불러오기
+//    	List<Comments> commentList = boardService.getCommentList(board);
+//    	logger.info("댓글 내용 불러오기 :{}", commentList);
     	
     	//모델값 전달
     	model.addAttribute("detail", detail);
     	model.addAttribute("viewfile",viewfile);
-//    	model.addAttribute("isrecommend", isrecommend);
-//    	model.addAttribute("cntRecommend", boardService.getTotalCntRecommend(recommend));
-    	
+//      model.addAttribute("commentList", commentList);
     	
     }
 	@RequestMapping(value="/write", method=RequestMethod.GET)
@@ -176,7 +186,73 @@ public class BoardController {
 		mav.setViewName("jsonView");
 		
 		return mav;
+	}
+	
+	@RequestMapping(value="/comments/list")
+	public void commentList(Board board, Model model, HttpSession session) {
+		logger.info("/baord/commentList [GET]");
+		logger.info("댓글리스트용 게시글번호 : {}", board);
+		
+		//댓글 리스트 불러오기
+		List<Comments> commentList = boardService.getCommentList(board);
+		logger.info("댓글 내용 불러오기 :{}", commentList);
+		
+		//모델값 전달
+		model.addAttribute("commentList", commentList);
+	}
+	
+	@RequestMapping(value="/comments/insert", method=RequestMethod.POST)
+	public @ResponseBody void comments(Comments comments,HttpSession session) {
+		
+		logger.info("/comments [POST]");
+		logger.info("comments 에있는 정보 {}:" , comments);
+		
+		int mNo = (Integer)session.getAttribute("mNo");
+		comments.setmNo(mNo);
+
+		boardService.insertComments(comments);
+		logger.info("comments 내용 불러오기 :",comments);
 		
 	}
+	@RequestMapping(value="/comments/delete")
+	public @ResponseBody void commentsDelete(Comments comments,Writer writer) {
+		logger.info("/comments/delete [GET]");
+		logger.info("commetns 안에 값 확인 : {}",comments);
+		
+		boolean success = boardService.deleteComments(comments);
+		
+		try {
+			writer.append("{\"success\":"+success+"}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+    @RequestMapping(value="/comments/update",method=RequestMethod.GET)
+	public void commentUpdate(Comments comments,String mNick,Model model) {
+		logger.info("/comments/update [GET]");
+		logger.info("comments 안에 값 확인 : {}",comments);
+		
+		
+		List<HashMap<String, Object>> cmtlist = boardService.getCommentlist(comments);
+		logger.info("cmltlist 안에 값 확인 : {}",cmtlist);
+		
+		model.addAttribute("cmtlist",cmtlist);
+	}
+    @RequestMapping(value="/comments/update", method=RequestMethod.POST )
+    public void commentUpdateProc(Comments comments,Model model) {
+    	
+       logger.info("/comments/update [POST]");
+       logger.info("comments 수정 후 데이터 값 확인 : {}",comments );
+       
+       
+    	
+    
+    }
+    
+    
+
+	
 	
 }

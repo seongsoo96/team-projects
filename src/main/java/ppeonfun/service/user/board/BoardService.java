@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
+import ppeonfun.dto.Comments;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.Recommend;
 import ppeonfun.util.Paging;
@@ -87,4 +88,18 @@ public interface BoardService {
 	 * @return true-추천 false-추천 취소
 	 */
 	public boolean recommend(Recommend recommend);
+	/** 파일 게시판 불러오기
+	 * 
+	 * @param board
+	 * @return
+	 */
+	public List<Comments> getCommentList(Board board);
+	
+	public void insertComments(Comments comments);
+	
+	public boolean deleteComments(Comments comments);
+	
+	
+	public List<HashMap<String, Object>> getCommentlist(Comments comments);
+	
 }
