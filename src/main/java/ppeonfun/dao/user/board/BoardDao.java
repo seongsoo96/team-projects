@@ -3,6 +3,7 @@ package ppeonfun.dao.user.board;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dto.Board;
@@ -12,6 +13,8 @@ import ppeonfun.dto.Member;
 import ppeonfun.dto.Recommend;
 import ppeonfun.util.Paging;
 
+
+@Repository("user.BoardDao")
 public interface BoardDao {
     /** 전체 게시글 수 
      *  
