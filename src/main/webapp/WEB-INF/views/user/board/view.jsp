@@ -139,7 +139,7 @@ function deletecomment(cNo){
 	   ,data : {
 		    cNo : c_no
 		    ,mNick : m_nick
-		    ,$("#registerComment textarea[name='content']").val("")
+		    
 	   }	
 	   ,dataType: "html"	
 	   ,success:function(){
