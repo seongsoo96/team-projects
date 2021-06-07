@@ -78,7 +78,7 @@
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본요건&nbsp;<span class="state">${pRequirements}</span></span><a href="/admin/requirement/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본정보&nbsp;<span class="state">${pInformation}</span></span><a href="/admin/information/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">스토리&nbsp;<span class="state">${pStory}</span></span><a href="/admin/story/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
-	<div class="alert background-white alert-info" role="alert"><span class="pull-left">리워드&nbsp;<span class="state">${pReward}</span></span><a href="#"><i class="far fa-plus-square pull-right"></i></a></div>
+	<div class="alert background-white alert-info" role="alert"><span class="pull-left">리워드&nbsp;<span class="state">${pReward}</span></span><a href="/admin/reward/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">메이커 정보&nbsp;<span class="state">${pMaker}</span></span><a href="#"><i class="far fa-plus-square pull-right"></i></a></div>
 
 	<div class="btn-group btn-group-lg" role="group">

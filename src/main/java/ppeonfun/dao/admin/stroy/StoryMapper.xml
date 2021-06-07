@@ -42,4 +42,12 @@ SELECT count(*) FROM story where p_no = #{pNo}
   	SELECT * FROM story_file WHERE s_no = #{sNo}
   </select>
   
+  <delete id="deleteStoryFile" parameterType="StoryFile">
+  	DELETE FROM story_file where sf_No = #{sfNo}
+  	
+  </delete>
+  <update id="modifyStory" parameterType="Story">
+  UPDATE Story SET s_url = #{sUrl},s_summery=#{sSummery},s_story=#{sStory},s_state=#{sState} WHERE s_no = #{sNo}
+  </update>
+  
 </mapper>

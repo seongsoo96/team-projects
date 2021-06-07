@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="ppeonfun.dao.admin.reward.RewardDao">
+ <select id="selectByState" resultType="Project" parameterType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
+  
+  <select id="selectIsReward" resultType="int" parameterType="Project">
+SELECT count(*) FROM reward where p_no = #{pNo}
+  </select>
+  
+  <select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  <select id="selectRewardList" resultType="Reward" parameterType="Project">
+  SELECT * FROM reward where p_no = #{pNo}
+  </select>
+ 
+ </mapper>

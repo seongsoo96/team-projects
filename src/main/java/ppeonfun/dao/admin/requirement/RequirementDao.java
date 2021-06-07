@@ -15,9 +15,9 @@ public interface RequirementDao {
 	 */
 	public Project selectByState(Project project);
 	/**
-	 * 상태값 반환
-	 * @param project - 프로젝트 번호
-	 * @return - 프로젝트 상태값
+	 * 값이 존재하는지 여부를 반환
+	 * @param int - 값이 존재하면 1이상이 반환된다
+	 * @return - 값이 있는지 여부
 	 */
 	public int selectIsRequirement(Project project);
 	

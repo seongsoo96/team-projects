@@ -112,4 +112,78 @@ public class StroyServiceImpl implements StoryService {
 	public List<StoryFile> viewStoryFile(Story story) {
 		return storyDao.selectAllStroyFile(story);
 	}
+	
+	@Override
+	public void removeFile(List<StoryFile> removeList) {
+		
+		
+		for(int i=0; i<removeList.size(); i++) {
+			
+			
+			String storedPath = context.getRealPath("upload");
+			
+			//폴더가 존재하지 않으면 생성하기
+			File stored = new File(storedPath+"/"+removeList.get(i).getSfStoredName());
+			if( stored.exists() ) {
+				if(stored.delete()) {
+					logger.info("파일 삭제 완료 {}", removeList.get(i).getSfStoredName());
+				}else {
+					logger.info("파일 삭제 실패 {}", removeList.get(i).getSfStoredName());
+				}
+			}
+			storyDao.deleteStoryFile(removeList.get(i));
+		}
+
+	}
+	@Override
+	public void modifyStoryFile(Story story,List<MultipartFile> fileList) {
+		storyDao.modifyStory(story);
+		storyDao.updateProjectState(story);
+		
+		for( MultipartFile file : fileList ) {
+			//url 값이 존재할경우
+			if(story.getsUrl()!=null && !"".equals(story.getsUrl())) {
+				logger.info("url값 존재 {}", story.getsUrl());
+				return;
+			}
+			
+			if( file.getSize() <= 0 ) {
+				return;
+			}
+			String storedPath = context.getRealPath("upload");
+			
+			//폴더가 존재하지 않으면 생성하기
+			File stored = new File(storedPath);
+			if( !stored.exists() ) {
+				stored.mkdir();
+			}
+				
+			String filename = file.getOriginalFilename();
+				
+			String uid = UUID.randomUUID().toString().split("-")[4];
+			
+			filename += uid;
+			
+			File dest = new File( stored, filename );
+				
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			StoryFile storyFile = new StoryFile();
+			storyFile.setsNo(story.getsNo());
+			storyFile.setSfOriginName(file.getOriginalFilename());
+			storyFile.setSfSize((int)file.getSize());
+			storyFile.setSfContentType(file.getContentType());
+			storyFile.setSfStoredName(filename);
+			
+			storyDao.insertStoryFile(storyFile);
+		} // for문 end (다중 첨부파일)
+		
+	}
+
 }

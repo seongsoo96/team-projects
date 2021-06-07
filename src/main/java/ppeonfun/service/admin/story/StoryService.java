@@ -54,5 +54,19 @@ public interface StoryService {
 	 * @return - 스토리 파일 리스트
 	 */
 	public List<StoryFile> viewStoryFile(Story story);
+	
+	/**
+	 * storyFile 삭제
+	 * @param removeList - 스토리 파일 삭제
+	 */
+	
+	public void removeFile(List<StoryFile> removeList);
+
+	/**
+	 * storyFile 수정
+	 * @param story - 스토리 
+	 * @param fileList - 스토리 파일들
+	 */
+	public void modifyStoryFile(Story story, List<MultipartFile> fileList);
 
 }

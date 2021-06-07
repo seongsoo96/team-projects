@@ -33,7 +33,7 @@
 			<div class="background-white form-group alert" role="alert">
 			    <label for="file">대표이미지</label>
 			    <p class="help-block">텍스트 로고 삽입 금지</p>
-			    <img id="img" class="imgclick" src="/upload/${information.iStoredName} " width="900px" height="400px">
+			    <img id="img" class="imgclick" src="/upload/information/${information.iStoredName} " width="900px" height="400px">
 			</div>
 			<div class="background-white form-group alert" role="alert">
 				<label for="iCategory">카테고리</label>

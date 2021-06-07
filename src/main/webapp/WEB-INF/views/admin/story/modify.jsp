@@ -19,7 +19,7 @@ $(document).ready(function(){
 			divImg.css('display', 'none');
 			$("#sUrl").attr('required', true);
 			$("#file").attr('required', false);
-			$("#introductionUrlField").attr('src', ${story.sUrl});
+			$("#introductionUrlField").attr('src', '${story.sUrl}');
  			$("#sUrl").attr('readonly', true);
  			$("#introductionUrl").attr('checked', true);
 		</c:when>
@@ -145,13 +145,11 @@ function handleImgFileSelect(e){
 	<c:import url="/WEB-INF/views/layout/adminProjectSlide.jsp"></c:import>
 	<div class="container">
 		<h1>스토리작성</h1>
-		
-		
-		
-		
+
 		<form action="/admin/story/modify" method="post" role="role" enctype="multipart/form-data">
 			<input type="hidden" name="pNo" value="${project.pNo }" />
 			<input type="hidden" name="sState" value="${story.sState }" />
+			<input type="hidden" name="sNo" value="${story.sNo }" />
 			<div class="radio background-white form-group alert">
 			  <label>
 			    <input type="radio" name="introduction" id="introductionUrl" value="url">
