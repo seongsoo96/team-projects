@@ -3,6 +3,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp"></c:import>
+<c:if test="${not empty project.pRequirements }">
+	<c:choose>
+		<c:when test="${project.pRequirements eq 'W' }"><c:set var="pRequirements" value="작성전" /></c:when>
+		<c:when test="${project.pRequirements eq 'Y'}"><c:set var="pRequirements" value="작성완료" /></c:when>
+		<c:when test="${project.pRequirements eq 'N' }"><c:set var="pRequirements" value="수정요청" /></c:when>
+	</c:choose>
+</c:if>
+
+<c:if test="${not empty project.pInformation }">
+	<c:choose>
+		<c:when test="${project.pInformation eq 'W' }"><c:set var="pInformation" value="작성전" /></c:when>
+		<c:when test="${project.pInformation eq 'Y' }"><c:set var="pInformation" value="작성완료" /></c:when>
+		<c:when test="${project.pInformation eq 'N' }"><c:set var="pInformation" value="수정요청" /></c:when>
+	</c:choose>
+</c:if>
+
+<c:if test="${not empty project.pStory }">
+	<c:choose>
+		<c:when test="${project.pStory eq 'W'}"><c:set var="pStory" value="작성전" /></c:when>
+		<c:when test="${project.pStory eq 'Y'}"><c:set var="pStory" value="작성완료" /></c:when>
+		<c:when test="${project.pStory eq 'N'}"><c:set var="pStory" value="수정요청" /></c:when>
+	</c:choose>
+</c:if>
+
+<c:if test="${not empty project.pReward }">
+	<c:choose>
+		<c:when test="${project.pReward eq 'W'}"><c:set var="pReward" value="작성전" /></c:when>
+		<c:when test="${project.pReward eq 'Y'}"><c:set var="pReward" value="작성완료" /></c:when>
+		<c:when test="${project.pReward eq 'N'}"><c:set var="pReward" value="수정요청" /></c:when>
+	</c:choose>
+</c:if>
+
+<c:if test="${not empty project.pMaker }">
+	<c:choose>
+		<c:when test="${project.pMaker eq 'W'}"><c:set var="pMaker" value="작성전" /></c:when>
+		<c:when test="${project.pMaker eq 'Y'}"><c:set var="pMaker" value="작성완료" /></c:when>
+		<c:when test="${project.pMaker eq 'N'}"><c:set var="pMaker" value="수정요청" /></c:when>
+	</c:choose>
+</c:if>
 <style type="text/css">
 hr{
 	margin-top:80px;
@@ -50,13 +89,64 @@ $(document).ready(function(){
 <c:forEach items="${list }" var="project">
 	<tr>
 		<td><a href="/admin/project/view?pNo=${project.pNo }">${project.pName }</a></td>
-		<td>${project.pRequirements }</td>
-		<td>${project.pInformation }</td>
-		<td>${project.pStory }</td>
-		<td>${project.pReward }</td>
-		<td>${project.pMaker }</td>
-		<td>${project.pState}</td>
-		<td>${project.pProgressState }</td>
+		<c:if test="${not empty project.pRequirements }">
+			<c:choose>
+				<c:when test="${project.pRequirements eq 'W' }"><c:set var="pRequirements" value="작성전" /></c:when>
+				<c:when test="${project.pRequirements eq 'Y'}"><c:set var="pRequirements" value="작성완료" /></c:when>
+				<c:when test="${project.pRequirements eq 'N' }"><c:set var="pRequirements" value="수정요청" /></c:when>
+			</c:choose>
+		</c:if>
+		<c:if test="${not empty project.pInformation }">
+			<c:choose>
+				<c:when test="${project.pInformation eq 'W' }"><c:set var="pInformation" value="작성전" /></c:when>
+				<c:when test="${project.pInformation eq 'Y' }"><c:set var="pInformation" value="작성완료" /></c:when>
+				<c:when test="${project.pInformation eq 'N' }"><c:set var="pInformation" value="수정요청" /></c:when>
+			</c:choose>
+		</c:if>
+		<c:if test="${not empty project.pStory }">
+			<c:choose>
+				<c:when test="${project.pStory eq 'W'}"><c:set var="pStory" value="작성전" /></c:when>
+				<c:when test="${project.pStory eq 'Y'}"><c:set var="pStory" value="작성완료" /></c:when>
+				<c:when test="${project.pStory eq 'N'}"><c:set var="pStory" value="수정요청" /></c:when>
+			</c:choose>
+		</c:if>
+		
+		<c:if test="${not empty project.pReward }">
+			<c:choose>
+				<c:when test="${project.pReward eq 'W'}"><c:set var="pReward" value="작성전" /></c:when>
+				<c:when test="${project.pReward eq 'Y'}"><c:set var="pReward" value="작성완료" /></c:when>
+				<c:when test="${project.pReward eq 'N'}"><c:set var="pReward" value="수정요청" /></c:when>
+			</c:choose>
+		</c:if>
+		
+		<c:if test="${not empty project.pMaker }">
+			<c:choose>
+				<c:when test="${project.pMaker eq 'W'}"><c:set var="pMaker" value="작성전" /></c:when>
+				<c:when test="${project.pMaker eq 'Y'}"><c:set var="pMaker" value="작성완료" /></c:when>
+				<c:when test="${project.pMaker eq 'N'}"><c:set var="pMaker" value="수정요청" /></c:when>
+			</c:choose>
+		</c:if>
+		<c:if test="${not empty project.pState }">
+			<c:choose>
+				<c:when test="${project.pState eq 'W'}"><c:set var="pState" value="승인전" /></c:when>
+				<c:when test="${project.pState eq 'Y'}"><c:set var="pState" value="승인완료" /></c:when>
+				<c:when test="${project.pState eq 'N'}"><c:set var="pState" value="승인거부" /></c:when>
+			</c:choose>
+		</c:if>
+		<c:if test="${not empty project.pProgressState }">
+			<c:choose>
+				<c:when test="${project.pProgressState eq 'W'}"><c:set var="pProgressState" value="오픈예정" /></c:when>
+				<c:when test="${project.pProgressState eq 'Y'}"><c:set var="pProgressState" value="펀딩 진행중" /></c:when>
+				<c:when test="${project.pProgressState eq 'N'}"><c:set var="pProgressState" value="펀딩 종료" /></c:when>
+			</c:choose>
+		</c:if>
+		<td>${pRequirements }</td>
+		<td>${pInformation }</td>
+		<td>${pStory }</td>
+		<td>${pReward }</td>
+		<td>${pMaker }</td>
+		<td>${pState}</td>
+		<td>${pProgressState }</td>
 		<td><fmt:formatDate value="${project.pCreateDate }" pattern="yy-MM-dd" /></td>
 	</tr>
 </c:forEach>

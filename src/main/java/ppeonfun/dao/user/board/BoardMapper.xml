@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ppeonfun.dao.user.board.BoardDao">
+ 
+  
+<select id="selectCntAll" resultType="int" parameterType="ppeonfun.util.Paging">
+      SELECT COUNT(*) FROM board
+      WHERE 1=1 AND
+		<if test="!search.equals('')">
+			<if test="category.equals('title')">
+				b_title LIKE '%' || #{search} || '%'
+		    </if>
+			<if test="category.equals('content')">
+		        b_content  LIKE '%' || #{search} || '%'
+			</if>
+		    <if test="category.equals('totalplus')">
+		        (b_title  LIKE '%' || #{search} || '%')
+		       OR (b_content  LIKE '%' || #{search} || '%')
+		    </if>
+		 </if>
+		 <if test="search.equals('')">
+		     1=1
+		 </if>
+		     
+</select>     
+<select id="selectPageList" parameterType="ppeonfun.util.Paging" resultType="hashmap">
+    
+     SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+            SELECT board.*, member.m_nick 
+            FROM board, member
+            WHERE b_grade = 'B' AND board.m_no = member.m_no AND
+			    <if  test="!search.equals('')">
+			    <if test="category.equals('title')">
+			        b_title  LIKE '%' || #{search} || '%'
+			    </if>
+			    <if test="category.equals('content')">
+			        b_content  LIKE '%' || #{search} || '%'
+			    </if>
+			    <if test="category.equals('totalplus')">
+			        (b_title  LIKE '%' || #{search} || '%')
+			       OR (b_content  LIKE '%' || #{search} || '%')
+			    </if>
+			 </if>
+			 <if test="search.equals('')">
+			     1=1
+			 </if>
+            ORDER BY b_no DESC
+         ) B
+      ) BOARD
+      WHERE rnum BETWEEN #{startNo} AND #{endNo}
+     
+</select>
+
+<select id="selectView" resultType="hashmap" parameterType="board">
+  SELECT
+    board.*,
+    member.m_nick,
+    (SELECT count(*) FROM recommend R WHERE board.b_no = R.b_no ) recommend_cnt
+  FROM board,member
+  WHERE b_no = #{bNo}
+  AND board.m_no = member.m_no
+</select>
+
+<select id="selectviewfile" resultType="boardfile" parameterType="board">
+  SELECT * FROM board_File
+  WHERE b_no =#{bNo}
+</select> 
+
+<update id="hit" parameterType="board" >
+  UPDATE board
+  SET B_HIT = B_HIT +1
+  WHERE b_no = #{bNo}
+</update>
+
+<insert id="insertAll" parameterType="board">
+  <selectKey order="BEFORE" resultType="int" keyProperty="bNo">
+     SELECT board_seq.nextval FROM dual
+  </selectKey>
+  
+  INSERT INTO board(b_no, m_no, b_title, b_content,b_grade)
+  VALUES (#{bNo}, #{mNo}, #{bTitle}, #{bContent},'B')
+</insert>
+
+<insert id="insertFile" parameterType="boardfile">
+  INSERT INTO board_File(bf_fileno, b_no, bf_origin_name, bf_stored_name, bf_size, bf_content_type)
+  VALUES(board_file_seq.nextval, #{bNo}, #{bfOriginName}, #{bfStoredName}, #{bfSize}, #{bfContentType})
+</insert>
+
+<select id="selectByFileno" parameterType="boardfile" resultType="boardfile">
+  SELECT * FROM board_File
+  WHERE bf_fileno =#{bfFileno}
+</select>
+
+<select id="selectUpdate" parameterType="board" resultType="hashmap">
+   SELECT board.*,member.m_nick FROM board,member
+   WHERE B_NO = #{bNo}
+   AND board.m_no = member.m_no
+</select>
+
+<select id="selectByBoardno" parameterType="boardfile" resultType="hashmap">
+  SELECT * FROM board_File
+  WHERE b_no =#{bNo}
+</select>
+
+<update id="update" parameterType="board">
+   UPDATE board
+   SET B_TITLE = #{bTitle}
+      ,B_CONTENT = #{bContent}
+   WHERE B_NO = #{bNo}
+
+</update>
+
+<delete id="filedelete" parameterType="board">
+ DELETE FROM board_File
+ WHERE b_no =#{bNo}
+</delete>
+
+<insert id="insertfile" parameterType="boardfile">
+  INSERT INTO board_File(BF_FILENO,B_NO,BF_ORIGIN_NAME,BF_STORED_NAME,BF_SIZE,BF_CONTENT_TYPE)
+   VALUES (board_file_seq.nextval, #{bNo},#{bfOriginName},#{bfStoredName},#{bfSize},#{bfContentType} )
+</insert>
+
+<delete id="delete" parameterType="board">
+ DELETE FROM board
+ WHERE b_no = #{bNo}
+</delete>
+
+<delete id="deletefile" parameterType="board">
+ DELETE FROM board_File
+ WHERE b_no = #{bNo}
+</delete>
+
+<select id="selectCntRecommend" resultType="int" parameterType="recommend">
+  SELECT COUNT(*) FROM recommend
+  WHERE m_no = #{mNo} AND b_no = #{bNo}
+</select>
+
+<select id="selectTotalCntRecommend" resultType="int" parameterType="recommend">
+  SELECT COUNT(*) From recommend
+  WHERE b_no = #{bNo}
+</select>
+
+<delete id="deleteRecommend" parameterType="recommend">
+   DELETE FROM recommend
+   WHERE b_no = #{bNo} AND m_no = #{mNo}
+</delete>
+
+<insert id="insertRecommend" parameterType="recommend">
+   INSERT INTO recommend(r_no,m_no, b_no )
+   VALUES (recommend_SEQ.nextval, #{mNo}, #{bNo})
+</insert>
+
+<select id="selectBycomment" parameterType="board" resultType="Comments">
+   SELECT * FROM Comments
+   WHERE b_no = #{bNo}
+
+</select>
+
+<insert id="insertComments" parameterType="comments">
+  INSERT INTO Comments(c_no,b_no,m_no,c_content)
+  VALUES (comments_seq.nextval, #{bNo}, #{mNo}, #{cContent})
+</insert>
+
+<delete id="deleteComments" parameterType="comments">
+  DELETE FROM comments
+  WHERE c_no = #{cNo}
+</delete>
+
+<select id="countCommnets" parameterType="comments" resultType="int">
+  SELECT COUNT(*) FROM comments
+  WHERE c_no = #{cNo}
+</select>
+
+<select id="selectcmtlist" parameterType="comments" resultType="hashmap">
+ SELECT * FROM comments
+ WHERE c_no = #{cNo}
+</select>
+
+
+  </mapper>
