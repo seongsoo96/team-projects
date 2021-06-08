@@ -60,9 +60,11 @@ function view(m_no){
 }
 </script>
 
-<div class="container">
+<div class="content">
+
+<div class="">
 	
-	<h1>사용자 관리</h1>
+	<h1>사용자 관리 &nbsp;<a id="projectWrite"><i class="fas fa-plus"></i></a></h1>
 	<hr>
 	
 	<!-- Modal -->
@@ -142,7 +144,8 @@ function view(m_no){
 <%-- 	<jsp:include page="/WEB-INF/views/admin/user/paging.jsp" /> --%>
 	<c:import url="/WEB-INF/views/admin/user/paging.jsp"></c:import>    
 	
-</div><!-- .container -->
+	</div><!-- .container -->
+</div>
 
 
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
