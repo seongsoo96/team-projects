@@ -58,6 +58,17 @@ public interface StoryDao {
 	 * @return - 스토리 파일
 	 */
 	public List<StoryFile> selectAllStroyFile(Story story);
+	/**
+	 * 프로젝트 스토리 파일 삭제
+	 * @param storyFile - 프로젝트 스토리파일
+	 */
+	public void deleteStoryFile(StoryFile storyFile);
+	
+	/**
+	 * 프로젝트 스토리 수정
+	 * @param story - 스토리 수정
+	 */
+	public void modifyStory(Story story);
 	
 	
 	

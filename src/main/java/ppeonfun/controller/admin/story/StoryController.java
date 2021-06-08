@@ -40,6 +40,15 @@ public class StoryController {
 		}
 		String name = storyService.selectByName(project);
 		Story story = storyService.viewStory(project);
+		List<StoryFile> fileList = storyService.viewStoryFile(story);
+		
+		if(story.getsUrl()!=null && !"".equals(story.getsUrl())) {
+			String url = storyService.convartUrl(story.getsUrl()); //url 변환
+			story.setsUrl(url); //url 변환 값 대입
+			logger.info("story url {}",story.getsUrl());
+		}
+		
+		model.addAttribute("storyFile", fileList);
 		model.addAttribute("story", story);
 		model.addAttribute("name", name);
 		return null;
@@ -80,28 +89,40 @@ public class StoryController {
 		for(int i=0; i<fileList.size(); i++) {
 			logger.info("storyfile {}", fileList.get(i));
 		}
+		if(story.getsUrl()!=null && !"".equals(story.getsUrl())) {
+			String url = storyService.convartUrl(story.getsUrl()); //url 변환
+			story.setsUrl(url); //url 변환 값 대입
+			logger.info("story url {}",story.getsUrl());
+		}
+		
+		
+		
 		
 		model.addAttribute("story", story);
 		model.addAttribute("storyFile", fileList);
 		model.addAttribute("name", name);
 	}
 	
-//	@RequestMapping(value="/modify", method=RequestMethod.POST)
-//	public String modify(Story story, MultipartFile file, String storedName,  @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate){
-//		logger.info("/admin/story/modify [POST]");
-//		logger.info("story {}", story);
-//		logger.info("file {}", file);
-//		
-//		story = storyService.getStory(story);
-//		story.setiEndDate(endDate); //날짜 삽입
-//		logger.info("result {}", story);
-//		
-//		logger.info("storedName {}", storedName);
-//		storyService.removeFile(storedName); //파일 정보 및 파일 삭제
-//		storyService.modifyStoryFile(story,file); // 파일 정보 및 파일 수정
-//		
-//		return "redirect:/admin/project/view?pNo="+story.getpNo();
-//	}
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public String modify(Story story,  MultipartHttpServletRequest mtfRequest){
+		logger.info("/admin/story/modify [POST]");
+		logger.info("story {}", story);
+		
+		story.setsState("Y");
+		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+		
+		List<StoryFile> removeList = storyService.viewStoryFile(story);
+		logger.info("result {}", story);
+		logger.info("fileList {}", fileList);
+		logger.info("removeList {}", removeList);
+		
+		storyService.removeFile(removeList); //파일 정보 및 파일 삭제
+		storyService.modifyStoryFile(story,fileList); // 파일 정보 및 파일 수정
+		
+		
+		
+		return "redirect:/admin/project/view?pNo="+story.getpNo();
+	}
 	
 	@RequestMapping(value="/url", method=RequestMethod.POST)
 	public String url(String sUrl, Model model) {
