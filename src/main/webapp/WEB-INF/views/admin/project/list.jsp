@@ -131,6 +131,7 @@ $(document).ready(function(){
 				<c:when test="${project.pState eq 'W'}"><c:set var="pState" value="승인전" /></c:when>
 				<c:when test="${project.pState eq 'Y'}"><c:set var="pState" value="승인완료" /></c:when>
 				<c:when test="${project.pState eq 'N'}"><c:set var="pState" value="승인거부" /></c:when>
+				<c:when test="${project.pState eq 'S'}"><c:set var="pState" value="제출" /></c:when>
 			</c:choose>
 		</c:if>
 		<c:if test="${not empty project.pProgressState }">

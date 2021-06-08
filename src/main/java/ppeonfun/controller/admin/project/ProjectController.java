@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ppeonfun.dto.Message;
 import ppeonfun.dto.Project;
 import ppeonfun.service.admin.project.ProjectService;
 import ppeonfun.util.Paging;
@@ -52,13 +53,34 @@ public class ProjectController {
 		
 		return "redirect:/admin/project/view";
 	}
-	
+	@RequestMapping(value="/submit")
 	public String submit(Model model, Project project) {
 		project = projectService.selectProject(project);
 		project = projectService.submitProject(project);
 		
 		
+		
 		model.addAttribute("project", project);
 		return "redirect:/admin/project/view";
+	}
+	@RequestMapping(value="/approve")
+	public String approve(HttpSession session,Project project,Model model) {
+		projectService.approveProject(project);
+		projectService.messageSend(project,session);
+		
+		
+		model.addAttribute("project", project);
+		return "redirect:/admin/project/view?pNo="+project.getpNo();
+	}
+	
+	@RequestMapping(value="/reject")
+	public String reject(HttpSession session,Project project,Model model, Message message) {
+		logger.info("message {}", message);
+		projectService.rejectProject(project);
+		projectService.messageSend(project,session,message);
+		
+		
+		model.addAttribute("project", project);
+		return "redirect:/admin/project/view?pNo="+project.getpNo();
 	}
 }

@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import ppeonfun.dto.ChatParticipant;
+import ppeonfun.dto.ChatRoom;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.Project;
 import ppeonfun.util.Paging;
 
@@ -40,6 +43,26 @@ public interface ProjectDao {
 	 * @param project - 프로젝트를 삽입할 객체
 	 */
 	public void insertProject(Project project);
+	/**
+	 * 프로젝트 submit상태로 수정
+	 * @param project - 프로젝트를 s상태로 수정
+	 */
+	public void updateSubmit(Project project);
+	/**
+	 * 채팅방 생성
+	 * @param chatRoom - 채팅방 생생
+	 */
+	public void insertChatRoom(ChatRoom chatRoom);
+	/**
+	 * 채팅방 참여
+	 * @param chatParticipant - 참여자 정보
+	 */
+	public void insertChatParticipant(ChatParticipant chatParticipant);
+	/**
+	 * 메시지 입력
+	 * @param message - 메시지
+	 */
+	public void insertMessage(Message message);
 	
 	
 }

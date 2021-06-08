@@ -2,6 +2,9 @@ package ppeonfun.service.admin.project;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import ppeonfun.dto.Message;
 import ppeonfun.dto.Project;
 import ppeonfun.util.Paging;
 
@@ -46,5 +49,33 @@ public interface ProjectService {
 	 * @return 프로젝트 반환
 	 */
 	public Project submitProject(Project project);
+	
+	/**
+	 * 채팅방 개설 및 메시지 보내기
+	 * @param project - 프로젝트 번호
+	 * @param session 
+	 */
+	public void messageSend(Project project, HttpSession session);
+	/**
+	 * 프로젝트 승인
+	 * @param project - 프로젝트 승인
+	 */
+	public void approveProject(Project project);
+	
+	/**
+	 * 프로젝트 거부
+	 * @param project - 프로젝트 거부
+	 */
+	public void rejectProject(Project project);
+	
+	/**
+	 * 메시지 보내기
+	 * @param project - 프로젝트 번호
+	 * @param session - 세션의 저장되어 있는 mNo
+ 	 * @param message - 메시지 내용
+	 */
+	public void messageSend(Project project, HttpSession session, Message message);
+	
+	
 	
 }

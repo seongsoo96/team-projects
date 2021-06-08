@@ -53,4 +53,28 @@
   		INSERT INTO project(p_no,m_no,p_name) VALUES(#{pNo}, #{mNo}, '프로젝트이름'||#{pNo})
   	</insert>
   	
+  	<update id="updateSubmit" parameterType="Project">
+  		UPDATE PROJECT SET p_state = #{pState} WHERE p_no =#{pNo}
+  	</update>
+  	
+  	<insert id="insertChatRoom" parameterType="ChatRoom">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="crNo">
+  			SELECT chat_room_SEQ.nextval FROM dual
+  		</selectKey>
+  		INSERT INTO chat_room (cr_no,cr_name,cr_create_date) values(#{crNo}, #{crName}, sysdate)
+  	</insert>
+  	
+  	<insert id="insertChatParticipant" parameterType="ChatParticipant">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="cpNo">
+  			SELECT chat_participant_SEQ.nextval FROM dual
+  		</selectKey>
+  		insert into chat_participant(cp_no,cr_no,m_no,cp_create_date) values(#{cpNo}, #{crNo}, #{mNo}, sysdate)
+  	</insert>
+  	
+  	<insert id="insertMessage" parameterType="Message">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="msgNo">
+  			SELECT message_SEQ.nextval FROM dual
+  		</selectKey>
+  		insert into message(msg_no,msg_content,cr_no,cp_no,msg_time) values(#{msgNo}, #{msgContent}, #{crNo}, #{cpNo}, sysdate)
+  	</insert>
   </mapper>

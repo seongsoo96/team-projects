@@ -71,6 +71,30 @@ $(document).ready(function(){
 		}	
 	})
 	
+	$("#btnApprove").click(function(){
+		$(location).attr('href', '/admin/project/approve?pNo=${project.pNo}')
+	})
+	
+	$("#btnReject").click(function(){
+		modal.modal('show');
+		var rejectDiv = $("#rejectDiv");
+		rejectDiv.css("display","block");
+		rejectDiv.attr("required", true);
+		
+		
+	})
+	$("#messageClose").click(function(){
+		var rejectDiv = $("#rejectDiv");
+		rejectDiv.css("display","hidden");
+		rejectDiv.attr("required", false);
+	})
+	
+	$("#messageSubmit").click(function(){
+		var rejectDiv = $("#rejectDiv");
+		rejectDiv.css("display","hidden");
+		rejectDiv.attr("required", false);
+		$("form").submit();
+	})
 	
 });
 
@@ -102,6 +126,9 @@ $(document).ready(function(){
 	color:#4EE2EC;
 	font-size:12px;
 }
+.form-control{
+	width:83%;
+}
 
 </style>
 
@@ -109,6 +136,8 @@ $(document).ready(function(){
 <c:import url="/WEB-INF/views/layout/adminProjectSlide.jsp"></c:import>
 
 <div class="container">
+	<form action="/admin/project/reject" method="post">
+	<input type="hidden" name="pNo" value="${project.pNo}">
 	<div class="modal fade" id="defaultModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -116,16 +145,21 @@ $(document).ready(function(){
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 class="modal-title">알림</h4>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body form-horizontal">
                             <p class="modal-contents"></p>
+                            <div id="rejectDiv" class="form-group" style="display:none;">
+								<label for="msgContent" class="col-sm-2 control-label">거부사유:</label>
+								<textarea id="msgContent" name="msgContent" class="form-control" style="display: inline-block;"></textarea>
+							</div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                        	<button id="messageSubmit" type="button" class="btn btn-default" data-dismiss="modal">전송</button>
+                            <button id="messageClose" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->	
-
+		</form>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본요건&nbsp;<span class="state">${pRequirements}</span></span><a href="/admin/requirement/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본정보&nbsp;<span class="state">${pInformation}</span></span><a href="/admin/information/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">스토리&nbsp;<span class="state">${pStory}</span></span><a href="/admin/story/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
@@ -148,8 +182,8 @@ $(document).ready(function(){
 			
 		</c:if>
 		<c:if test="${project.mNo ne mNo and project.pState eq 'S'}">
-			<button type="button" class="btn btn-default">승인</button>
-			<button type="button" class="btn btn-default">거부</button>	
+			<button type="button" id="btnApprove" class="btn btn-default">승인</button>
+			<button type="button" id="btnReject" class="btn btn-default">거부</button>	
 		</c:if>
 		
 	</div>
