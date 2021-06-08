@@ -2,6 +2,7 @@ package ppeonfun.service.user.mypage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ppeonfun.dao.user.mypage.MypageDao;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
+import ppeonfun.util.Paging;
 
 @Service("user.MypageService")
 public class MypageServiceImpl implements MypageService {
@@ -167,7 +169,26 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getMyFundingList(int mNo) {
-		return mypageDao.selectMyFunding(mNo);
+	public Paging getPaging(int curPage, int mNo) {
+		
+		int totalCount = mypageDao.selectCntPayment(mNo);
+		
+		return new Paging(totalCount, curPage, 6);
 	}
+
+	@Override
+	public List<Map<String, Object>> getMyFundingListAll(Paging paging, int mNo) {
+		return mypageDao.selectMyFundingListAll(paging, mNo);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getPaymentSum(int mNo) {
+		return mypageDao.selectPaymSumByNo(mNo);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getPaybackSum(int mNo) {
+		return mypageDao.selectPaybSumByNo(mNo);
+	}
+
 }

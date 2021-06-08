@@ -1,5 +1,6 @@
 package ppeonfun.dao.user.mypage;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
+import ppeonfun.util.Paging;
 
 @Repository("user.MypageDao")
 public interface MypageDao {
@@ -88,13 +90,39 @@ public interface MypageDao {
 
 
 	/**
-	 * payment, project, information 테이블을 조인하여
-	 * 회원이 최근에 펀딩한 프로젝트 목록을 조회한다.
-	 * 
+	 * 회원이 펀딩한 전체 내역을 조회한다.
 	 * @param mNo	회원번호
-	 * @return		최근 펀딩 목록
+	 * @return		전체 내역 수
 	 */
-	public List<Map<String, Object>> selectMyFunding(int mNo);
+	public int selectCntPayment(int mNo);
+
+	
+	/**
+	 *  payment, project, information 테이블을 조인하여
+	 *  회원이 펀딩한 프로젝트 전체 목록을 조회한다. (페이징 적용)
+	 * @param paging	페이징 정보
+	 * @param mNo		회원번호
+	 * @return			펀딩한 프로젝트 목록
+	 */
+	public List<Map<String, Object>> selectMyFundingListAll(@Param("paging")Paging paging, @Param("mNo")int mNo);
+
+
+	/**
+	 * payment와 information 테이블을 조인하여
+	 * i_category 별 회원의 결제 완료 금액을 조회한다.
+	 * @param mNo	회원번호
+	 * @return		카테고리별 결제 완료 금액
+	 */
+	public List<HashMap<String, Object>> selectPaymSumByNo(int mNo);
+
+
+	/**
+	 * payment, payback, information 테이블을 조인하여
+	 * i_category 별 회원의 환불 금액을 조회한다.
+	 * @param mNo	회원번호
+	 * @return		카테고리별 환불 금액
+	 */
+	public List<HashMap<String, Object>> selectPaybSumByNo(int mNo);
 
 
 }

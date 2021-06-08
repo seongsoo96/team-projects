@@ -1,5 +1,6 @@
 package ppeonfun.service.user.mypage;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
+import ppeonfun.util.Paging;
 
 public interface MypageService {
 
@@ -93,12 +95,37 @@ public interface MypageService {
 	 */
 	public void updateDeleteState(int mNo);
 
+	/**
+	 * 전체 펀딩의 페이징 객체를 생성한다.
+	 * @param curPage	현재 페이지
+	 * @param mNo 		회원번호
+	 * @return			페이지에 따른 페이징
+	 */
+	public Paging getPaging(int curPage, int mNo);
+
 
 	/**
-	 * 회원이 펀딩한 최근 내역을 조회한다.
-	 * @param mNo	회원 번호
-	 * @return		최근 펀딩 내역 리스트
+	 * 페이징이 적용된 전체 펀딩 목록을 조회한다.
+	 * @param paging	페이징 정보
+	 * @param mNo		회원번호
+	 * @return			페이징에 따른 목록
 	 */
-	public List<Map<String, Object>> getMyFundingList(int mNo);
-	
+	public List<Map<String, Object>> getMyFundingListAll(Paging paging, int mNo);
+
+
+	/**
+	 * 회원의 카테고리별 결제 완료 금액을 조회한다.
+	 * @param mNo	회원번호
+	 * @return		카테고리별 결제 금액
+	 */
+	public List<HashMap<String, Object>> getPaymentSum(int mNo);
+
+
+	/**
+	 * 회원의 카테고리별 환불 금액을 조회한다.
+	 * @param mNo	회원번호
+	 * @return		카테고리별 환불 금액
+	 */
+	public List<HashMap<String, Object>> getPaybackSum(int mNo);
+
 }

@@ -2,6 +2,7 @@ package ppeonfun.controller.user.mypage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
 import ppeonfun.service.user.member.MemberService;
 import ppeonfun.service.user.mypage.MypageService;
+import ppeonfun.util.Paging;
 
 
 @Controller("user.MypageController")
@@ -224,14 +226,61 @@ public class MypageController {
 	
 	//마이페이지 나의프로젝트--------------------------------------------------------------------
 	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
-	public void viewMyFunding(HttpSession session, Model model) {
+	public void viewMyFunding(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/myfunding [GET] START *****");
 		
-		//최근 펀딩 내역 조회
-		List<Map<String, Object>> latelyList = mypageService.getMyFundingList((int) session.getAttribute("mNo"));
-		logger.info("latelyList: {}", latelyList);
+		int mNo = (int) session.getAttribute("mNo");
 		
-		model.addAttribute("latelyList", latelyList);
+		//전체 펀딩 내역 조회
+		Paging paging = mypageService.getPaging(curPage, mNo);
+		List<Map<String, Object>> totalList = mypageService.getMyFundingListAll(paging, mNo);
+		logger.info("totalList: {}", totalList);
+		
+		model.addAttribute("paging", paging);
+		model.addAttribute("totalList", totalList);
 	}
+	
+	@RequestMapping(value="/fundingchart", method=RequestMethod.GET)
+	public String viewMyFundingChart( @RequestParam(defaultValue="payment") String payState) {
+		logger.info("***** /user/mypage/fundingchart [GET] START *****");
+		
+		if("payment".equals(payState)) {
+			return "redirect:/user/mypage/fundingchart/payment";
+		} else if("payback".equals(payState)) {
+			return "redirect:/user/mypage/fundingchart/payback";
+		}
+		logger.info("결제 OR 취소: {}",payState);
+		
+		return null;
+		
+	}
+	
+	@RequestMapping(value="/fundingchart/payment")
+	public String viewMyPayment(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/fundingchart/payment START *****");
+		
+		//회원의 카테고리별 결제 내역을 조회한다.
+		List<HashMap<String, Object>> map = mypageService.getPaymentSum((int) session.getAttribute("mNo"));
+		
+		logger.info("통계 데이터 {}",map);
+		model.addAttribute("map",map);
+		model.addAttribute("paystate","payment");
+		return "/user/mypage/fundingchart";
+	}
+	
+	
+	@RequestMapping(value = "/fundingchart/payback")
+	public String viewMyPayback(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/fundingchart/payback START *****");
+		
+		//회원의 카테고리별 결제 취소(환불) 내역을 조회한다.
+		List<HashMap<String, Object>> map = mypageService.getPaybackSum((int) session.getAttribute("mNo"));
+		
+		logger.info("통계 데이터 {}",map);
+		model.addAttribute("map",map);
+		model.addAttribute("paystate","payback");
+		return "/user/mypage/fundingchart";
+	}
+	
 	
 }

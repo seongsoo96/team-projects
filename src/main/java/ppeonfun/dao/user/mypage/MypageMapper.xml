@@ -21,26 +21,26 @@
  	WHERE my_no= #{mNo}
  	</select>
  	
- 	<update id="updateMypage" parameterType="ppeonfun.dto.MyPage">
+ 	<update id="updateMypage" parameterType="MyPage">
  	UPDATE mypage
  	SET my_origin_name = #{myOriginName}, my_stored_name = #{myStoredName}
  		, my_size = #{mySize}, my_content_type = #{myContentType}
  	WHERE my_no = #{myNo}
  	</update>
  	
- 	<update id="updateMypageIntro" parameterType="ppeonfun.dto.MyPage">
+ 	<update id="updateMypageIntro" parameterType="MyPage">
  	UPDATE mypage
  	SET my_introduce = #{myIntroduce}
  	WHERE my_no = #{myNo}
  	</update>
  	
- 	<select id="selectMemberByNo" parameterType="int" resultType="ppeonfun.dto.Member">
+ 	<select id="selectMemberByNo" parameterType="int" resultType="Member">
  	SELECT m_phone, m_email, m_bank, m_account, m_post, m_address, m_detail_address
  	FROM member
  	WHERE m_no = #{mNo}
  	</select>
 
- 	<update id="updateMemberInfo" parameterType="ppeonfun.dto.Member">
+ 	<update id="updateMemberInfo" parameterType="Member">
  	UPDATE member
  	SET m_nick = #{mNick}, m_email = #{mEmail}, m_phone = #{mPhone}
  		, m_bank = #{mBank}, m_account = #{mAccount}, m_post = #{mPost}
@@ -54,13 +54,13 @@
  	WHERE m_no = #{mNo}
  	</select>
  	
- 	<select id="selectCntmPw" parameterType="ppeonfun.dto.Member" resultType="int">
+ 	<select id="selectCntmPw" parameterType="Member" resultType="int">
  	SELECT COUNT(*)
  	FROM member
  	WHERE m_no = #{mNo} AND m_password = #{mPassword}
  	</select>
  	
- 	<update id="updatePwByNo" parameterType="ppeonfun.dto.Member">
+ 	<update id="updatePwByNo" parameterType="Member">
  	UPDATE member
  	SET m_password = #{mPassword}
  	WHERE m_no = #{mNo}
@@ -78,20 +78,50 @@
  	WHERE m_no = #{mNo}
  	</update>
  	
- 	<select id="selectMyFunding" parameterType="int" resultType="hashmap">
+ 	<select id="selectCntPayment" parameterType="int" resultType="int">
+	SELECT COUNT(*) 
+	FROM payment
+	WHERE m_no = #{mNo} AND paym_state = 'Y'
+ 	</select>
+ 	
+ 	<select id="selectMyFundingListAll" parameterType="hashmap" resultType="hashmap">
 	SELECT * FROM (
 	    SELECT rownum rnum, RES.* FROM (
 	        SELECT 
-	            PJ.p_no, PJ.m_no, PJ.p_name, PJ.p_progress_state, I.i_stored_name, I.i_end_date
-	        FROM payment PM
-	        INNER JOIN project PJ
-	            ON PM.p_no = PJ.p_no
-	        INNER JOIN information I
-	            ON PM.p_no = I.p_no
+	            PM.paym_amount
+	            , PJ.p_no, PJ.p_name, PJ.p_progress_state
+	            , I.i_category, I.i_stored_name, I.i_end_date
+	        FROM (
+	        	payment PM
+		        INNER JOIN project PJ
+		            ON PM.p_no = PJ.p_no
+		        INNER JOIN information I
+		            ON PM.p_no = I.p_no
+		    )
 	        WHERE PM.m_no = #{mNo} AND PM.paym_state = 'Y'
-	        ORDER BY PM.paym_date DESC
+	        ORDER BY PM.paym_no DESC
 	    ) RES
-	) WHERE rnum BETWEEN 1 AND 3
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
+ 	
+ 	<select id="selectPaymSumByNo" parameterType="int" resultType="hashmap">
+	SELECT i_category as category, sum(paym_amount) as count 
+	FROM (payment 
+    	INNER JOIN information
+		ON information.p_no = payment.p_no)
+	WHERE m_no = #{mNo}
+	GROUP BY i_category
+ 	</select>
+ 	
+ 	<select id="selectPaybSumByNo" parameterType="int" resultType="hashmap">
+	SELECT i_category as category, sum(paym_amount) as count 
+	FROM (payment 
+    	INNER JOIN information
+		ON information.p_no = payment.p_no
+    	INNER JOIN payback
+		ON payback.paym_no = payment.paym_no)
+	WHERE m_no = #{mNo}
+	GROUP BY i_category
  	</select>
  </mapper>  
     
