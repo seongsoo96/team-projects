@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
 import ppeonfun.dto.Comments;
+import ppeonfun.dto.Commentss;
 import ppeonfun.dto.Recommend;
 import ppeonfun.util.Paging;
 
@@ -160,8 +161,16 @@ public interface NoticeDao {
 	 * 
 	 * @param cmt - 새로 작성한 댓글 정보가 담겨있는 객체
 	 */
-	public void insertCmt(Comments cmt);
+	public void insertCmt(Comments cmts);
 	
+	/**
+	 * 댓글 수정 폼을 열었다가 취소할 경우 기존의 데이터를 보여준다
+	 * 
+	 * @param cmts - 수정 취소 할 댓글 번호가 담겨있는 객체
+	 * @return 댓글 번호가 일치하는 댓글의 모든 데이터
+	 */
+	public HashMap<String, Object> selectOneComments(Comments cmts);
+
 	/**
 	 * 해당 글의 모든 댓글을 불러온다
 	 * 
@@ -176,23 +185,92 @@ public interface NoticeDao {
 	 * @param cmt - 기존의 댓글 정보를 불러올 댓글 번호
 	 * @return 댓글 번호가 일치하는 모든 정보를 얻어온다
 	 */
-	public HashMap<String, Object> selectCmt(Comments cmt);
+	public HashMap<String, Object> selectCmt(Comments cmts);
 
 	/**
 	 * 댓글 리스트에서 수정한 본인의 댓글을 기존 정보에 덮어씌운다
 	 * 
 	 * @param cmt - 수정할 기준이 될 댓글 번호와 내용을 담고있는 객체
 	 */
-	public void updateCmt(Comments cmt);
+	public void updateCmt(Comments cmts);
+
+	/**
+	 * 해당 댓글을 삭제할 때 대댓글이 있다면 c_delete_state = N, 없다면 데이터 삭제를 하기 위해
+	 * 대댓글의 존재여부를 확인한다
+	 * 
+	 * @param cmts - 댓글 번호를 가지고있는 객체
+	 * @return 대댓글이 있을 경우 false, 없을 경우 true를 반환한다
+	 */
+	public int selectCntCmtss(Comments cmts);
 
 	/**
 	 * 해당 댓글 번호의 전체 정보를 삭제한다
+	 * -> 댓글 번호에 해당하는 전체 데이터 중 c_delete_state 컬럼 값을 'N' 으로 바꿔서
+	 * 삭제 상태로 바꾼다
 	 * 
-	 * @param cmt - 삭제할 댓글의 댓글 번호를 담고있는 객체
+	 * @param cmt - 컬럼값을 바꿀 댓글의 댓글 번호를 담고있는 객체
 	 */
-	public void deleteCmt(Comments cmt);
+	public void updateCmtForDelete(Comments cmts);
 
+	/**
+	 * 해당 댓글이 대댓글을 가지고 있지 않을 경우 해당 댓글 데이터를 삭제한다
+	 * 
+	 * @param cmts - 삭제할 댓글 번호를 가지고 있는 객체
+	 */
+	public void deleteCmt(Comments cmts);
 
+	/**
+	 * 해당 글이 갖고있는 댓글들에 달린 대댓글 리스트를 얻어온다
+	 * 
+	 * @param object 해당 댓글 번호(Object object)
+	 * @return 댓글 번호에 해당하는 모든 대댓글 리스트
+	 */
+	public List<HashMap<String, Object>> selectAllCommentss(int bNo);
+
+	/**
+	 * "답글 쓰기" 버튼 클릭 후 입력한 내용을 DB에 삽입한다
+	 * 
+	 * @param cmtss - 새로 입력한 대댓글의 부모인 댓글 번호, 대댓글을 작성한 회원 번호, 
+	 * 					대댓글 내용을 담고있는 객체
+	 */
+	public void insertCmtCmt(Commentss cmtss);
+
+	/**
+	 * 대댓글 수정한 후 수정된 대댓글 데이터를 출력하기 위해 요청한다
+	 * 
+	 * @param cmtss - 대댓글 번호가 담겨있는 객체
+	 * @return 대댓글 번호가 일치하는 모든 데이터
+	 */
+	public Commentss selectOneCommentss(Commentss cmtss);
 	
+	/**
+	 * 얻어온 대댓글 번호와 일치하는 대댓글 데이터를 삭제한다
+	 * 
+	 * @param csNo - 대댓글 번호를 담고있는 변수
+	 */
+	public void deleteCmtCmt(int csNo);
+	
+	/**
+	 * 대댓글 수정 폼에서 입력한 내용을 기존 대댓글 데이터에 덮어씌운다
+	 * 
+	 * @param cmtss - 기준이 될 대댓글 번호와 수정한 내용을 담고있는 객체
+	 */
+	public void updateCmtCmt(Commentss cmtss);
+
+	/**
+	 * 게시글을 삭제할 때 PK와 FK로 연결되어있는 데이터를 먼저 삭제해야하기
+	 * 때문에 해당 대댓글을 전부 삭제한다
+	 * 
+	 * @param board - 게시글 번호를 담고있는 객체
+	 */
+	public void deleteAllCommentssByBno(Board board);
+
+	/**
+	 * 글을 삭제할 때 해당 게시글 번호를 가진 모든 댓글을 삭제한다
+	 * 
+	 * @param board - 게시글 번호를 가지고있는 객체
+	 */
+	public void deleteAllCommentsByBno(Board board);
+
 
 }

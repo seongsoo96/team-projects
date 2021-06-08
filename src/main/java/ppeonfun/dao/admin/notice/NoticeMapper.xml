@@ -36,6 +36,15 @@
 		<result column="c_content" property="cContent" />
 		<result column="c_create_date" property="cCreateDate" />
 	</resultMap>
+	
+	<resultMap type="ppeonfun.dto.Commentss" id="Commentss">
+		<id column="cs_no" property="csNo" />
+		
+		<result column="c_no" property="cNo" />
+		<result column="m_no" property="mNo" />
+		<result column="cs_content" property="csContent" />
+		<result column="cs_create_date" property="csCreateDate" />
+	</resultMap>
    
 	<select id="selectCntAll" parameterType="hashmap" resultType="int">
 		SELECT count(*) FROM board
@@ -212,6 +221,12 @@
 		ORDER BY c_no ASC
 	</select>
 	
+	<select id="selectOneComments" parameterType="ppeonfun.dto.Comments" resultType="hashmap">
+		SELECT comments.*, member.m_nick FROM member, comments
+		WHERE member.m_no = comments.m_no AND comments.c_no = #{cNo}
+		ORDER BY c_no ASC
+	</select>
+	
 	<select id="selectCmt" parameterType="ppeonfun.dto.Comments" resultType="hashmap">
 		SELECT comments.*, member.m_nick FROM member, comments
 		WHERE member.m_no = comments.m_no AND comments.c_no = #{cNo}
@@ -224,9 +239,67 @@
 		WHERE c_no = #{cNo}
 	</update>
 	
+	<select id="selectCntCmtss" parameterType="ppeonfun.dto.Comments" resultType="int">
+		SELECT count(*) FROM commentss
+		WHERE c_no = #{cNo}
+	</select>
+	
 	<delete id="deleteCmt" parameterType="ppeonfun.dto.Comments">
 		DELETE FROM comments
 		WHERE c_no = #{cNo}
 	</delete>
+	
+	<update id="updateCmtForDelete" parameterType="ppeonfun.dto.Comments">
+		UPDATE comments
+		SET c_delete_state = 'N'
+		WHERE c_no = #{cNo}
+	</update>
+	
+	<select id="selectAllCommentss" parameterType="int" resultType="hashmap">
+		SELECT commentss.*, member.m_nick FROM commentss, member, (
+			SELECT comments.c_no FROM comments
+			WHERE comments.b_no = #{bNo}
+			ORDER BY c_no ASC
+		) CS
+		WHERE commentss.c_no = CS.c_no AND commentss.m_no = member.m_no
+		ORDER BY cs_no ASC
+	</select>
+	
+	<insert id="insertCmtCmt" parameterType="ppeonfun.dto.Commentss">
+		<selectKey order="BEFORE" resultType="int" keyProperty="csNo">
+			SELECT commentss_seq.nextval FROM dual
+		</selectKey>
+		
+		INSERT INTO commentss ( cs_no, c_no, m_no, cs_content )
+		VALUES ( #{csNo}, #{cNo}, #{mNo}, #{csContent} )
+	</insert>
+	
+	<update id="updateCmtCmt" parameterType="ppeonfun.dto.Commentss">
+		UPDATE commentss
+		SET cs_content = #{csContent}
+		WHERE cs_no = #{csNo}
+	</update>
+	
+	<select id="selectOneCommentss" parameterType="ppeonfun.dto.Commentss" resultMap="Commentss">
+		SELECT * FROM commentss
+		WHERE cs_no = #{csNo}
+	</select>
+	
+	<delete id="deleteCmtCmt" parameterType="int">
+		DELETE FROM commentss
+		WHERE cs_no = #{csNo}
+	</delete>
+	
+	<delete id="deleteAllCommentssByBno" parameterType="ppeonfun.dto.Board">
+		DELETE FROM commentss
+		WHERE c_no IN ( select c_no from comments
+		where b_no = #{bNo} )
+	</delete>
+	
+	<delete id="deleteAllCommentsByBno" parameterType="ppeonfun.dto.Board">
+		DELETE FROM comments
+		WHERE b_no = #{bNo}
+	</delete>
+	
 	
 </mapper>

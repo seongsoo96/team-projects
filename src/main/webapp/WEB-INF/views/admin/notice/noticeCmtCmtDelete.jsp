@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:forEach var="c" items="${cmtList }">
+<c:forEach var="c" items="${clist }">
 	<c:if test="${c.C_DELETE_STATE eq 'Y'}">
 		<div id="comment${c.C_NO }" class="comment">
 			<label class="comment_nick">${c.M_NICK }</label><br>
@@ -23,7 +23,7 @@
 							<label class="pop-btn" onclick="">신고</label>
 						</c:if>
 					</div>
-				</div>
+	   			</div>
 			</div>
 		</div>
 	</c:if>
@@ -41,12 +41,13 @@
 					<label class="comment_comment_content">${cc.CS_CONTENT }</label><br>
 					<label class="comment_comment_date">
 					<fmt:formatDate value="${cc.CS_CREATE_DATE }" pattern="yyyy.MM.dd HH:mm" /></label>
+					<label class="create_commentss" onclick="CmtssInsertFormAfterCmts(${c.C_NO})">답글 쓰기</label>
 					<label id="#comment${cc.CS_NO }" class="btn-example pull-right" onclick="comment_layer_data(${cc.CS_NO })">…</label>
 					<div id="comment${cc.CS_NO }" class="comment-pop-layer">
 						<div class="comment-pop-container">
 							<div class="comment-pop-conts">
 								<c:if test="${cc.M_NO eq sessionScope.mNo }">
-									<label class="pop-btn" onclick="CmtCmtUpdateForm(${cc.CS_NO}, ${c.B_NO })">수정</label><br>
+									<label class="pop-btn" onclick="CmtCmtUpdateForm(${cc.CS_NO}, '${cc.M_NICK }', '${cc.CS_CONTENT }')">수정</label><br>
 									<label class="pop-btn" onclick="CmtCmtdelete(${cc.CS_NO}, ${c.B_NO })">삭제</label>
 								</c:if>
 								<c:if test="${cc.M_NO ne sessionScope.mNo }">
