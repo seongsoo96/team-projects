@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
 	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 	
 	
-	@Autowired private JavaMailSender mailSender;
+	@Autowired private JavaMailSender mailSender; 
 	@Autowired private MemberDao memberDao;
 	@Override
 	public Member encryption(Member member) {

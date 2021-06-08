@@ -2,6 +2,9 @@ package ppeonfun.service.user.mypage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -13,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dao.user.mypage.MypageDao;
+import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
+import ppeonfun.util.Paging;
 
 @Service("user.MypageService")
 public class MypageServiceImpl implements MypageService {
@@ -124,4 +129,78 @@ public class MypageServiceImpl implements MypageService {
 		
 		mypageDao.updateMypageIntro(mypage);
 	}
+
+	@Override
+	public Member getMemberInfo(int mNo) {
+		return mypageDao.selectMemberByNo(mNo);
+	}
+
+	@Override
+	public void updateMemberInfo(Member member) {
+		mypageDao.updateMemberInfo(member);
+	}
+
+	@Override
+	public String getSocialInfo(int mNo) {
+		return mypageDao.selectMsocialByNo(mNo);
+	}
+
+	@Override
+	public boolean checkPassword(Member member) {
+		int cnt = mypageDao.selectCntmPw(member);
+		
+		if(cnt > 0) return true;
+		else return false;
+	}
+
+	@Override
+	public void updatePassword(Member member) {
+		mypageDao.updatePwByNo(member);
+	}
+
+	@Override
+	public String getEmailBymNo(int mNo) {
+		return mypageDao.selectmEmailBymNo(mNo);
+	}
+	
+	@Override
+	public boolean checkProjectByNo(int mNo) {
+		//서포터로 참여중인 프로젝트 개수 조회
+		int bySupport = mypageDao.selectCntProjectBySupport(mNo);
+		
+		//메이커로 참여중인 프로젝트 개수 조회
+		int byMaker = mypageDao.selectCntProjectByMaker(mNo);
+		
+		if((bySupport + byMaker) > 0 ) { return true; }
+		else { return false; }
+	}
+	
+	@Override
+	public void updateDeleteState(int mNo) {
+		mypageDao.updateDeleteStateBymNo(mNo);
+	}
+
+	@Override
+	public Paging getPaging(int curPage, int mNo) {
+		
+		int totalCount = mypageDao.selectCntPayment(mNo);
+		
+		return new Paging(totalCount, curPage, 6);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMyFundingListAll(Paging paging, int mNo) {
+		return mypageDao.selectMyFundingListAll(paging, mNo);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getPaymentSum(int mNo) {
+		return mypageDao.selectPaymSumByNo(mNo);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getPaybackSum(int mNo) {
+		return mypageDao.selectPaybSumByNo(mNo);
+	}
+
 }

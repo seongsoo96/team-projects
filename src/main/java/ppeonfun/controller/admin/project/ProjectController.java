@@ -52,4 +52,13 @@ public class ProjectController {
 		
 		return "redirect:/admin/project/view";
 	}
+	
+	public String submit(Model model, Project project) {
+		project = projectService.selectProject(project);
+		project = projectService.submitProject(project);
+		
+		
+		model.addAttribute("project", project);
+		return "redirect:/admin/project/view";
+	}
 }

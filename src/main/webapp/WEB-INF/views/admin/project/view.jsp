@@ -36,35 +36,48 @@
 <c:if test="${not empty project.pMaker }">
 	<c:choose>
 		<c:when test="${project.pMaker eq 'W'}"><c:set var="pMaker" value="작성전" /></c:when>
-		<c:when test="${project.pMaker eq 'Y'} "><c:set var="pMaker" value="작성완료" /></c:when>
-		<c:when test="${project.pMaker eq 'N'} "><c:set var="pMaker" value="수정요청" /></c:when>
+		<c:when test="${project.pMaker eq 'Y'}"><c:set var="pMaker" value="작성완료" /></c:when>
+		<c:when test="${project.pMaker eq 'N'}"><c:set var="pMaker" value="수정요청" /></c:when>
 	</c:choose>
 </c:if>
 
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp"></c:import>
+<script type="text/javascript">
+$(document).ready(function(){
+	var pRequirements = '${project.pRequirements}';
+	var pInformation = '${project.pInformation}';
+	var pStory = '${project.pStory}';
+	var pReward = '${project.pReward}';
+	var pMaker = '${project.pMaker}';
+	var modalContents = $(".modal-contents");
+	var modal = $("#defaultModal");
+	
+	
+	
+	console.log(pRequirements);
+	console.log(pInformation);
+	console.log(pStory);
+	console.log(pReward);
+	console.log(pMaker);
+	
+	$("#projectSubmit").click(function(){
+		if(pRequirements == 'Y' && pInformation=='Y' && pStory=='Y' && pReward=='Y' && pMaker=='Y'){
+			console.log('작성완료')
+			$(location).attr('href', '/admin/project/submit?pNo=${project.pNo}')
+			
+		}else{
+			modalContents.text("프로젝트를 완성하세요");
+		    modal.modal('show');
+		}	
+	})
+	
+	
+});
+
+</script>
+
 <style type="text/css">
 
-.side_list{
-	position: absolute;
-	top:35px;
-	left:0;
-	bottom: 0;
-	border-top: 1px solid #ccc;
-	width: 200px;
-	height: 500px;
-	font-size: 20px;
-	line-height:0px;
-}
-.side_link{
-	display: block;
-	text-decoration:none;
-	text-align:center;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	padding: 40px 0;
-	border-bottom: 1px solid #ccc;
-	
-}
 .alert{
 	width: 900px;
 	float: right;
@@ -73,25 +86,14 @@
 	margin-left:220px;
 
 }
-.background{
-	background: #4EE2EC;
-	color: #FFFFFF;
-	
-}
+
 .background-white{
 	background: #FFFFFF;
 	color: #1E2227;
 	border: 1px solid #4EE2EC;
 	font-size: 35px;
 }
-.title{
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	height: 60px;
-}
-.title > h3{
-	margin-top: 0px;
-}
+
 .fa-plus-square{
 	margin-top:9px;
 	color:#4EE2EC;
@@ -104,30 +106,52 @@
 </style>
 
 <div id="content">
-<div class="side_list">
-	<div class="title">
-		<h3>${name }의<br>프로젝트 번호:${project.pNo}</h3>
-	</div>
-	<a href="#" class="side_link background">펀딩준비</a>
-	<a href="#" class="side_link">새소식</a>
-	<a href="#" class="side_link">오픈예정</a>
-	<a href="#" class="side_link">서포터</a>
-	<a href="#" class="side_link">펀딩현황</a>
-</div>
+<c:import url="/WEB-INF/views/layout/adminProjectSlide.jsp"></c:import>
+
 <div class="container">
-	<div class="alert background-white" role="alert"><span class="pull-left">기본요건&nbsp;<span class="state">${pRequirements}</span></span><a href="#"><i class="far fa-plus-square pull-right"></i></a></div>
-	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본정보&nbsp;<span class="state">${pInformation}</span></span><a href="#"><i class="far fa-plus-square pull-right"></i></a></div>
-	<div class="alert background-white alert-info" role="alert"><span class="pull-left">스토리&nbsp;<span class="state">${pStory}</span></span><a href="#"><i class="far fa-plus-square pull-right"></i></a></div>
-	<div class="alert background-white alert-info" role="alert"><span class="pull-left">리워드&nbsp;<span class="state">${pReward}</span></span><a href="#"><i class="far fa-plus-square pull-right"></i></a></div>
-	<div class="alert background-white alert-info" role="alert"><span class="pull-left">메이커 정보&nbsp;<span class="state">${pMaker}</span></span><a href="#"><i class="far fa-plus-square pull-right"></i></a></div>
+	<div class="modal fade" id="defaultModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">알림</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="modal-contents"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->	
+
+	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본요건&nbsp;<span class="state">${pRequirements}</span></span><a href="/admin/requirement/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
+	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본정보&nbsp;<span class="state">${pInformation}</span></span><a href="/admin/information/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
+	<div class="alert background-white alert-info" role="alert"><span class="pull-left">스토리&nbsp;<span class="state">${pStory}</span></span><a href="/admin/story/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
+	<div class="alert background-white alert-info" role="alert"><span class="pull-left">리워드&nbsp;<span class="state">${pReward}</span></span><a href="/admin/reward/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
+	<div class="alert background-white alert-info" role="alert"><span class="pull-left">메이커 정보&nbsp;<span class="state">${pMaker}</span></span><a href="/admin/maker/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 
 	<div class="btn-group btn-group-lg" role="group">
 		<c:if test="${project.mNo eq mNo}">
-			<button type="button" class="btn btn-default">제출</button>
+			<c:choose>
+				<c:when test="${project.pState eq 'S' }">
+					<button type="button" id="projectSubmit" class="btn btn-default" disabled>승인 대기중</button>
+				</c:when>
+				<c:when test="${project.pState eq 'Y' }">
+					<button type="button" id="projectSubmit" class="btn btn-default" disabled>승인 완료</button>
+				</c:when>
+				<c:when test="${project.pState eq 'W' }">
+					<button type="button" id="projectSubmit" class="btn btn-default">제출</button>
+				</c:when>
+			</c:choose>
+			
 		</c:if>
-		<button type="button" class="btn btn-default">승인</button>
-		<button type="button" class="btn btn-default">거부</button>
-		<button type="button" class="btn btn-default">수정요청</button>
+		<c:if test="${project.mNo ne mNo and project.pState eq 'S'}">
+			<button type="button" class="btn btn-default">승인</button>
+			<button type="button" class="btn btn-default">거부</button>	
+		</c:if>
+		
 	</div>
 </div>
 </div>
