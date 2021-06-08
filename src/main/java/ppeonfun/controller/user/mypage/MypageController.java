@@ -282,5 +282,11 @@ public class MypageController {
 		return "/user/mypage/fundingchart";
 	}
 	
+	//마이페이지 오류--------------------------------------------------------------------
+	@RequestMapping(value = "/error")
+	public void error() {
+		logger.info("***** /user/mypage/error START *****");
+	}
+	
 	
 }

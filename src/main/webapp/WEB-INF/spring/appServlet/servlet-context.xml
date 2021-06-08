@@ -31,8 +31,8 @@
 		</interceptor>
 		<interceptor>
 		  <mapping path="/user/mypage/**"/>
-			<exclude-mapping path="/user/board/error"/>
-		  <beans:bean class="ppeonfun.util.interceptor.user.UserInterceptor"/>	
+			<exclude-mapping path="/user/mypage/error"/>
+		  <beans:bean class="ppeonfun.util.interceptor.user.MypageInterceptor"/>	
 		</interceptor>
 	</interceptors>
 	
