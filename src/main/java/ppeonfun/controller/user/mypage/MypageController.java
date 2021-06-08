@@ -2,6 +2,9 @@ package ppeonfun.controller.user.mypage;
 
 import java.io.IOException; 
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,8 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
+import ppeonfun.service.user.member.MemberService;
 import ppeonfun.service.user.mypage.MypageService;
+import ppeonfun.util.Paging;
 
 
 @Controller("user.MypageController")
@@ -29,13 +35,16 @@ public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 	
 	@Autowired private MypageService mypageService;
+	@Autowired private MemberService memberService;
+	
+	//마이페이지 홈---------------------------------------------------------------------------------
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public void getMypage(HttpSession session, Model model) {
 		logger.info("***** /user/mypage/home START *****");
 		MyPage profileimg = mypageService.getProfileImg((int) session.getAttribute("mNo"));
 		String storedName = profileimg.getMyStoredName();
-
+		
 		//저장된 프로필 사진이 기본 이미지인 경우
 		if("member.png".equals(storedName)) {
 			model.addAttribute("isDefaultImg", true);
@@ -45,6 +54,9 @@ public class MypageController {
 		
 		model.addAttribute("profile", profileimg);
 	}
+	
+	
+	//마이페이지 프로필------------------------------------------------------------------------------
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public void editMyProfile(HttpSession session, Model model) {
@@ -114,4 +126,179 @@ public class MypageController {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	//마이페이지 회원정보수정--------------------------------------------------------------------
+	
+	@RequestMapping(value="/detail", method=RequestMethod.GET)
+	public void detailHome(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/detail START *****");
+		
+		//사이트 로그인 , 소셜 로그인에 따라 jsp 다르게 하기 위해 정보 조회
+		String joinInfo = mypageService.getSocialInfo((int) session.getAttribute("mNo"));
+		if(!"사이트".equals(joinInfo)) {	//카카오 로그인 회원인 경우
+			model.addAttribute("isSocialKakao", true);
+		}
+	}
+	
+	@RequestMapping(value="/info", method=RequestMethod.GET)
+	public void viewMyInfo(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/info [GET] START *****");
+		
+		Member member = mypageService.getMemberInfo((int) session.getAttribute("mNo"));
+		logger.info("회원정보:{}", member);
+		
+		model.addAttribute("mInfo", member);
+	}
+	
+	@RequestMapping(value="/info", method=RequestMethod.POST)
+	public String updateMyInfo(HttpSession session, Member member) {
+		logger.info("***** /user/mypage/info [POST] START *****");
+		
+		member.setmNo((int) session.getAttribute("mNo"));
+		logger.info("수정된 회원정보 확인:{}", member);
+		
+		mypageService.updateMemberInfo(member);
+		session.setAttribute("mNick", member.getmNick());
+		
+		return "redirect:/user/mypage/detail";
+	}
+	
+	@RequestMapping(value="/checkpw", method=RequestMethod.POST)
+	public String checkPassword(HttpSession session, Member member, Model model) {
+		logger.info("***** /user/mypage/checkpw [POST] START *****");
+		
+		//암호화 처리
+		member = memberService.encryption(member);
+		member.setmNo((int) session.getAttribute("mNo"));
+		
+		//현재 정보와 일치하는지 check
+		boolean isSameValue = mypageService.checkPassword(member);
+		
+		model.addAttribute("isSameValue", isSameValue);
+		return "jsonView";
+		
+	}
+	
+	@RequestMapping(value="/changepw", method=RequestMethod.GET)
+	public void viewMyPw() {
+		logger.info("***** /user/mypage/changepw [GET] START *****");
+	}
+	
+	@RequestMapping(value="/changepw", method=RequestMethod.POST)
+	public String updateMyPw(Member member, HttpSession session) {
+		logger.info("***** /user/mypage/changepw [POST] START *****");
+		logger.info("변경할 비밀번호 확인:{}", member.getmPassword());
+		
+		//암호화 처리 후 update
+		member = memberService.encryption(member);
+		member.setmNo((int) session.getAttribute("mNo"));
+		
+		mypageService.updatePassword(member);
+		
+		return "redirect:/user/mypage/home";
+	}
+	
+	@RequestMapping(value="/unsubscribe", method=RequestMethod.GET)
+	public void viewUnsubscribe(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/unsubscribe [GET] START *****");
+		
+		String mEmail = mypageService.getEmailBymNo((int) session.getAttribute("mNo"));
+		model.addAttribute("mEmail", mEmail);
+		
+	}
+	
+	@RequestMapping(value="/unsubscribe/ajax", method=RequestMethod.POST)
+	public String checkPjBeforeUnsub(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/unsubscribe/ajax [GET] START *****");
+		
+		//회원이 참여 중인 프로젝트가 있는지 조회한다. 
+		//프로젝트가 있으면 true -> 탈퇴 불가, 없으면 false -> 탈퇴 가능
+		boolean hasProject = mypageService.checkProjectByNo((int) session.getAttribute("mNo"));
+		model.addAttribute("hasProject", hasProject);
+		
+		return "jsonView";
+	}
+	
+	@RequestMapping(value="/unsubscribe", method=RequestMethod.POST)
+	public String postUnsubscribe(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/unsubscribe [POST] START *****");
+		
+		//m_delete_state N -> Y 로 UPDATE
+		mypageService.updateDeleteState((int) session.getAttribute("mNo"));
+		
+		//사이트 로그인 , 소셜 로그인에 따라 로그아웃 다르게 하기 위해 정보 조회
+		String joinInfo = mypageService.getSocialInfo((int) session.getAttribute("mNo"));
+		if(!"사이트".equals(joinInfo)) {	//카카오 로그인 회원인 경우
+			model.addAttribute("isSocialKakao", true);
+		}
+		
+		return "jsonView";
+	}
+	
+	//마이페이지 나의프로젝트--------------------------------------------------------------------
+	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
+	public void viewMyFunding(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+		logger.info("***** /user/mypage/myfunding [GET] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
+		
+		//전체 펀딩 내역 조회
+		Paging paging = mypageService.getPaging(curPage, mNo);
+		List<Map<String, Object>> totalList = mypageService.getMyFundingListAll(paging, mNo);
+		logger.info("totalList: {}", totalList);
+		
+		model.addAttribute("paging", paging);
+		model.addAttribute("totalList", totalList);
+	}
+	
+	@RequestMapping(value="/fundingchart", method=RequestMethod.GET)
+	public String viewMyFundingChart( @RequestParam(defaultValue="payment") String payState) {
+		logger.info("***** /user/mypage/fundingchart [GET] START *****");
+		
+		if("payment".equals(payState)) {
+			return "redirect:/user/mypage/fundingchart/payment";
+		} else if("payback".equals(payState)) {
+			return "redirect:/user/mypage/fundingchart/payback";
+		}
+		logger.info("결제 OR 취소: {}",payState);
+		
+		return null;
+		
+	}
+	
+	@RequestMapping(value="/fundingchart/payment")
+	public String viewMyPayment(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/fundingchart/payment START *****");
+		
+		//회원의 카테고리별 결제 내역을 조회한다.
+		List<HashMap<String, Object>> map = mypageService.getPaymentSum((int) session.getAttribute("mNo"));
+		
+		logger.info("통계 데이터 {}",map);
+		model.addAttribute("map",map);
+		model.addAttribute("paystate","payment");
+		return "/user/mypage/fundingchart";
+	}
+	
+	
+	@RequestMapping(value = "/fundingchart/payback")
+	public String viewMyPayback(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/fundingchart/payback START *****");
+		
+		//회원의 카테고리별 결제 취소(환불) 내역을 조회한다.
+		List<HashMap<String, Object>> map = mypageService.getPaybackSum((int) session.getAttribute("mNo"));
+		
+		logger.info("통계 데이터 {}",map);
+		model.addAttribute("map",map);
+		model.addAttribute("paystate","payback");
+		return "/user/mypage/fundingchart";
+	}
+	
+	//마이페이지 오류--------------------------------------------------------------------
+	@RequestMapping(value = "/error")
+	public void error() {
+		logger.info("***** /user/mypage/error START *****");
+	}
+	
+	
 }
