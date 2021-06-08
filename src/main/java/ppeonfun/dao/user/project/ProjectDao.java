@@ -2,9 +2,12 @@ package ppeonfun.dao.user.project;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ppeonfun.dto.Information;
 import ppeonfun.util.Paging;
 
+@Repository("user.ProjectDao")
 public interface ProjectDao {
 	/**
 	 * 프로젝트 전체 개수
