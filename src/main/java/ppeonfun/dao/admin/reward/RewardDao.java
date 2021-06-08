@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import ppeonfun.dto.Information;
 import ppeonfun.dto.Project;
 import ppeonfun.dto.Reward;
 
@@ -34,5 +35,22 @@ public interface RewardDao {
 	 * @return 리워드 리스트 반환 
 	 */
 	public List<Reward> selectRewardList(Project project);
-
+	
+	/**
+	 * 리워드 값 대입
+	 * @param reward - 리워드 값 대입
+	 */
+	public void insertReward(Reward reward);
+	
+	/**
+	 * 리워드 값 삭제
+	 * @param reward - 삭제할 리워드 번호
+	 */
+	public void deleteReward(Reward reward);
+	
+	/**
+	 * 프로젝트 상태 변화 시키기
+	 * @param information - 프로젝트 번호
+	 */
+	public void updateProjectState(Project project);
 }

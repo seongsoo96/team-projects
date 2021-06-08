@@ -21,5 +21,21 @@ SELECT count(*) FROM reward where p_no = #{pNo}
   <select id="selectRewardList" resultType="Reward" parameterType="Project">
   SELECT * FROM reward where p_no = #{pNo}
   </select>
+ <insert id="insertReward" parameterType="Reward">
+ <selectKey order="BEFORE" resultType="int" keyProperty="reNo">
+ SELECT reward_SEQ.nextval FROM dual
+ </selectKey>
+ 
+ INSERT INTO reward(re_no,p_no,re_money,re_title,re_context,re_option,re_option_context,re_delivery,re_delivery_money,re_limit_quantity,re_state) 
+ VALUES(#{reNo}, #{pNo}, #{reMoney}, #{reTitle}, #{reContext}, #{reOption}, #{reOptionContext}, #{reDelivery}, #{reDeliveryMoney}, #{reLimitQuantity}, #{reState})
+ </insert>
+ 
+ <delete id="deleteReward" parameterType="Reward">
+ DELETE FROM reward where re_no = #{reNo}
+ </delete>
+ <update id="updateProjectState" parameterType="Project">
+ UPDATE project SET p_reward=#{pReward} WHERE p_no = #{pNo}
+ </update>
+ 
  
  </mapper>

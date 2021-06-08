@@ -25,8 +25,6 @@ function pagingSelect(pagingNumber) {
 		}
 	});
 }
-
-
 </script>
 <section>
 <div id="wrapper-main">

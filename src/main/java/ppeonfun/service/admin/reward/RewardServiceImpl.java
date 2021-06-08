@@ -42,4 +42,37 @@ public class RewardServiceImpl implements RewardService {
 		// TODO Auto-generated method stub
 		return rewardDao.selectRewardList(project);
 	}
+	
+	@Override
+	public Reward inputReward(Reward reward) {
+		
+		rewardDao.insertReward(reward);
+		
+		return reward;
+	}
+	@Override
+	public Project getProject(Reward reward) {
+		Project project = new Project();
+		project.setpNo(reward.getpNo());
+		return project;
+	}
+	@Override
+	public void removeReward(Reward reward) {
+		rewardDao.deleteReward(reward);
+		
+	}
+	
+	@Override
+	public void updateRewardState(Reward reward) {
+		Project project = new Project();
+		project.setpNo(reward.getpNo());
+		if(rewardDao.selectIsReward(project) > 0) {
+			project.setpReward("Y");
+		}else {
+			project.setpReward("W");
+		}
+		
+		rewardDao.updateProjectState(project);
+	}
+	
 }

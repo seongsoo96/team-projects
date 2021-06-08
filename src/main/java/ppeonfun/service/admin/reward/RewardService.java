@@ -27,9 +27,32 @@ public interface RewardService {
 	public String selectByName(Project project);
 	/**
 	 * 리워드 반환
-	 * @param project - 프로젝트 번호
+	 * @param reward - 프로젝트 번호
 	 * @return 기본요건 반환
 	 */
 	public List<Reward> viewRewardList(Project project);
+	
+	/**
+	 * 리워드값 대입
+	 * @param reward - 리워드 값
+	 * @return 대입한 값 가져오기
+	 */
+	public Reward inputReward(Reward reward);
+	/**
+	 * 프로젝트 값 생성
+	 * @param reward - 프로젝트 번호를 가진 reward
+	 * @return 프로젝트 리턴
+	 */
+	public Project getProject(Reward reward);
+	/**
+	 * 리워드 삭제
+	 * @param reward - 리워드 삭제 번호
+	 */
+	public void removeReward(Reward reward);
+	/**
+	 * 리워드 상태 변경
+	 * @param reward - 리워드 상태 변경
+	 */
+	public void updateRewardState(Reward reward);
 
 }
