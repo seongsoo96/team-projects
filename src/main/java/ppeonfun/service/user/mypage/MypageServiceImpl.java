@@ -162,7 +162,19 @@ public class MypageServiceImpl implements MypageService {
 	public String getEmailBymNo(int mNo) {
 		return mypageDao.selectmEmailBymNo(mNo);
 	}
-
+	
+	@Override
+	public boolean checkProjectByNo(int mNo) {
+		//서포터로 참여중인 프로젝트 개수 조회
+		int bySupport = mypageDao.selectCntProjectBySupport(mNo);
+		
+		//메이커로 참여중인 프로젝트 개수 조회
+		int byMaker = mypageDao.selectCntProjectByMaker(mNo);
+		
+		if((bySupport + byMaker) > 0 ) { return true; }
+		else { return false; }
+	}
+	
 	@Override
 	public void updateDeleteState(int mNo) {
 		mypageDao.updateDeleteStateBymNo(mNo);

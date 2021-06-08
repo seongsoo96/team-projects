@@ -11,7 +11,7 @@
 </style>
 
 <div class="container">
-	<!-- 모달창 -->
+	<!-- 비밀번호 확인 모달창 -->
 	<div class="modal fade" id="pwModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -32,6 +32,22 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 회원 탈퇴 불가 모달창 -->
+	<div class="modal fade" id="unsubCancleModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body form-inline">
+					<div class="form-group text-center" style="width:100%;">
+						<div class="modalMsg">현재 참여중인 프로젝트가 있어<br> 탈퇴가 불가능합니다.</div>
+						<button type="button" class="btn" data-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 	<h3>회원정보수정</h3>
 	<hr>
@@ -39,7 +55,7 @@
 	<div class="text-center" style="height:250px;">
 		<div><button type="button" id="default-info">기본 정보 수정</button></div>
 		<div><button type="button" id="changepw" data-toggle="modal" data-target="#pwModal">비밀번호 변경</button></div>
-		<a href="/user/mypage/unsubscribe">회원탈퇴</a>	
+		<div><button type="button" id="btnUnsub" style="border:none; font-size:14px; text-decoration:underline;">회원탈퇴</button>	</div>
 	</div>
 	
 </div>
@@ -85,6 +101,30 @@ $(document).ready(function() {
 		})
 		
 	})
+	
+	// '회원 탈퇴' 클릭 시 ajax로 참여중인 프로젝트 조회
+	$("#btnUnsub").click(function() {
+		console.log("회원 탈퇴 클릭!")
+		$.ajax({
+			type: "post"
+	    	, url: "/user/mypage/unsubscribe/ajax"
+	    	, dataType: "json"
+	    	, success: function(res) {
+	    		
+	    		if(res.hasProject) {//참여중인 프로젝트가 있는 경우
+	    			console.log('탈퇴 불가')
+	    			$('#unsubCancleModal').modal('toggle')
+	    		} else {
+	    			console.log('탈퇴 가능')
+	    			location.href="/user/mypage/unsubscribe"
+	    		}
+	    	}
+	    	, error: function() { console.log("회원 탈퇴 ajax 요청 실패") }
+			
+		})
+	})
+	
+	//$("#btnUnsubComplete").click(function() {})
 })
 </script>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

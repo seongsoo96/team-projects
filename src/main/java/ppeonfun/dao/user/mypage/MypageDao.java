@@ -81,7 +81,25 @@ public interface MypageDao {
 	 */
 	public String selectmEmailBymNo(int mNo);
 
+	
+	/**
+	 * payment, project 테이블을 조인하여
+	 * 회원이 서포터로서 참여한 프로젝트 수를 조회한다.
+	 * 
+	 * @param mNo	회원번호
+	 * @return		참여중인 프로젝트 개수
+	 */
+	public int selectCntProjectBySupport(int mNo);
+	
+	/**
+	 * project 테이블에서 회원이 메이커로서 참여한 프로젝트 수를 조회한다.
+	 * 
+	 * @param mNo	회원번호
+	 * @return		참여중인 프로젝트 개수
+	 */
+	public int selectCntProjectByMaker(int mNo);
 
+	
 	/**
 	 * member 테이블의 m_delete_state를 업데이트한다.
 	 * @param mNo	회원 탈퇴를 신청한 회원번호
@@ -123,6 +141,5 @@ public interface MypageDao {
 	 * @return		카테고리별 환불 금액
 	 */
 	public List<HashMap<String, Object>> selectPaybSumByNo(int mNo);
-
 
 }

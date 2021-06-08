@@ -72,6 +72,24 @@
  	WHERE m_no = #{mNo}
  	</select>
  	
+ 	<select id="selectCntProjectBySupport" parameterType="int" resultType="int">
+	SELECT COUNT(*)
+	FROM (payment PM
+    	INNER JOIN project PJ
+        	ON PM.p_no = PJ.p_no
+	)
+	WHERE PM.m_no = #{mNo}
+    	AND PM.paym_state = 'Y'
+   		AND PJ.p_progress_state = 'Y'
+ 	</select>
+ 	
+ 	<select id="selectCntProjectByMaker" parameterType="int" resultType="int">
+	SELECT COUNT(*)
+	FROM project
+	WHERE m_no = #{mNo}
+    	AND p_progress_state = 'Y'
+ 	</select>
+ 	
  	<update id="updateDeleteStateBymNo" parameterType="int">
  	UPDATE member
  	SET m_delete_state = 'Y'

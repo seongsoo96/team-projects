@@ -88,7 +88,15 @@ public interface MypageService {
 	 */
 	public String getEmailBymNo(int mNo);
 
+	
+	/**
+	 * 회원이 참여중인 프로젝트가 있는지 조회한다.
+	 * @param mNo	회원번호
+	 * @return		참여중이면 true, 아니면 false
+	 */
+	public boolean checkProjectByNo(int mNo);
 
+	
 	/**
 	 * 회원의 탈퇴 신청을 업데이트한다.
 	 * @param mNo	회원번호

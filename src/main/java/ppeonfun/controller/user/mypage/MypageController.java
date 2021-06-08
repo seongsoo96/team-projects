@@ -208,6 +208,18 @@ public class MypageController {
 		
 	}
 	
+	@RequestMapping(value="/unsubscribe/ajax", method=RequestMethod.POST)
+	public String checkPjBeforeUnsub(HttpSession session, Model model) {
+		logger.info("***** /user/mypage/unsubscribe/ajax [GET] START *****");
+		
+		//회원이 참여 중인 프로젝트가 있는지 조회한다. 
+		//프로젝트가 있으면 true -> 탈퇴 불가, 없으면 false -> 탈퇴 가능
+		boolean hasProject = mypageService.checkProjectByNo((int) session.getAttribute("mNo"));
+		model.addAttribute("hasProject", hasProject);
+		
+		return "jsonView";
+	}
+	
 	@RequestMapping(value="/unsubscribe", method=RequestMethod.POST)
 	public String postUnsubscribe(HttpSession session, Model model) {
 		logger.info("***** /user/mypage/unsubscribe [POST] START *****");
