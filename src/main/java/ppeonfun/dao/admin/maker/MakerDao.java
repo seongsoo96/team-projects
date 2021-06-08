@@ -32,5 +32,20 @@ public interface MakerDao {
 	 * @return 메이커
 	 */
 	public Maker selectMaker(Project project);
+	/**
+	 * 프로젝트 메이커 정보 삽입
+	 * @param maker - 프로젝트 메이커 정보
+	 */
+	public void insertMaker(Maker maker);
+	/**
+	 * 프로젝트 상태 변화 시키기
+	 * @param maker - 프로젝트 번호
+	 */
+	public void updateProjectState(Maker maker);
+	/**
+	 * 프로젝트 메이커 정보 수정
+	 * @param maker - 메이커 번호
+	 */
+	public void updateMaker(Maker maker);
 
 }

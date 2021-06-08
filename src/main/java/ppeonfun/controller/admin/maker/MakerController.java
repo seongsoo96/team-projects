@@ -75,19 +75,19 @@ public class MakerController {
 		model.addAttribute("name", name);
 	}
 	
-//	@RequestMapping(value="/modify", method=RequestMethod.POST)
-//	public String modify(Maker maker, MultipartFile file, String storedName){
-//		logger.info("/admin/maker/modify [POST]");
-//		logger.info("maker {}", maker);
-//		logger.info("file {}", file);
-//		
-//		maker = makerService.getMaker(maker);
-//		logger.info("result {}", maker);
-//		
-//		logger.info("storedName {}", storedName);
-//		makerService.removeFile(storedName, maker); //파일 정보 및 파일 삭제
-//		makerService.modifyMakerFile(maker,file); // 파일 정보 및 파일 수정
-//		
-//		return "redirect:/admin/project/view?pNo="+maker.getpNo();
-//	}
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public String modify(Maker maker, MultipartFile file, String storedName){
+		logger.info("/admin/maker/modify [POST]");
+		logger.info("maker {}", maker);
+		logger.info("file {}", file);
+		
+		maker = makerService.getMaker(maker);
+		logger.info("result {}", maker);
+		
+		logger.info("storedName {}", storedName);
+		makerService.removeFile(storedName); //파일 정보 및 파일 삭제
+		makerService.modifyMakerFile(maker,file); // 파일 정보 및 파일 수정
+		
+		return "redirect:/admin/project/view?pNo="+maker.getpNo();
+	}
 }

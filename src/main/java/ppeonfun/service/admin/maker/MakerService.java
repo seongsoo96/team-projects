@@ -37,5 +37,24 @@ public interface MakerService {
 	 * @param file - 삽입할 메이커파일
 	 */
 	public void inputMaker(Maker maker, MultipartFile file);
+	/**
+	 * 메이커 정보 번호 가져오기
+	 * @param maker - 기본 정보 프로젝트 번호
+	 * @return 번호을 포함한 메이커 객체 가져오기
+	 */
+	
+	public Maker getMaker(Maker maker);
+	/**
+	 * 메이커 프로필 파일 삭제
+	 * @param storedName - 저장 이름
+	 */
+	public void removeFile(String storedName);
+	/**
+	 * 메이커 정보 수정
+	 * @param maker - 기본 정보 
+	 * @param file - 파일 재업로드
+	 */
+	
+	public void modifyMakerFile(Maker maker, MultipartFile file);
 
 }

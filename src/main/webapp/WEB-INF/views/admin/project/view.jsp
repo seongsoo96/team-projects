@@ -42,6 +42,40 @@
 </c:if>
 
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp"></c:import>
+<script type="text/javascript">
+$(document).ready(function(){
+	var pRequirements = '${project.pRequirements}';
+	var pInformation = '${project.pInformation}';
+	var pStory = '${project.pStory}';
+	var pReward = '${project.pReward}';
+	var pMaker = '${project.pMaker}';
+	var modalContents = $(".modal-contents");
+	var modal = $("#defaultModal");
+	
+	
+	
+	console.log(pRequirements);
+	console.log(pInformation);
+	console.log(pStory);
+	console.log(pReward);
+	console.log(pMaker);
+	
+	$("#projectSubmit").click(function(){
+		if(pRequirements == 'Y' && pInformation=='Y' && pStory=='Y' && pReward=='Y' && pMaker=='Y'){
+			console.log('작성완료')
+			$(location).attr('href', '/admin/project/submit?pNo=${project.pNo}')
+			
+		}else{
+			modalContents.text("프로젝트를 완성하세요");
+		    modal.modal('show');
+		}	
+	})
+	
+	
+});
+
+</script>
+
 <style type="text/css">
 
 .alert{
@@ -75,6 +109,23 @@
 <c:import url="/WEB-INF/views/layout/adminProjectSlide.jsp"></c:import>
 
 <div class="container">
+	<div class="modal fade" id="defaultModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">알림</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="modal-contents"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->	
+
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본요건&nbsp;<span class="state">${pRequirements}</span></span><a href="/admin/requirement/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본정보&nbsp;<span class="state">${pInformation}</span></span><a href="/admin/information/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">스토리&nbsp;<span class="state">${pStory}</span></span><a href="/admin/story/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
@@ -83,11 +134,24 @@
 
 	<div class="btn-group btn-group-lg" role="group">
 		<c:if test="${project.mNo eq mNo}">
-			<button type="button" class="btn btn-default">제출</button>
+			<c:choose>
+				<c:when test="${project.pState eq 'S' }">
+					<button type="button" id="projectSubmit" class="btn btn-default" disabled>승인 대기중</button>
+				</c:when>
+				<c:when test="${project.pState eq 'Y' }">
+					<button type="button" id="projectSubmit" class="btn btn-default" disabled>승인 완료</button>
+				</c:when>
+				<c:when test="${project.pState eq 'W' }">
+					<button type="button" id="projectSubmit" class="btn btn-default">제출</button>
+				</c:when>
+			</c:choose>
+			
 		</c:if>
-		<button type="button" class="btn btn-default">승인</button>
-		<button type="button" class="btn btn-default">거부</button>
-		<button type="button" class="btn btn-default">수정요청</button>
+		<c:if test="${project.mNo ne mNo and project.pState eq 'S'}">
+			<button type="button" class="btn btn-default">승인</button>
+			<button type="button" class="btn btn-default">거부</button>	
+		</c:if>
+		
 	</div>
 </div>
 </div>
