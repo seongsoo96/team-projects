@@ -3,6 +3,10 @@ package ppeonfun.controller.user.search;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,7 @@ public class SearchController {
 	public String list(String keyword, Model model, SearchPaging inData ) {
 		logger.info("/search/ [GET]");
 		
+		
 		logger.info("keyword : " + keyword);
 		logger.info("inData : " + inData);
 		
@@ -47,8 +52,7 @@ public class SearchController {
 		for( HashMap<String, Object> i : list) {
 			logger.info("list에 담긴 객체 확인 : {}", i);
 		}
-		
-	
+				
 		//모델값 전달
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("searchList", list);
