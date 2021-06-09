@@ -155,5 +155,23 @@ public interface MypageService {
 	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo);
 
 
+	/**
+	 * 펀딩 커뮤니티의 페이징 객체를 생성한다.
+	 * @param curPage	현재 페이지
+	 * @param mNo		회원 번호
+	 * @return			페이징 정보 객체
+	 */
+	public Paging getFundCommPaging(int curPage, int mNo);
+
+
+	/**
+	 * 회원이 펀딩 커뮤니티에 작성한 글 목록을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원 번호
+	 * @return			작성한 글 목록 
+	 */
+	public List<HashMap<String, Object>> getMyFundCommList(Paging paging, int mNo);
+
+
 
 }

@@ -152,11 +152,32 @@ public interface MypageDao {
 	
 	
 	/**
+	 * favorite, project, information 테이블을 조인하여
+	 * 회원이 좋아요 한 프로젝트 목록을 조회한다.
 	 * 
 	 * @param paging	페이징 정보 객체
 	 * @param mNo		회원번호
 	 * @return			좋아한 프로젝트 목록
 	 */
 	public List<HashMap<String, Object>> selectAllMyFavoriteList(@Param("paging")Paging paging, @Param("mNo")int mNo);
+
+
+	/**
+	 * 회원이 펀딩 커뮤니티에 작성한 글의 수를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		작성한 글 수
+	 */
+	public int selectCntFundComm(int mNo);
+
+
+	/**
+	 * community, project 테이블을 조인하여
+	 * 회원이 작성한 글 목록을 조회한다.
+	 * 
+	 * @param paging 	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			작성한 글 목록
+	 */
+	public List<HashMap<String, Object>> selectAllMyFundCommList(@Param("paging")Paging paging, @Param("mNo")int mNo);
 
 }

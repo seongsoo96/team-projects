@@ -168,6 +168,30 @@
 	    ) RES
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
  	</select>
+ 	
+ 	<select id="selectCntFundComm" parameterType="int" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM community
+ 	WHERE m_no = #{mNo}
+ 	ORDER BY com_no DESC
+ 	</select>
+ 	
+ 	<select id="selectAllMyFundCommList" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	        	C.com_content, C.com_date
+	        	, PJ.p_name, PJ.p_progress_state
+	        FROM (
+	        	community C
+		        INNER JOIN project PJ
+		            ON C.p_no = PJ.p_no
+		    )
+	        WHERE C.m_no = #{mNo}
+	        ORDER BY C.com_no DESC
+	    ) RES
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
+ 	</select>
  </mapper>  
     
   

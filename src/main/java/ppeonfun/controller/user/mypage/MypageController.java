@@ -281,7 +281,7 @@ public class MypageController {
 	}
 	
 	
-	@RequestMapping(value = "/fundingchart/payback")
+	@RequestMapping(value="/fundingchart/payback")
 	public String viewMyPayback(HttpSession session, Model model) {
 		logger.info("***** /user/mypage/fundingchart/payback START *****");
 		
@@ -294,8 +294,11 @@ public class MypageController {
 		return "/user/mypage/fundingchart";
 	}
 	
+	
+	/* 서포터 */
+	
 	//마이페이지 좋아요--------------------------------------------------------------------
-	@RequestMapping(value = "/favorite", method=RequestMethod.GET)
+	@RequestMapping(value="/favorite", method=RequestMethod.GET)
 	public void viewMyFavorite(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/favorite [GET] START *****");
 		
@@ -308,6 +311,37 @@ public class MypageController {
 		logger.info("좋아요 목록 {}", favoriteList);
 		model.addAttribute("favoriteList", favoriteList);
 	}
+	
+	
+	//마이페이지 내가 쓴 글--------------------------------------------------------------------
+	
+	@RequestMapping(value="/fundcomm", method=RequestMethod.GET)
+	public void viewMyFundComm(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+		logger.info("***** /user/mypage/fundcomm [GET] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
+		Paging paging = mypageService.getFundCommPaging(curPage, mNo);
+		
+		//회원이 프로젝트 커뮤니티에 작성한 글을 조회한다.
+		List<HashMap<String, Object>> fundCommList = mypageService.getMyFundCommList(paging, mNo);
+		
+		logger.info("펀딩 커뮤니티에 작성한 글 목록 {}", fundCommList);
+		model.addAttribute("fundCommList", fundCommList);
+	}
+	
+//	@RequestMapping(value="/board", method=RequestMethod.GET)
+//	public void viewMyBoard(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+//		logger.info("***** /user/mypage/board [GET] START *****");
+//		
+//		int mNo = (int) session.getAttribute("mNo");
+//		Paging paging = mypageService.getBoardPaging(curPage, mNo);
+//		
+//		//회원이 게시판에 작성한 글을 조회한다.
+//		List<HashMap<String, Object>> favoriteList = mypageService.getMyFavoriteList(paging, mNo);
+//		
+//		logger.info("좋아요 목록 {}", favoriteList);
+//		model.addAttribute("favoriteList", favoriteList);
+//	}
 
 	
 	

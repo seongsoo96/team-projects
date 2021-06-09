@@ -215,5 +215,17 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.selectAllMyFavoriteList(paging, mNo);
 	}
 
+	@Override
+	public Paging getFundCommPaging(int curPage, int mNo) {
+		int totalCount = mypageDao.selectCntFundComm(mNo);
+		
+		return new Paging(totalCount, curPage, 5);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getMyFundCommList(Paging paging, int mNo) {
+		return mypageDao.selectAllMyFundCommList(paging, mNo);
+	}
+
 
 }
