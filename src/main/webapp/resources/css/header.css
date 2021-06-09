@@ -157,6 +157,7 @@ header > div{
     background-color: #fff;
 /*     width: 100%; */
     width: max-content;
+    z-index:100;
 }
 
 .searchInput_module {

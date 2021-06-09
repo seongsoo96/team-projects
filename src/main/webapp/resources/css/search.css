@@ -17,6 +17,10 @@ input[type="checkbox"] {
     width: 980px;
 }
 
+em {
+	font-style: normal;
+}
+
 
 
 
@@ -357,8 +361,19 @@ button {
     color: #1d2129;
 }
 
+.SearchList .totalCount {
+    color:#00b2b2;
+}
+
 .SearchList p span {
-    color: #00b2b2;
+	color: #90949c;
+}
+
+.SearchList p span:nth-child(2)::before {
+    content: "|";
+    color: #dadce0;
+    margin: 0 5px;
+    font-weight: 400;
 }
 
 .SearchList_result_wrap {
@@ -475,9 +490,35 @@ button {
 }
 
 .SearchList_result_project .project_status_wrap
+.project_status_info .project_deadline {
+    font-size: 14px;
+    font-weight: 500;
+    color: #90949c;
+    margin-top: 4px;
+}
+.SearchList_result_project .project_status_wrap
+.project_status_info .project_success {
+    font-size: 14px;
+    font-weight: 500;
+    color: #00b2b2;
+    margin-top: 4px;
+}
+.SearchList_result_project .project_status_wrap
+.project_status_info .project_success::before {
+    content: "\B7";
+    padding: 0 2px;
+}
+
+.SearchList_result_project .project_status_wrap
 .project_status_info .project_status_info_box .project_funded_money::before {
     content: "\B7";
     padding: 0 2px;
+}
+
+.SearchList_result_project .project_status_wrap_comingsoon {
+   	font-size: 17px;
+    font-weight: 500;
+    color: #00b2b2;
 }
 
 .SearchList .view_more {

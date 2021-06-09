@@ -70,16 +70,68 @@ $(document).ready(function() {
 								</small>
 							</p>
 						</a>
-						<div class="project_status_wrap">
-							<div class="goal_bar"><span></span></div>
-							<div class="project_status_info">
-								<div class="project_status_info_box">
-									<strong class="project_funded_percent">${list.FUNDED_PERCENT }%</strong>
-									<em class="project_funded_money">${list.FUNDEND_MONEY }</em>
+						<c:set var="now" value="<%=new java.util.Date() %>" />
+						<c:set var="today"><fmt:formatDate value="${now}" pattern="yy-MM-dd" /></c:set>
+						<c:set var="start_date"><fmt:formatDate value="${list.I_START_DATE }" pattern="yy-MM-dd" /></c:set>
+						<c:set var="end_date"><fmt:formatDate value="${list.I_END_DATE }" pattern="yy-MM-dd" /></c:set>
+						<fmt:parseDate value="${today }" var="todayDate" pattern="yyyy-MM-dd"/>
+						<fmt:parseNumber value="${todayDate.time / (1000*60*60*24)}" integerOnly="true" var="tDate"></fmt:parseNumber>
+						<fmt:parseDate value="${start_date }" var="strPlanDate" pattern="yyyy-MM-dd"/>
+						<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="sDate"></fmt:parseNumber>
+						<fmt:parseDate value="${end_date }" var="endPlanDate" pattern="yyyy-MM-dd"/>
+						<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="eDate"></fmt:parseNumber>
+						
+				<c:choose>
+							<c:when test="${start_date <= today && end_date >= today }">
+								<div class="project_status_wrap">
+									<div class="goal_bar"><span style="width:${list.FUNDED_PERCENT }% "></span></div>
+									<div class="project_status_info">
+										<div class="project_status_info_box">
+											<strong class="project_funded_percent">${list.FUNDED_PERCENT }%</strong>
+											<em class="project_funded_money">${list.FUNDED_MONEY }원</em>
+										</div>
+<%-- 										<em class="project_deadline"><fmt:formatDate value="${list.I_END_DATE }" pattern="yy-MM-dd" /></em> --%>
+										<em class="project_deadline">${eDate - tDate }일 남음</em>
+									</div>
 								</div>
-								<em class="project_deadline"><fmt:formatDate value="${list.I_END_DATE }" pattern="yy-MM-dd" /></em>
-							</div>
-						</div>
+							</c:when>
+							<c:when test="${start_date > today }">
+								<div class="project_status_wrap_comingsoon">
+									<fmt:formatDate value="${list.I_START_DATE }" pattern="MM" />/<fmt:formatDate value="${list.I_START_DATE }" pattern="dd" />(<fmt:formatDate value="${list.I_START_DATE }" pattern="E" />)
+									<fmt:formatDate value="${list.I_START_DATE }" pattern="HH" />시<fmt:formatDate value="${list.I_START_DATE }" pattern="dd" />분
+									오픈예정
+								</div>
+							</c:when>
+							<c:when test="${end_date < today }">
+								<div class="project_status_wrap">
+									<div class="goal_bar"><span style="width:${list.FUNDED_PERCENT }% "></span></div>
+									<div class="project_status_info">
+										<div class="project_status_info_box">
+											<strong class="project_funded_percent">${list.FUNDED_PERCENT }%</strong>
+											<em class="project_funded_money">${list.FUNDED_MONEY }원</em>
+										</div>
+										<c:if test="${list.FUNDED_PERCENT >= 100 }">
+											<em class="project_deadline">종료</em>
+											<em class="project_success">성공</em>
+										</c:if>
+										<c:if test="${list.FUNDED_PERCENT < 100 }">
+											<em class="project_deadline">종료</em>
+											<em class="project_success">실패</em>
+										</c:if>
+									</div>
+								</div>
+							</c:when>
+						</c:choose>
+<!-- 						<div class="project_status_wrap"> -->
+<!-- 							<div class="goal_bar"><span></span></div> -->
+<!-- 							<div class="project_status_info"> -->
+<!-- 								<div class="project_status_info_box"> -->
+<%-- 									<strong class="project_funded_percent">${list.FUNDED_PERCENT }%</strong> --%>
+<%-- 									<em class="project_funded_money">${list.FUNDEND_MONEY }</em> --%>
+<!-- 								</div> -->
+<%-- 								<em class="project_deadline"><fmt:formatDate value="${list.I_END_DATE }" pattern="yy-MM-dd" /></em> --%>
+<!-- 							</div> -->
+<!-- 						</div> -->
 					</div>
 				</c:forEach>
 <!-- 			</div>.SearchList_result_wrap -->

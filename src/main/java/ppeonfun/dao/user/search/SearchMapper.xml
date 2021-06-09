@@ -34,7 +34,7 @@
 		            (select sum(paym_amount) from payment where p_no = p.p_no) funded_money
 		            , i.i_money
 		            , (select round( ( (select sum(paym_amount) from payment where p_no = p.p_no ) / i.i_money ) * 100, 2 )  from dual) funded_percent
-		            , i.i_stored_name, i.i_category, i.i_end_date, p.*
+		            , i.i_stored_name, i.i_category, i.i_start_date, i.i_end_date, p.*
 		        from project p, information i
 		        where p.p_name like '%' || #{keyword} || '%'
 		        and p.p_no = i.p_no(+)
@@ -50,8 +50,8 @@
 	<select id="selectCntAllByFilter" parameterType="hashmap" resultType="int">
 		SELECT count(*) FROM (
             SELECT
-                ( SELECT round( sum(paym_amount) / i_money * 100, 2 ) FROM payment  WHERE p_no = p.p_no  ) rate
-                , ( SELECT sum(paym_amount) FROM payment WHERE p_no = p.p_no) sum_amount
+                ( SELECT round( sum(paym_amount) / i_money * 100, 2 ) FROM payment  WHERE p_no = p.p_no  ) funded_percent
+                , ( SELECT sum(paym_amount) FROM payment WHERE p_no = p.p_no) funded_money
                 , p.p_no, p.m_no, p_name
                 , i_category, i_money, i_start_date, i_end_date
             FROM project P, information I
@@ -82,10 +82,10 @@
             AND i_category in ( ${sf.category} )
         </if>
         <if test="sf.s1min != null and sf.s1max != null">
-            AND rate BETWEEN #{sf.s1min} AND #{sf.s1max}
+            AND funded_percent BETWEEN #{sf.s1min} AND #{sf.s1max}
         </if>
         <if test="sf.s2min != null and sf.s2max != null">
-            AND sum_amount BETWEEN #{sf.s2min} AND #{sf.s2max}
+            AND funded_money BETWEEN #{sf.s2min} AND #{sf.s2max}
         </if>
         </trim>
 	</select>
@@ -95,8 +95,8 @@
 		    SELECT rownum rnum, RES.* FROM (
 		        SELECT * FROM (
 		            SELECT
-		                ( SELECT round( sum(paym_amount) / i_money * 100, 2 ) FROM payment  WHERE p_no = p.p_no  ) rate
-		                , ( SELECT sum(paym_amount) FROM payment WHERE p_no = p.p_no) sum_amount
+		                ( SELECT round( sum(paym_amount) / i_money * 100, 2 ) FROM payment  WHERE p_no = p.p_no  ) funded_percent
+		                , ( SELECT sum(paym_amount) FROM payment WHERE p_no = p.p_no) funded_money
 		                , p.p_no, p.m_no, p_name
 		                , i_category, i_money, i_start_date, i_end_date, i_stored_name
 		            FROM project P, information I
@@ -127,10 +127,10 @@
 		            AND i_category in ( ${sf.category} )
 		        </if>
 		        <if test="sf.s1min != null and sf.s1max != null">
-		            AND rate BETWEEN #{sf.s1min} AND #{sf.s1max}
+		            AND funded_percent BETWEEN #{sf.s1min} AND #{sf.s1max}
 		        </if>
 		        <if test="sf.s2min != null and sf.s2max != null">
-		            AND sum_amount BETWEEN #{sf.s2min} AND #{sf.s2max}
+		            AND funded_money BETWEEN #{sf.s2min} AND #{sf.s2max}
 		        </if>
 		        </trim>
 		        ORDER BY p_no DESC
