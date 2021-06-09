@@ -26,15 +26,35 @@ function submitContents( elClickedObj ) {
 }
 </script>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	//작성버튼 동작
+	$("#btnWrite").click(function() {
+		
+		//스마트 에디터의 내용을 <textarea>에 적용하는 함수를 호출한다
+		submitContents( $("#btnWrite") )
+		
+		//<form> submit
+		$("form").submit();
+	});
+	
+	//취소버튼 동작
+	$("#btnCancel").click(function() {
+		history.go(-1);
+	});
+});
+</script>
+
 <div id="content">
 
 <div class="anbody2">
-<div class="buttonbox">
+
 <label class="headname">공지사항 쓰기</label>
-<input class="viewbtn pull-right" type="button" onclick="history.go(-1)" value="취소" />
-<button class="viewbtn pull-right">완료</button>
+<div class="buttonbox">
+<button id="btnCancel" class="viewbtn pull-right">취소</button>
+<button id="btnWrite" class="viewbtn pull-right">완료</button>
 </div>
-<hr>
 
 <form action="/admin/notice/write" method="post" enctype="multipart/form-data">
 <div class="nTitle"><input type="text" name="bTitle" class="bTitle" placeholder="제목을 입력해주세요." required /></div><br>

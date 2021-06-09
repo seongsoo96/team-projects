@@ -27,37 +27,102 @@
 		<result column="bf_size" property="bfSize" />
 		<result column="bf_content_type" property="bfContentType" />
 	</resultMap>
+	
+	<resultMap type="ppeonfun.dto.Comments" id="Comments">
+		<id column="c_no" property="cNo" />
+		
+		<result column="b_no" property="bNo" />
+		<result column="m_no" property="mNo" />
+		<result column="c_content" property="cContent" />
+		<result column="c_create_date" property="cCreateDate" />
+	</resultMap>
+	
+	<resultMap type="ppeonfun.dto.Commentss" id="Commentss">
+		<id column="cs_no" property="csNo" />
+		
+		<result column="c_no" property="cNo" />
+		<result column="m_no" property="mNo" />
+		<result column="cs_content" property="csContent" />
+		<result column="cs_create_date" property="csCreateDate" />
+	</resultMap>
    
 	<select id="selectCntAll" parameterType="hashmap" resultType="int">
 		SELECT count(*) FROM board
 		WHERE b_grade = 'N'
-		<if test="category.equals('mix')">
+		<if test="category.equals('mix') and !''.equals(search)">
 			AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
 		</if>
-		<if test="category.equals('title')">
+		<if test="category.equals('title') and !''.equals(search)">
 			AND REGEXP_LIKE ( b_title, #{search} )
 		</if>
-		<if test="category.equals('content')">
+		<if test="category.equals('content') and !''.equals(search)">
 			AND REGEXP_LIKE ( b_content, #{search} )
+		</if>
+		<if test="''.equals(search)">
+			AND 1=1
 		</if>
 	</select>
 
 	<select id="selectAll" parameterType="hashmap" resultType="hashmap">
 		SELECT * FROM (
 			SELECT rownum rnum, N.* FROM (
-				SELECT board.*, member.m_nick 
+				SELECT board.*, member.m_nick , (
+					SELECT count(*) FROM recommend
+					WHERE recommend.b_no = board.b_no
+				) AS RECOMMEND
 				FROM board, member
 				WHERE b_grade = 'N' AND board.m_no = member.m_no
 				ORDER BY b_no DESC
 			) N WHERE 1=1
-			<if test="category.equals('mix')">
-				AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+			<if test="!search.equals('')">
+				<if test="category.equals('mix')">
+					AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+				</if>
+				<if test="category.equals('title')">
+					AND REGEXP_LIKE ( b_title, #{search} )
+				</if>
+				<if test="category.equals('content')">
+					AND REGEXP_LIKE ( b_content, #{search} )
+				</if>
 			</if>
-			<if test="category.equals('title')">
-				AND REGEXP_LIKE ( b_title, #{search} )
+			<if test="search.equals('')">
+				AND 1=1
 			</if>
-			<if test="category.equals('content')">
-				AND REGEXP_LIKE ( b_content, #{search} )
+		) NOTICE
+		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+	</select>
+	
+	<select id="selectAllByArray" parameterType="hashmap" resultType="hashmap">
+		SELECT * FROM (
+			SELECT rownum rnum, N.* FROM (
+				SELECT board.*, member.m_nick , (
+					SELECT count(*) FROM recommend
+					WHERE recommend.b_no = board.b_no
+				) AS RECOMMEND
+				FROM board, member
+				WHERE b_grade = 'N' AND board.m_no = member.m_no
+				ORDER BY 
+				<if test="orderby == 2">
+					RECOMMEND DESC,
+				</if>
+				<if test="orderby == 3">
+					RECOMMEND ASC,
+				</if>
+				b_no DESC
+			) N WHERE 1=1
+			<if test="!search.equals('')">
+				<if test="category.equals('mix')">
+					AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+				</if>
+				<if test="category.equals('title')">
+					AND REGEXP_LIKE ( b_title, #{search} )
+				</if>
+				<if test="category.equals('content')">
+					AND REGEXP_LIKE ( b_content, #{search} )
+				</if>
+			</if>
+			<if test="search.equals('')">
+				AND 1=1
 			</if>
 		) NOTICE
 		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
@@ -85,6 +150,11 @@
 	
 	<select id="selectFilesByBoardno" parameterType="int" resultMap="BoardFile">
 		SELECT * FROM board_file
+		WHERE b_no = #{bNo}
+	</select>
+	
+	<select id="selectCntRecommend" parameterType="int" resultType="int">
+		SELECT count(*) FROM recommend
 		WHERE b_no = #{bNo}
 	</select>
 	
@@ -119,6 +189,117 @@
 		DELETE FROM board
 		WHERE b_no = #{bNo}
 	</delete>
-   
+	
+	<select id="selectCntRec" parameterType="ppeonfun.dto.Recommend" resultType="int">
+		SELECT count(*) FROM recommend
+		WHERE b_no = #{bNo} AND m_no = #{mNo}
+	</select>
+	
+	<insert id="insertRec" parameterType="ppeonfun.dto.Recommend">
+		INSERT INTO recommend ( r_no, b_no, m_no )
+		VALUES ( recommend_seq.nextval, #{bNo}, #{mNo} )
+	</insert>
+	
+	<delete id="deleteRec" parameterType="ppeonfun.dto.Recommend">
+		DELETE FROM recommend
+		WHERE b_no = #{bNo} AND m_no = #{mNo}
+	</delete>
+	
+	<select id="selectRecByBno" parameterType="ppeonfun.dto.Recommend" resultType="int">
+		SELECT count(*) FROM recommend
+		WHERE b_no = #{bNo}
+	</select>
+	
+	<insert id="insertCmt" parameterType="ppeonfun.dto.Comments">
+		INSERT INTO comments ( c_no, b_no, m_no, c_content )
+		VALUES ( comments_seq.nextval, #{bNo}, #{mNo}, #{cContent} )
+	</insert>
+	
+	<select id="selectComments" parameterType="int" resultType="hashmap">
+		SELECT comments.*, member.m_nick FROM member, comments
+		WHERE member.m_no = comments.m_no AND comments.b_no = #{bNo}
+		ORDER BY c_no ASC
+	</select>
+	
+	<select id="selectOneComments" parameterType="ppeonfun.dto.Comments" resultType="hashmap">
+		SELECT comments.*, member.m_nick FROM member, comments
+		WHERE member.m_no = comments.m_no AND comments.c_no = #{cNo}
+		ORDER BY c_no ASC
+	</select>
+	
+	<select id="selectCmt" parameterType="ppeonfun.dto.Comments" resultType="hashmap">
+		SELECT comments.*, member.m_nick FROM member, comments
+		WHERE member.m_no = comments.m_no AND comments.c_no = #{cNo}
+		ORDER BY c_no ASC
+	</select>
+	
+	<update id="updateCmt" parameterType="ppeonfun.dto.Comments">
+		UPDATE comments
+		SET c_content = #{cContent}
+		WHERE c_no = #{cNo}
+	</update>
+	
+	<select id="selectCntCmtss" parameterType="ppeonfun.dto.Comments" resultType="int">
+		SELECT count(*) FROM commentss
+		WHERE c_no = #{cNo}
+	</select>
+	
+	<delete id="deleteCmt" parameterType="ppeonfun.dto.Comments">
+		DELETE FROM comments
+		WHERE c_no = #{cNo}
+	</delete>
+	
+	<update id="updateCmtForDelete" parameterType="ppeonfun.dto.Comments">
+		UPDATE comments
+		SET c_delete_state = 'N'
+		WHERE c_no = #{cNo}
+	</update>
+	
+	<select id="selectAllCommentss" parameterType="int" resultType="hashmap">
+		SELECT commentss.*, member.m_nick FROM commentss, member, (
+			SELECT comments.c_no FROM comments
+			WHERE comments.b_no = #{bNo}
+			ORDER BY c_no ASC
+		) CS
+		WHERE commentss.c_no = CS.c_no AND commentss.m_no = member.m_no
+		ORDER BY cs_no ASC
+	</select>
+	
+	<insert id="insertCmtCmt" parameterType="ppeonfun.dto.Commentss">
+		<selectKey order="BEFORE" resultType="int" keyProperty="csNo">
+			SELECT commentss_seq.nextval FROM dual
+		</selectKey>
+		
+		INSERT INTO commentss ( cs_no, c_no, m_no, cs_content )
+		VALUES ( #{csNo}, #{cNo}, #{mNo}, #{csContent} )
+	</insert>
+	
+	<update id="updateCmtCmt" parameterType="ppeonfun.dto.Commentss">
+		UPDATE commentss
+		SET cs_content = #{csContent}
+		WHERE cs_no = #{csNo}
+	</update>
+	
+	<select id="selectOneCommentss" parameterType="ppeonfun.dto.Commentss" resultMap="Commentss">
+		SELECT * FROM commentss
+		WHERE cs_no = #{csNo}
+	</select>
+	
+	<delete id="deleteCmtCmt" parameterType="int">
+		DELETE FROM commentss
+		WHERE cs_no = #{csNo}
+	</delete>
+	
+	<delete id="deleteAllCommentssByBno" parameterType="ppeonfun.dto.Board">
+		DELETE FROM commentss
+		WHERE c_no IN ( select c_no from comments
+		where b_no = #{bNo} )
+	</delete>
+	
+	<delete id="deleteAllCommentsByBno" parameterType="ppeonfun.dto.Board">
+		DELETE FROM comments
+		WHERE b_no = #{bNo}
+	</delete>
+	
 	
 </mapper>

@@ -12,6 +12,11 @@
 	text-decoration: underline;
 }
 
+.arrayLink:visited, .arrayLink:link, .arrayLink:hover {
+	color: black;
+	text-decoration: none;
+}
+
 .headname {
 	font-size: 25pt;
 	font-weight: 500;
@@ -24,31 +29,32 @@ h1 {
 
 /* #content 하위 내 속성을 정할 div */
 .anbody1 {
-	width: 1200px;
 	margin-left: 0;
 	text-align: left !important;
+	width: 1200px;
 }
 
 .anbody2 {
-	width: 1000px;
 	margin-left: 0;
 	text-align: left !important;
+	width: 1000px;
 }
 
 /* table 설정 ("admin/notice/list.jsp") */
 .antable {
-	width: 100%;
-	max-width: 100%;
 	margin-bottom: 20px;
+	max-width: 100%;
+	width: 100%;
 }
 
 tr {
+	border-radius: 10px;
 	height: 35px;
 }
 
 th, td {
-	text-align: center;
 	border-bottom: 1px solid #f6f6f6;
+	text-align: center;
 }
 
 th {
@@ -58,8 +64,8 @@ th {
 .BtnWrite {
 	background-color: #cccccc6b;
 	border-radius: 10px;
-	padding: 5px 20px;
 	border-width: inherit;
+	padding: 5px 20px;
 	
 }
 
@@ -69,9 +75,10 @@ th {
 }
 
 .backlist {
-	font-size: 12pt;
 	color: #4EEDED;
 	cursor: pointer;
+	font-size: 12pt;
+	font-weight: 500;
 }
 
 .viewTitle {
@@ -99,8 +106,8 @@ th {
 
 .imgbox {
 	height: 200px;
-	width: 100%;
 	text-align: left;
+	width: 100%;
 }
 
 .imgclick {
@@ -108,33 +115,141 @@ th {
 	width: 300px;
 }
 
+.comment {
+	border-bottom: 1px solid #f2f2f2;
+	margin-bottom: 10px;
+	position: relative;
+}
+
+.comment_comment {
+	border-bottom: 1px solid #f2f2f2;
+	margin-bottom: 10px;
+	margin-left: 50px;
+	position: relative;
+}
+
+.deletedCmt {
+	height: 45px;
+}
+
+.comment_nick, .comment_comment_nick {
+	font-weight: 600;
+}
+
+.comment_content, .comment_comment_content {
+	font-weight: 400;
+}
+
+.comment_date, .comment_comment_date {
+	color: silver;
+	font-weight: 400;
+}
+
+/* 수정, 삭제 버튼용 스타일 */
+.btn-example {
+	cursor: pointer;	
+}
+
+.pop-layer, .comment-pop-layer {
+  color: #666;
+  line-height: 25px;
+}
+
+.pop-layer .btn-r {
+  border-top: 1px solid #DDD;
+  margin: 10px 0 20px;
+  padding-top: 10px;
+  text-align: right;
+  width: 100%;
+}
+
+.pop-layer, .comment-pop-layer {
+  background-color: #fff;
+  display: none;
+  float: right;
+  height: auto;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  width: 75px;
+  z-index: 10;
+}
+
+.dim-layer .pop-layer {
+  display: block;
+}
+
+.dim-layer .comment-pop-layer {
+  display: block;
+}
+
+.pop-conts, .comment-pop-conts {
+	border: 1px outset rgba(0, 0, 0, .06);
+	border-radius: 6px;
+	box-shadow: 0 1px 12px 0 rgb(0 0 0 / 6%);
+	box-sizing: border-box;
+	padding-left: 10px;
+	padding-top: 4px;
+}
+
+.create_commentss {
+	color: silver;
+	cursor: pointer;
+	font-weight: 400;
+	margin-left: 10px;
+}
+
+.pop-btn {
+	font-weight: 400;
+	cursor: pointer;
+}
+
+.okbtn-after-cmtupdate {
+	background-color: #4EEDED;
+	border: none;
+	border-radius: 5px;
+	margin: 5px 5px;
+	padding: 5px;
+	width: 55px;
+}
+
+.cnbtn-after-cmtupdate {
+	background-color: #f2f2f2;
+	border: none;
+	border-radius: 5px;
+	margin: 5px 5px;
+	padding: 5px;
+	width: 55px;
+}
+
 .viewbtn {
 	border: none;
-	padding: 5px 20px;
 	margin-right: 20px;
+	padding: 5px 20px;
 }
 
 /* noticeWrite.jsp */
 .nTitle {
+	border-bottom: 1px solid #f6f6f6;
 	width: 100%;
 }
 
 .bTitle {
-	width: 80%;
-	height: 40px;
-	font-size: 13pt;
 	border: 1.5px solid white;
+	font-size: 13pt;
+	height: 40px;
+	width: 80%;
 }
 
 .bTitle:focus {
-	outline: none;
 	border: 1.5px solid #4EEDED;
-	transition: border 3s;
+	outline: none;
+	transition: border 1s;
 }
 
 .nContent {
-	width: 100%;
 	margin: 0px 0px 0px -10px;
+	width: 100%;
 }
 
 .buttonbox {
@@ -143,24 +258,24 @@ th {
 }
 
 .dropbox {
-	margin: 0 5px;
-	width: 100px;
-	height: 30px;
 	border-color: ivory;
+	height: 30px;
+	margin: 0px 5px;
+	width: 100px;
 }
 
 .search {
-	width: 200px;
-	height: 30px;
 	border-color: snow;
+	height: 30px;
+	width: 200px;
 }
 
 .searchBtn {
-	width: 50px;
-	height: 30.5px;
-	margin-left: -4px;
 	background-color: #C4FFFF;
 	border: none;
+	height: 30.5px;
+	margin-left: -4px;
+	width: 50px;
 }
 
 .write {
