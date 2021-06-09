@@ -72,4 +72,21 @@ public interface NewsDao {
 	 */
 	public List<NewsFile> selectNewsFile(News news);
 	
+	/**
+	 * DB에 새소식 파일 삭제
+	 * @param newsFile - 새소식 파일 삭제
+	 */
+	public void deleteNewsFile(NewsFile newsFile);
+	
+	/**
+	 * 새소식 파일 업데이트
+	 * @param news - 새소식
+	 */
+	public void updateNews(News news);
+	/**
+	 * 새소식 정보 삭제
+	 * @param news -  새소식
+	 */
+	public void deleteNews(News news);
+	
 }

@@ -13,11 +13,13 @@ $(document).ready(function(){
 	</c:forEach>
 		
 	$("#btnUpdate").click(function(){
-		
+		$(location).attr("href","/admin/news/modify?nNo=${news.nNo }");
 	});
 	
 	$("#btnDelete").click(function(){
-		
+		if(confirm("정말로 삭제하시겠습니까?")){
+			$(location).attr("href","/admin/news/remove?nNo=${news.nNo }&pNo=${project.pNo }");
+		}
 	});
 		
 })
@@ -89,7 +91,7 @@ function handleImgFileSelect(e){
                     <div class="col-lg-offset-2 col-lg-10">
                         <button id="btnUpdate" type="button" class="btn btn-primary">수정하기</button>
                         <button id="btnDelete" type="button" class="btn btn-danger">삭제하기</button>
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="button" class="btn btn-info" onclick="location.href='/admin/news/view?nNo=${news.nNo }'">돌아가기</button>
                     </div>
             </div>
 		</form>

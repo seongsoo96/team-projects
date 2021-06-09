@@ -74,4 +74,24 @@ public interface NewsService {
 	 * @return 프로젝트 번호
 	 */
 	public Project getProject(News news);
+	
+	/**
+	 * 새소식 수정
+	 * @param news - 정보 수정
+	 * @param fileList - 파일 수정
+	 */
+	public void modifyNewsFile(News news, List<MultipartFile> fileList);
+	
+	/**
+	 * 새소식 파일 삭제 
+	 * @param news - news 파일 삭제
+	 * @param newsFile - 실질적 파일 삭제
+	 */
+	public void removeFile(News news, List<NewsFile> newsFile);
+	
+	/**
+	 * 새소식 데이터 삭제
+	 * @param news - 삭제할 새소식 데이터
+	 */
+	public void removeNewsFile(News news);
 }

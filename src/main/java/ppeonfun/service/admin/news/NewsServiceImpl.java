@@ -142,4 +142,80 @@ public class NewsServiceImpl implements NewsService {
 		project.setpNo(news.getpNo());
 		return project;
 	}
+	@Override
+	public void removeFile(News news, List<NewsFile> newsFile) {
+		
+		for(int i=0; i<newsFile.size(); i++) {
+			
+			
+			String storedPath = context.getRealPath("upload");
+			
+			//폴더가 존재하지 않으면 생성하기
+			File stored = new File(storedPath+"/"+newsFile.get(i).getNfStoredName());
+			if( stored.exists() ) {
+				if(stored.delete()) {
+					logger.info("파일 삭제 완료 {}", newsFile.get(i).getNfStoredName());
+				}else {
+					logger.info("파일 삭제 실패 {}", newsFile.get(i).getNfStoredName());
+				}
+			}
+			newsDao.deleteNewsFile(newsFile.get(i));
+		}
+		
+	}
+	@Override
+	public void modifyNewsFile(News news, List<MultipartFile> fileList) {
+		newsDao.updateNews(news);
+		int count =0;
+		for( MultipartFile file : fileList ) {
+			count++; //최대 5장까지 허요
+			if(count>5) {
+				return;
+			}
+			
+			if( file.getSize() <= 0 ) {
+				return;
+			}
+			String storedPath = context.getRealPath("upload");
+			
+			//폴더가 존재하지 않으면 생성하기
+			File stored = new File(storedPath);
+			if( !stored.exists() ) {
+				stored.mkdir();
+			}
+				
+			String filename = file.getOriginalFilename();
+				
+			String uid = UUID.randomUUID().toString().split("-")[4];
+			
+			filename += uid;
+			
+			File dest = new File( stored, filename );
+				
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			NewsFile newsFile = new NewsFile();
+			newsFile.setnNo(news.getnNo());
+			newsFile.setNfOriginName(file.getOriginalFilename());
+			newsFile.setNfSize((int)file.getSize());
+			newsFile.setNfContentType(file.getContentType());
+			newsFile.setNfStoredName(filename);
+			
+			newsDao.insertNewsFile(newsFile);
+		} // for문 end (다중 첨부파일)
+		
+	}
+	
+	@Override
+	public void removeNewsFile(News news) {
+		newsDao.deleteNews(news);
+		
+	}
+	
 }

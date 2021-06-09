@@ -80,4 +80,15 @@
   	SELECT*FROM news_file where n_no = #{nNo}
   	</select>
   	
+  	<delete id="deleteNewsFile" parameterType="NewsFile">
+  	DELETE FROM news_file where nf_no = #{nfNo}
+  	</delete>
+  	
+  	<update id="updateNews" parameterType="News">
+  		UPDATE news SET n_title= #{nTitle},n_context=#{nContext},n_category=#{nCategory} WHERE n_no = #{nNo}
+  	</update>
+  	
+  	<delete id="deleteNews" parameterType="News">
+  		DELETE FROM news where n_no = #{nNo}
+  	</delete>
   </mapper>

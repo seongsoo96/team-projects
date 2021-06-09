@@ -79,6 +79,53 @@ public class NewsController {
 		model.addAttribute("newsFile", newsFile);
 		model.addAttribute("project", project);
 		model.addAttribute("name", name);
-	}	
+	}
+	@RequestMapping(value="/modify", method=RequestMethod.GET)
+	public void modify(News news, Model model) {
+		logger.info("/admin/news/view");
+		logger.info("news {}", news);
+		news = newsService.viewNews(news);
+		List<NewsFile> newsFile = newsService.viewNewsList(news);
+		Project project = newsService.getProject(news);
+		project = newsService.viewProject(project);
+		String name = newsService.selectByName(project);
+		
+		logger.info("newsFile {}", newsFile);
+		
+		model.addAttribute("news",news);
+		model.addAttribute("newsFile", newsFile);
+		model.addAttribute("project", project);
+		model.addAttribute("name", name);
+		
+	}
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public String modifyProc(News news,MultipartHttpServletRequest mtfRequest) {
+		logger.info("/admin/news/modify [POST]");
+		logger.info("news {}", news);
+		logger.info("mtfRequest {}", mtfRequest);
+		
+		
+		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+		logger.info("fileList {}", fileList);
+		List<NewsFile> newsFile = newsService.viewNewsList(news); 
+		
+		logger.info("result news {}", news);
+		
+		newsService.removeFile(news, newsFile);
+		newsService.modifyNewsFile(news,fileList);
+		
+		return "redirect:/admin/news/view?nNo="+news.getnNo();
+	}
+	@RequestMapping(value="/remove")
+	public String remove(News news) {
+		logger.info("/admin/news/remove");
+		logger.info("news {}", news);
+		
+		List<NewsFile> newsFile = newsService.viewNewsList(news); 
+		newsService.removeFile(news, newsFile);
+		newsService.removeNewsFile(news);
+		
+		return "redirect:/admin/news/list?pNo="+news.getpNo();
+	}
 	
 }
