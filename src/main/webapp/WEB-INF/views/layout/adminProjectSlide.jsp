@@ -41,7 +41,7 @@
 	<div class="title">
 		<h3>${name }의<br>프로젝트 번호:${project.pNo}</h3>
 	</div>
-	<a href="#" class="side_link background">펀딩준비</a>
+	<a href="/admin/project/view?pNo=${project.pNo}" class="side_link background">펀딩준비</a>
 	<a href="#" class="side_link">새소식</a>
 	<a href="#" class="side_link">오픈예정</a>
 	<a href="#" class="side_link">서포터</a>

@@ -39,5 +39,12 @@ public interface ProjectService {
 	 * @return - 생성한 프로젝트 반환
 	 */
 	public Project input(int mNo);
-
+	
+	/**
+	 * 프로젝트 제출 상태로 변환
+	 * @param project - 수정할 프로젝트
+	 * @return 프로젝트 반환
+	 */
+	public Project submitProject(Project project);
+	
 }

@@ -55,4 +55,19 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return project;
 	}
+	@Override
+	public Project submitProject(Project project) {
+		project.setpState("S");
+		if(!"Y".equals(project.getpRequirements()) || 
+		   !"Y".equals(project.getpInformation()) ||
+		   !"Y".equals(project.getpReward()) ||
+		   !"Y".equals(project.getpStory()) ||
+		   !"Y".equals(project.getpMaker()) 
+				) { //Y상태가 하나라도 아닐경우
+			return null;
+		}
+		//projectDao.updateSubmit();
+		
+		return project;
+	}
 }

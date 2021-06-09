@@ -9,7 +9,7 @@
 $(document).ready(function() {
 	setTimeout(function() {
 		alert("메인페이지로 이동")
-		location.href = "/member/main";
+		location.href = "/main";
 	}, 3100)
 	
 	var i = 3;

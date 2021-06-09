@@ -22,13 +22,12 @@ $(document).ready(function(){
 	  $(location).attr("href","/user/board/delete?bNo=" + ${detail.B_NO})
   })
   //추천하기
-	
   $("#btnrecommend").click(function(){
 	  $.ajax({
      	 type: "get"//요청 메소드
          ,url:"/user/board/recommend"//요청 URL
  	    ,data: {
- 	    	 "bNo" : ${detail.B_NO }
+ 	    	 bNo : ${detail.B_NO }
  	    }//요청파라미터
  	    ,dateType: "json"//응답받은 데이터의 형식
  	    ,success:function(res){//AJAX성공 시 콜백함수
@@ -50,15 +49,142 @@ $(document).ready(function(){
  	     ,error:function(){//AJAX 실패 시 콜백함수
  	    	 console.log("실패")
  	     }
- 	  
  	 }) <!--end $.ajax -->
+	   
+  })<!--$("#btnrecommend").click(function() -->
+    
 	  
-	  
-	  
-  })
-})
+	  //댓글 등록하기
+	  $("#register").click(function(){
+		 
+		  $("#show").show()
+		
+		  $.ajax({
+			 type: "post"
+			 ,url:"/user/board/comments/insert"
+		    ,data:{
+		    	bNo : ${detail.B_NO }
+		    	,cContent : $("#content").val()
+		    }
+			,dataType: "html"
+		    ,success:function(res){
+		    	console.log("성공")
+		    	$("#registerComment textarea[name='content']").val("")
+				listComment();
+		    }	
+			,error:function(res){
+				console.log("실패")	
+			}  
+		  })<!--end $.ajax -->
+		  
+	  })<!-- end  $("register").click(function()-->
+	
+      //댓글 펼치기
+	  $("#fold").click(function(){
+		  listComment();
+		  $("#show").toggle()
+	  })	
 
+})<!--$(document).ready(function() -->
+
+//댓글 리스트 불러오기
+function listComment() {
+	
+	 $.ajax({ 
+		 type : "get"
+		,url : "/user/board/comments/list"
+		,data : {
+			"bNo" : ${detail.B_NO}
+		}
+		,dataType: "html"
+		,success:function(res){
+			console.log("성공")
+			$("#show").html(res)
+		}
+		,error:function(error,request,status){
+			console.log("실패")
+			console.log(error)
+			console.log(request.status)
+		} 
+	 })<!--end  $.ajax-->
+}
+
+//댓글 삭제
+function deletecomment(cNo){
+	 
+	$("#comdelete").parent().parent().remove();
+	
+	 $.ajax({ 
+		 type : "get"
+		,url : "/user/board/comments/delete"
+		,data : {
+			"cNo" : cNo
+		}
+		,dataType: "json"
+		,success:function(){
+			console.log("성공")
+		}
+		,error:function(error,request,status){
+			console.log("실패")
+			console.log(error)
+			console.log(request.status)
+		} 
+	 })<!--end  $.ajax-->
+}<!--end function deletecomment(cNo)-->
+//댓글 수정전 textarea를 포함한 원본내용 보여주기
+ function updatecomment(c_no,m_nick){
+	$.ajax({
+		type: "get"
+       ,url:"/user/board/comments/update"		
+	   ,data : {
+		    cNo : c_no
+		    ,mNick : m_nick
+		    
+	   }	
+	   ,dataType: "html"	
+	   ,success:function(){
+		   console.log("실패")
+	   }
+	   ,error:function(){
+		   console.log("실패")
+	   }
+	})
+}
+//댓글 수정
+function updatecomment(c_no,m_nick){
+	$.ajax({
+		type: "post"
+	  ,url : "/user/board/comments/update"
+	  ,data : {
+		   cNo : c_no
+		  ,bNo : b_no
+          ,
+	  }	
+	  ,dataType: "json"
+	  ,success:function(){
+		  console.log("성공")
+	  }
+	  ,error:function(){
+		  console.log("실패")
+	  }
+	})
+	
+	
+	
+}
+  
 </script>
+<style type="text/css">
+#show{
+  display: none;
+}
+
+.imgfile{
+width:300px;
+hegiht:300px;
+}
+
+</style>
 
 <div class="container">
 <h1>게시판 상세보기</h1>
@@ -78,6 +204,7 @@ $(document).ready(function(){
 
 </table>
 
+<img src="/resources/upload/${viewfile.bfStoredName}" class="imgfile"><br><br>
 <a href="/user/board/download?bfFileno=${viewfile.bfFileno }">${viewfile.bfOriginName }</a>
 
 
@@ -87,11 +214,40 @@ $(document).ready(function(){
  <button id="btnUpdate" class="btn btn-info">수정</button>
  <button id="btnDelete" class="btn btn-danger">삭제</button>
  </c:if>
-</div>	
+</div><hr><br>	
+
+<table id="registerComment">
+<tr>
+ <td width="150">${detail.M_NICK }</td>
+ <td width="550"><textarea id="content" name="content" rows="4" cols="70" ></textarea></td>
+ <td><button id="register">등록하기</button></td>
+</tr>
+</table><br><br>
+
+<button class="btn btn-primary" id="fold" name="recommend">댓글 펼치기</button> <br><br>
+
+<table id="show">
+ <c:forEach items="${commentList}" var="c">
+  <tr>
+    <td width="150"><div name="commentNo">${c.cNo }</div></td><br>
+    <td width="150">
+     <div>${detail.M_NICK }<br>
+      <font size="2" color="lightgray"><fmt:formatDate value="${c.cCreateDate }" pattern="yy-MM-dd HH:mm:ss" /></font>
+     </div>
+    </td>
+    <td width="550"><div id="content" name="content">${c.cContent }</div></td>
+    <td>
+      <c:if test="${sessionScope.mNo eq c.mNo }">
+        <button id="comdelete"  onclick="deletecomment(${c.cNo})" >삭제</button><br>
+        <button id="comdeupdate" onclick="updatecomment(${c.cNo},${detail.M_NICK })" >수정</button> 
+      </c:if>
+    </td>
+  </tr>
+
+ </c:forEach>
+
+</table>
 
 
-
-
-</div>
-
+</div><!-- end class="container"  -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
