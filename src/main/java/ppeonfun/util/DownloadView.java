@@ -38,8 +38,10 @@ public class DownloadView extends AbstractView{
 		logger.info("model객체 데이터 : {}", model);
 		logger.info(model.toString());
 		
+	    
+		
 		//모델값 가져오기
-		BoardFile file = (BoardFile) model.get("bf");
+		BoardFile file = (BoardFile) model.get("downFile");
 		logger.info("모델값 : {}", file);
 		
 		//파일의 경로
