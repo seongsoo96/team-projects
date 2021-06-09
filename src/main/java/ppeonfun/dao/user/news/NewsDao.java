@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
@@ -43,5 +44,35 @@ public interface NewsDao {
 	 * @return
 	 */
 	public int selectCntNews(News news);
+
+	/**
+	 * 사용자가 해당 프로젝트 찜 했는지 조회
+	 * 
+	 * @param favorite - 사용자, 프로젝트 정보 가진 객체
+	 * @return 1 - 찜X, 0 - 찜
+	 */
+	public int selectCntFavorite(Favorite favorite);
+
+	/**
+	 * 프로젝트의 전체 좋아요 수 조회
+	 * 
+	 * @param favorite
+	 * @return
+	 */
+	public int getTotalCntFavorite(Favorite favorite);
+
+	/**
+	 * 찜(좋아요) 상태 지우기
+	 * 
+	 * @param favorite
+	 */
+	public void deleteFavorite(Favorite favorite);
+
+	/**
+	 * 찜(좋아요) 상태 넣기
+	 * 
+	 * @param favorite
+	 */
+	public void insertFavorite(Favorite favorite);
 
 }

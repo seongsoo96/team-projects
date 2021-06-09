@@ -19,6 +19,10 @@
 <script src='https://developers.kakao.com/sdk/js/kakao.min.js'></script>
 <link rel="stylesheet" href="/resources/css/header.css">
 
+<!-- bootstrap icon 적용 -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <script type="text/javascript">
 $(document).ready(function() {
 	

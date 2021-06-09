@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ppeonfun.dao.user.story.StoryDao;
+import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
@@ -45,5 +46,37 @@ public class StoryServiceImpl implements StoryService {
 	@Override
 	public int newsCount(News news) {
 		return storyDao.selectCntNews(news);
+	}
+	
+	@Override
+	public boolean isFav(Favorite favorite) {
+		int cnt = storyDao.selectCntFavorite(favorite);
+		
+		if(cnt > 0) { //찜 함
+			return true;
+			
+		} else { //찜 안함
+			return false;
+			
+		}
+	}
+	
+	@Override
+	public boolean favorite(Favorite favorite) {
+		
+		if(isFav(favorite)) { //찜 한 상태
+			storyDao.deleteFavorite(favorite);
+			
+			return false;
+		} else {
+			storyDao.insertFavorite(favorite);
+			
+			return true;
+		}
+	}
+	
+	@Override
+	public int getTotalCntFavorite(Favorite favorite) {
+		return storyDao.selectCntFavorite(favorite);
 	}
 }

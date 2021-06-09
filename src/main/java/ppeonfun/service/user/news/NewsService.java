@@ -2,6 +2,7 @@ package ppeonfun.service.user.news;
 
 import java.util.List;
 
+import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
@@ -40,5 +41,29 @@ public interface NewsService {
 	 * @return
 	 */
 	public int newsCount(News news);
+
+	/**
+	 * 추천 상태 확인
+	 * 
+	 * @param favorite
+	 * @return
+	 */
+	public boolean isFav(Favorite favorite);
+
+	/**
+	 * 해당 프로젝트의 총 찜된 횟수 구하기
+	 * 
+	 * @param favorite
+	 * @return
+	 */
+	public int getTotalCntFavorite(Favorite favorite);
+
+	/**
+	 * 찜 상태 확인 후 하트 상태 변경
+	 * 
+	 * @param favorite
+	 * @return
+	 */
+	public boolean favorite(Favorite favorite);
 
 }

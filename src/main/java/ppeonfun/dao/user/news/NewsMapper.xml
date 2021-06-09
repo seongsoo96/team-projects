@@ -75,5 +75,29 @@
 		FROM news
 		WHERE p_no = #{pNo }
 	</select>
+	
+	<select id="selectCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE m_no = #{mNo }
+			AND p_no = #{pNo }
+	</select>
+	
+	<select id="getTotalCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<delete id="deleteFavorite" parameterType="ppeonfun.dto.Favorite">
+		DELETE favorite
+		WHERE m_no = #{mNo }
+			AND p_no = #{pNo }
+	</delete>
+	
+	<insert id="insertFavorite" parameterType="ppeonfun.dto.Favorite">
+		INSERT INTO favorite (fav_no, p_no, m_no)
+		VALUES (favorite_seq.nextval, #{pNo }, #{mNo })
+	</insert>
 
 </mapper>

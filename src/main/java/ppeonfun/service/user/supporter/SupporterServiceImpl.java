@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ppeonfun.dao.user.supporter.SupporterDao;
+import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
@@ -50,6 +51,37 @@ public class SupporterServiceImpl implements SupporterService {
 	@Override
 	public int newsCount(News news) {
 		return supporterDao.selectCntNews(news);
+	}
+	
+	@Override
+	public boolean isFav(Favorite favorite) {
+		int cnt = supporterDao.selectCntFavorite(favorite);
+		
+		if(cnt > 0) { //찜 함
+			return true;
+			
+		} else { //찜 안함
+			return false;
+			
+		}
+	}
+	
+	@Override
+	public boolean favorite(Favorite favorite) {
+		if(isFav(favorite)) { //찜 한 상태
+			supporterDao.deleteFavorite(favorite);
+			
+			return false;
+		} else {
+			supporterDao.insertFavorite(favorite);
+			
+			return true;
+		}
+	}
+	
+	@Override
+	public int getTotalCntFavorite(Favorite favorite) {
+		return supporterDao.selectCntFavorite(favorite);
 	}
 
 }

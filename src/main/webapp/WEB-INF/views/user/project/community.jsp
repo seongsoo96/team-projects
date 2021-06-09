@@ -3,6 +3,49 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp" />
 
+<script type="text/javascript">
+$(document).ready(function() {
+	if(${isFav }) { //해당 아이디로 프로젝트 좋아요 누른 상태
+		$("#heart")
+			.css("color", "red");
+	} else { //좋아요 누르지 않은 상태
+		
+	}
+	
+	
+	$(".btn_heart").click(function() {
+		
+		$.ajax({
+			type: "get"
+			, url: "/community/favorite"
+			, data: {"pNo" : '${info.pNo }'}
+			, dataType: "json"
+			, success: function( data ) {
+// 				console.log("성공");
+// 				console.log(data.result);
+// 				console.log(data.cnt);
+				
+				if(data.result) { //찜 성공
+					$("#heart").css("color", "red");
+				
+				} else { //찜 취소 성공
+					$("#heart").css("color", "");
+				
+				}
+				
+				$("#cntFav").text(data.cnt);
+				
+			}
+			, error: function() {
+				console.log("실패");
+			}
+		})
+	}) //$(".btn_heart").click(function() end
+			
+});
+</script>
+
+
 <style type="text/css">
 /* 전체 영역 */
 .container {
@@ -54,6 +97,94 @@ hr {
 /* 	padding-left: 10px; */
 }
 
+#left .comDiv {
+	margin-bottom: 40px;
+	font-size: 13px;
+}
+
+/* left 안에 가장 위 멘트 */
+#left .comDiv .ment {
+	line-height: 24px;
+	font-size: 16px;
+	padding-bottom: 30px;
+	box-shadow: 0 1px 0 0 rgb(0 0 0 / 10%);
+	margin-bottom: 60px;
+/* 	border-bottom: 1px solid #44484b; */
+}
+
+/* 멘트 밑 제목 */
+#left .comDiv .comContainer .comTitle {
+	margin-bottom: 24px;
+}
+
+/* 응원, 질문, 체험리뷰 */
+#left .comDiv .comContainer .comTitle .commuTitle {
+	position: relative;
+	margin-bottom: 8px;
+	line-height: 24px;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+/* 응원,질문,체험리뷰 개수 */
+#left .comDiv .comContainer .comTitle .commuTitle em {
+	margin-left: 4px;
+	color: #4EE2EC;
+}
+
+#left .comDiv .comContainer .comTitle .explain {
+	color: rgba(0,0,0,.54);
+	font-size: 13px;
+}
+
+/* 글 남기기 버튼 */
+#left .comDiv .comContainer .writeCom {
+	background-color: #90949c;
+	color: #fff;
+	border-color: #90949c;
+	border-radius: 3px;
+	cursor: pointer;
+	height: 48px;
+	vertical-align: middle;
+	line-height: 1;
+	font-size: 17px;
+	font-weight: 400;
+	padding-top: .07em;
+	width: 343px;
+	margin-bottom: 24px;
+}
+
+/* 커뮤 리스트 하나하나의 div */
+#left .comDiv .comContainer .communityList .itemContainer {
+	position: relative;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+#left .comDiv .comContainer .communityList .itemContainer .item {
+	position: relative;
+	padding: 0 0 0 56px;
+}
+
+#left .comDiv .comContainer .communityList .itemContainer .item .itemIcon {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* 프로필 사진 */
+.profile {
+	width: 36px;
+	height: 36px;
+	display: inline-block;
+	position: relative;
+	border-radius: 50%;
+	vertical-align: middle;
+}
+</style>
+
+
+<style type="text/css">
 #right {
 	/* 영역 확인용 */ 
 /*   	border: 1px solid green;   */
@@ -193,7 +324,53 @@ hr {
 
 
 <div id="left">
+<div class="comDiv">
+	<div class="ment">
+		<p>
+			서포터님!<br>처음 <strong>메이커의 열정과 가치에 공감</strong>
+			해주셨듯, 마지막까지 <strong>메이커를 응원</strong>해주세요.
+		</p>
+	</div>
+	<div class="comContainer">
 	
+		<!-- 응원,질문,체험리뷰 -->
+		<div class="comTitle">
+			<div class="commuTitle">
+				<p>응원 · 질문 · 체험리뷰
+					<em>86</em>
+				</p>
+			</div>
+			<p class="explain">펀딩 종료전에 남긴 글입니다.</p>
+		</div>
+		
+		<!-- 글 남기기 버튼 -->
+		<div>
+			<button class="writeCom">글 남기기</button>
+		</div>
+		
+		<!-- 질문, 답변 전체 -->
+		<div class="communityList">
+			<div style="height: 20px; border-bottom: 1px solid #44484b;" ></div>
+			<div>
+				<!-- 리스트 하나하나 -->
+				<div class="itemContainer">
+					<div class="item">
+					
+						<!-- 아이콘 -->
+						<div class="itemIcon">
+							<img class="profile" src="/resources/img/basic.png">
+						</div>
+						<!-- 글씨 -->
+						<div class="itemMain">
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </div><!-- #left end -->
 
 
@@ -222,8 +399,8 @@ hr {
 	<div class="buttons">
 		<div class="heart">
 			<button class="btn_heart">
-				<i></i>
-				<em>640</em>
+				<i id="heart" class="fa fa-heart" aria-hidden="true"></i>
+				<em id="cntFav">${cntFav }</em>
 			</button>
 		</div>
 		<div class="declare">

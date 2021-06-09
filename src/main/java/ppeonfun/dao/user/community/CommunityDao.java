@@ -2,6 +2,7 @@ package ppeonfun.dao.user.community;
 
 import org.springframework.stereotype.Repository;
 
+import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
@@ -19,5 +20,11 @@ public interface CommunityDao {
 	public int selectTotalAmount(SupporterJoin suJoin);
 
 	public int selectCntNews(News news);
+
+	public int selectCntFavorite(Favorite favorite);
+
+	public void deleteFavorite(Favorite favorite);
+
+	public void insertFavorite(Favorite favorite);
 
 }

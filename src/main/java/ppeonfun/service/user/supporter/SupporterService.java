@@ -2,6 +2,7 @@ package ppeonfun.service.user.supporter;
 
 import java.util.List;
 
+import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
@@ -50,5 +51,11 @@ public interface SupporterService {
 	public Information projectInfo(Information info);
 
 	public int newsCount(News news);
+
+	public boolean isFav(Favorite favorite);
+
+	public int getTotalCntFavorite(Favorite favorite);
+
+	public boolean favorite(Favorite favorite);
 
 }

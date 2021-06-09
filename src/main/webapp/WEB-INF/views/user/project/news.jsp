@@ -4,6 +4,48 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp" />
 
+<script type="text/javascript">
+$(document).ready(function() {
+	if(${isFav }) { //해당 아이디로 프로젝트 좋아요 누른 상태
+		$("#heart")
+			.css("color", "red");
+	} else { //좋아요 누르지 않은 상태
+		
+	}
+	
+	
+	$(".btn_heart").click(function() {
+		
+		$.ajax({
+			type: "get"
+			, url: "/news/favorite"
+			, data: {"pNo" : '${info.pNo }'}
+			, dataType: "json"
+			, success: function( data ) {
+// 				console.log("성공");
+// 				console.log(data.result);
+// 				console.log(data.cnt);
+				
+				if(data.result) { //찜 성공
+					$("#heart").css("color", "red");
+				
+				} else { //찜 취소 성공
+					$("#heart").css("color", "");
+				
+				}
+				
+				$("#cntFav").text(data.cnt);
+				
+			}
+			, error: function() {
+				console.log("실패");
+			}
+		})
+	}) //$(".btn_heart").click(function() end
+			
+});
+</script>
+
 <style type="text/css">
 /* 전체 영역 */
 .container {
@@ -290,7 +332,6 @@ hr {
 }
 </style>
 
-
 <div class="container">
 <br><br><hr>
 
@@ -306,8 +347,8 @@ hr {
 <nav id="topMenu">
 	<ul>
 		<li class="active"><a class="menuLink" href="/story?pNo=${info.pNo }">스토리</a></li>
-		<li><a class="menuLink" href="#">새소식<span class="count">${newsCnt }</span></a></li>
-		<li><a class="menuLink" href="#">커뮤니티<span class="count">2</span></a></li>
+		<li><a class="menuLink" href="/news?pNo=${info.pNo }">새소식<span class="count">${newsCnt }</span></a></li>
+		<li><a class="menuLink" href="/community?pNo=${info.pNo }">커뮤니티<span class="count">2</span></a></li>
 		<li><a class="menuLink" href="/supporter?pNo=${info.pNo }">서포터<span class="count">${totalCnt }</span></a></li>
 	</ul>
 </nav><!-- #topMenu end -->
@@ -389,8 +430,8 @@ hr {
 	<div class="buttons">
 		<div class="heart">
 			<button class="btn_heart">
-				<i></i>
-				<em>640</em>
+				<i id="heart" class="fa fa-heart" aria-hidden="true"></i>
+				<em id="cntFav">${cntFav }</em>
 			</button>
 		</div>
 		<div class="declare">
