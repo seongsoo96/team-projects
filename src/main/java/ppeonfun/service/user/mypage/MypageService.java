@@ -109,7 +109,7 @@ public interface MypageService {
 	 * @param mNo 		회원번호
 	 * @return			페이지에 따른 페이징
 	 */
-	public Paging getPaging(int curPage, int mNo);
+	public Paging getPaymPaging(int curPage, int mNo);
 
 
 	/**
@@ -135,5 +135,25 @@ public interface MypageService {
 	 * @return		카테고리별 환불 금액
 	 */
 	public List<HashMap<String, Object>> getPaybackSum(int mNo);
+
+
+	/**
+	 * 회원이 좋아요한 프로젝트 목록의 페이징을 생성한다.
+	 * @param curPage 	현재 페이지
+	 * @param mNo		회원번호
+	 * @return			페이징 정보 객체
+	 */
+	public Paging getFavoritePaging(int curPage, int mNo);
+	
+	
+	/**
+	 * 회원이 좋아요한 프로젝트 목록을 조회한다.
+	 * @param paging 	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			좋아요한 프로젝트 목록
+	 */
+	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo);
+
+
 
 }

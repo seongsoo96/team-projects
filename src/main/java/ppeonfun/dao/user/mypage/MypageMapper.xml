@@ -141,6 +141,33 @@
 	WHERE m_no = #{mNo}
 	GROUP BY i_category
  	</select>
+ 	
+ 	<select id="selectCntFavorite" parameterType="int" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM favorite
+ 	WHERE m_no = #{mNo}
+ 	ORDER BY fav_no DESC
+ 	</select>
+ 	
+ 	<select id="selectAllMyFavoriteList" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	        	F.p_no
+	        	, PJ.p_name, PJ.p_progress_state
+	            , I.i_category, I.i_stored_name, I.i_end_date
+	        FROM (
+	        	favorite F
+		        INNER JOIN project PJ
+		            ON F.p_no = PJ.p_no
+		        INNER JOIN information I
+		            ON F.p_no = I.p_no
+		    )
+	        WHERE F.m_no = #{mNo}
+	        ORDER BY F.fav_no DESC
+	    ) RES
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
  </mapper>  
     
   

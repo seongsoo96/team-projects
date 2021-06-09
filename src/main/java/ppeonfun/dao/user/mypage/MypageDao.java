@@ -142,4 +142,21 @@ public interface MypageDao {
 	 */
 	public List<HashMap<String, Object>> selectPaybSumByNo(int mNo);
 
+	
+	/**
+	 * 회원이 좋아요한 프로젝트 수를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		좋아요 한 프로젝트 수
+	 */
+	public int selectCntFavorite(int mNo);
+	
+	
+	/**
+	 * 
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			좋아한 프로젝트 목록
+	 */
+	public List<HashMap<String, Object>> selectAllMyFavoriteList(@Param("paging")Paging paging, @Param("mNo")int mNo);
+
 }

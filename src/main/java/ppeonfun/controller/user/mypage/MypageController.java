@@ -244,7 +244,7 @@ public class MypageController {
 		int mNo = (int) session.getAttribute("mNo");
 		
 		//전체 펀딩 내역 조회
-		Paging paging = mypageService.getPaging(curPage, mNo);
+		Paging paging = mypageService.getPaymPaging(curPage, mNo);
 		List<Map<String, Object>> totalList = mypageService.getMyFundingListAll(paging, mNo);
 		logger.info("totalList: {}", totalList);
 		
@@ -293,6 +293,31 @@ public class MypageController {
 		model.addAttribute("paystate","payback");
 		return "/user/mypage/fundingchart";
 	}
+	
+	//마이페이지 좋아요--------------------------------------------------------------------
+	@RequestMapping(value = "/favorite", method=RequestMethod.GET)
+	public void viewMyFavorite(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+		logger.info("***** /user/mypage/favorite [GET] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
+		Paging paging = mypageService.getFavoritePaging(curPage, mNo);
+		
+		//회원이 좋아요한 프로젝트 목록을 조회한다.
+		List<HashMap<String, Object>> favoriteList = mypageService.getMyFavoriteList(paging, mNo);
+		
+		logger.info("좋아요 목록 {}", favoriteList);
+		model.addAttribute("favoriteList", favoriteList);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//마이페이지 오류--------------------------------------------------------------------
 	@RequestMapping(value = "/error")

@@ -181,7 +181,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public Paging getPaging(int curPage, int mNo) {
+	public Paging getPaymPaging(int curPage, int mNo) {
 		
 		int totalCount = mypageDao.selectCntPayment(mNo);
 		
@@ -202,5 +202,18 @@ public class MypageServiceImpl implements MypageService {
 	public List<HashMap<String, Object>> getPaybackSum(int mNo) {
 		return mypageDao.selectPaybSumByNo(mNo);
 	}
+
+	@Override
+	public Paging getFavoritePaging(int curPage, int mNo) {
+		int totalCount = mypageDao.selectCntFavorite(mNo);
+		
+		return new Paging(totalCount, curPage, 6);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo) {
+		return mypageDao.selectAllMyFavoriteList(paging, mNo);
+	}
+
 
 }
