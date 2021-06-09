@@ -12,7 +12,7 @@ h4 a:hover{text-decoration:none;}
 /* 프로젝트 있는 경우 스타일 */
 .divFundMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px;}
 .selectMyFund {text-align-last:center; font-size:17px; width:150px; height:35px; margin:0 45% 15px;}
-.thumbnail img {width:80%; height:200px; border:1px solid coral;}
+.thumbnail a img {width:80%; height:200px; border:1px solid coral;}
 .dday span {display:inline-block; width:100px; margin:10px 0;}
 .pjname {font-weight:600; font-size:16px;}
 </style>
@@ -29,7 +29,7 @@ h4 a:hover{text-decoration:none;}
 		<div class="text-center" style="height:210px; margin-top:100px;">
 			<h3>펀딩 프로젝트에 참여한 이력이 없습니다.</h3>
 			<h4>
-				<a href="#">
+				<a href="/user/project/list">
 				펀딩 프로젝트 참여하러 가기
 				<span>
 					<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
@@ -71,7 +71,9 @@ h4 a:hover{text-decoration:none;}
 							</c:if>
 						</div>
 						
-						<img alt="프로젝트 사진" src="/upload/imformation/${tlist.I_STORED_NAME }">
+						<a href="/user/project?pNo=${tlist.P_NO }">
+							<img alt="프로젝트 대표 사진" src="/upload/imformation/${tlist.I_STORED_NAME }">
+						</a>
 						<div class="caption">
 							<div class="pjname">${tlist.P_NAME }</div>
 							<div>펀딩한 금액: <fmt:formatNumber type="number" maxFractionDigits="3" value="${tlist.PAYM_AMOUNT}" />원</div>
