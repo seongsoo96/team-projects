@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp" />
-
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -18,7 +18,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type: "get"
-			, url: "/supporter/favorite"
+			, url: "/news/favorite"
 			, data: {"pNo" : '${info.pNo }'}
 			, dataType: "json"
 			, success: function( data ) {
@@ -45,7 +45,6 @@ $(document).ready(function() {
 			
 });
 </script>
-
 
 <style type="text/css">
 /* 전체 영역 */
@@ -91,57 +90,132 @@ hr {
 
 #left {
 	/* 영역 확인용 */
-/*   	border: 1px solid red;   */
+/*    	border: 1px solid red;    */
 	float: left;
 	width: 60%;
 	margin-left: 5px;
 /* 	padding-left: 10px; */
 }
 
-#left .ment {
-	font-size: 28px;
-	font-weight: 300;
-	line-height: 1.29; /* 줄 간격 */
-	padding: 0 0 23px;
+/* 새소식 감싸는 div */
+#left .newsDiv {
+	padding: 16px 16px 32px;
 }
 
-/* 서포터 리스트 div */
-#left .supporterContainer .supporterList {
-	margin-top: 40px;
+/* 뉴스 리스트 헤더 */
+#left .newsDiv .newsListHeader {
+	border-bottom: 1px solid #44484b;
+	height: 42px;
 }
 
-#left .supporterContainer .supporterList .oneperson {
-	height: 72px;
-}
-
-#left .supporterContainer .supporterList .supportDetail .fundingDetail {
-	font-size: 17px;
-	line-height: 1.65;
-	margin-bottom: 2px;
-}
-
-#left .supporterContainer .supporterList .supportDetail em {
+#left .newsDiv .newsListHeader .newsHeaderTitle {
+	line-height: 30px;
+	font-size: 20px;
+	font-weight: 700;
 	font-style: normal;
+	float: left;
 }
 
-/* 더보기 div */
-#left .listMoreBtn {
-	display: block;
+/* 타이틀: 새소식 */
+#left .newsDiv .newsListHeader .newsHeaderTitle .news_title {
+	line-height: 1.47;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+/* 타이틀 : 새소식 갯수 */
+#left .newsDiv .newsListHeader .newsHeaderTitle .news_count {
+	margin-left: 3px;
+	line-height: 1.47;
+	color: #4EE2EC;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+/* 카테고리, 시간정렬 */
+#left .newsDiv .newsListHeader .newsHeaderSelect {
+	line-height: 20px;
+	letter-spacing: 0;
+	font-size: 15px;
+	font-weight: 400;
+	font-style: normal;
+	float: right;
+	margin-top: 5px;
+}
+
+/* 카테고리, 시간정렬 label */
+#left .newsDiv .newsListHeader .newsHeaderSelect .selectLabel {
 	position: relative;
-	width: 100%;
-	height: 48px;
+	margin-left: 16px;
 }
 
-#left .listMoreBtn .moreBtn {
-	display: block;
-	background: none;
-	font-size: 17px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+#left .newsDiv .newsListHeader .newsHeaderSelect .selectLabel .option {
+	width: 68px;
+	background-color: #fff;
+	line-height: 1.33;
+	font-size: 15px;
+	outline: none;
+/* 	appearance: none; */
 }
+
+/* 새소식 리스트 각각의 div */
+#left .newsDiv .newsListDiv {
+	box-shadow: 0 1px 0 0 rgb(0 0 0 / 10%);
+    padding: 16px 0;
+}
+
+/* 리스트 카테고리 */
+#left .newsDiv .newsListDiv .category {
+	line-height: 18px;
+	letter-spacing: 0;
+	font-size: 12px;
+	font-weight: 700;
+	font-style: normal;
+	color: #495057;
+}
+
+/* 리스트 카테고리 옆 구분선 */
+#left .newsDiv .newsListDiv .division {
+	display: inline-block;
+	margin: -2px 8px 0 9px;
+	background: #e6eaed;
+	width: 1px;
+	height: 10px;
+	vertical-align: middle;
+	content: "";
+}
+
+/* 오픈예정 */
+#left .newsDiv .newsListDiv .schedule {
+	line-height: 18px;
+	letter-spacing: 0;
+	font-size: 12px;
+	font-weight: 400;
+	font-style: normal;
+	color: #495057;
+}
+
+/* 새소식 제목 */
+#left .newsDiv .newsListDiv .news_title {
+	line-height: 28px;
+ 	letter-spacing: -1px; /* 글씨 간격 */
+	font-size: 16px;
+	font-weight: 400;
+	font-style: normal;
+	margin: 4px 0;
+}
+
+/* 리스트 각각 작성된날짜 */
+#left .newsDiv .newsListDiv .news_date {
+	line-height: 18px;
+	letter-spacing: 0;
+	font-size: 12px;
+	font-weight: 400;
+	font-style: normal;
+	color: #495057;
+	margin-bottom: 7px;
+}
+
 
 #right {
 	/* 영역 확인용 */ 
@@ -200,6 +274,7 @@ hr {
 	margin-top: -15px;
 }
 
+
 /* 펀딩하기, 환불하기 버튼 */
 #right .funding .btn_funding, #right .refund .btn_refund {
 	background-color: #4EE2EC;
@@ -214,22 +289,6 @@ hr {
 	font-weight: 400;
 	vertical-align: middle;
 	box-sizing: border-box!important;
-}
-
-/* 프로필 */
-.profileBox {
-	width: 50px;
-	height: 50px;
-	border-radius: 70%;
-	overflow: hidden;
- 	margin-right: 18px; 
-  	float: left; 
-}
-
-.profile {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
 }
 
 /* 찜하기, 신고하기 버튼 */
@@ -271,7 +330,6 @@ hr {
 	border: 1px solid #dadce0;
 	border-radius: 2px;
 }
-
 </style>
 
 <div class="container">
@@ -298,28 +356,52 @@ hr {
 
 
 <div id="left">
-	<span class="ment">현재 이 프로젝트에<br>
-		<strong style="color: #4EE2EC;">${totalCnt }명</strong>의 참여가 이루어졌습니다.
-	</span>
-	
-	<div class="supporterContainer">
-		<div class="supporterList">
-		<c:forEach items="${list }" var="supporter">
-			<div class="oneperson">
-				<div class="profileBox">
-					<img class="profile" src="/resources/img/basic.png">
-				</div>
-				<div class="supportDetail">
-					<p class="fundingDetail"><strong>${supporter.mId }</strong>님이 <strong>${supporter.reMoney + supporter.suAddMoney }원 펀딩</strong>으로 참여 하셨습니다.</p>
-					<em>1분 전</em>
-				</div><div style="clear: both;"></div>
-			</div>
+	<!-- 새소식 감싸는 div -->
+	<div class="newsDiv">
+		<div class="newsListHeader">
+			<span class="newsHeaderTitle">
+				<span class="news_title">새소식</span>
+				<span class="news_count">${newsCnt }</span>
+			</span>
+			<span class="newsHeaderSelect">
+				<label class="selectLabel">
+					<select class="option category">
+						<option>전체</option>
+						<option>이벤트</option>
+						<option>리워드</option>
+					</select>
+					<i></i> <!-- 아이콘 -->
+				</label>
+				<label class="selectLabel">
+					<select class="option time">
+						<option>최신순</option>
+						<option>과거순</option>
+					</select>
+					<i></i> <!-- 아이콘 -->
+				</label>
+			</span>
+		</div><!-- .newsListHeader end -->
+		
+		<!-- 새소식 리스트 (a태그 안에 div 불가능한지)-->
+<!-- 		<a href="#" style="text-decoration: none;"> -->
+<!-- 			<div></div> -->
+<!-- 		</a> -->
+
+		<c:forEach items="${newsList }" var="news">
+		<div class="newsListDiv" style="cursor: pointer;" onclick="location.href='/news/view?nNo=${news.nNo}&pNo=${news.pNo }';">
+			<p>
+				<span class="category">${news.nCategory }</span>
+				<span class="division"></span>
+				<span class="schedule">오픈예정</span>
+			</p>
+			<p class="news_title">${news.nTitle }</p>
+			<p class="news_date">
+				<fmt:formatDate pattern="yyyy.MM.dd" value="${news.nCreateDate }"/>
+			</p>
+		</div>
 		</c:forEach>
-		</div><!-- .supporterList end -->
-		<div class="listMoreBtn">
-			<button class="moreBtn">더보기</button>
-		</div><!-- .listMoreBtn end -->
-	</div><!-- .supporterContainer end -->
+		
+	</div>
 </div><!-- #left end -->
 
 
@@ -363,6 +445,7 @@ hr {
 
 <div style="clear: both;"></div>
 </div>
+
 
 <br><br>
 <c:import url="/WEB-INF/views/layout/footer.jsp" />

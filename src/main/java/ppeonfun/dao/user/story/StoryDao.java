@@ -1,6 +1,4 @@
-package ppeonfun.dao.user.supporter;
-
-import java.util.List;
+package ppeonfun.dao.user.story;
 
 import org.springframework.stereotype.Repository;
 
@@ -10,8 +8,16 @@ import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
-@Repository("user.SupporterDao")
-public interface SupporterDao {
+@Repository("user.StoryDao")
+public interface StoryDao {
+
+	/**
+	 * 프로젝트 정보 검색
+	 * 
+	 * @param info
+	 * @return
+	 */
+	public Information selectInfo(Information info);
 
 	/**
 	 * pNo로 총 서포터 수 검색
@@ -22,15 +28,7 @@ public interface SupporterDao {
 	public int selectCntSupporter(Supporter supporter);
 
 	/**
-	 * 서포터 리스트 검색
-	 * 
-	 * @param suJoin - 프로젝트 번호
-	 * @return
-	 */
-	public List<SupporterJoin> selectList(SupporterJoin suJoin);
-
-	/**
-	 * 프로젝트 남은 날짜 계산
+	 * 프로젝트 남은 일수 계산
 	 * 
 	 * @param suJoin
 	 * @return
@@ -45,16 +43,14 @@ public interface SupporterDao {
 	 */
 	public int selectTotalAmount(SupporterJoin suJoin);
 
-	/**
-	 * 프로젝트 정보 검색
-	 * 
-	 * @param info
-	 * @return
-	 */
-	public Information selectInfo(Information info);
-
 	public int selectCntNews(News news);
 
+	/**
+	 * 사용자가 해당 프로젝트 찜했는지 조회
+	 * 
+	 * @param favorite
+	 * @return
+	 */
 	public int selectCntFavorite(Favorite favorite);
 
 	public void deleteFavorite(Favorite favorite);

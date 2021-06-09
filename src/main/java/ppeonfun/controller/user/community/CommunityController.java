@@ -1,4 +1,4 @@
-package ppeonfun.controller.user.story;
+package ppeonfun.controller.user.community;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,34 +15,35 @@ import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
-import ppeonfun.service.user.story.StoryService;
+import ppeonfun.service.user.community.CommunityService;
 
-@Controller("user.StoryController")
-public class StoryController {
+@Controller("user.CommunityController")
+public class CommunityController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(StoryController.class);
-
-	@Autowired StoryService storyService;
+	private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
 	
-	@RequestMapping(value = "/story")
-	public String story(
+	@Autowired CommunityService communityService;
+	
+	
+	@RequestMapping(value = "/community")
+	public String community(
 			Model model, Information info, Supporter supporter, SupporterJoin suJoin, 
 			News news, HttpSession session) {
 		
 		//해당 프로젝트의 제목, 카테고리, 목표금액
-		info = storyService.projectInfo(info);
+		info = communityService.projectInfo(info);
 		
 		//해당 프로젝트의 총 서포터 수 구하기
-		int totalCount = storyService.totalCount(supporter);
+		int totalCount = communityService.totalCount(supporter);
 		
 		//프로젝트 남은 일수 구하기
-		int remaining_day = storyService.remainDay(suJoin);
+		int remaining_day = communityService.remainDay(suJoin);
 		
 		//프로젝트의 총 펀딩 액
-		int total_amount = storyService.amount(suJoin);
+		int total_amount = communityService.amount(suJoin);
 		
 		//새소식 개수
-		int newsCount = storyService.newsCount(news);
+		int newsCount = communityService.newsCount(news);
 		
 		//로그인 상태 확인 후 찜 작업 수행
 		
@@ -52,7 +53,7 @@ public class StoryController {
 		favorite.setmNo(((Integer)session.getAttribute("mNo")).intValue()); //회원번호
 		
 		//찜 상태 확인
-		boolean isFav = storyService.isFav(favorite); 
+		boolean isFav = communityService.isFav(favorite); 
 		logger.info("찜 상태 확인 {}", isFav);
 		
 		model.addAttribute("info", info);
@@ -62,20 +63,20 @@ public class StoryController {
 		model.addAttribute("newsCnt", newsCount);
 		
 		model.addAttribute("isFav", isFav); //회원의 찜 상태 전달
-		model.addAttribute("cntFav", storyService.getTotalCntFavorite(favorite)); //총 좋아요 횟수
+		model.addAttribute("cntFav", communityService.getTotalCntFavorite(favorite)); //총 좋아요 횟수
 		
-		return "/user/project/story";
+		return "/user/project/community";
 	}
 	
-	@RequestMapping(value = "/story/favorite")
+	@RequestMapping(value = "/community/favorite")
 	public ModelAndView favorite(Favorite favorite, ModelAndView mav, HttpSession session) {
 		
 		//찜(하트)
 		favorite.setmNo(((Integer)session.getAttribute("mNo")).intValue());
-		boolean result = storyService.favorite(favorite);
+		boolean result = communityService.favorite(favorite);
 		
 		//좋아요 수 조회
-		int cnt = storyService.getTotalCntFavorite(favorite);
+		int cnt = communityService.getTotalCntFavorite(favorite);
 		
 		mav.addObject("result", result);
 		mav.addObject("cnt", cnt);
@@ -83,5 +84,5 @@ public class StoryController {
 		
 		return mav;
 	}
-	
+
 }
