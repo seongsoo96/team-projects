@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp" />
-
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -18,7 +18,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type: "get"
-			, url: "/supporter/favorite"
+			, url: "/news/favorite"
 			, data: {"pNo" : '${info.pNo }'}
 			, dataType: "json"
 			, success: function( data ) {
@@ -98,50 +98,72 @@ hr {
 /* 	padding-left: 10px; */
 }
 
-#left .ment {
-	font-size: 28px;
-	font-weight: 300;
-	line-height: 1.29; /* 줄 간격 */
-	padding: 0 0 23px;
+/* view 감싸는 div */
+#left .newsViewDiv {
+	padding: 16px 16px 32px;
 }
 
-/* 서포터 리스트 div */
-#left .supporterContainer .supporterList {
+/* 목록으로가기 버튼 */
+#left .newsViewDiv a .gobackBtn {
+	margin-top: 0;
+	padding: 0 16px;
+	height: 36px;
+	font-size: 15px;
+	border: 1px solid rgba(0,0,0,.15);
+	border-radius: 3px;
+	background-color: #fff;
+	vertical-align: middle;
+	line-height: 1; 
+	color: rgba(0,0,0,.54);
+	font-weight: 400;
+}
+
+/* 글 정보 영역 */
+#left .newsViewDiv .newsViewTitle {
 	margin-top: 40px;
+	margin-bottom: 16px;
 }
 
-#left .supporterContainer .supporterList .oneperson {
-	height: 72px;
+/* 카테고리 */
+#left .newsViewDiv .newsViewTitle .news_category {
+	line-height: 18px;
+	letter-spacing: 0;
+	font-size: 12px;
+	font-weight: 700;
+	color: #495057;
 }
 
-#left .supporterContainer .supporterList .supportDetail .fundingDetail {
-	font-size: 17px;
-	line-height: 1.65;
-	margin-bottom: 2px;
+/* 제목 */
+#left .newsViewDiv .newsViewTitle .news_title {
+	line-height: 30px;
+	letter-spacing: -.6px;
+	font-size: 20px;
+	font-weight: 700;
+	margin: 12px 0;
 }
 
-#left .supporterContainer .supporterList .supportDetail em {
-	font-style: normal;
+/* 작성시간 */
+#left .newsViewDiv .newsViewTitle .news_time {
+	line-height: 20px;
+	letter-spacing: 0;
+	font-size: 14px;
+	font-weight: 400;
+	color: #495057;
 }
 
-/* 더보기 div */
-#left .listMoreBtn {
-	display: block;
-	position: relative;
-	width: 100%;
-	height: 48px;
+/* 새소식 내용 div */
+#left .newsViewDiv .newsDetail {
+	box-shadow: 0 1px 0 0 rgb(0 0 0 / 10%), 0 -1px 0 0 rgb(0 0 0 / 10%);
+    padding: 20px 0 40px;
 }
 
-#left .listMoreBtn .moreBtn {
-	display: block;
-	background: none;
-	font-size: 17px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+/* 내용 */
+#left .newsViewDiv .newsDetail .newsContent {
+	line-height: 28px;
+	font-size: 16px;
+	font-weight: 400px;
 }
+
 
 #right {
 	/* 영역 확인용 */ 
@@ -216,22 +238,6 @@ hr {
 	box-sizing: border-box!important;
 }
 
-/* 프로필 */
-.profileBox {
-	width: 50px;
-	height: 50px;
-	border-radius: 70%;
-	overflow: hidden;
- 	margin-right: 18px; 
-  	float: left; 
-}
-
-.profile {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
 /* 찜하기, 신고하기 버튼 */
 .buttons {
 	width: 100%;
@@ -271,8 +277,8 @@ hr {
 	border: 1px solid #dadce0;
 	border-radius: 2px;
 }
-
 </style>
+
 
 <div class="container">
 <br><br><hr>
@@ -298,28 +304,32 @@ hr {
 
 
 <div id="left">
-	<span class="ment">현재 이 프로젝트에<br>
-		<strong style="color: #4EE2EC;">${totalCnt }명</strong>의 참여가 이루어졌습니다.
-	</span>
+	<!-- view 감싸는 div -->
+	<div class="newsViewDiv">
 	
-	<div class="supporterContainer">
-		<div class="supporterList">
-		<c:forEach items="${list }" var="supporter">
-			<div class="oneperson">
-				<div class="profileBox">
-					<img class="profile" src="/resources/img/basic.png">
-				</div>
-				<div class="supportDetail">
-					<p class="fundingDetail"><strong>${supporter.mId }</strong>님이 <strong>${supporter.reMoney + supporter.suAddMoney }원 펀딩</strong>으로 참여 하셨습니다.</p>
-					<em>1분 전</em>
-				</div><div style="clear: both;"></div>
+		<a href="#" onclick="history.back()">
+			<button class="gobackBtn">
+				<i class="fa fa-angle-left" aria-hidden="true"></i><!-- 왼쪽 화살표 아이콘 -->
+				목록으로 이동
+			</button>
+		</a>
+		
+		<div class="newsViewTitle">
+			<p>
+				<span class="news_category">${view.nCategory }</span>
+			</p>
+			<p class="news_title">${view.nTitle }</p>
+			<p class="news_time">
+				<fmt:formatDate pattern="yyyy.MM.dd HH:ss" value="${view.nCreateDate }"/>
+			</p>
+		</div>
+		
+		<div class="newsDetail">
+			<div class="newsContent">
+				${view.nContext }
 			</div>
-		</c:forEach>
-		</div><!-- .supporterList end -->
-		<div class="listMoreBtn">
-			<button class="moreBtn">더보기</button>
-		</div><!-- .listMoreBtn end -->
-	</div><!-- .supporterContainer end -->
+		</div>
+	</div><!-- .newsViewDiv end -->
 </div><!-- #left end -->
 
 
@@ -363,6 +373,7 @@ hr {
 
 <div style="clear: both;"></div>
 </div>
+
 
 <br><br>
 <c:import url="/WEB-INF/views/layout/footer.jsp" />

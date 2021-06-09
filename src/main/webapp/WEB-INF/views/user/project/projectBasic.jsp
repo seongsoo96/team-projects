@@ -3,50 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp" />
 
-
-<script type="text/javascript">
-$(document).ready(function() {
-	if(${isFav }) { //해당 아이디로 프로젝트 좋아요 누른 상태
-		$("#heart")
-			.css("color", "red");
-	} else { //좋아요 누르지 않은 상태
-		
-	}
-	
-	
-	$(".btn_heart").click(function() {
-		
-		$.ajax({
-			type: "get"
-			, url: "/supporter/favorite"
-			, data: {"pNo" : '${info.pNo }'}
-			, dataType: "json"
-			, success: function( data ) {
-// 				console.log("성공");
-// 				console.log(data.result);
-// 				console.log(data.cnt);
-				
-				if(data.result) { //찜 성공
-					$("#heart").css("color", "red");
-				
-				} else { //찜 취소 성공
-					$("#heart").css("color", "");
-				
-				}
-				
-				$("#cntFav").text(data.cnt);
-				
-			}
-			, error: function() {
-				console.log("실패");
-			}
-		})
-	}) //$(".btn_heart").click(function() end
-			
-});
-</script>
-
-
 <style type="text/css">
 /* 전체 영역 */
 .container {
@@ -96,51 +52,6 @@ hr {
 	width: 60%;
 	margin-left: 5px;
 /* 	padding-left: 10px; */
-}
-
-#left .ment {
-	font-size: 28px;
-	font-weight: 300;
-	line-height: 1.29; /* 줄 간격 */
-	padding: 0 0 23px;
-}
-
-/* 서포터 리스트 div */
-#left .supporterContainer .supporterList {
-	margin-top: 40px;
-}
-
-#left .supporterContainer .supporterList .oneperson {
-	height: 72px;
-}
-
-#left .supporterContainer .supporterList .supportDetail .fundingDetail {
-	font-size: 17px;
-	line-height: 1.65;
-	margin-bottom: 2px;
-}
-
-#left .supporterContainer .supporterList .supportDetail em {
-	font-style: normal;
-}
-
-/* 더보기 div */
-#left .listMoreBtn {
-	display: block;
-	position: relative;
-	width: 100%;
-	height: 48px;
-}
-
-#left .listMoreBtn .moreBtn {
-	display: block;
-	background: none;
-	font-size: 17px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
 }
 
 #right {
@@ -216,22 +127,6 @@ hr {
 	box-sizing: border-box!important;
 }
 
-/* 프로필 */
-.profileBox {
-	width: 50px;
-	height: 50px;
-	border-radius: 70%;
-	overflow: hidden;
- 	margin-right: 18px; 
-  	float: left; 
-}
-
-.profile {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
 /* 찜하기, 신고하기 버튼 */
 .buttons {
 	width: 100%;
@@ -271,8 +166,8 @@ hr {
 	border: 1px solid #dadce0;
 	border-radius: 2px;
 }
-
 </style>
+
 
 <div class="container">
 <br><br><hr>
@@ -298,28 +193,7 @@ hr {
 
 
 <div id="left">
-	<span class="ment">현재 이 프로젝트에<br>
-		<strong style="color: #4EE2EC;">${totalCnt }명</strong>의 참여가 이루어졌습니다.
-	</span>
 	
-	<div class="supporterContainer">
-		<div class="supporterList">
-		<c:forEach items="${list }" var="supporter">
-			<div class="oneperson">
-				<div class="profileBox">
-					<img class="profile" src="/resources/img/basic.png">
-				</div>
-				<div class="supportDetail">
-					<p class="fundingDetail"><strong>${supporter.mId }</strong>님이 <strong>${supporter.reMoney + supporter.suAddMoney }원 펀딩</strong>으로 참여 하셨습니다.</p>
-					<em>1분 전</em>
-				</div><div style="clear: both;"></div>
-			</div>
-		</c:forEach>
-		</div><!-- .supporterList end -->
-		<div class="listMoreBtn">
-			<button class="moreBtn">더보기</button>
-		</div><!-- .listMoreBtn end -->
-	</div><!-- .supporterContainer end -->
 </div><!-- #left end -->
 
 
@@ -348,8 +222,8 @@ hr {
 	<div class="buttons">
 		<div class="heart">
 			<button class="btn_heart">
-				<i id="heart" class="fa fa-heart" aria-hidden="true"></i>
-				<em id="cntFav">${cntFav }</em>
+				<i></i>
+				<em>640</em>
 			</button>
 		</div>
 		<div class="declare">
@@ -363,6 +237,7 @@ hr {
 
 <div style="clear: both;"></div>
 </div>
+
 
 <br><br>
 <c:import url="/WEB-INF/views/layout/footer.jsp" />

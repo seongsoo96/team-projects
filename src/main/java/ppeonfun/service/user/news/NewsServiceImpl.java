@@ -1,4 +1,4 @@
-package ppeonfun.service.user.supporter;
+package ppeonfun.service.user.news;
 
 import java.util.List;
 
@@ -7,55 +7,59 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ppeonfun.dao.user.supporter.SupporterDao;
+import ppeonfun.dao.user.news.NewsDao;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
-@Service("user.SupporterService")
-public class SupporterServiceImpl implements SupporterService {
+@Service("user.NewsService")
+public class NewsServiceImpl implements NewsService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(SupporterServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(NewsServiceImpl.class);
 	
-	@Autowired
-	private SupporterDao supporterDao;
+	@Autowired NewsDao newsDao;
 	
 	
 	@Override
-	public int totalCount(Supporter supporter) {
-		return supporterDao.selectCntSupporter(supporter);
+	public Information projectInfo(Information info) {
+		return newsDao.selectInfo(info);
 	}
 	
 	@Override
-	public List<SupporterJoin> supporterList(SupporterJoin suJoin) {
-		return supporterDao.selectList(suJoin);
+	public int totalCount(Supporter supporter) {
+		return newsDao.selectCntSupporter(supporter);
 	}
 	
 	@Override
 	public int remainDay(SupporterJoin suJoin) {
-		return supporterDao.selectRemainDay(suJoin);
+		return newsDao.selectRemainDay(suJoin);
 	}
 	
 	@Override
 	public int amount(SupporterJoin suJoin) {
-		return supporterDao.selectTotalAmount(suJoin);
+		return newsDao.selectTotalAmount(suJoin);
 	}
 	
 	@Override
-	public Information projectInfo(Information info) {
-		return supporterDao.selectInfo(info);
+	public List<News> getList(News news) {
+		return newsDao.selectList(news);
+	}
+	
+	@Override
+	public News view(News news) {
+		return newsDao.selectByNno(news);
 	}
 	
 	@Override
 	public int newsCount(News news) {
-		return supporterDao.selectCntNews(news);
+		return newsDao.selectCntNews(news);
 	}
 	
 	@Override
 	public boolean isFav(Favorite favorite) {
-		int cnt = supporterDao.selectCntFavorite(favorite);
+		int cnt = newsDao.selectCntFavorite(favorite);
 		
 		if(cnt > 0) { //찜 함
 			return true;
@@ -68,12 +72,13 @@ public class SupporterServiceImpl implements SupporterService {
 	
 	@Override
 	public boolean favorite(Favorite favorite) {
+		
 		if(isFav(favorite)) { //찜 한 상태
-			supporterDao.deleteFavorite(favorite);
+			newsDao.deleteFavorite(favorite);
 			
 			return false;
 		} else {
-			supporterDao.insertFavorite(favorite);
+			newsDao.insertFavorite(favorite);
 			
 			return true;
 		}
@@ -81,7 +86,7 @@ public class SupporterServiceImpl implements SupporterService {
 	
 	@Override
 	public int getTotalCntFavorite(Favorite favorite) {
-		return supporterDao.selectCntFavorite(favorite);
+		return newsDao.selectCntFavorite(favorite);
 	}
 
 }

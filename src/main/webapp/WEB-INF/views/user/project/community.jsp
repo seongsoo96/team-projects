@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp" />
 
-
 <script type="text/javascript">
 $(document).ready(function() {
 	if(${isFav }) { //해당 아이디로 프로젝트 좋아요 누른 상태
@@ -18,7 +17,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type: "get"
-			, url: "/supporter/favorite"
+			, url: "/community/favorite"
 			, data: {"pNo" : '${info.pNo }'}
 			, dataType: "json"
 			, success: function( data ) {
@@ -98,51 +97,94 @@ hr {
 /* 	padding-left: 10px; */
 }
 
-#left .ment {
-	font-size: 28px;
-	font-weight: 300;
-	line-height: 1.29; /* 줄 간격 */
-	padding: 0 0 23px;
+#left .comDiv {
+	margin-bottom: 40px;
+	font-size: 13px;
 }
 
-/* 서포터 리스트 div */
-#left .supporterContainer .supporterList {
-	margin-top: 40px;
+/* left 안에 가장 위 멘트 */
+#left .comDiv .ment {
+	line-height: 24px;
+	font-size: 16px;
+	padding-bottom: 30px;
+	box-shadow: 0 1px 0 0 rgb(0 0 0 / 10%);
+	margin-bottom: 60px;
+/* 	border-bottom: 1px solid #44484b; */
 }
 
-#left .supporterContainer .supporterList .oneperson {
-	height: 72px;
+/* 멘트 밑 제목 */
+#left .comDiv .comContainer .comTitle {
+	margin-bottom: 24px;
 }
 
-#left .supporterContainer .supporterList .supportDetail .fundingDetail {
-	font-size: 17px;
-	line-height: 1.65;
-	margin-bottom: 2px;
-}
-
-#left .supporterContainer .supporterList .supportDetail em {
-	font-style: normal;
-}
-
-/* 더보기 div */
-#left .listMoreBtn {
-	display: block;
+/* 응원, 질문, 체험리뷰 */
+#left .comDiv .comContainer .comTitle .commuTitle {
 	position: relative;
-	width: 100%;
-	height: 48px;
+	margin-bottom: 8px;
+	line-height: 24px;
+	font-size: 20px;
+	font-weight: 700;
 }
 
-#left .listMoreBtn .moreBtn {
-	display: block;
-	background: none;
+/* 응원,질문,체험리뷰 개수 */
+#left .comDiv .comContainer .comTitle .commuTitle em {
+	margin-left: 4px;
+	color: #4EE2EC;
+}
+
+#left .comDiv .comContainer .comTitle .explain {
+	color: rgba(0,0,0,.54);
+	font-size: 13px;
+}
+
+/* 글 남기기 버튼 */
+#left .comDiv .comContainer .writeCom {
+	background-color: #90949c;
+	color: #fff;
+	border-color: #90949c;
+	border-radius: 3px;
+	cursor: pointer;
+	height: 48px;
+	vertical-align: middle;
+	line-height: 1;
 	font-size: 17px;
+	font-weight: 400;
+	padding-top: .07em;
+	width: 343px;
+	margin-bottom: 24px;
+}
+
+/* 커뮤 리스트 하나하나의 div */
+#left .comDiv .comContainer .communityList .itemContainer {
+	position: relative;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+#left .comDiv .comContainer .communityList .itemContainer .item {
+	position: relative;
+	padding: 0 0 0 56px;
+}
+
+#left .comDiv .comContainer .communityList .itemContainer .item .itemIcon {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
-	height: 100%;
 }
 
+/* 프로필 사진 */
+.profile {
+	width: 36px;
+	height: 36px;
+	display: inline-block;
+	position: relative;
+	border-radius: 50%;
+	vertical-align: middle;
+}
+</style>
+
+
+<style type="text/css">
 #right {
 	/* 영역 확인용 */ 
 /*   	border: 1px solid green;   */
@@ -216,22 +258,6 @@ hr {
 	box-sizing: border-box!important;
 }
 
-/* 프로필 */
-.profileBox {
-	width: 50px;
-	height: 50px;
-	border-radius: 70%;
-	overflow: hidden;
- 	margin-right: 18px; 
-  	float: left; 
-}
-
-.profile {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
 /* 찜하기, 신고하기 버튼 */
 .buttons {
 	width: 100%;
@@ -271,8 +297,8 @@ hr {
 	border: 1px solid #dadce0;
 	border-radius: 2px;
 }
-
 </style>
+
 
 <div class="container">
 <br><br><hr>
@@ -298,28 +324,53 @@ hr {
 
 
 <div id="left">
-	<span class="ment">현재 이 프로젝트에<br>
-		<strong style="color: #4EE2EC;">${totalCnt }명</strong>의 참여가 이루어졌습니다.
-	</span>
+<div class="comDiv">
+	<div class="ment">
+		<p>
+			서포터님!<br>처음 <strong>메이커의 열정과 가치에 공감</strong>
+			해주셨듯, 마지막까지 <strong>메이커를 응원</strong>해주세요.
+		</p>
+	</div>
+	<div class="comContainer">
 	
-	<div class="supporterContainer">
-		<div class="supporterList">
-		<c:forEach items="${list }" var="supporter">
-			<div class="oneperson">
-				<div class="profileBox">
-					<img class="profile" src="/resources/img/basic.png">
-				</div>
-				<div class="supportDetail">
-					<p class="fundingDetail"><strong>${supporter.mId }</strong>님이 <strong>${supporter.reMoney + supporter.suAddMoney }원 펀딩</strong>으로 참여 하셨습니다.</p>
-					<em>1분 전</em>
-				</div><div style="clear: both;"></div>
+		<!-- 응원,질문,체험리뷰 -->
+		<div class="comTitle">
+			<div class="commuTitle">
+				<p>응원 · 질문 · 체험리뷰
+					<em>86</em>
+				</p>
 			</div>
-		</c:forEach>
-		</div><!-- .supporterList end -->
-		<div class="listMoreBtn">
-			<button class="moreBtn">더보기</button>
-		</div><!-- .listMoreBtn end -->
-	</div><!-- .supporterContainer end -->
+			<p class="explain">펀딩 종료전에 남긴 글입니다.</p>
+		</div>
+		
+		<!-- 글 남기기 버튼 -->
+		<div>
+			<button class="writeCom">글 남기기</button>
+		</div>
+		
+		<!-- 질문, 답변 전체 -->
+		<div class="communityList">
+			<div style="height: 20px; border-bottom: 1px solid #44484b;" ></div>
+			<div>
+				<!-- 리스트 하나하나 -->
+				<div class="itemContainer">
+					<div class="item">
+					
+						<!-- 아이콘 -->
+						<div class="itemIcon">
+							<img class="profile" src="/resources/img/basic.png">
+						</div>
+						<!-- 글씨 -->
+						<div class="itemMain">
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </div><!-- #left end -->
 
 
@@ -363,6 +414,7 @@ hr {
 
 <div style="clear: both;"></div>
 </div>
+
 
 <br><br>
 <c:import url="/WEB-INF/views/layout/footer.jsp" />
