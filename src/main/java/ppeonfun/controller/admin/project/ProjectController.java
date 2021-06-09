@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import ppeonfun.dto.Message;
 import ppeonfun.dto.Project;
@@ -31,8 +32,9 @@ public class ProjectController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
-		
 	}
+	
+	
 	@RequestMapping(value="/view")
 	public void view(Project project, Model model) {
 		logger.info("/admin/project/view 실행");
@@ -66,6 +68,7 @@ public class ProjectController {
 	@RequestMapping(value="/approve")
 	public String approve(HttpSession session,Project project,Model model) {
 		projectService.approveProject(project);
+		projectService.insertStartDate(project);
 		projectService.messageSend(project,session);
 		
 		

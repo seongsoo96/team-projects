@@ -75,6 +75,11 @@ public interface ProjectService {
  	 * @param message - 메시지 내용
 	 */
 	public void messageSend(Project project, HttpSession session, Message message);
+	/**
+	 * 프로젝트의 시작시간 삽입
+	 * @param project
+	 */
+	public void insertStartDate(Project project);
 	
 	
 	

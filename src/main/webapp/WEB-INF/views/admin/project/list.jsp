@@ -2,7 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp"></c:import>
+<style type="text/css">
+.search {
+	border-color: snow;
+	height: 30px;
+	width: 200px;
+}
+
+.searchBtn {
+	background-color: #C4FFFF;
+	border: none;
+	height: 30.5px;
+	margin-left: -4px;
+	width: 50px;
+}
+.dropbox {
+	border-color: ivory;
+	height: 30px;
+	margin: 0px 5px;
+	width: 100px;
+}
+</style>
 <c:if test="${not empty project.pRequirements }">
 	<c:choose>
 		<c:when test="${project.pRequirements eq 'W' }"><c:set var="pRequirements" value="작성전" /></c:when>
@@ -155,6 +177,16 @@ $(document).ready(function(){
 </table>
 
 <span class="pull-left">total : ${paging.totalCount }</span><br>
+
+<form action="/admin/project/list" method="post">
+<div id="search">
+	<select class="dropbox" name="category">
+		<option value="title">제목</option>
+	</select>
+	<input type="text" id="search" class="search" name="search" placeholder="검색어를 입력해주세요"  />
+	<button class="searchBtn">검색</button>
+</div>
+</form>
 
 <c:import url="/WEB-INF/views/admin/project/paging.jsp"></c:import>    
 </div>

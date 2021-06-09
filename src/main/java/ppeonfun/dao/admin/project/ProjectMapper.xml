@@ -24,15 +24,23 @@
   	SELECT*FROM(
 		SELECT rownum rnum, P.* FROM(
 		        SELECT *
-            FROM project 
+            FROM project
+            WHERE 1=1
+            <if test="'title'.equals(category)">
+            	AND p_name like '%'||#{search}||'%'
+            </if>
             order by p_no desc
     	) P
 	)R
 	WHERE rnum BETWEEN #{startNo} AND #{endNo}	
   	</select>
   	
-  	<select id="selectCntAll" resultType="int">
-  		SELECT count(*) FROM project
+  	<select id="selectCntAll" resultType="int" parameterType="Paging">
+  		SELECT count(*) FROM project WHERE
+  		1=1
+  		<if test="'title'.equals(category)">
+			AND p_name like '%'||#{search}||'%'
+		</if>
   	</select>
   	
   	<select id="selectByName" resultType="String" parameterType="Project">
@@ -77,4 +85,12 @@
   		</selectKey>
   		insert into message(msg_no,msg_content,cr_no,cp_no,msg_time) values(#{msgNo}, #{msgContent}, #{crNo}, #{cpNo}, sysdate)
   	</insert>
+  	
+  	<select id="selectInformation" parameterType="Project" resultType="Information">
+  		SELECT * FROM information WHERE p_no = #{pNo}
+  	</select>
+  	<update id="updateInformation" parameterType="information">
+  		UPDATE information SET i_start_date = #{iStartDate} WHERE i_no = #{iNo}
+  	</update>
+  	
   </mapper>

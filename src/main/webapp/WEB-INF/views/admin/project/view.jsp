@@ -59,6 +59,8 @@ $(document).ready(function(){
 	console.log(pStory);
 	console.log(pReward);
 	console.log(pMaker);
+	console.log('${contextPath}');
+	
 	
 	$("#projectSubmit").click(function(){
 		if(pRequirements == 'Y' && pInformation=='Y' && pStory=='Y' && pReward=='Y' && pMaker=='Y'){

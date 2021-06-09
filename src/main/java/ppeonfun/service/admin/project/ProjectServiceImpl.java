@@ -1,5 +1,10 @@
 package ppeonfun.service.admin.project;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +17,7 @@ import org.springframework.stereotype.Service;
 import ppeonfun.dao.admin.project.ProjectDao;
 import ppeonfun.dto.ChatParticipant;
 import ppeonfun.dto.ChatRoom;
+import ppeonfun.dto.Information;
 import ppeonfun.dto.Message;
 import ppeonfun.dto.Project;
 import ppeonfun.util.Paging;
@@ -25,11 +31,13 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Paging getPaging(Paging inData) {
 		//전체 개수
-		int totalCount = projectDao.selectCntAll();
+		int totalCount = projectDao.selectCntAll(inData);
 		logger.info("totalCount: {}", totalCount);
 
 		//Paging객체 생성
 		Paging paging = new Paging(totalCount, inData.getCurPage());
+		paging.setCategory(inData.getCategory());
+		paging.setSearch(inData.getSearch());
 		
 		return paging;
 	}
@@ -138,5 +146,25 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setpState("N");
 		
 		projectDao.updateSubmit(project);
+	}
+	@Override
+	public void insertStartDate(Project project) {
+		Date start = null;
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("current: " + df.format(cal.getTime()));
+		
+        cal.add(Calendar.DATE, 14); //2주 더하기
+        try {
+			start = df.parse(df.format(cal.getTime()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        Information information = projectDao.selectInformation(project);
+        information.setiStartDate(start);
+        projectDao.updateInformation(information);
+        
 	}
 }
