@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import ppeonfun.dto.Board;
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
@@ -191,5 +192,22 @@ public interface MypageDao {
 	 * @return			답변 DTO
 	 */
 	public CommunityAnswer selectCommAnsBycomNo(@Param("mNo")int mNo, @Param("comNo")int comNo);
+
+
+	/**
+	 * 회원이 작성한 게시글의 수를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		게시글 수
+	 */
+	public int selectCntMyBoard(int mNo);
+
+
+	/**
+	 * board 테이블에서 회원이 작성한 게시글을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			게시글 목록
+	 */
+	public List<HashMap<String, Object>> selectAllBoardBymNo(@Param("paging")Paging paging, @Param("mNo")int mNo);
 
 }

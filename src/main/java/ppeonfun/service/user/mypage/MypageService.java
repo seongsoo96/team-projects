@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import ppeonfun.dto.Board;
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
@@ -181,6 +182,25 @@ public interface MypageService {
 	 * @return			답변 DTO
 	 */
 	public CommunityAnswer getCommentAnswerBycomNo(int mNo, int comNo);
+
+
+	/**
+	 * 회원이 게시판에 작성한 글의 수로 페이징을 생성한다.
+	 * @param curPage	현재 페이지
+	 * @param mNo		회원번호
+	 * @return			페이징 정보 객체
+	 */
+	public Paging getMyBoardPaging(int curPage, int mNo);
+
+
+	/**
+	 * 회원이 작성한 게시글 목록을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			게시글 목록
+	 */
+	public List<HashMap<String, Object>> getMyBoardList(Paging paging, int mNo);
+
 
 
 

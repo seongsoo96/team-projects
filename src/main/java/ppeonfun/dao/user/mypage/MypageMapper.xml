@@ -188,9 +188,9 @@
 		            ON C.p_no = PJ.p_no
 		    )
 	        WHERE C.m_no = #{mNo}
-	        ORDER BY C.com_no DESC
 	    ) RES
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
+	ORDER BY rnum DESC 
  	</select>
  	
  	<select id="selectCommAnsBycomNo" parameterType="hashmap" resultType="CommunityAnswer">
@@ -202,6 +202,24 @@
 				ON C.com_no = CA.com_no
         )
     WHERE C.m_no = #{mNo} AND C.com_no = #{comNo}
+ 	</select>
+ 	
+ 	<select id="selectCntMyBoard" parameterType="int" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM board
+ 	WHERE m_no = #{mNo}
+ 	</select>
+ 	
+ 	<select id="selectAllBoardBymNo" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	        	b_no, b_title, b_create_date, b_hit, b_grade
+	        FROM board
+	        WHERE m_no = #{mNo}
+	    ) RES
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
+	ORDER BY rnum DESC 	
  	</select>
  </mapper>  
     

@@ -345,7 +345,21 @@ public class MypageController {
 		
 		return "jsonView";
 	}
-
+	
+	@RequestMapping(value="/board", method=RequestMethod.GET)
+	public void viewMyBoard(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+		logger.info("***** /user/mypage/board [GET] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
+		Paging paging = mypageService.getMyBoardPaging(curPage, mNo);
+		
+		//회원이 게시판에 작성한 글 목록을 조회한다.
+		List<HashMap<String, Object>> myBoardList = mypageService.getMyBoardList(paging, mNo);
+		
+		logger.info("게시판에 작성한 글 목록 {}", myBoardList);
+		model.addAttribute("boardList", myBoardList);
+		model.addAttribute("paging", paging);
+	}
 	
 	//마이페이지 오류--------------------------------------------------------------------
 	@RequestMapping(value = "/error")

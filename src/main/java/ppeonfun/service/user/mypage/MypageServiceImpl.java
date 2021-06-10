@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dao.user.mypage.MypageDao;
+import ppeonfun.dto.Board;
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
@@ -231,6 +232,18 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public CommunityAnswer getCommentAnswerBycomNo(int mNo, int comNo) {
 		return mypageDao.selectCommAnsBycomNo(mNo, comNo);
+	}
+
+	@Override
+	public Paging getMyBoardPaging(int curPage, int mNo) {
+		int totalCount = mypageDao.selectCntMyBoard(mNo);
+		
+		return new Paging(totalCount, curPage);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getMyBoardList(Paging paging, int mNo) {
+		return mypageDao.selectAllBoardBymNo(paging, mNo);
 	}
 
 
