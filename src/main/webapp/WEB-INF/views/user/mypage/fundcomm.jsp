@@ -56,7 +56,7 @@ td[colspan='3'] div {width:70%; margin:0 auto; border-radius:5px;}
 			</tr>
 			<tr>
 				<td id="td${fcList.RNUM }" colspan="3">
-					<div class="divComContent">${fcList.COM_CONTENT }</div>
+					<div class="divComContent"><div>${fcList.COM_CONTENT }</div></div>
 					<div class="divComAnswer"></div>
 				</td>
 			</tr>
@@ -65,6 +65,8 @@ td[colspan='3'] div {width:70%; margin:0 auto; border-radius:5px;}
 		<c:import url="/WEB-INF/views/layout/paging.jsp"/>
 	</c:if>
 </div><!-- div.container -->
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -86,12 +88,20 @@ function getContent(rnum, comNo) {
 			, data: { 'comNo': comNo }
 			, dataType: 'json'
 			, success: function(res) {
-				console.log("성공", res)
-				
+				console.log("답변 조회 성공", res)
 				if(res.answer != null) {
 					$( "#td" + rnum + " .divComAnswer").css('border', '2px solid #ccc')
-					$( "#td" + rnum + " .divComAnswer").html(res.answer.caContent)
-				} else {
+					
+					/* 답변 작성일 Date format */
+					var caDate = moment(new Date(res.answer.caDate)).format('YYYY-MM-DD')
+					console.log(caDate)
+
+					/* 답변 내용 추가 */
+					var ansHtml = ""
+					ansHtml += ("<div>답변일: " + caDate + "</div><br>")
+					ansHtml += ("<div>" + res.answer.caContent + "</div>")
+					
+					$( "#td" + rnum + " .divComAnswer").html(ansHtml)
 				}
 			}
 			, error: function() { console.log("답변 조회 실패") }
