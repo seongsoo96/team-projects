@@ -39,11 +39,12 @@ public class RequirementController {
 		String name = requirementService.selectByName(project);
 		Requirement requirement = requirementService.viewRequirement(project);
 		RequirementFile requirementFile = requirementService.viewRequirementFile(requirement);
+		project = requirementService.viewProject(project);
 		
 		model.addAttribute("requirement", requirement);
 		model.addAttribute("requirementFile", requirementFile);
 		model.addAttribute("name", name);
-		
+		model.addAttribute("project", project);
 		return null;
 	}
 	

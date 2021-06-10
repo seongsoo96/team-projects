@@ -189,4 +189,9 @@ public class RequirementServiceImpl implements RequirementService {
 		
 		requirementDao.insertRequirementFile(requirementFile);
 	}
+	@Override
+	public Project viewProject(Project project) {
+		
+		return requirementDao.selectProject(project);
+	}
 }

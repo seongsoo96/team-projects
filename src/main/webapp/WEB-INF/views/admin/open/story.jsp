@@ -146,7 +146,7 @@ function handleImgFileSelect(e){
 <div id="content">
 	<c:import url="/WEB-INF/views/layout/adminProjectSlide.jsp"></c:import>
 	<div class="container">
-		<h1>스토리작성</h1>
+		<h1>스토리</h1>
 
 		<form action="/admin/story/modify" method="post" role="role" enctype="multipart/form-data">
 			<div class="radio background-white form-group alert">
@@ -185,13 +185,10 @@ function handleImgFileSelect(e){
 				<textarea id="sStory" name="sStory" class="form-control" rows="3" disabled>${story.sStory }</textarea>
 			</div>
 			
-			<div class="background-white form-group">
-                    <div class="col-lg-offset-2 col-lg-10">
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
-                    </div>
-            </div>
+			
 		</form>
 	</div>
+	<c:import url="/WEB-INF/views/admin/open/openPaging.jsp"></c:import>
 </div>
 <script type="text/javascript">
 var oEditors = [];

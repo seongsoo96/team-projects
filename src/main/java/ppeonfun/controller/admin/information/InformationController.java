@@ -41,8 +41,10 @@ public class InformationController {
 		}
 		String name = informationService.selectByName(project);
 		Information information = informationService.viewInformation(project);
+		project = informationService.viewProject(project);
 		model.addAttribute("information", information);
 		model.addAttribute("name", name);
+		model.addAttribute("project", project);
 		return null;
 	}
 	

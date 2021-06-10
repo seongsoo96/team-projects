@@ -48,9 +48,12 @@ public class StoryController {
 			logger.info("story url {}",story.getsUrl());
 		}
 		
+		project = storyService.viewProject(project);
 		model.addAttribute("storyFile", fileList);
 		model.addAttribute("story", story);
 		model.addAttribute("name", name);
+		model.addAttribute("project", project);
+		
 		return null;
 	}
 	

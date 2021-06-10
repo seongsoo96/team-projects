@@ -36,5 +36,8 @@ SELECT count(*) FROM information where p_no = #{pNo}
   UPDATE information SET i_title=#{iTitle},i_money=#{iMoney}, i_origin_name=#{iOriginName},i_stored_name=#{iStoredName},i_category=#{iCategory},i_end_date=#{iEndDate},i_state=#{iState},i_size=#{iSize},i_content_type=#{iContentType}  
   WHERE i_no = #{iNo}
   </update>
+  <select id="selectProject" parameterType="Project" resultType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
   
   </mapper>

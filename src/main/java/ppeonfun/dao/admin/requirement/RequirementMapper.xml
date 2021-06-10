@@ -51,5 +51,8 @@ SELECT count(*) FROM requirement where p_no = #{pNo}
   <delete id="deleteRequirementFile" parameterType="Requirement">
   	DELETE FROM requirement_file where r_no = #{rNo}
   </delete>
+   <select id="selectProject" parameterType="Project" resultType="Project">
+   	SELECT * FROM project WHERE p_no = #{pNo}
+   </select> 
     
   </mapper>

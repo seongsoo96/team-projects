@@ -51,6 +51,13 @@ public interface InformationDao {
 	 * @param information - 프로젝트 정보
 	 */
 	public void updateInformation(Information information);
+	
+	/**
+	 * 프로젝트 정보 조회
+	 * @param project - 프로젝트 조회
+	 * @return 프로젝트 정보 조회
+	 */
+	public Project selectProject(Project project);
 
 	
 }
