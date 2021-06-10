@@ -180,7 +180,7 @@
 	SELECT * FROM (
 	    SELECT rownum rnum, RES.* FROM (
 	        SELECT 
-	        	C.com_content, C.com_date
+	        	C.com_no, C.com_content, C.com_date
 	        	, PJ.p_name, PJ.p_progress_state
 	        FROM (
 	        	community C
@@ -191,6 +191,17 @@
 	        ORDER BY C.com_no DESC
 	    ) RES
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
+ 	</select>
+ 	
+ 	<select id="selectCommAnsBycomNo" parameterType="hashmap" resultType="CommunityAnswer">
+    SELECT 
+		C.com_no, C.com_content, C.com_date
+		, CA.ca_content, CA.ca_date
+	FROM (community C
+			INNER JOIN community_answer CA
+				ON C.com_no = CA.com_no
+        )
+    WHERE C.m_no = #{mNo} AND C.com_no = #{comNo}
  	</select>
  </mapper>  
     

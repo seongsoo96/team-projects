@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dao.user.mypage.MypageDao;
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
 import ppeonfun.util.Paging;
@@ -225,6 +226,11 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public List<HashMap<String, Object>> getMyFundCommList(Paging paging, int mNo) {
 		return mypageDao.selectAllMyFundCommList(paging, mNo);
+	}
+
+	@Override
+	public CommunityAnswer getCommentAnswerBycomNo(int mNo, int comNo) {
+		return mypageDao.selectCommAnsBycomNo(mNo, comNo);
 	}
 
 

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
 import ppeonfun.service.user.member.MemberService;
@@ -327,31 +328,24 @@ public class MypageController {
 		
 		logger.info("펀딩 커뮤니티에 작성한 글 목록 {}", fundCommList);
 		model.addAttribute("fundCommList", fundCommList);
+		model.addAttribute("paging", paging);
 	}
 	
-//	@RequestMapping(value="/board", method=RequestMethod.GET)
-//	public void viewMyBoard(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
-//		logger.info("***** /user/mypage/board [GET] START *****");
-//		
-//		int mNo = (int) session.getAttribute("mNo");
-//		Paging paging = mypageService.getBoardPaging(curPage, mNo);
-//		
-//		//회원이 게시판에 작성한 글을 조회한다.
-//		List<HashMap<String, Object>> favoriteList = mypageService.getMyFavoriteList(paging, mNo);
-//		
-//		logger.info("좋아요 목록 {}", favoriteList);
-//		model.addAttribute("favoriteList", favoriteList);
-//	}
+	@RequestMapping(value="/fundcomm/ajax", method=RequestMethod.POST)
+	public String getMyFundCommAnswer(@RequestParam(required=true) int comNo, HttpSession session, Model model) {
+		logger.info("***** /user/mypage/fundcomm/ajax [POST] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		//작성 글에 대한 답변을 조회한다.
+		CommunityAnswer answer = mypageService.getCommentAnswerBycomNo(mNo, comNo);
+		
+		logger.info("펀딩 커뮤니티 답변 내용 {}", answer);
+		model.addAttribute("answer", answer);
+		
+		return "jsonView";
+	}
+
 	
 	//마이페이지 오류--------------------------------------------------------------------
 	@RequestMapping(value = "/error")

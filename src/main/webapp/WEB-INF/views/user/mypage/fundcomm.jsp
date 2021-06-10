@@ -7,17 +7,25 @@
 <style type="text/css">
 /* 테이블 */
 table th, td {text-align:center;}
-/* 남긴 글이 있는 경우 스타일 */
-.divFundMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px;}
-.selectMyFund {text-align-last:center; font-size:17px; width:150px; height:35px; margin:0 45% 15px;}
-.thumbnail a img {width:80%; height:200px; border:1px solid coral;}
-.dday span {display:inline-block; width:100px; margin:10px 0;}
-.pjname {font-weight:600; font-size:16px;}
+
+/* 상단 메뉴 */
+.divCommMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px;}
+
+/* 카테고리 */
+.selectCategory {text-align-last:center; font-size:17px; width:150px; height:35px; margin:0 45% 15px;}
+
+/* 프로젝트 제목 */
+#btnPjName {background:none; border:none;}
+
+/* 질문 내용 & 답변 */
+td[colspan='3'] div {width:70%; margin:0 auto; border-radius:5px;}
+.divComContent {text-align:left; border:2px solid #4EE2EC; }
+.divComAnswer {text-align:right;}
 </style>
 
 <div class="container">
 	<h2>내가 쓴 글</h2>
-	<div class="divFundMenu">
+	<div class="divCommMenu">
 		<span><a href="/user/mypage/fundcomm">펀딩 커뮤니티</a></span>
 		<span><a href="/user/mypage/board">자유 게시판</a></span>
 	</div>
@@ -30,24 +38,27 @@ table th, td {text-align:center;}
 	</c:if>
 	
 	<c:if test="${not empty fundCommList }">
-		<select class="selectMyFund">
+		<select class="selectCategory">
 			<option selected>카테고리 전체</option>
 		</select>
 	
-		<table class="table" style="width:80%;margin:0 auto;">
+		<table class="table table-hover" style="width:80%;margin:0 auto;">
 			<tr>
 				<th style="width:10%">#</th>
 				<th style="width:50%">프로젝트명</th>
 				<th style="width:10%">작성일</th>
 			</tr>
 			<c:forEach var="fcList" items="${fundCommList }">
-			<tr id="trFcData">
+			<tr>
 				<td>${fcList.RNUM }</td>
-				<td>${fcList.P_NAME }</td>
+				<td><button type="button" id="btnPjName" onclick="getContent(${fcList.RNUM }, ${fcList.COM_NO})">${fcList.P_NAME }</button></td>
 				<td><fmt:formatDate value="${fcList.COM_DATE }" pattern="yyyy-MM-dd"/></td>
 			</tr>
-			<tr id="trDetailContent">
-				<td colspan="3">${fcList.COM_CONTENT }</td>
+			<tr>
+				<td id="td${fcList.RNUM }" colspan="3">
+					<div class="divComContent">${fcList.COM_CONTENT }</div>
+					<div class="divComAnswer"></div>
+				</td>
 			</tr>
 			</c:forEach>
 		</table>
@@ -56,11 +67,36 @@ table th, td {text-align:center;}
 </div><!-- div.container -->
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#trDetailContent td").hide()
-	$("#trFcData").click(function() {
-	$("#trFcData + tr > td").show()
-		
-	})
+	
+	//질문 상세 내용 숨기기
+	$("td[colspan='3']").hide()
+	
 })
+
+//프로젝트 제목 클릭 시 질문 상세 내용 show, hide
+function getContent(rnum, comNo) {
+	
+	$("#td" + rnum).toggle()
+	
+	//show 일 때 답변 조회
+	if( $("#td" + rnum).is(':visible')) {
+		$.ajax({
+			type: 'post'
+			, url: '/user/mypage/fundcomm/ajax'
+			, data: { 'comNo': comNo }
+			, dataType: 'json'
+			, success: function(res) {
+				console.log("성공", res)
+				
+				if(res.answer != null) {
+					$( "#td" + rnum + " .divComAnswer").css('border', '2px solid #ccc')
+					$( "#td" + rnum + " .divComAnswer").html(res.answer.caContent)
+				} else {
+				}
+			}
+			, error: function() { console.log("답변 조회 실패") }
+		})		
+	}
+}
 </script>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

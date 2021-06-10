@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
 import ppeonfun.util.Paging;
@@ -179,5 +180,16 @@ public interface MypageDao {
 	 * @return			작성한 글 목록
 	 */
 	public List<HashMap<String, Object>> selectAllMyFundCommList(@Param("paging")Paging paging, @Param("mNo")int mNo);
+
+
+	/**
+	 * community, community_ans 테이블을 조인하여
+	 * 회원이 작성한 글의 답변을 조회한다.
+	 * 
+	 * @param mNo		회원번호
+	 * @param comNo		커뮤니티 질문 번호
+	 * @return			답변 DTO
+	 */
+	public CommunityAnswer selectCommAnsBycomNo(@Param("mNo")int mNo, @Param("comNo")int comNo);
 
 }

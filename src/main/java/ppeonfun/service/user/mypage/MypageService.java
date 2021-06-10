@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.MyPage;
 import ppeonfun.util.Paging;
@@ -171,6 +172,15 @@ public interface MypageService {
 	 * @return			작성한 글 목록 
 	 */
 	public List<HashMap<String, Object>> getMyFundCommList(Paging paging, int mNo);
+
+
+	/**
+	 * 회원이 펀딩 커뮤니티에 작성한 글의 답변을 조회한다.
+	 * @param mNo		회원번호
+	 * @param comNo		커뮤니티 질문 번호
+	 * @return			답변 DTO
+	 */
+	public CommunityAnswer getCommentAnswerBycomNo(int mNo, int comNo);
 
 
 
