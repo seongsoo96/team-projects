@@ -1,8 +1,9 @@
 package ppeonfun.service.user.board;
 
-import java.io.File; 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import ppeonfun.dao.user.board.BoardDao;
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
 import ppeonfun.dto.Comments;
+import ppeonfun.dto.Commentss;
 import ppeonfun.dto.Recommend;
 import ppeonfun.service.user.main.MainServiceImpl;
 import ppeonfun.util.Paging;
@@ -234,7 +236,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Comments> getCommentList(Board board) {
+	public List<HashMap<String, Object>> getCommentList(Board board) {
 		
 		logger.info("board객체에 내용 확인 : {}",board);
 		return boardDao.selectBycomment(board);
@@ -257,11 +259,74 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
-
 	@Override
-	public List<HashMap<String, Object>> getCommentlist(Comments comments) {
+	public 	List<HashMap<String, Object>> getCommentlist(Comments comments) {
 		return boardDao.selectcmtlist(comments);
 	}
+
+	
+
+	@Override
+	public void updateComment(Comments comments) {
+		boardDao.commentUpdate(comments);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getupdatecommentlist(Comments comments) {
+		return boardDao.selectupdatecommentlist(comments);
+	}
+
+//	@Override
+//	public List<HashMap<String, Object>> getCommentssList(Board board) {
+//		return boardDao.selectCommentsslist(board);
+//	}
+
+	@Override
+	public List<Integer> getCommentssList(Board board) {
+		return boardDao.selectCommentsslist(board);
+	}
+	@Override
+	public List<HashMap<String, Object>> getcommentNolist(List<Integer> commentsslistbno) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("list", commentsslistbno);
+		
+		logger.info("@#@#@#@#@#@#@# {}",commentsslistbno);
+		
+//		for(int i=0; i<commentsslistbno.size(); i++) {
+//			
+//			HashMap<String, Object> element= (HashMap<String, Object>) iter.next();
+//			logger.info("element조회 : {}",element);
+//		}
+		
+		return boardDao.selectCommentCno(commentsslistbno);
+	}
+
+	@Override
+	public void insertCommentsS(Commentss commentss) {
+		boardDao.commentssinsert(commentss);
+		
+	}
+
+	@Override
+	public boolean deleteCommentss(Commentss commentss) {
+		
+		boardDao.commentssDelete(commentss);
+		
+		if(boardDao.countCommnetss(commentss)>0) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+
+	@Override
+	public void updateCommentss(Commentss commentss) {
+		boardDao.commentssUpdate(commentss);
+	} 
+
+
+
 
 
 

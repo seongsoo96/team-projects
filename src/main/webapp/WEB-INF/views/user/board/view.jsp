@@ -50,7 +50,6 @@ $(document).ready(function(){
  	    	 console.log("실패")
  	     }
  	 }) <!--end $.ajax -->
-	   
   })<!--$("#btnrecommend").click(function() -->
     
 	  
@@ -83,7 +82,8 @@ $(document).ready(function(){
 	  $("#fold").click(function(){
 		  listComment();
 		  $("#show").toggle()
-	  })	
+	  })
+	  
 
 })<!--$(document).ready(function() -->
 
@@ -94,11 +94,12 @@ function listComment() {
 		 type : "get"
 		,url : "/user/board/comments/list"
 		,data : {
-			"bNo" : ${detail.B_NO}
+			bNo : ${detail.B_NO}
 		}
 		,dataType: "html"
 		,success:function(res){
 			console.log("성공")
+			console.log("성공@@@@@@@@@@@@@@@@@", res)
 			$("#show").html(res)
 		}
 		,error:function(error,request,status){
@@ -112,8 +113,9 @@ function listComment() {
 //댓글 삭제
 function deletecomment(cNo){
 	 
-	$("#comdelete").parent().parent().remove();
 	
+// 	console.log("#####",cNo);
+	$("#comdelete").parent().parent().remove();
 	 $.ajax({ 
 		 type : "get"
 		,url : "/user/board/comments/delete"
@@ -123,54 +125,34 @@ function deletecomment(cNo){
 		,dataType: "json"
 		,success:function(){
 			console.log("성공")
+			listComment();
 		}
-		,error:function(error,request,status){
+		,error:function(){
 			console.log("실패")
-			console.log(error)
-			console.log(request.status)
 		} 
 	 })<!--end  $.ajax-->
 }<!--end function deletecomment(cNo)-->
 //댓글 수정전 textarea를 포함한 원본내용 보여주기
- function updatecomment(c_no,m_nick){
+ function updatecomment(c_no){
+	
 	$.ajax({
-		type: "get"
+		type: "post"
        ,url:"/user/board/comments/update"		
 	   ,data : {
 		    cNo : c_no
+
+		    ,bNo : ${detail.B_NO}
+			,cContent:$("[data-commentNo='"+c_no+"'] .comment-txt textarea").val()
 		    ,mNick : m_nick
-		    
 	   }	
 	   ,dataType: "html"	
-	   ,success:function(){
-		   console.log("실패")
+	   ,success:function(res){
+		   listComment();
 	   }
 	   ,error:function(){
 		   console.log("실패")
 	   }
 	})
-}
-//댓글 수정
-function updatecomment(c_no,m_nick){
-	$.ajax({
-		type: "post"
-	  ,url : "/user/board/comments/update"
-	  ,data : {
-		   cNo : c_no
-		  ,bNo : b_no
-          ,
-	  }	
-	  ,dataType: "json"
-	  ,success:function(){
-		  console.log("성공")
-	  }
-	  ,error:function(){
-		  console.log("실패")
-	  }
-	})
-	
-	
-	
 }
   
 </script>
@@ -182,6 +164,17 @@ function updatecomment(c_no,m_nick){
 .imgfile{
 width:300px;
 hegiht:300px;
+}
+#hidden{
+  visibility : hidden;
+}
+#register{
+  background: #4978f4;
+  border-radius: 3px;
+  border:none;
+  color:#fff;
+  letter-spacing: -.5px;
+  line-height: 30px;
 }
 
 </style>
@@ -219,34 +212,16 @@ hegiht:300px;
 <table id="registerComment">
 <tr>
  <td width="150">${detail.M_NICK }</td>
- <td width="550"><textarea id="content" name="content" rows="4" cols="70" ></textarea></td>
+ <td width="550"><textarea id="content" name="content" rows="4" cols="70" placeholder="내용을 작성하세요"></textarea></td>
  <td><button id="register">등록하기</button></td>
 </tr>
 </table><br><br>
 
-<button class="btn btn-primary" id="fold" name="recommend">댓글 펼치기</button> <br><br>
+<button class="btn btn-primary" id="fold" >댓글 펼치기</button> <br><br>
 
-<table id="show">
- <c:forEach items="${commentList}" var="c">
-  <tr>
-    <td width="150"><div name="commentNo">${c.cNo }</div></td><br>
-    <td width="150">
-     <div>${detail.M_NICK }<br>
-      <font size="2" color="lightgray"><fmt:formatDate value="${c.cCreateDate }" pattern="yy-MM-dd HH:mm:ss" /></font>
-     </div>
-    </td>
-    <td width="550"><div id="content" name="content">${c.cContent }</div></td>
-    <td>
-      <c:if test="${sessionScope.mNo eq c.mNo }">
-        <button id="comdelete"  onclick="deletecomment(${c.cNo})" >삭제</button><br>
-        <button id="comdeupdate" onclick="updatecomment(${c.cNo},${detail.M_NICK })" >수정</button> 
-      </c:if>
-    </td>
-  </tr>
+<div id="show">
 
- </c:forEach>
-
-</table>
+</div>
 
 
 </div><!-- end class="container"  -->
