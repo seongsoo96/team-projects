@@ -311,6 +311,7 @@ public class MypageController {
 		
 		logger.info("좋아요 목록 {}", favoriteList);
 		model.addAttribute("favoriteList", favoriteList);
+		model.addAttribute("paging", paging);
 	}
 	
 	

@@ -9,8 +9,11 @@
 svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 h4 a:hover{text-decoration:none;}
 
-/* 프로젝트 있는 경우 스타일 */
+/* 상단 메뉴 */
 .divFundMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px;}
+.fa-house-user {font-size:30px; position:relative; left:550px;}
+
+/* 프로젝트 있는 경우 스타일 */
 .selectMyFund {text-align-last:center; font-size:17px; width:150px; height:35px; margin:0 45% 15px;}
 .thumbnail a img {width:80%; height:200px; border:1px solid coral;}
 .dday span {display:inline-block; width:100px; margin:10px 0;}
@@ -22,6 +25,7 @@ h4 a:hover{text-decoration:none;}
 	<div class="divFundMenu">
 		<span><a href="/user/mypage/myfunding">나의 펀딩</a></span>
 		<span><a href="/user/mypage/fundingchart">펀딩 내역</a></span>
+		<span><a href="/user/mypage/home"><i class="fas fa-house-user"></i></a></span>
 	</div>
 	<hr>
 	

@@ -5,6 +5,9 @@
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 
 <style type="text/css">
+/* 상단 메뉴 - 홈 아이콘 */
+.fa-house-user {font-size:30px; position:relative; left:750px;}
+
 /* 좋아한 프로젝트 없는 경우 스타일*/
 svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 h4 a:hover{text-decoration:none;}
@@ -18,7 +21,8 @@ h4 a:hover{text-decoration:none;}
 </style>
 
 <div class="container">
-	<h2>좋아요</h2>
+	<h2 style="display:inline-block">좋아요</h2>
+	<span><a href="/user/mypage/home"><i class="fas fa-house-user"></i></a></span>
 	<hr>
 	
 	<c:if test="${empty favoriteList }">

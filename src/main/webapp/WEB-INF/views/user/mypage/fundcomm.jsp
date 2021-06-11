@@ -10,6 +10,7 @@ table th, td {text-align:center;}
 
 /* 상단 메뉴 */
 .divCommMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px;}
+.fa-house-user {font-size:30px; position:relative; left:550px;}
 
 /* 카테고리 */
 .selectCategory {text-align-last:center; font-size:17px; width:150px; height:35px; margin:0 45% 15px;}
@@ -27,7 +28,8 @@ td[colspan='3'] div {width:70%; margin:0 auto; border-radius:5px;}
 	<h2>내가 쓴 글</h2>
 	<div class="divCommMenu">
 		<span><a href="/user/mypage/fundcomm">펀딩 커뮤니티</a></span>
-		<span><a href="/user/mypage/board">자유 게시판</a></span>
+		<span><a href="/user/mypage/board">게시판</a></span>
+		<span><a href="/user/mypage/home"><i class="fas fa-house-user"></i></a></span>
 	</div>
 	<hr>
 	
