@@ -49,7 +49,7 @@ $(document).ready(function(){
 	    </ul>
 	    <div>List</div>
 	    <ul>
-	      <li><a href="#">사용자 관리</a></li>
+	      <li><a href="/admin/user/list">사용자 관리</a></li>
 	      <li><a href="/admin/notice/list">공지사항 관리</a></li>
 	      <li><a href="/admin/board/list">게시판 관리</a></li>
 	      <li><a href="/admin/project/list">프로젝트 관리</a></li>
@@ -57,7 +57,7 @@ $(document).ready(function(){
 	    </ul>
 	</nav>
 	<div style="width:200px;">
-	<a href = "/admin/main"><img src="/resources/img/test1.png" width="100" height="40" alt="PpeonFun"  title="PpeonFun"> </a>
+	<a href = "/admin/main"><img src="/resources/img/logo.png" style="border-radius: 50%;" width="50" height="50" alt="PpeonFun"  title="PpeonFun"> </a>
 	</div>
 	<!--메인 검색창  -->
 	<div>

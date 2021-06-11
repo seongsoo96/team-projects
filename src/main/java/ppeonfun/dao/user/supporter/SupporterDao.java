@@ -2,10 +2,15 @@ package ppeonfun.dao.user.supporter;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
+import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
+@Repository("user.SupporterDao")
 public interface SupporterDao {
 
 	/**
@@ -47,5 +52,13 @@ public interface SupporterDao {
 	 * @return
 	 */
 	public Information selectInfo(Information info);
+
+	public int selectCntNews(News news);
+
+	public int selectCntFavorite(Favorite favorite);
+
+	public void deleteFavorite(Favorite favorite);
+
+	public void insertFavorite(Favorite favorite);
 
 }

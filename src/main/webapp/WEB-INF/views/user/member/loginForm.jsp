@@ -29,7 +29,7 @@
  <script type="text/javascript">
 $(document).ready(function() {
 	//페이지 첫 접속 시 입력창으로 포커스 이동
-	$("input").eq(0).focus();
+	$("input").eq(1).focus();
 	
 	//패스워드 입력 창에서 엔터 입력 시 form submit
 	$("input").eq(1).keydown(function(key) {

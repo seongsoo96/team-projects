@@ -140,8 +140,10 @@ function deletecomment(cNo){
        ,url:"/user/board/comments/update"		
 	   ,data : {
 		    cNo : c_no
+
 		    ,bNo : ${detail.B_NO}
 			,cContent:$("[data-commentNo='"+c_no+"'] .comment-txt textarea").val()
+		    ,mNick : m_nick
 	   }	
 	   ,dataType: "html"	
 	   ,success:function(res){
