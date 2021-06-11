@@ -221,6 +221,12 @@
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
 	ORDER BY rnum DESC 	
  	</select>
+ 	
+ 	<select id="selectCntChatBymNo" parameterType="int" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM chat_participant
+ 	WHERE m_no = #{mNo}
+ 	</select>
  </mapper>  
     
   

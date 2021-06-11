@@ -210,4 +210,12 @@ public interface MypageDao {
 	 */
 	public List<HashMap<String, Object>> selectAllBoardBymNo(@Param("paging")Paging paging, @Param("mNo")int mNo);
 
+
+	/**
+	 * 회원이 참여중인 채팅방의 수를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		채팅방 수
+	 */
+	public int selectCntChatBymNo(int mNo);
+
 }

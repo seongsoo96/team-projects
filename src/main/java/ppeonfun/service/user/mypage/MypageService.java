@@ -201,6 +201,15 @@ public interface MypageService {
 	 */
 	public List<HashMap<String, Object>> getMyBoardList(Paging paging, int mNo);
 
+	
+	/**
+	 * 메시지 목록의 페이징 객체를 생성한다.
+	 * @param curPage	현재 페이지
+	 * @param mNo		회원번호
+	 * @return			페이징 정보 객체
+	 */
+	public Paging getMessagePaging(int curPage, int mNo);
+
 
 
 

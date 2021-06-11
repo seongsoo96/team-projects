@@ -187,7 +187,11 @@ public class MypageServiceImpl implements MypageService {
 		
 		int totalCount = mypageDao.selectCntPayment(mNo);
 		
-		return new Paging(totalCount, curPage, 6);
+		if( totalCount > 0 ) {
+			return new Paging(totalCount, curPage, 6);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -209,7 +213,11 @@ public class MypageServiceImpl implements MypageService {
 	public Paging getFavoritePaging(int curPage, int mNo) {
 		int totalCount = mypageDao.selectCntFavorite(mNo);
 		
-		return new Paging(totalCount, curPage, 6);
+		if(totalCount > 0) {
+			return new Paging(totalCount, curPage, 6);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -221,7 +229,11 @@ public class MypageServiceImpl implements MypageService {
 	public Paging getFundCommPaging(int curPage, int mNo) {
 		int totalCount = mypageDao.selectCntFundComm(mNo);
 		
-		return new Paging(totalCount, curPage, 5);
+		if(totalCount > 0 ) {
+			return new Paging(totalCount, curPage, 5);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -238,12 +250,27 @@ public class MypageServiceImpl implements MypageService {
 	public Paging getMyBoardPaging(int curPage, int mNo) {
 		int totalCount = mypageDao.selectCntMyBoard(mNo);
 		
-		return new Paging(totalCount, curPage);
+		if(totalCount > 0) {
+			return new Paging(totalCount, curPage);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public List<HashMap<String, Object>> getMyBoardList(Paging paging, int mNo) {
 		return mypageDao.selectAllBoardBymNo(paging, mNo);
+	}
+
+	@Override
+	public Paging getMessagePaging(int curPage, int mNo) {
+		int totalCount = mypageDao.selectCntChatBymNo(mNo);
+		
+		if(totalCount > 0 ) {
+			return new Paging(totalCount, curPage, 5);
+		} else {
+			return null;
+		}
 	}
 
 
