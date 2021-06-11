@@ -34,28 +34,40 @@ public class BoardController {
 			@RequestParam(value="curPage", defaultValue="0") int cPage
 			, @RequestParam(value="category", defaultValue="") String category
 			, @RequestParam(value="search", defaultValue="") String search
+			, @RequestParam(value="orderby", defaultValue="1") int orderby
 			, Model model) {
 //		logger.info("/admin/notice/list [GET] 요청 완료");
-		logger.info("얻어온 category : {}", category);
-		logger.info("얻어온 search : {}", search);
 		
 		//카테고리, 검색어 기반 페이징 적용 (없을 시 defaulValue로 전체 글 페이징 적용)
 		Paging paging = boardService.getPaging(cPage, category, search);
-		
-		logger.info("검색 후 paging값 확인 : {}", paging);
-		
-		//model값으로 paging객체 설정
 		model.addAttribute("paging", paging);
 		
-		//공지사항 리스트 얻어오기
-		List<HashMap<String, Object>> nlist = boardService.getList(paging, category, search);
-		
-//		for(HashMap<String, Object> i : nlist) {
-//			logger.info("리스트 값 확인 : {}", i);
-//		}
-		
-		//model값으로 공지사항 리스트 설정
-		model.addAttribute("nlist", nlist);
+		//추천수 정렬 기준에 따른 리스트 얻어오기 ( 기본적으로 검색기능 적용 )
+		// 처음으로 게시판 접속 시 orderby = 1 ( 정렬 미적용 )
+		// 정렬 기능 누를 시 내림차순 정렬 orderby = 2 ( 추천수 내림차순 정렬 적용 )
+		// 재차 누를 시 오름차순 정렬 ordrby = 3 ( 추천수 오름차순 정렬 적용 )
+		if(orderby == 2) {
+			List<HashMap<String, Object>> blist = boardService.getArrayList(paging, category, search, orderby);
+			model.addAttribute("blist", blist);
+			orderby = 3;
+			model.addAttribute("orderby", orderby);
+			
+		} else if(orderby == 3){
+			List<HashMap<String, Object>> blist = boardService.getArrayList(paging, category, search, orderby);
+			model.addAttribute("blist", blist);
+			orderby = 1;
+			model.addAttribute("orderby", orderby);
+			
+		} else {
+			//공지사항 리스트 얻어오기
+			List<HashMap<String, Object>> blist = boardService.getList(paging, category, search);
+			logger.info("얻어온 blist 데이터 : {}", blist);
+			//model값으로 공지사항 리스트 설정
+			model.addAttribute("blist", blist);
+			orderby = 2;
+			model.addAttribute("orderby", orderby);
+			
+		}
 		
 		//viewName 설정
 		return "admin/board/boardList";
@@ -92,24 +104,17 @@ public class BoardController {
 	@RequestMapping(value="/view")
 	public String view(int bNo, Model model) {
 //		logger.info("/admin/notice/view [GET] 요청 완료");
-		logger.info("얻어온 게시글 번호 확인 : {}", bNo);
 		
-		//해당하는 게시글 번호의 모든 정보 가져오기
-		HashMap<String, Object> viewBoard = boardService.getView(bNo);
+		HashMap<String, Object> viewBoard = boardService.getView(bNo);	//해당하는 게시글 번호의 모든 정보 가져오기
 		
-		//얻어온 게시글 정보 확인하기
-		logger.info("얻어온 게시글 정보 확인하기 : {}", viewBoard);
+		model.addAttribute("viewBoard", viewBoard);						//model값으로 게시글 정보 설정
 		
-		//model값으로 게시글 정보 설정
-		model.addAttribute("viewBoard", viewBoard);
+		List<BoardFile> fileList = boardService.getFiles(bNo);				//첨부파일 리스트 얻어오기
 		
-		//첨부파일 리스트 얻어오기
-		List<BoardFile> flist = boardService.getFiles(bNo);
+		model.addAttribute("flist", fileList);								//model값으로 첨부파일 정보 설정
 		
-		logger.info("얻어온 첨부파일 정보 확인하기 : {}", flist);
+		List<Integer> RecommendList = boardService.getRecommend(bNo);//해당 게시글의 추천수 얻어오기
 		
-		//model값으로 첨부파일 정보 설정
-		model.addAttribute("flist", flist);
 		
 		//viewName 지정
 		return "admin/board/boardView";
@@ -121,10 +126,10 @@ public class BoardController {
 			, Model model ) {
 		
 		//특정 파일번호로 해당 파일의 전체 정보를 얻어온다
-		BoardFile bf = boardService.getFile(bfFileno);
+		BoardFile downFile = boardService.getFile(bfFileno);
 		
 		//model값으로 download할 파일정보 설정
-		model.addAttribute("bf", bf);
+		model.addAttribute("downFile", downFile);
 		
 		return "down";
 	}

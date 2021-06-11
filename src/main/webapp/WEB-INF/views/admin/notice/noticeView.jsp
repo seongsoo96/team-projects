@@ -50,37 +50,25 @@ $(document).ready(function(){
 	
 })
 
-function arrayDesc(b_no){
-	/* $.ajax({
-		type: "GET"
-			, url: "/admin/notice/comment/arrayDesc"
-			, data: {
-				bNo: b_no
-			}
-			, dataType: ""
-			, success: function(res){
-			}
-			, error: function(res){
-				
-			}
-	}) */
-}
-
-function arrayAsc(b_no){
+/* 댓글 새로고침 기능 시작 */
+function refreshList(b_no, array){
 	$.ajax({
 		type: "GET"
-			, url: "/admin/notice/comment/arrayAsc"
-			, data: {
-				bNo: b_no
-			}
-			, dataType: ""
-			, success: function(res){
-			}
-			, error: function(res){
-				
-			}
+		, url: "/admin/notice/comments/refresh"
+		, data: {
+			bNo: b_no
+			, standard: array
+		}
+		, dataType: "html"
+		, success: function(res){
+			$("#CommentBox").html(res)
+		}
+		, error: function(res){
+			
+		}
 	})
 }
+/* 댓글 새로고침 기능 끝 */
 
 /* 댓글 수정, 삭제, 신고 버튼 팝업기능 시작 */
 function layer_data(c_no){
@@ -239,6 +227,8 @@ function Cmtdelete(c_no, b_no){
 /* 댓글에서 "답글쓰기" 버튼 누르면 나오는 대댓글 폼 삽입 시작 */
 function CmtssInsertFormAfterCmts(c_no){
 	var cmtcmt = document.getElementById("comment"+c_no);
+	$("#additoryDiv").remove();
+	$("#CmtCmtText").remove();
 	
 	var div = document.createElement('div');
 	div.setAttribute("id", "CmtCmtText");
@@ -266,12 +256,10 @@ function CmtssInsertFormAfterCmts(c_no){
 	cancelBtn.setAttribute("value", "취소");
 	
 	
-	if( !document.getElementById('comment_comment_make'+c_no) ){
 		cmtcmt.append(div);
 		div.append(textarea);
 		div.append(insertBtn);
 		div.append(cancelBtn);
-	}
 }
 /* 댓글에서 "답글쓰기" 버튼 누르면 나오는 대댓글 폼 삽입 끝 */
 
@@ -302,18 +290,7 @@ function CmtssInsertAfterCmts(c_no){
 
 /* 댓글 하단 "답글 쓰기" 클릭 후 취소 시작 */
 function CmtssCancelAfterCmts(c_no){
-	$.ajax({
-		type: "GET"
-		, url: "/admin/notice/commentss/update"
-		, data: {}
-		, dataType: "html"
-		, success: function(res){
-			
-		}
-		, error: function(res){
-			
-		}
-	})
+	$("#CmtCmtText").remove();
 }
 /* 댓글 하단 "답글 쓰기" 클릭 후 취소 끝 */
 
@@ -329,9 +306,9 @@ function CmtssInsertFormAfterCmtss(cs_no, c_no, m_nick){
 		}
 		, dataType: "html"
 		, success: function(res){
-			if( !document.getElementById("comment_comment_insertContent") ){
-				$("#comment_comment"+cs_no).append(res);
-			}
+			$("#CmtCmtText").remove();
+			$("#additoryDiv").remove();
+			$("#comment_comment"+cs_no).append(res);
 		}
 		, error: function(res){
 			
@@ -485,7 +462,6 @@ function CmtCmtdelete(cs_no, b_no){
 
 <div class="anbody">
 
-
 	<div style="text-align: left;"><label class="viewTitle">${viewBoard.B_TITLE }</label></div>
 	<div style="text-align: left;"><label>${viewBoard.M_NICK }</label></div>
 	<div class="CdAndHit" style="text-align: left;"><label>
@@ -510,11 +486,12 @@ function CmtCmtdelete(cs_no, b_no){
 	</div>
 	<br>
 	
-	<div class="CommentBox" style="text-align: left;">
+	<div id="CommentBox" class="CommentBox" style="text-align: left;">
 		<div class="comment_tab">
 			<label style="font-size: 17pt; font-weight: 500;">댓글</label>&nbsp;&nbsp;
-			<label class="arrayDesc" style="font-weight: 400; cursor: pointer;" onclick="arrayDesc(${viewBoard.B_NO})">등록순</label>&nbsp;
-			<label class="arrayAsc" style="font-weight: 400; cursor: pointer;" onclick="arrayAsc(${viewBoard.B_NO})">최신순</label>
+			<label class="arrayDesc" style="font-weight: 500; cursor: pointer; color: black;" onclick="refreshList(${viewBoard.B_NO}, 'ASC')">등록순</label>&nbsp;
+			<label class="arrayAsc" style="font-weight: 400; cursor: pointer; color: silver;" onclick="refreshList(${viewBoard.B_NO}, 'DESC')">최신순</label>&nbsp;
+			<label><img src="/resources/img/refresh.png" style="width: 20px; height: 20px; margin-bottom: 5px; cursor: pointer;" onclick="refreshList(${viewBoard.B_NO}, '${standard}')"></label>
 		</div>
 		<div id="comment_list" class="comment_list">
 			<%-- 댓글 시작 --%>

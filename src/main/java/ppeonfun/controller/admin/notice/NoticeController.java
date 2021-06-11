@@ -20,7 +20,6 @@ import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
 import ppeonfun.dto.Comments;
 import ppeonfun.dto.Commentss;
-import ppeonfun.dto.Member;
 import ppeonfun.dto.Recommend;
 import ppeonfun.service.admin.notice.NoticeService;
 import ppeonfun.util.Paging;
@@ -34,8 +33,6 @@ public class NoticeController {
 	@Autowired
 	NoticeService noticeService;
 	
-	
-	
 	@RequestMapping(value="/list")
 	public String list(
 			@RequestParam(value="curPage", defaultValue="0") int cPage
@@ -43,9 +40,9 @@ public class NoticeController {
 			, @RequestParam(value="search", defaultValue="") String search
 			, @RequestParam(value="orderby", defaultValue="1") int orderby
 			, Model model) {
-//		logger.info("/admin/notice/list [GET] 요청 완료");
-//		logger.info("얻어온 category : {}", category);
-//		logger.info("얻어온 search : {}", search);
+		logger.info("/admin/notice/list [GET] 요청 완료");
+		logger.info("얻어온 category : {}", category);
+		logger.info("얻어온 search : {}", search);
 		
 		//카테고리, 검색어 기반 페이징 적용 (없을 시 defaulValue로 전체 글 페이징 적용)
 		Paging paging = noticeService.getPaging(cPage, category, search);
@@ -87,7 +84,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/write", method=RequestMethod.GET)
 	public String writeForm() {
-//		logger.info("/admin/notice/write [GET] 요청 완료");
+		logger.info("/admin/notice/write [GET] 요청 완료");
 		
 		//viewName writeForm.jsp 지정
 		return "admin/notice/noticeWrite";
@@ -97,7 +94,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
 	public String write( Board board, MultipartHttpServletRequest mtfRequest, HttpSession session, Model model) {
-//		logger.info("/admin/notice/write [POST] 요청 완료");
+		logger.info("/admin/notice/write [POST] 요청 완료");
 		
 		//얻어온 다중 파일 리스트에 담기 - 완료
 		List<MultipartFile> fileList = mtfRequest.getFiles("file");
@@ -105,8 +102,8 @@ public class NoticeController {
 		int mNo = (Integer)session.getAttribute("mNo");
 		board.setmNo(mNo);
 		
-//		logger.info("얻어온 board값 확인 : {}", board);
-//		logger.info("얻어온 다중 파일 정보 확인 : {}", fileList);
+		logger.info("얻어온 board값 확인 : {}", board);
+		logger.info("얻어온 다중 파일 정보 확인 : {}", fileList);
 		
 		//글 쓰기 수행
 		noticeService.write(board, fileList);
@@ -118,14 +115,14 @@ public class NoticeController {
 	
 	@RequestMapping(value="/view")
 	public String view(int bNo, HttpSession session, Model model) {
-//		logger.info("/admin/notice/view [GET] 요청 완료");
-//		logger.info("얻어온 게시글 번호 확인 : {}", bNo);
+		logger.info("/admin/notice/view [GET] 요청 완료");
+		logger.info("얻어온 게시글 번호 확인 : {}", bNo);
 		
 		//해당하는 게시글 번호의 모든 정보 가져오기
 		HashMap<String, Object> viewBoard = noticeService.getView(bNo);
 		
 		//얻어온 게시글 정보 확인하기
-//		logger.info("얻어온 게시글 정보 확인하기 : {}", viewBoard);
+		logger.info("얻어온 게시글 정보 확인하기 : {}", viewBoard);
 		
 		//model값으로 게시글 정보 설정
 		model.addAttribute("viewBoard", viewBoard);
@@ -133,7 +130,7 @@ public class NoticeController {
 		//첨부파일 리스트 얻어오기
 		List<BoardFile> flist = noticeService.getFiles(bNo);
 		
-//		logger.info("얻어온 첨부파일 정보 확인하기 : {}", flist);
+		logger.info("얻어온 첨부파일 정보 확인하기 : {}", flist);
 		
 		//model값으로 첨부파일 정보 설정
 		model.addAttribute("flist", flist);
@@ -157,7 +154,7 @@ public class NoticeController {
 		//해당 글의 댓글 리스트 불러오기
 		List<HashMap<String, Object>> clist = noticeService.getCommentsList(bNo);
 		
-//		logger.info("clist 데이터 확인 : {}", clist);
+		logger.info("clist 데이터 확인 : {}", clist);
 		
 		//model값으로 댓글 정의
 		model.addAttribute("clist", clist);
@@ -165,13 +162,35 @@ public class NoticeController {
 		// 해당 글이 가지고있는 댓글들의 댓글 번호 리스트를 얻어서 해당하는 대댓글을 얻어오기
 		List<HashMap<String, Object>> cclist = noticeService.getCommentssList(bNo);
 		
-//		logger.info("얻어온 대댓글 리스트 : {}", cclist);
+		logger.info("얻어온 대댓글 리스트 : {}", cclist);
 		
 		//model값으로 대댓글 정의
 		model.addAttribute("cclist", cclist);
 		
 		//viewName 지정
 		return "admin/notice/noticeView";
+	}
+	
+	
+	
+	@RequestMapping(value="/comments/refresh", method=RequestMethod.GET)
+	public String refreshComments(
+			int bNo, 
+			@RequestParam(value="standard", defaultValue="ASC") String standard, 
+			Model model) {
+		//댓글과 대댓글 리스트를 얻어온 뒤 model값으로 설정
+		List<HashMap<String, Object>> clist = noticeService.getCommentsListForArray(bNo, standard);
+		model.addAttribute("clist", clist);
+		
+		List<HashMap<String, Object>> cclist = noticeService.getCommentssList(bNo);
+		model.addAttribute("cclist", cclist);
+		
+		model.addAttribute("bNo", bNo);
+		model.addAttribute("standard", standard);
+		logger.info("모델값으로 설정한 bNo의 값 : {}", bNo);
+		logger.info("모델값으로 설정한 standard의 값 : {}", standard);
+		
+		return "admin/notice/noticeCmtRefresh";
 	}
 	
 	
@@ -185,7 +204,7 @@ public class NoticeController {
 		BoardFile bf = noticeService.getFile(bfFileno);
 		
 		//model값으로 download할 파일정보 설정
-		model.addAttribute("bf", bf);
+		model.addAttribute("downFile", bf);
 		
 		return "down";
 	}
@@ -200,14 +219,14 @@ public class NoticeController {
 		//recommend 테이블에 값 넣기
 		boolean checkRec = noticeService.checkRecommend(rec);
 		
-//		logger.info("얻어온 checkRec의 값 : {}", checkRec);
+		logger.info("얻어온 checkRec의 값 : {}", checkRec);
 		
 		model.addAttribute("chkrec", checkRec);
 		
 		//해당 게시글의 총 추천수를 얻어와야 한다
 		int totalRec = noticeService.getRecommend(rec);
 		
-//		logger.info("해당 게시글의 총 조회수 : {}", totalRec);
+		logger.info("해당 게시글의 총 조회수 : {}", totalRec);
 		
 		model.addAttribute("rec", totalRec);
 		
@@ -218,7 +237,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/comment/insert")
 	public String CmtInsert(Comments cmts, Model model) {
-//		logger.info("받아온 cmt객체 정보 확인 : {}", cmt);
+		logger.info("받아온 cmt객체 정보 확인 : {}", cmts);
 		
 		//새로 입력한 댓글 DB에 삽입
 		noticeService.writeCmt(cmts);
@@ -262,7 +281,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/comment/updateCancel", method=RequestMethod.GET)
 	public String CmtUpdateCancel(Comments cmts, Model model) {
-//		logger.info("댓글 수정 취소 시 얻어온 데이터 : {}", cmts);
+		logger.info("댓글 수정 취소 시 얻어온 데이터 : {}", cmts);
 		
 		//댓글 번호로 전체 댓글 데이터 가져오기
 		HashMap<String, Object> cmt = noticeService.getComments(cmts);
@@ -313,7 +332,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/comments/insert")
 	public String CmtCmtInsert(Commentss cmtss, int bNo, Model model) {
-//		logger.info("답글 쓰기 후 등록 시 얻어오는 데이터 : {}", cmts);
+		logger.info("답글 쓰기 후 등록 시 얻어오는 데이터 : {}", cmtss);
 		
 		//얻어온 신규 대댓글 데이터 DB 삽입
 		noticeService.writeCmtCmt(cmtss);
@@ -332,7 +351,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/commentss/insert", method=RequestMethod.GET)
 	public String CmtssInsertFormAfterCmtss(Commentss cmtss, String mNick, Model model) {
-//		logger.info("얻어온 cmtss 데이터 : {}", cmtss);
+		logger.info("얻어온 cmtss 데이터 : {}", cmtss);
 		Commentss result = noticeService.getOneCommentss(cmtss);
 
 		model.addAttribute("cmtss", result);
@@ -373,8 +392,8 @@ public class NoticeController {
 	
 	@RequestMapping(value="/commentss/update", method=RequestMethod.GET)
 	public String CmtCmtUpdateForm(Commentss cmtss, String mNick, Model model) {
-//		logger.info("commentss update용으로 얻어온 기존 대댓글 데이터 : {}", cmtss);
-//		logger.info("수정하려는 대댓글의 회원 닉네임 : {}", mNick);
+		logger.info("commentss update용으로 얻어온 기존 대댓글 데이터 : {}", cmtss);
+		logger.info("수정하려는 대댓글의 회원 닉네임 : {}", mNick);
 		model.addAttribute("cmtss", cmtss);
 		model.addAttribute("mNick", mNick);
 		
@@ -384,7 +403,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/commentss/update", method=RequestMethod.POST)
 	public String CmtssUpdateAfterCmts(Commentss cmtss, String mNick, int bNo, Model model) {
-//		logger.info("대댓글 수정 폼에서 입력한 값 확인 : {}", cmtss);
+		logger.info("대댓글 수정 폼에서 입력한 값 확인 : {}", cmtss);
 		
 		//변경한 내용으로 대댓글 데이터 Update 수행
 		noticeService.updateCmtCmt(cmtss);
@@ -399,7 +418,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/commentss/updatecancel", method=RequestMethod.GET)
 	public String CmtssUpdateCancelAfterCmts(Commentss cmtss, String mNick, int bNo, Model model) {
-//		logger.info("얻어온 cmtss 데이터 확인 : {}", cmtss);
+		logger.info("얻어온 cmtss 데이터 확인 : {}", cmtss);
 		
 		//해당 댓글 다시 가져오기
 		Commentss result = noticeService.getOneCommentss(cmtss);
@@ -413,8 +432,8 @@ public class NoticeController {
 	
 	@RequestMapping(value="/commentss/delete")
 	public String CmtCmtDelete(int csNo, int bNo, Model model) {
-//		logger.info("얻어온 csNo 값 확인 : {}", csNo);
-//		logger.info("얻어온 bNo 값 확인 : {}", bNo);
+		logger.info("얻어온 csNo 값 확인 : {}", csNo);
+		logger.info("얻어온 bNo 값 확인 : {}", bNo);
 		
 		//해당 대댓글 삭제
 		noticeService.deleteCmtCmt(csNo);
@@ -433,14 +452,12 @@ public class NoticeController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String updateForm( int bNo, Model model ) {
-		//가져온 값 확인 - 완료
-//		logger.info("얻어온 bNo값 확인 : {}", bNo);
+		logger.info("얻어온 bNo값 확인 : {}", bNo);
 		
 		//얻어온 값으로 전체 공지사항 정보 얻어오기
 		Board board = noticeService.getViewForUpdate(bNo);
 		
-		//얻어온 board 객체 정보 확인
-//		logger.info("얻어온 board 전체 정보 확인 : {}", board);
+		logger.info("얻어온 board 전체 정보 확인 : {}", board);
 		
 		//model값으로 공지사항 객체 설정
 		model.addAttribute("board", board);
@@ -459,14 +476,14 @@ public class NoticeController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update( Board board, MultipartHttpServletRequest mtfRequest) {
-//		logger.info("얻어온 board객체 정보 확인 {}", board);
+		logger.info("얻어온 board객체 정보 확인 {}", board);
 		
 		//다중 첨부파일 리스트로 변환
 		List<MultipartFile> flist = mtfRequest.getFiles("file");
 		
-//		for( MultipartFile i : flist ) {
-//			logger.info("각각의 다중 첨부파일 정보 확인 {}", i);
-//		}
+		for( MultipartFile i : flist ) {
+			logger.info("각각의 다중 첨부파일 정보 확인 {}", i);
+		}
 		
 		//글 수정 메소드 호출
 		noticeService.updateBoardAndFiles(board, flist);
@@ -478,7 +495,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/delete")
 	public String delete(Board board) {
-//		logger.info("/admin/notice/delete 요청 완료");
+		logger.info("/admin/notice/delete 요청 완료");
 		
 		//해당 글 번호의 공지사항 삭제
 		noticeService.deleteBoard(board);

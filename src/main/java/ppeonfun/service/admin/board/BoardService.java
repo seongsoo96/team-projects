@@ -19,6 +19,19 @@ public interface BoardService {
 	public Paging getPaging(int cPage, String category, String search);
 
 	/**
+	 * 공지사항 리스트에서 추천수 탭을 누를 시 현재 상태에 따른 정렬방식을 얻어온다
+	 * ( 추천수 기준 내림차순 정렬, 추천수 기준 오름차순 정렬 )
+	 * 
+	 * @param paging - 추천수가 적용된 리스트에 적용할 페이징 객체
+	 * @param category - 검색 기준(제목+내용, 제목, 내용)
+	 * @param search - 검색어
+	 * @param orderby - 3가지 상태를 나타내는 값 
+	 * ( 정렬 미적용: 1, 추천수 내림차순: 2, 추천수 오름차순: 3
+	 * @return
+	 */
+	public List<HashMap<String, Object>> getArrayList(Paging paging, String category, String search, int orderby);
+
+	/**
 	 * 관리자 로그인 -> 공지사항 관리 메뉴 클릭 시
 	 * 바로 공지사항 리스트를 보여준다
 	 * 
@@ -50,6 +63,14 @@ public interface BoardService {
 	 * @return 게시글 번호가 일치하는 첨부파일들의 리스트
 	 */
 	public List<BoardFile> getFiles(int bNo);
+	
+	/**
+	 * 
+	 * 
+	 * @param bNo
+	 * @return 
+	 */
+	public List<Integer> getRecommend(int bNo);
 
 	/**
 	 * 상세보기에서 첨부파일 다운로드를 위해 파일번호로 해당 파일의 전체 데이터를 얻어온다
@@ -81,5 +102,7 @@ public interface BoardService {
 	 * @param bNo - 삭제할 글 번호
 	 */
 	public void deleteBoard(Board board);
+
+
 
 }

@@ -48,7 +48,7 @@ $(document).ready(function() {
 
 <div id="content">
 
-<div class="anbody2">
+<div class="writebody">
 
 <label class="headname">글 쓰기</label>
 <div class="buttonbox">

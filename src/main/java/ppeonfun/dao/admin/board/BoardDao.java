@@ -28,6 +28,14 @@ public interface BoardDao {
 	public List<HashMap<String, Object>> selectAll(HashMap<String, Object> map);
 
 	/**
+	 * orderby 상태에 따라 추천수 정렬을 오름차순, 내림차순 상태로 나눠서 받아온다
+	 * 
+	 * @param map - 페이징, 검색 기준, 검색어, orderby 기준이 담겨있는 객체
+	 * @return orderby에 따라 추천수 정렬을 오름차순/내림차순으로 구분하여 받아온 게시글 목록
+	 */
+	public List<HashMap<String, Object>> selectAllByArray(HashMap<String, Object> map);
+
+	/**
 	 * 신규 작성요청된 공지사항을 DB에 삽입한다
 	 * 
 	 * @param board - 신규 작성될 요청 제목, 내용이 들어있는 객체
@@ -101,6 +109,7 @@ public interface BoardDao {
 	 * @param bNo - 삭제할 공지사항의 글 번호
 	 */
 	public void deleteByBoardno(Board board);
+
 
 
 }

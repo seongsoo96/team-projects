@@ -45,19 +45,60 @@
 	<select id="selectAll" parameterType="hashmap" resultType="hashmap">
 		SELECT * FROM (
 			SELECT rownum rnum, N.* FROM (
-				SELECT board.*, member.m_nick 
+				SELECT board.*, member.m_nick, (
+					SELECT count(*) FROM recommend
+					WHERE recommend.b_no = board.b_no
+				) AS RECOMMEND
 				FROM board, member
 				WHERE b_grade = 'B' AND board.m_no = member.m_no
 				ORDER BY b_no DESC
 			) N WHERE 1=1
-			<if test="category.equals('mix')">
-				AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+			<if test="!search.equals('')">
+				<if test="category.equals('mix')">
+					AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+				</if>
+				<if test="category.equals('title')">
+					AND REGEXP_LIKE ( b_title, #{search} )
+				</if>
+				<if test="category.equals('content')">
+					AND REGEXP_LIKE ( b_content, #{search} )
+				</if>
 			</if>
-			<if test="category.equals('title')">
-				AND REGEXP_LIKE ( b_title, #{search} )
+		) NOTICE
+		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+	</select>
+	
+	<select id="selectAllByArray" parameterType="hashmap" resultType="hashmap">
+		SELECT * FROM (
+			SELECT rownum rnum, N.* FROM (
+				SELECT board.*, member.m_nick , (
+					SELECT count(*) FROM recommend
+					WHERE recommend.b_no = board.b_no
+				) AS RECOMMEND
+				FROM board, member
+				WHERE b_grade = 'N' AND board.m_no = member.m_no
+				ORDER BY 
+				<if test="orderby == 2">
+					RECOMMEND DESC,
+				</if>
+				<if test="orderby == 3">
+					RECOMMEND ASC,
+				</if>
+				b_no DESC
+			) N WHERE 1=1
+			<if test="!search.equals('')">
+				<if test="category.equals('mix')">
+					AND REGEXP_LIKE ( b_title, #{search} ) OR REGEXP_LIKE ( b_content, #{search} )
+				</if>
+				<if test="category.equals('title')">
+					AND REGEXP_LIKE ( b_title, #{search} )
+				</if>
+				<if test="category.equals('content')">
+					AND REGEXP_LIKE ( b_content, #{search} )
+				</if>
 			</if>
-			<if test="category.equals('content')">
-				AND REGEXP_LIKE ( b_content, #{search} )
+			<if test="search.equals('')">
+				AND 1=1
 			</if>
 		) NOTICE
 		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}

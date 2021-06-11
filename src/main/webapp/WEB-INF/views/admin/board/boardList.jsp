@@ -6,9 +6,7 @@
 
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp" />
 
-<link rel="stylesheet" href="/resources/css/adminNotice.css">
-
-
+<link rel="stylesheet" href="/resources/css/adminBoard.css">
 
 <%-- 현재시간을 변환(yyyyMMdd)하여 변수에 저장 --%>
 <fmt:formatDate value="<%=new Date() %>" pattern="yyMMdd" var="nowStr" />
@@ -17,37 +15,39 @@
 <h1>게시판 관리</h1>
 <hr>
 
-<div class="anbody1">
+<div class="boardbody">
 
 <div class="write">
 	<button id="BtnWrite" class="BtnWrite" onclick="location.href='/admin/board/write'">글쓰기</button>
 </div><br> <%-- write end --%>
 
-<table class="antable">
+<table class="boardTable">
 <tr>
-	<th style="width: 5%">글 번호</th>
-	<th style="width: 65%">제목</th>
+	<th style="width: 5%"></th>
+	<th style="width: 60%">제목</th>
 	<th style="width: 10%">닉네임</th>
 	<th style="width: 10%">작성일</th>
-	<th style="width: 5%">조회수</th>
-	<th style="width: 5%"><label id="arrayRec" style="cursor: pointer;">추천수▼</label></th>
+	<th style="width: 5%">조회</th>
+	<th style="width: 10%">
+	<a class="arrayLink" href="/admin/board/list?curPage=${paging.curPage }&orderby=${orderby }">좋아요▼</a></th>
 </tr>
-<c:forEach var="n" items="${nlist }">
-<fmt:formatDate value="${n.B_CREATE_DATE }" pattern="yyMMdd" var="brdStr" />
+<c:forEach var="b" items="${blist }">
+<fmt:formatDate value="${b.B_CREATE_DATE }" pattern="yyMMdd" var="brdStr" />
 	<tr>
-		<td>${n.B_NO }</td>
+		<td>${b.B_NO }</td>
 		<td style="text-align: left; padding-left: 25px;">
-		<a class="titleLink" href="/admin/board/view?bNo=${n.B_NO }">${n.B_TITLE }</a></td>
-		<td>${n.M_NICK }</td>
+		<a class="titleLink" href="/admin/board/view?bNo=${b.B_NO }">${b.B_TITLE }</a></td>
+		<td>${b.M_NICK }</td>
 		<td>
 		<c:if test="${brdStr eq nowStr }">
-			<fmt:formatDate value="${n.B_CREATE_DATE }" type="time" pattern="HH:mm" />
+			<fmt:formatDate value="${b.B_CREATE_DATE }" type="time" pattern="HH:mm" />
 		</c:if>
 		<c:if test="${brdStr lt nowStr }">
-			<fmt:formatDate value="${n.B_CREATE_DATE }" type="date" pattern="yyyy.MM.dd" />
+			<fmt:formatDate value="${b.B_CREATE_DATE }" type="date" pattern="yyyy.MM.dd" />
 		</c:if>
 		</td>
-		<td>${n.B_HIT }</td>
+		<td>${b.B_HIT }</td>
+		<td>${b.RECOMMEND }</td>
 	</tr>
 </c:forEach>
 </table>

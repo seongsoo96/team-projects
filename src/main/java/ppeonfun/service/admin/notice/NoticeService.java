@@ -109,8 +109,6 @@ public interface NoticeService {
 	
 	
 	
-	
-	
 	/**
 	 * 상세보기에서 첨부파일 다운로드를 위해 파일번호로 해당 파일의 전체 데이터를 얻어온다
 	 * 
@@ -230,8 +228,14 @@ public interface NoticeService {
 	 */
 	public Commentss getOneCommentss(Commentss cmtss);
 
-	
-
+	/**
+	 * 공지사항 상세보기에서 등록순, 최신순으로 정렬하여 댓글을 요청한다
+	 * 
+	 * @param bNo - 댓글을 조회할 기준이 될 글 번호
+	 * @param standard - 등록순 정렬 혹은 최신순 정렬을 할 기준
+	 * @return standard의 값에 따라 정렬이 된 댓글 리스트
+	 */
+	public List<HashMap<String, Object>> getCommentsListForArray(int bNo, String standard);
 
 
 }

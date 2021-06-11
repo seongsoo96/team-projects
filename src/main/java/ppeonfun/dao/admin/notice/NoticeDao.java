@@ -272,5 +272,25 @@ public interface NoticeDao {
 	 */
 	public void deleteAllCommentsByBno(Board board);
 
+	/**
+	 * 공지사항 상세보기에서 등록순 혹은 최신순을 누를때 마다 기준이 나뉘어서 오름차순, 내림차순
+	 * 정렬이 된 댓글 리스트를 보여준다
+	 * 
+	 * @param bNo - 해당하는 정렬 기준이 적용된 댓글들의 글 번호
+	 * @param standard - 정렬 분류를 할 기준 값
+	 * @return standard의 값에 따라 정렬이 된 댓글 리스트
+	 */
+	public List<HashMap<String, Object>> selectCommentsListForArray(HashMap<String, Object> map);
+
+	/**
+	 * 공지사항 상세보기에서 등록순 혹은 최신순을 누를때 마다 기준이 나뉘어서 오름차순, 내림차순
+	 * 정렬이 된 대댓글 리스트를 보여준다
+	 * 
+	 * @param bNo - 해당하는 정렬 기준이 적용된 대댓글을 갖고있는 댓글들의 글 번호
+	 * @param standard - 정렬 분류를 할 기준 값
+	 * @return standard의 값에 따라 정렬이 된 대댓글 리스트
+	 */
+	public List<HashMap<String, Object>> selectCommentssListForArray(HashMap<String, Object> map);
+
 
 }

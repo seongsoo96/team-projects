@@ -301,5 +301,16 @@
 		WHERE b_no = #{bNo}
 	</delete>
 	
+	<select id="selectCommentsListForArray" parameterType="hashmap" resultType="hashmap">
+		SELECT comments.*, member.m_nick FROM comments, member
+		WHERE member.m_no = comments.m_no AND comments.b_no = #{bNo}
+		ORDER BY c_no 
+		<if test="standard.equals('ASC')">
+			ASC
+		</if>
+		<if test="standard.equals('DESC')">
+			DESC
+		</if>
+	</select>
 	
 </mapper>

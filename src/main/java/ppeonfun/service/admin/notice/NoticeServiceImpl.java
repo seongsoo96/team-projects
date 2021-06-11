@@ -47,7 +47,7 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		int totalCount = noticeDao.selectCntAll(map);
 		
-//		logger.info("검색기준과 검색어를 활용해 얻어온 총 공지사항 수 : {}", totalCount);
+		logger.info("검색기준과 검색어를 활용해 얻어온 총 공지사항 수 : {}", totalCount);
 			
 		Paging paging = new Paging(totalCount, curPage);
 			
@@ -57,7 +57,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public List<HashMap<String, Object>> getList(Paging paging, String category, String search) {
 		//연결 확인
-//		logger.info("/admin/notice/list NoticeServiceImpl 요청 완료");
+		logger.info("/admin/notice/list NoticeServiceImpl 요청 완료");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("paging", paging);
 		map.put("category", category);
@@ -90,7 +90,7 @@ public class NoticeServiceImpl implements NoticeService {
 		noticeDao.insertNotice(board);
 		
 		//글쓰기 수행 후 신규 공지사항의 bNo값 얻어오기
-//		logger.info("신규 공지사항 작성 후 board 객체 값 : {}", board);
+		logger.info("신규 공지사항 작성 후 board 객체 값 : {}", board);
 		
 		//첨부파일 저장 수행
 		String storedPath = context.getRealPath("resources/upload");
@@ -278,7 +278,7 @@ public class NoticeServiceImpl implements NoticeService {
 		//여기서 for-each문 돌려서 해당 댓글 하나하나의 댓글번호로 대댓글 리스트 얻어오기
 		List<HashMap<String, Object>> cclist = noticeDao.selectAllCommentss(bNo);
 		
-//		logger.info("조회값으로 넣은 모든 댓글에 해당하는 모든 대댓글 리스트 : {}", cclist);
+		logger.info("조회값으로 넣은 모든 댓글에 해당하는 모든 대댓글 리스트 : {}", cclist);
 		
 		return cclist;
 	}
@@ -326,8 +326,13 @@ public class NoticeServiceImpl implements NoticeService {
 		noticeDao.deleteCmtCmt(csNo);
 	}
 
-
-
+	@Override
+	public List<HashMap<String, Object>> getCommentsListForArray(int bNo, String standard) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("bNo", bNo);
+		map.put("standard", standard);
+		return noticeDao.selectCommentsListForArray(map);
+	}
 
 
 } // Class end

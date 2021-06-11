@@ -52,7 +52,6 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<HashMap<String, Object>> getList(Paging paging, String category, String search) {
-		//연결 확인
 //		logger.info("/admin/notice/list NoticeServiceImpl 요청 완료");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("paging", paging);
@@ -60,9 +59,23 @@ public class BoardServiceImpl implements BoardService{
 		map.put("search", search);
 		
 		//전체 공지사항 목록 가져오기
-		List<HashMap<String, Object>> nlist = boardDao.selectAll(map);
+		List<HashMap<String, Object>> blist = boardDao.selectAll(map);
 		
-		return nlist;
+		return blist;
+	}
+	
+	@Override
+	public List<HashMap<String, Object>> getArrayList(Paging paging, String category, String search, int orderby) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("paging", paging);
+		map.put("category", category);
+		map.put("search", search);
+		map.put("orderby", orderby);
+		
+		//전체 공지사항 목록 가져오기
+		List<HashMap<String, Object>> alist = boardDao.selectAllByArray(map);
+		
+		return alist;
 	}
 
 	@Override
@@ -200,6 +213,11 @@ public class BoardServiceImpl implements BoardService{
 		
 		//해당 공지사항 삭제
 		boardDao.deleteByBoardno(board);
+	}
+
+	@Override
+	public List<Integer> getRecommend(int bNo) {
+		return null;
 	}
 
 }
