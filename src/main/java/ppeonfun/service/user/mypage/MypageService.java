@@ -211,6 +211,15 @@ public interface MypageService {
 	public Paging getMessagePaging(int curPage, int mNo);
 
 
+	/**
+	 * 회원이 참여중인 대화 목록을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			대화 목록
+	 */
+	public List<HashMap<String, Object>> getMessageList(Paging paging, int mNo);
+
+
 
 
 }

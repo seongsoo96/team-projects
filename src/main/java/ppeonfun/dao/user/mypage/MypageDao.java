@@ -218,4 +218,13 @@ public interface MypageDao {
 	 */
 	public int selectCntChatBymNo(int mNo);
 
+
+	/**
+	 * 회원이 참여중인 채팅방 번호를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		채팅방 번호 목록
+	 */
+	public List<Integer> selectChatNoBymNo(int mNo);
+
+
 }

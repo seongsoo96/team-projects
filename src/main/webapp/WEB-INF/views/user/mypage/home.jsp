@@ -116,7 +116,7 @@ a:hover {text-decoration: none;}
 						</a>
 					</div>
 					<div class="message">
-						<a href="/user/mypage/sptmessage">
+						<a href="/user/mypage/message">
 							<span>메시지</span>
 							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
@@ -169,7 +169,7 @@ a:hover {text-decoration: none;}
 						</a>
 					</div>
 					<div class="message">
-						<a href="/user/mypage/mkmessage">
+						<a href="/user/mypage/message">
 							<span>메시지</span>
 							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>

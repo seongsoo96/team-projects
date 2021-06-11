@@ -244,10 +244,12 @@ public class MypageController {
 		
 		int mNo = (int) session.getAttribute("mNo");
 		
-		//전체 펀딩 내역 조회
 		Paging paging = mypageService.getPaymPaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
 		
+		//전체 펀딩 내역 조회
 		List<Map<String, Object>> totalList = null;
+		
 		if(paging != null) {
 			totalList = mypageService.getMyFundingListAll(paging, mNo);	
 		}
@@ -308,11 +310,14 @@ public class MypageController {
 		logger.info("***** /user/mypage/favorite [GET] START *****");
 		
 		int mNo = (int) session.getAttribute("mNo");
-		Paging paging = mypageService.getFavoritePaging(curPage, mNo);
 		
+		Paging paging = mypageService.getFavoritePaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
+		
+		//회원이 좋아요한 프로젝트 목록을 조회한다.
 		List<HashMap<String, Object>> favoriteList = null;
+
 		if(paging != null) {
-			//회원이 좋아요한 프로젝트 목록을 조회한다.
 			favoriteList = mypageService.getMyFavoriteList(paging, mNo);
 		}
 		
@@ -329,11 +334,14 @@ public class MypageController {
 		logger.info("***** /user/mypage/fundcomm [GET] START *****");
 		
 		int mNo = (int) session.getAttribute("mNo");
-		Paging paging = mypageService.getFundCommPaging(curPage, mNo);
 		
+		Paging paging = mypageService.getFundCommPaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
+		
+		//회원이 프로젝트 커뮤니티에 작성한 글을 조회한다.
 		List<HashMap<String, Object>> fundCommList = null;
+
 		if(paging != null) {
-			//회원이 프로젝트 커뮤니티에 작성한 글을 조회한다.
 			fundCommList = mypageService.getMyFundCommList(paging, mNo);
 		}
 		
@@ -362,11 +370,13 @@ public class MypageController {
 		logger.info("***** /user/mypage/board [GET] START *****");
 		
 		int mNo = (int) session.getAttribute("mNo");
-		Paging paging = mypageService.getMyBoardPaging(curPage, mNo);
 		
+		Paging paging = mypageService.getMyBoardPaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
+		
+		//회원이 게시판에 작성한 글 목록을 조회한다.
 		List<HashMap<String, Object>> myBoardList = null;
 
-		//회원이 게시판에 작성한 글 목록을 조회한다.
 		if(paging != null) {
 			 myBoardList = mypageService.getMyBoardList(paging, mNo);
 		}
@@ -379,14 +389,23 @@ public class MypageController {
 	//마이페이지 메시지--------------------------------------------------------------------
 
 	@RequestMapping(value="/message", method=RequestMethod.GET)
-	public void viewMessage(HttpSession session, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMessage(HttpSession session, @RequestParam(defaultValue="1")int curPage, Model model) {
 		logger.info("***** /user/mypage/message [GET] START *****");
 		
 		int mNo = (int) session.getAttribute("mNo");
 
 		//메시지 페이징 객체 생성
 		Paging paging = mypageService.getMessagePaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
 		
+		//참여중인 대화 목록 조회
+		List<HashMap<String, Object>> chatList = null;
+		if(paging != null) {
+			chatList = mypageService.getMessageList(paging, mNo);
+		}
+		
+		model.addAttribute("chatList", chatList);
+		model.addAttribute("paging", paging);
 	}
 	
 	

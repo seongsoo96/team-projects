@@ -273,5 +273,16 @@ public class MypageServiceImpl implements MypageService {
 		}
 	}
 
+	@Override
+	public List<HashMap<String, Object>> getMessageList(Paging paging, int mNo) {
+		
+		//회원이 참여중인 채팅방 번호를 조회한다.
+		List<Integer> chatNo = mypageDao.selectChatNoBymNo(mNo);
+		logger.info("채팅방 번호 목록:{}", chatNo);
+		
+		//회원번호가 다르면서 채팅방 번호가 같은 목록 조회(상대방 정보 까지 조회)
+		return null;
+	}
+
 
 }

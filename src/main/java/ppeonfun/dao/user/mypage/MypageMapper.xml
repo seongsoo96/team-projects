@@ -227,6 +227,13 @@
  	FROM chat_participant
  	WHERE m_no = #{mNo}
  	</select>
+ 	
+ 	<select id="selectChatNoBymNo" parameterType="int" resultType="int">
+ 	SELECT cr_no
+ 	FROM chat_participant
+ 	WHERE m_no = #{mNo}
+ 	ORDER BY cp_no
+ 	</select>
  </mapper>  
     
   
