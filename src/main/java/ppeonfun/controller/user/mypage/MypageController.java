@@ -362,6 +362,15 @@ public class MypageController {
 		model.addAttribute("paging", paging);
 	}
 	
+	//마이페이지 메시지(서포터)--------------------------------------------------------------------
+
+	@RequestMapping(value="/sptmessage", method=RequestMethod.GET)
+	public void viewSupportMsg() {
+		logger.info("***** /user/mypage/supomsg [GET] START *****");
+		
+	}
+	
+	
 	//마이페이지 오류--------------------------------------------------------------------
 	@RequestMapping(value = "/error")
 	public void error() {

@@ -6,7 +6,7 @@
 
 <style type="text/css">
 /* 프로젝트 없는 경우 스타일*/
-svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
+.arrow-img {width:20px; height:20px; vertical-align:bottom;}
 h4 a:hover{text-decoration:none;}
 
 /* 상단 메뉴 */
@@ -35,11 +35,7 @@ h4 a:hover{text-decoration:none;}
 			<h4>
 				<a href="/user/project/list">
 				펀딩 프로젝트 참여하러 가기
-				<span>
-					<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-					<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-					</svg>
-				</span>
+				<img src="/resources/img/arrow.svg" class="arrow-img">
 				</a>
 			</h4>
 		</div>
