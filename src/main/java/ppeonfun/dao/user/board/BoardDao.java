@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
 import ppeonfun.dto.Comments;
+import ppeonfun.dto.Commentss;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.Recommend;
 import ppeonfun.util.Paging;
@@ -89,7 +90,7 @@ public interface BoardDao {
 	
 	public void insertRecommend(Recommend recommend);
 	
-	public List<Comments> selectBycomment(Board board);
+	public List<HashMap<String, Object>> selectBycomment(Board board);
 	
 	public void insertComments(Comments comments);
 	
@@ -99,5 +100,25 @@ public interface BoardDao {
 	
 	public List<Comments> selectComments(int bNo);
 	
-	public List<HashMap<String, Object>> selectcmtlist(Comments comments);
+	public 	List<HashMap<String, Object>> selectcmtlist(Comments comments);
+	
+	public void commentUpdate(Comments comments);
+	
+	public List<HashMap<String, Object>> selectupdatecommentlist(Comments comments);
+	
+//	public List<HashMap<String, Object>> selectCommentsslist(Board board);
+	
+	public List<HashMap<String, Object>> selectCommentCno(List<Integer> commentsslistbno);
+	
+	public List<Integer> selectCommentsslist(Board board);
+	
+	public void commentssinsert(Commentss commentss);
+	
+	public void commentssDelete(Commentss commentss);
+	
+	public int countCommnetss(Commentss commentss);
+	
+	public void commentssUpdate(Commentss commentss);
+	
+	
 }

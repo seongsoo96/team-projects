@@ -155,10 +155,10 @@
    VALUES (recommend_SEQ.nextval, #{mNo}, #{bNo})
 </insert>
 
-<select id="selectBycomment" parameterType="board" resultType="Comments">
-   SELECT * FROM Comments
+<select id="selectBycomment" parameterType="board" resultType="hashmap">
+   SELECT comments.*,member.m_nick FROM Comments,member
    WHERE b_no = #{bNo}
-
+   AND comments.m_no = member.m_no
 </select>
 
 <insert id="insertComments" parameterType="comments">
@@ -174,12 +174,66 @@
 <select id="countCommnets" parameterType="comments" resultType="int">
   SELECT COUNT(*) FROM comments
   WHERE c_no = #{cNo}
+  ORDER BY c_no DESC
 </select>
 
 <select id="selectcmtlist" parameterType="comments" resultType="hashmap">
+ SELECT comments.*,member.m_nick FROM comments,member 
+ WHERE b_no = #{bNo}
+ AND comments.m_no = member.m_no
+ ORDER BY c_no DESC
+</select>
+
+<update id="commentUpdate" parameterType="comments">
+ UPDATE comments
+ SET C_CONTENT = #{cContent}
+ WHERE c_no = #{cNo}
+</update>
+
+<select id="selectupdatecommentlist" parameterType="comments" resultType="hashmap"> 
  SELECT * FROM comments
  WHERE c_no = #{cNo}
 </select>
+
+
+<select id="selectCommentsslist" parameterType="board" resultType="int">
+  SELECT comments.c_no FROM comments
+  WHERE b_no = #{bNo}
+</select>
+
+<select id="selectCommentCno" parameterType="hashmap" resultType="hashmap">
+  SELECT commentss.*,member.m_nick FROM commentss,member 
+  WHERE c_no in
+  <foreach collection="list" item="data" open="(" close=")" separator=",">
+  	#{data}
+  </foreach>
+  AND commentss.m_no = member.m_no
+  ORDER BY cs_no DESC
+</select>
+
+<insert id="commentssinsert" parameterType="commentss">
+ INSERT INTO commentss(cs_no, c_no,m_no,cs_content) 
+ VALUES(commentss_seq.nextval, #{cNo},#{mNo},#{csContent})
+</insert>
+
+<delete id="commentssDelete" parameterType="commentss">
+  DELETE FROM commentss
+  WHERE cs_no = #{csNo} 
+</delete>
+
+<select id="countCommnetss" parameterType="commentss" resultType="int">
+  SELECT COUNT(*) FROM commentss
+  WHERE cs_no = #{csNo} 
+  ORDER BY cs_no DESC
+</select>
+
+<update id="commentssUpdate" parameterType="commentss">
+ UPDATE commentss
+ SET CS_CONTENT =#{csContent}
+ WHERE cs_no = #{csNo}
+</update>
+
+
 
 
   </mapper>

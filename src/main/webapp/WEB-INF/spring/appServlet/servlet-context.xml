@@ -26,6 +26,7 @@
 		  <mapping path="/user/board/**"/>
 		    <exclude-mapping path="/user/board/list"/>
 			<exclude-mapping path="/user/board/view"/>
+			<exclude-mapping path="/user/board/comments/list"/>
 		  <beans:bean class="ppeonfun.util.interceptor.user.UserInterceptor"/>	
 		</interceptor>
 	</interceptors>
