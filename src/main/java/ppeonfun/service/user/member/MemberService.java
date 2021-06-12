@@ -120,5 +120,16 @@ public interface MemberService {
 	 * @return 이메일 반환
 	 */
 	public Member getEmail(Member member);
+	/**
+	 * 카카오로 가입한 닉네임 가져오기
+	 * @param mNo - 회원 번호
+	 * @return 닉네임 반환
+	 */
+	public String kakaoMnick(int mNo);
+	/**
+	 * 마이페이지 생성
+	 * @param mNo - 회원번호
+	 */
+	public void inputMypage(int mNo);
 
 }

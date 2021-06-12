@@ -3,6 +3,7 @@ package ppeonfun.dao.user.member;
 import org.springframework.stereotype.Repository;
 
 import ppeonfun.dto.Member;
+import ppeonfun.dto.MyPage;
 
 @Repository("user.MemberDao")
 public interface MemberDao {
@@ -73,6 +74,17 @@ public interface MemberDao {
 	 * @return 아이디를 통한 이메일 검색
 	 */
 	public Member selectEmail(Member member);
+	/**
+	 * 닉네임 반환
+	 * @param mNo - 회원번호
+	 * @return 닉네임
+	 */
+	public String selectKakaoNick(int mNo);
+	/**
+	 * 마이페이지 생성
+	 * @param mypage - 마이페이지 생성
+	 */
+	public void insertMyPage(MyPage mypage);
 
 
 	
