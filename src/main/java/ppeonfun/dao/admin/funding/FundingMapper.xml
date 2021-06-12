@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="ppeonfun.dao.admin.funding.FundingDao">
+ 		<select id="selectState" parameterType="Project" resultType="hashmap">
+ 			SELECT R.re_no, R.re_title, R.re_money, count(su_no) as count from supporter S
+			right join reward R
+			on R.re_no = S.re_no
+			where R.p_no = #{pNo}
+			group by R.re_no, R.re_title, R.re_money
+ 		</select>
+ 		
+ 		<select id="selectSuAddMoney" parameterType="Project" resultType="String">
+ 			select sum(su_add_money) sum from supporter
+			where p_no = #{pNo}
+ 		</select>
+ </mapper>

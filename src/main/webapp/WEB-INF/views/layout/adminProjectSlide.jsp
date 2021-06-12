@@ -15,7 +15,7 @@ $(document).ready(function(){
 			<c:choose>
 				<c:when test="${info eq 'news'}">$( '#news' ).addClass( 'background' )</c:when>
 				<c:when test="${info eq 'open'}">$( '#open' ).addClass( 'background' )</c:when>
-				<c:when test="${info eq 'support'}">$( '#support' ).addClass( 'background' )</c:when>
+				<c:when test="${info eq 'supporter'}">$( '#supporter' ).addClass( 'background' )</c:when>
 				<c:when test="${info eq 'funding'}">$( '#funding' ).addClass( 'background' )</c:when>
 				<c:otherwise>$( '#project' ).addClass( 'background' )</c:otherwise>
 			</c:choose>
@@ -76,15 +76,15 @@ $(document).ready(function(){
 			<a href="/admin/project/view?pNo=${project.pNo}" id="project" class="side_link background">펀딩준비</a>
 			<a href="#" id="news" class="side_link">새소식&nbsp;<i class="fas fa-lock"></i></a>
 			<a href="#" id="open" class="side_link">오픈예정&nbsp;<i class="fas fa-lock"></i></a>
-			<a href="#" id="support" class="side_link">서포터&nbsp;<i class="fas fa-lock"></i></a>
+			<a href="#" id="supporter" class="side_link">서포터&nbsp;<i class="fas fa-lock"></i></a>
 			<a href="#" id="funding" class="side_link">펀딩현황&nbsp;<i class="fas fa-lock"></i></a>
 		</c:when>
 		<c:otherwise>
 			<a href="/admin/project/view?pNo=${project.pNo}" id="project" class="side_link">펀딩준비</a>
 			<a href="/admin/news/list?pNo=${project.pNo}" id="news" class="side_link">새소식&nbsp;<i class="fas fa-lock-open"></i></a>
 			<a href="/admin/open/requirement?pNo=${project.pNo}" id="open" class="side_link">오픈예정&nbsp;<i class="fas fa-lock-open"></i></a>
-			<a href="/admin/support/list?pNo=${project.pNo}" id="support" class="side_link">서포터&nbsp;<i class="fas fa-lock-open"></i></a>
-			<a href="/admin/funding/list?pNo=${project.pNo}" id="funding" class="side_link">펀딩현황&nbsp;<i class="fas fa-lock-open"></i></a>
+			<a href="/admin/supporter/list?pNo=${project.pNo}" id="supporter" class="side_link">서포터&nbsp;<i class="fas fa-lock-open"></i></a>
+			<a href="/admin/funding/view?pNo=${project.pNo}" id="funding" class="side_link">펀딩현황&nbsp;<i class="fas fa-lock-open"></i></a>
 		</c:otherwise>
 	</c:choose>
 	
