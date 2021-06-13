@@ -41,23 +41,22 @@ $(document).ready(function(){
 })
 </script>
 
-<style type="text/css">
 
-</style>
 
 <div id="container">
-
 <h1>게시글 등록</h1>
 <hr>
 
 <form id="write" action="/user/board/write" method="post" enctype="multipart/form-data">
 
 <table class="table table-bordered">
-
-<tr><td>닉네임</td><td>${mNick}</td></tr>
-<tr><td>제목</td><td><input type="text" name="bTitle" /></td></tr>
-<tr><td>본문</td></tr>
-<tr><td><input type="text" name="bContent" id="content"  /></td></tr>
+<tr>
+ <td class="info">닉네임</td>
+ <td>${mNick}</td>
+</tr>
+<tr><td class="info">제목</td><td><input type="text" name="bTitle" style="width:100%" /></td></tr>
+<tr><td class="info" colspan="4">내용</td></tr>
+<tr><td colspan="2"><input type="text" name="bContent" id="content"  /></td></tr>
 </table>
 
 <label>첨부파일 <input type="file" name="file" /></label>
@@ -68,7 +67,6 @@ $(document).ready(function(){
   <button  id="btnWrite" class="btn btn-info">작성</button>
 </div>
 </form>
-
 
 </div><!-- end.container -->
 

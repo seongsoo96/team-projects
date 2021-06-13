@@ -26,6 +26,7 @@ import com.google.gson.JsonParser;
 
 import ppeonfun.dao.user.member.MemberDao;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.MyPage;
 import ppeonfun.util.Encryption;
 
 @Service("user.MemberService")
@@ -374,4 +375,22 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
     
+	@Override
+	public String kakaoMnick(int mNo) {
+		// TODO Auto-generated method stub
+		return memberDao.selectKakaoNick(mNo);
+	}
+	
+	@Override
+	public void inputMypage(int mNo) {
+		MyPage mypage = new MyPage();
+		mypage.setMyNo(mNo);
+		mypage.setMySize(1);
+		mypage.setMyContentType("image/png");
+		mypage.setMyOriginName("member.png");
+		mypage.setMyStoredName("member.png");
+		mypage.setMyIntroduce("자기소개");
+		memberDao.insertMyPage(mypage);
+	}
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
 import ppeonfun.dto.Comments;
+import ppeonfun.dto.Commentss;
 import ppeonfun.dto.Member;
 import ppeonfun.dto.Recommend;
 import ppeonfun.util.Paging;
@@ -93,13 +94,45 @@ public interface BoardService {
 	 * @param board
 	 * @return
 	 */
-	public List<Comments> getCommentList(Board board);
+	public List<HashMap<String, Object>> getCommentList(Board board);
 	
 	public void insertComments(Comments comments);
 	
 	public boolean deleteComments(Comments comments);
 	
 	
-	public List<HashMap<String, Object>> getCommentlist(Comments comments);
+	public 	List<HashMap<String, Object>> getCommentlist(Comments comments);
+	
+	public void updateComment(Comments comments);
+	
+	public List<HashMap<String, Object>> getupdatecommentlist(Comments comments);
+	/** 대댓글 리스트 조회
+	 * 
+ 	 * @param commentss csNo을 가진 대댓글 리스트
+	 * @return 
+	 */
+//	public List<HashMap<String, Object>> getCommentssList(Board board);
+	public List<Integer> getCommentssList(Board board);
+	/** 대댓글 리스트 불러오기
+	 * 
+	 * @param commentss c_no포함한 comments
+	 */
+	public List<HashMap<String, Object>> getcommentNolist(List<Integer> commentsslistbno);
+	/** 대댓글 등록하기
+	 * 
+	 * @param commentss CS_NO를 가진 대댓글 
+	 */
+	public void insertCommentsS(Commentss commentss);
+	/**  댓글 삭제하기
+	 * 
+	 * @param commentss cs_No을 가진 Commentss
+	 * @return
+	 */
+	public boolean deleteCommentss(Commentss commentss);
+	/** 댓글 수정하기
+	 * 
+	 * @param commentss csNo와 csContent값을 가진 commentss
+	 */
+	public void updateCommentss(Commentss commentss);
 	
 }

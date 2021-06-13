@@ -68,5 +68,11 @@ public interface StoryService {
 	 * @param fileList - 스토리 파일들
 	 */
 	public void modifyStoryFile(Story story, List<MultipartFile> fileList);
+	/**
+	 * 프로젝트 정보 조회
+	 * @param project - 프로젝트 번호
+	 * @return 프로젝트 정보 조회
+	 */
+	public Project viewProject(Project project);
 
 }

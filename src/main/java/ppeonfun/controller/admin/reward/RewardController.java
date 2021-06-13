@@ -34,9 +34,11 @@ public class RewardController {
 		}
 		String name = rewardService.selectByName(project);
 		List<Reward> rewardList = rewardService.viewRewardList(project);
-
+		
+		
 		model.addAttribute("rewardList", rewardList);
 		model.addAttribute("name", name);
+		model.addAttribute("project", project);
 		
 		return null;
 	}

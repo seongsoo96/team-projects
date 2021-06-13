@@ -70,6 +70,13 @@ public interface StoryDao {
 	 */
 	public void modifyStory(Story story);
 	
+	/**
+	 * 프로젝트 정보 조회
+	 * @param project - 프로젝트 정보
+	 * @return 프로젝트 반환
+	 */
+	public Project selectProject(Project project);
+	
 	
 	
 }

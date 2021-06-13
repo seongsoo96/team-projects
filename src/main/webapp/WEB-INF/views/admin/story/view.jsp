@@ -165,9 +165,7 @@ function handleImgFileSelect(e){
 			<div id="introductionUrlDiv" class="background-white form-group alert" role="alert" style="display: none;">
 			    <label for="sUrl">소개 영상(유튜브 링크 등록)</label>
 			    
-			    <input type="text" id="sUrl" name="sUrl" class="form-control" style="display:inline-block; width:80%;" />
-			    <button type="button" id="btnUrl" class="btn btn-primary">저장하기</button>
-			    <button type="button" id="btnUrlRemove" class="btn btn-danger">삭제하기</button>
+			    <input type="text" id="sUrl" name="sUrl" class="form-control" value="${story.sUrl }" />
 			    <iframe src="" width="870px" height="400px" id="introductionUrlField"></iframe>
 			</div>
 			

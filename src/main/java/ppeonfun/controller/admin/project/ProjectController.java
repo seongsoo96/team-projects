@@ -60,10 +60,7 @@ public class ProjectController {
 		project = projectService.selectProject(project);
 		project = projectService.submitProject(project);
 		
-		
-		
-		model.addAttribute("project", project);
-		return "redirect:/admin/project/view";
+		return "redirect:/admin/project/view?pNo="+project.getpNo();
 	}
 	@RequestMapping(value="/approve")
 	public String approve(HttpSession session,Project project,Model model) {
