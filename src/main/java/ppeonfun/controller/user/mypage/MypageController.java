@@ -410,8 +410,8 @@ public class MypageController {
 		
 		//최근 메시지 내용 조회
 		List<Integer> chatNoList = new ArrayList<Integer>();
-		List<Message> msgList = new ArrayList<Message>();
-		List<String> msgContentList = new ArrayList<String>();
+		List<HashMap<String, Object>> msgList = null;
+		
 		if(chatList != null) {
 			for(int i = 0; i < chatList.size(); i++) {
 				chatNoList.add(Integer.parseInt(String.valueOf(chatList.get(i).get("CR_NO"))));
@@ -419,15 +419,22 @@ public class MypageController {
 			logger.info("채팅방번호조회:{}", chatNoList);
 			
 			msgList = mypageService.getMessageList(chatNoList);
-			for(int i = 0; i < msgList.size(); i++) {
-				msgContentList.add(msgList.get(i).getMsgContent());
-			}
-			logger.info("메시지내용조회:{}", msgContentList);
+			logger.info("메시지내용조회:{}", msgList);
 		}
 		
 		model.addAttribute("paging", paging);
 		model.addAttribute("chatList", chatList);
-		model.addAttribute("msgContentList", msgContentList);
+		model.addAttribute("msgList", msgList);
+	}
+	
+	@RequestMapping(value="/message", method=RequestMethod.POST)
+	public String viewDetailMessage(@RequestParam(required=true) int crNo, HttpSession session, Model model) {
+		logger.info("***** /user/mypage/message [POST] START *****");
+		
+		List<HashMap<String, Object>> detailMsg = mypageService.getDetailMsg(crNo);
+		
+		model.addAttribute("detailMsg", detailMsg);
+		return "/user/mypage/detailMsg";
 	}
 	
 	

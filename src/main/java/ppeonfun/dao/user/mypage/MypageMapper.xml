@@ -261,12 +261,31 @@
 	    )WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
  	</select>
  	
-	<select id="selectMessageBycrNo" parameterType="int" resultType="Message">
-	SELECT msg_no, msg_content, cp_no, msg_time, cr_no
- 	FROM message 
- 	WHERE cr_no = #{crNo} AND rownum = 1 
- 	ORDER BY msg_no DESC	
-	</select>
+ 	<select id="selectMessageBycrNo" parameterType="int" resultType="hashmap">
+ 	SELECT MSG.msg_no, MSG.msg_content, MSG.msg_time, MSG.cr_no, CP.m_no, M.m_nick
+    FROM ( message MSG
+        INNER JOIN chat_participant CP
+            ON MSG.cp_no = CP.cp_no
+        INNER JOIN member M
+            ON CP.m_no = M.m_no
+        )
+    WHERE MSG.cr_no = #{crNo} AND rownum = 1
+    ORDER BY MSG.msg_no DESC
+ 	</select>
+ 	
+ 	<select id="selectAllMessageContent" parameterType="int" resultType="hashmap">
+ 	SELECT MSG.msg_no, MSG.msg_content, MSG.msg_time, MSG.cr_no, CP.m_no, M.m_nick, CR.cr_name
+    FROM ( message MSG
+        INNER JOIN chat_participant CP
+            ON MSG.cp_no = CP.cp_no
+        INNER JOIN member M
+            ON CP.m_no = M.m_no
+        INNER JOIN chat_room CR
+            ON CP.cr_no = CR.cr_no
+        )
+    WHERE MSG.cr_no = #{crNo}
+    ORDER BY MSG.msg_no
+ 	</select>
  </mapper>  
     
   

@@ -222,10 +222,18 @@ public interface MypageService {
 
 	/**
 	 * 대화의 최근 메시지 내용을 조회한다.
-	 * @param chatNoList	채팅방번호
+	 * @param chatNoList	채팅방 번호 리스트
 	 * @return				최근 메시지
 	 */
-	public List<Message> getMessageList(List<Integer> chatNoList);
+	public List<HashMap<String, Object>> getMessageList(List<Integer> chatNoList);
+
+
+	/**
+	 * 대화 상세 내용을 조회한다.
+	 * @param crNo	채팅방 번호
+	 * @return		대화 상세 내용
+	 */
+	public List<HashMap<String, Object>> getDetailMsg(int crNo);
 
 
 }

@@ -240,10 +240,20 @@ public interface MypageDao {
 
 
 	/**
+	 * message, chat_participant, member 테이블을 조인하여
 	 * 대화방의 최근 메시지를 조회한다.
 	 * @param integer	대화방 번호
 	 * @return			최근 메시지
 	 */
-	public Message selectMessageBycrNo(@Param("crNo")Integer chatRoomNo);
+	public HashMap<String, Object> selectMessageBycrNo(@Param("crNo")Integer chatRoomNo);
+
+
+	/**
+	 * message, chat_participant, member, chat_room 테이블을 조인하여
+	 * 해당 대화방의 모든 메시지를 조회한다.
+	 * @param crNo 	대화방 번호
+	 * @return		대화 상세 내용(모든 메시지)
+	 */
+	public List<HashMap<String, Object>> selectAllMessageContent(int crNo);
 
 }

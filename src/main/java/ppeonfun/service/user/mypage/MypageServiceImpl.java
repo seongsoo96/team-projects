@@ -291,14 +291,19 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public List<Message> getMessageList(List<Integer> chatNoList) {
-		List<Message> msgList = new ArrayList<Message>();
+	public List<HashMap<String, Object>> getMessageList(List<Integer> chatNoList) {
+		List<HashMap<String, Object>> msgList = new ArrayList<HashMap<String,Object>>();
+		HashMap<String, Object> msgMap = null;
 		for(int i = 0; i < chatNoList.size(); i++) {
-			Message msg = mypageDao.selectMessageBycrNo(chatNoList.get(i));
-			msgList.add(msg);
+			msgMap = mypageDao.selectMessageBycrNo(chatNoList.get(i));
+			msgList.add(msgMap);
 		}
-		logger.info("최근 메시지 내용:{}", msgList);
 		return msgList;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getDetailMsg(int crNo) {
+		return mypageDao.selectAllMessageContent(crNo);
 	}
 
 
