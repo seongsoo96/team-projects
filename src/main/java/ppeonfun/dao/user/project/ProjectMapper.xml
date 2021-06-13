@@ -14,6 +14,9 @@
 	 <if test='category !=null and !"".equals(category)'>
  			AND i_category=#{category}
  	</if>
+ 	<if test='search !=null and !"".equals(search)'>
+ 			AND i_title like'%'||#{search}||'%'
+ 	</if>
   </select>
   <select id="selectAll" resultType="Information" parameterType="Paging">
   	SELECT*FROM(
@@ -25,6 +28,9 @@
 		            WHERE P_PROGRESS_STATE='Y'
 		            <if test='category !=null and !"".equals(category)'>
 				 			AND i_category=#{category}
+				 	</if>
+				 	<if test='search !=null and !"".equals(search)'>
+				 			AND i_title like '%'||#{search}||'%'
 				 	</if>
 		            order by P.p_no desc
 		    ) I

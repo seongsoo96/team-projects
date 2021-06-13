@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="ppeonfun.dao.user.maker.supporter.SupporterDao">
+ 	<select id="selectCntAll" parameterType="Project" resultType="int">
+ 		select count(*) from supporter S inner join reward R
+		on S.re_no = R.re_no
+		inner join member M
+		on S.m_no = M.m_no
+		where S.p_no = #{pNo}
+ 	</select>
+ 	<select id="selectAllSupporter" parameterType="hashmap" resultType="hashmap">
+ 		SELECT*FROM(
+		SELECT rownum rnum, P.* FROM(
+            SELECT S.su_no,M.m_id,M.m_nick,S.su_create_date,R.re_title,R.re_money, S.su_add_money
+            from supporter S inner join reward R
+            on S.re_no = R.re_no
+            inner join member M
+            on S.m_no = M.m_no
+            where S.p_no = #{project.pNo}
+            order by S.su_no desc
+    	) P
+	)R
+	WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
+ 	<select id="selectSupporter" parameterType="Supporter" resultType="hashmap">
+ 		SELECT S.su_no ,S.p_no,M.m_no,M.m_id,M.m_name,M.m_nick,S.su_create_date,R.re_title,R.re_money, S.su_add_money
+            from supporter S inner join reward R
+            on S.re_no = R.re_no
+            inner join member M
+            on S.m_no = M.m_no
+            where S.su_no = #{suNo}
+ 	</select>
+ 	
+ 	<select id="selectByName" parameterType="int" resultType="String">
+ 		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+ 	</select>
+ 		
+ 	<select id="selectProject" parameterType="int" resultType="Project">
+ 		SELECT * FROM project WHERE p_no = #{pNo}
+ 	</select>	
+ 	<delete id="deleteSupporter" parameterType="Supporter">
+ 		delete FROM Supporter WHERE su_no = #{suNo}
+ 	</delete>	
+ 	
+ 	<select id="selectPayment" parameterType="Supporter" resultType="Payment">
+ 		SELECT * FROM payment WHERE m_no = #{mNo} AND re_no = #{reNo} 
+ 	</select>
+ 	
+ 	<select id="selectMember" parameterType="Supporter" resultType="Member">
+ 		SELECT m_name, m_bank, m_account FROM member WHERE m_no = #{mNo} 
+ 	</select>
+ 	
+ 	<insert id="insertPayback" parameterType="Payback">
+ 		<selectKey order="BEFORE" resultType="int" keyProperty="paybNo">
+ 			SELECT payback_SEQ.nextval FROM dual
+ 		</selectKey>
+ 		
+ 		insert into payback(payb_no,paym_no,payb_amount,payb_tax_free,payb_checksum,payb_reason,payb_refund_holder,payb_refund_bank,payb_refund_account) 
+ 		values(#{paybNo}, #{paymNo}, #{paybAmount}, #{paybTaxFree}, #{paybChecksum},#{paybReason}, #{paybRefundHolder}, #{paybRefundBank}, #{paybRefundAccount})
+ 	</insert>
+ 		
+ 	<update id="updatePayment" parameterType="Payment">
+ 		UPDATE PAYMENT SET paym_state='N' WHERE paym_no = #{paymNo}
+ 	</update>
+ 	
+ 	 <select id="selectSupporterDto" parameterType="Supporter" resultType="Supporter">
+ 	 	SELECT * FROM Supporter WHERE su_no = #{suNo}
+ 	 </select>
+ 		
+ </mapper>

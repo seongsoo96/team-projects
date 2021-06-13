@@ -14,7 +14,7 @@ import ppeonfun.dto.Requirement;
 import ppeonfun.dto.RequirementFile;
 import ppeonfun.service.admin.requirement.RequirementService;
 
-@Controller("user.RequirementController")
+@Controller("admin.RequirementController")
 @RequestMapping(value="/admin/requirement")
 public class RequirementController {
 	private static final Logger logger = LoggerFactory.getLogger(RequirementController.class);
