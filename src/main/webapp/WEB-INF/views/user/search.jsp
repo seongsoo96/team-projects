@@ -305,12 +305,6 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 					$('#btnViewMore').prop("disabled", true)
 				}
 				
-				
-// 				$('.listCount').text(cnt)
-// 				console.log("첫 페이지 리스트 수 listCount cnt : " + cnt)
-
-				
-				
 			}
 			, error: function(){
 				console.log("error")
