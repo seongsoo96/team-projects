@@ -2,6 +2,7 @@ package ppeonfun.controller.user.mypage;
 
 import java.io.IOException; 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.service.user.member.MemberService;
 import ppeonfun.service.user.mypage.MypageService;
@@ -401,11 +403,31 @@ public class MypageController {
 		//참여중인 대화 목록 조회
 		List<HashMap<String, Object>> chatList = null;
 		if(paging != null) {
-			chatList = mypageService.getMessageList(paging, mNo);
+			chatList = mypageService.getChatList(paging, mNo);
+		}
+		logger.info("대화 목록:{}", chatList);
+
+		
+		//최근 메시지 내용 조회
+		List<Integer> chatNoList = new ArrayList<Integer>();
+		List<Message> msgList = new ArrayList<Message>();
+		List<String> msgContentList = new ArrayList<String>();
+		if(chatList != null) {
+			for(int i = 0; i < chatList.size(); i++) {
+				chatNoList.add(Integer.parseInt(String.valueOf(chatList.get(i).get("CR_NO"))));
+			}
+			logger.info("채팅방번호조회:{}", chatNoList);
+			
+			msgList = mypageService.getMessageList(chatNoList);
+			for(int i = 0; i < msgList.size(); i++) {
+				msgContentList.add(msgList.get(i).getMsgContent());
+			}
+			logger.info("메시지내용조회:{}", msgContentList);
 		}
 		
-		model.addAttribute("chatList", chatList);
 		model.addAttribute("paging", paging);
+		model.addAttribute("chatList", chatList);
+		model.addAttribute("msgContentList", msgContentList);
 	}
 	
 	

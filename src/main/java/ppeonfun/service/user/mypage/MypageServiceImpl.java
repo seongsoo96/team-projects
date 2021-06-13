@@ -2,6 +2,7 @@ package ppeonfun.service.user.mypage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import ppeonfun.dao.user.mypage.MypageDao;
 import ppeonfun.dto.Board;
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.util.Paging;
 
@@ -274,14 +276,29 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public List<HashMap<String, Object>> getMessageList(Paging paging, int mNo) {
+	public List<HashMap<String, Object>> getChatList(Paging paging, int mNo) {
 		
 		//회원이 참여중인 채팅방 번호를 조회한다.
-		List<Integer> chatNo = mypageDao.selectChatNoBymNo(mNo);
-		logger.info("채팅방 번호 목록:{}", chatNo);
+		List<Integer> chatNoList = mypageDao.selectChatNoBymNo(mNo);
+		logger.info("채팅방 번호 목록:{}", chatNoList);
 		
 		//회원번호가 다르면서 채팅방 번호가 같은 목록 조회(상대방 정보 까지 조회)
-		return null;
+		List<HashMap<String, Object>> msgList = null;
+		if(chatNoList != null) {
+				msgList = mypageDao.selectAllMyChatList(paging, chatNoList, mNo);
+		} 
+		return msgList;
+	}
+
+	@Override
+	public List<Message> getMessageList(List<Integer> chatNoList) {
+		List<Message> msgList = new ArrayList<Message>();
+		for(int i = 0; i < chatNoList.size(); i++) {
+			Message msg = mypageDao.selectMessageBycrNo(chatNoList.get(i));
+			msgList.add(msg);
+		}
+		logger.info("최근 메시지 내용:{}", msgList);
+		return msgList;
 	}
 
 

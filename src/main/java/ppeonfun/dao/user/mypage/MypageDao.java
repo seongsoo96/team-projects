@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import ppeonfun.dto.Board;
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.util.Paging;
 
@@ -226,5 +227,23 @@ public interface MypageDao {
 	 */
 	public List<Integer> selectChatNoBymNo(int mNo);
 
+
+	/**
+	 * chat_participant, chat_room, mypage, member 테이블을 조인하여
+	 * 대화 목록을 조회한다.(상대방 정보 포함)
+	 * @param paging		페이징 정보 객체
+	 * @param chatNoList	채팅방 번호
+	 * @param mNo			회원 번호
+	 * @return				대화 목록
+	 */
+	public List<HashMap<String, Object>> selectAllMyChatList(@Param("paging")Paging paging, @Param("chatNoList")List<Integer> chatNoList, @Param("mNo")int mNo);
+
+
+	/**
+	 * 대화방의 최근 메시지를 조회한다.
+	 * @param integer	대화방 번호
+	 * @return			최근 메시지
+	 */
+	public Message selectMessageBycrNo(@Param("crNo")Integer chatRoomNo);
 
 }

@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import ppeonfun.dto.Board;
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.util.Paging;
 
@@ -217,9 +217,15 @@ public interface MypageService {
 	 * @param mNo		회원번호
 	 * @return			대화 목록
 	 */
-	public List<HashMap<String, Object>> getMessageList(Paging paging, int mNo);
+	public List<HashMap<String, Object>> getChatList(Paging paging, int mNo);
 
 
+	/**
+	 * 대화의 최근 메시지 내용을 조회한다.
+	 * @param chatNoList	채팅방번호
+	 * @return				최근 메시지
+	 */
+	public List<Message> getMessageList(List<Integer> chatNoList);
 
 
 }

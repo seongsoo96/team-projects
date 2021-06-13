@@ -234,6 +234,39 @@
  	WHERE m_no = #{mNo}
  	ORDER BY cp_no
  	</select>
+ 	
+ 	<select id="selectAllMyChatList" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	        SELECT rownum rnum, RES.* FROM (
+	            SELECT 
+	                CP.m_no, CR.cr_no, CR.cr_name, M.m_nick, MY.my_stored_name
+	            FROM
+	                chat_participant CP
+	                    INNER JOIN chat_room CR
+	                        ON CP.cr_no = CR.cr_no
+	                    INNER JOIN mypage MY
+	                        ON CP.m_no = MY.my_no
+	                    INNER JOIN member M
+	                        ON CP.m_no = M.m_no
+	            WHERE 1=1
+					<if test="chatNoList != null">
+					AND CP.cr_no IN
+					<foreach collection="chatNoList" item="chatNo" open="(" separator="," close=")">
+		            #{chatNo} 
+					</foreach>
+                   	AND CP.m_no != #{mNo}
+					</if>
+				ORDER BY CP.cr_no DESC
+	        ) RES
+	    )WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
+ 	
+	<select id="selectMessageBycrNo" parameterType="int" resultType="Message">
+	SELECT msg_no, msg_content, cp_no, msg_time, cr_no
+ 	FROM message 
+ 	WHERE cr_no = #{crNo} AND rownum = 1 
+ 	ORDER BY msg_no DESC	
+	</select>
  </mapper>  
     
   
