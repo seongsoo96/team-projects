@@ -252,12 +252,16 @@ public class BoardController {
 	}
     
     @RequestMapping(value="/comments/update", method=RequestMethod.POST )
-    public String commentUpdateProc(Comments comments,Model model) {
+    public void commentUpdateProc(Comments comments,Model modelm,Writer writer) {
        logger.info("/comments/update [POST]");
        logger.info("comments 수정 후 데이터 값 확인 : {}",comments );
        boardService.updateComment(comments);
        
-       return "user/board/comments/update";
+       try {
+    	   writer.append("{\"success\",true}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     @RequestMapping(value="/commentss/insert",method=RequestMethod.POST)
     public String commentssInsert(Commentss commentss,HttpSession session) {

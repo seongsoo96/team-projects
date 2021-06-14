@@ -18,7 +18,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type: "get"
-			, url: "/news/favorite"
+			, url: "/story/favorite"
 			, data: {"pNo" : '${info.pNo }'}
 			, dataType: "json"
 			, success: function( data ) {

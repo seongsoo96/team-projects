@@ -8,69 +8,11 @@
 
 <link rel="stylesheet" href="/resources/css/adminNotice.css">
 
-<script type="text/javascript">
-/* function array(orderbychk){
-	console.log( "얻어온 orderby의 값 : " + orderbychk );
-	
-	$.ajax({
-		type: "GET"
-		, url: "/admin/notice/list"
-		, data: {
-			orderby: orderbychk
-		}
-		, dataType: ""
-		, success: function(res){
-			$("#content").html(res)
-		}
-		, error: function(res){
-			
-		}
-	})
-} */
-
-/* function goPage(cPage, Cat, Sch, Ord){
-	$.ajax({
-		type: "GET"
-		, url: "/admin/notice/list"
-		, data: {
-			curPage: cPage,
-			category: Cat,
-			search: Sch,
-			orderby: Ord
-		}
-		, dataType: ""
-		, success: function(res){
-			
-		}
-		, error: function(res){
-			
-		}
-	})
-} */
-
-/* function prePage(curPage1, category1, search1, orderby1){
-	$.ajax({
-		type: "POST"
-		, url: "/admin/notice/list"
-		, data: {
-			curPage: curPage1,
-			category: category1,
-			search: search1,
-			orderby: orderby1
-		}
-		, dataType: ""
-		, success: function(res){
-			
-		}
-		, error: function(res){
-			
-		}
-	})
-} */
-</script>
+<%-- 현재시간을 변환(yyyyMMdd)하여 변수에 저장 --%>
+<fmt:formatDate value="<%=new Date() %>" pattern="yyMMdd" var="nowStr" />
 
 <div id="content">
-<h1>공지사항 관리</h1>
+	<h1>공지사항 관리</h1>
 <hr>
 
 <div class="anbody1">
@@ -82,21 +24,19 @@
 <table class="antable">
 <tr>
 	<th style="width: 5%"></th>
-	<th style="width: 65%">제목</th>
+	<th style="width: 60%">제목</th>
 	<th style="width: 10%">닉네임</th>
 	<th style="width: 10%">작성일</th>
 	<th style="width: 5%">조회</th>
-	<th style="width: 5%;" <%-- onclick="array(${orderby})" --%>>
+	<th style="width: 10%;" <%-- onclick="array(${orderby})" --%>>
 	<a class="arrayLink" href="/admin/notice/list?curPage=${paging.curPage }&orderby=${orderby }">좋아요▼</a></th>
 </tr>
-<%-- 현재시간을 변환(yyyyMMdd)하여 변수에 저장 --%>
-<fmt:formatDate value="<%=new Date() %>" pattern="yyMMdd" var="nowStr" />
 <c:forEach var="n" items="${nlist }">
 <fmt:formatDate value="${n.B_CREATE_DATE }" pattern="yyMMdd" var="brdStr" />
 	<tr>
 		<td>${n.B_NO }</td>
 		<td style="text-align: left; padding-left: 25px;">
-		<a class="titleLink" href="/admin/notice/view?bNo=${n.B_NO }">${n.B_TITLE }</a></td>
+		<a class="titleLink" href="/admin/notice/view?bNo=${n.B_NO }">${n.B_TITLE }&nbsp;[${n.COMMENTS+n.COMMENTSS }]</a></td>
 		<td>${n.M_NICK }</td>
 		<td>
 		<c:if test="${brdStr eq nowStr }">

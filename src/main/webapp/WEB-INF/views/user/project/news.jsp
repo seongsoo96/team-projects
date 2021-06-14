@@ -216,7 +216,79 @@ hr {
 	margin-bottom: 7px;
 }
 
+</style>
 
+
+<!-- 더보기 스타일 -->
+<style type="text/css">
+.newsDiv .view_more {
+	background-color: transparent!important;
+    padding: 0;
+    width: 100%;
+    font-size: 15px!important;
+    height: 52px!important;
+    border-width: 0;
+}
+
+.newsDiv .view_more.button {
+	transition-property: background-color,border-color,color,opacity;
+    transition-duration: .2s;
+    border: 0px solid rgba(0,0,0,.15);
+    border-radius: 3px;
+    background-color: #fff;
+    cursor: pointer;
+    padding: 0 1.41176em;
+    height: 48px;
+    vertical-align: middle;
+    line-height: 1;
+    color: rgba(0,0,0,.54);
+    font-size: 17px;
+    font-weight: 400;
+    box-sizing: border-box!important;
+    -webkit-appearance: none;
+    display: inline-block;
+    padding-top: .07em;
+    text-decoration: none;
+    background: none;
+    text-align: center;
+    align-items:flex-start;
+}
+
+.newsDiv .view_more em {
+    color: rgba(0,0,0,.3);
+    margin: 0 2px 0 1px;
+    font-style: normal;
+}
+
+.newsDiv .view_more i {
+    width: 16px;
+    height: 18px;
+    font-size: 18px;
+}
+
+.newsDiv .view_more .expand_more::before {
+    content: "⌄";
+    padding-bottom: 4px;
+}
+
+.newsDiv .view_more .icon::before {
+    display: inline-block;
+    margin-top: -.2em;
+    vertical-align: middle;
+    text-transform: none;
+    line-height: 1;
+    font-family: wadizicon!important;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+}
+</style>
+
+
+<!-- right style -->
+<style type="text/css">
 #right {
 	/* 영역 확인용 */ 
 /*   	border: 1px solid green;   */
@@ -381,27 +453,34 @@ hr {
 				</label>
 			</span>
 		</div><!-- .newsListHeader end -->
-		
-		<!-- 새소식 리스트 (a태그 안에 div 불가능한지)-->
-<!-- 		<a href="#" style="text-decoration: none;"> -->
-<!-- 			<div></div> -->
-<!-- 		</a> -->
 
+
+		<div>
 		<c:forEach items="${newsList }" var="news">
-		<div class="newsListDiv" style="cursor: pointer;" onclick="location.href='/news/view?nNo=${news.nNo}&pNo=${news.pNo }';">
-			<p>
-				<span class="category">${news.nCategory }</span>
-				<span class="division"></span>
-				<span class="schedule">오픈예정</span>
-			</p>
-			<p class="news_title">${news.nTitle }</p>
-			<p class="news_date">
-				<fmt:formatDate pattern="yyyy.MM.dd" value="${news.nCreateDate }"/>
-			</p>
-		</div>
+			<div class="newsListDiv" style="cursor: pointer;" onclick="location.href='/news/view?nNo=${news.nNo}&pNo=${news.pNo }';">
+				<p>
+					<span class="category">${news.nCategory }</span>
+					<span class="division"></span>
+					<span class="schedule">오픈예정</span>
+				</p>
+				<p class="news_title">${news.nTitle }</p>
+				<p class="news_date">
+					<fmt:formatDate pattern="yyyy.MM.dd" value="${news.nCreateDate }"/>
+				</p>
+			</div>
 		</c:forEach>
+		</div>
 		
-	</div>
+		<!-- 더보기 버튼 -->
+		<button id="btnViewMore" type="button" class="view_more button less" onclick="viewMore(${paging.curPage})">
+			더보기
+			<em class="listCount">9</em>
+<%-- 			<em>/${paging.totalCount }</em> --%>
+			<i class="icon expand_more"></i>
+		</button>
+		
+		
+	</div><!-- .newsDiv end -->
 </div><!-- #left end -->
 
 
