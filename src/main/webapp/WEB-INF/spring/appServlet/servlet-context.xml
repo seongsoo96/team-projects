@@ -40,6 +40,10 @@
 			<exclude-mapping path="/user/mypage/error"/>
 		  <beans:bean class="ppeonfun.util.interceptor.user.MypageInterceptor"/>	
 		</interceptor>
+		<interceptor>
+		  <mapping path="/user/maker/**"/>
+		  <beans:bean class="ppeonfun.util.interceptor.user.UserMakerInterceptor"/>	
+		</interceptor>
 	</interceptors>
 	
 	

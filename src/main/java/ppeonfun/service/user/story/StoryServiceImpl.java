@@ -77,6 +77,6 @@ public class StoryServiceImpl implements StoryService {
 	
 	@Override
 	public int getTotalCntFavorite(Favorite favorite) {
-		return storyDao.selectCntFavorite(favorite);
+		return storyDao.getTotalCntFavorite(favorite);
 	}
 }

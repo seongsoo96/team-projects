@@ -95,7 +95,7 @@ hr {
 	float: left;
 	width: 60%;
 	height: 400px;
-	margin-left: 5px;
+/* 	margin-left: 5px; */
 /* 	padding-left: 10px; */
 }
 

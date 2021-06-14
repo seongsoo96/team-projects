@@ -44,12 +44,24 @@ public class StoryController {
 		//새소식 개수
 		int newsCount = storyService.newsCount(news);
 		
-		//로그인 상태 확인 후 찜 작업 수행
-		
 		//찜 상태 조회
 		Favorite favorite = new Favorite();
 		favorite.setpNo(news.getpNo()); //프로젝트 번호
-		favorite.setmNo(((Integer)session.getAttribute("mNo")).intValue()); //회원번호
+		
+		//로그인 되어있을 경우
+		if(session.getAttribute("mNo") != null) {
+		
+			favorite.setmNo(((Integer)session.getAttribute("mNo")).intValue()); //회원번호
+			
+			//회원의 찜 상태 확인
+			boolean isFav = storyService.isFav(favorite); 
+//					logger.info("찜 상태 확인 {}", isFav);
+			
+			model.addAttribute("isFav", isFav); //회원의 찜 상태 전달
+			
+		} else {  //로그인 안되어있을 경우
+			model.addAttribute("isFav", false); //회원의 찜 상태 전달
+		}
 		
 		//찜 상태 확인
 		boolean isFav = storyService.isFav(favorite); 
@@ -61,7 +73,6 @@ public class StoryController {
 		model.addAttribute("totalAmount", total_amount);
 		model.addAttribute("newsCnt", newsCount);
 		
-		model.addAttribute("isFav", isFav); //회원의 찜 상태 전달
 		model.addAttribute("cntFav", storyService.getTotalCntFavorite(favorite)); //총 좋아요 횟수
 		
 		return "/user/project/story";

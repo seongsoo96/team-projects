@@ -95,9 +95,13 @@ public class RewardController {
 		
 		logger.info("reward result{}", reward);
 		
-		rewardService.removeReward(reward);
 		Project project = rewardService.getProject(reward);
+		logger.info("project ", project);
+		
+		rewardService.removeReward(reward);
 		List<Reward> rewardList = rewardService.viewRewardList(project);
+		
+		
 		
 		model.addAttribute("rewardList", rewardList);
 		

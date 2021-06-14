@@ -59,6 +59,12 @@
 		WHERE p_no = #{pNo }
 	</select>
 	
+	<select id="getTotalCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE p_no = #{pNo }
+	</select>
+	
 	<delete id="deleteFavorite" parameterType="ppeonfun.dto.Favorite">
 		DELETE favorite
 		WHERE m_no = #{mNo }

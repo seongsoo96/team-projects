@@ -254,7 +254,7 @@ function searchEnter(){
 	
 	<ul class="hdropdown">
 		<li><a href="/user/project/list">펀딩하기</a></li>
-		<li><a href="#">오픈예정</a></li>
+		<li><a href="/user/open/list">오픈예정</a></li>
 		<li>
 			<a href="#">더보기</a>
 			<ul>

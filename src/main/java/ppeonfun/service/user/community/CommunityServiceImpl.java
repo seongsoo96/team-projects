@@ -1,11 +1,15 @@
 package ppeonfun.service.user.community;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ppeonfun.dao.user.community.CommunityDao;
+import ppeonfun.dto.Community;
+import ppeonfun.dto.CommunityJoin;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
@@ -73,7 +77,21 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	@Override
 	public int getTotalCntFavorite(Favorite favorite) {
-		return communityDao.selectCntFavorite(favorite);
+		return communityDao.getTotalCntFavorite(favorite);
+	}
+	
+	@Override
+	public List<CommunityJoin> commuList(CommunityJoin communityJoin) {
+		return communityDao.selectList(communityJoin);
+	}
+	
+	@Override
+	public void writeCommunity(Community community) {
+		if("".equals(community.getComContent())) { //내용없을 때 삽입 안됨
+			return;
+		}
+		
+		communityDao.insertCommunity(community);
 	}
 	
 }

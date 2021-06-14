@@ -26,6 +26,7 @@ public class ProjectServiceImpl implements ProjectService {
 		//Paging객체 생성
 		Paging paging = new Paging(totalCount, inData.getCurPage(),6);
 		paging.setCategory(inData.getCategory());
+		paging.setSearch(inData.getSearch());
 		return paging;
 	}
 	@Override

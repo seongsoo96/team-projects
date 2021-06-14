@@ -2,6 +2,7 @@ package ppeonfun.service.user.mypage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dao.user.mypage.MypageDao;
+import ppeonfun.dto.Board;
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.util.Paging;
 
@@ -181,11 +185,15 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public Paging getPaging(int curPage, int mNo) {
+	public Paging getPaymPaging(int curPage, int mNo) {
 		
 		int totalCount = mypageDao.selectCntPayment(mNo);
 		
-		return new Paging(totalCount, curPage, 6);
+		if( totalCount > 0 ) {
+			return new Paging(totalCount, curPage, 6);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -202,5 +210,101 @@ public class MypageServiceImpl implements MypageService {
 	public List<HashMap<String, Object>> getPaybackSum(int mNo) {
 		return mypageDao.selectPaybSumByNo(mNo);
 	}
+
+	@Override
+	public Paging getFavoritePaging(int curPage, int mNo) {
+		int totalCount = mypageDao.selectCntFavorite(mNo);
+		
+		if(totalCount > 0) {
+			return new Paging(totalCount, curPage, 6);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo) {
+		return mypageDao.selectAllMyFavoriteList(paging, mNo);
+	}
+
+	@Override
+	public Paging getFundCommPaging(int curPage, int mNo) {
+		int totalCount = mypageDao.selectCntFundComm(mNo);
+		
+		if(totalCount > 0 ) {
+			return new Paging(totalCount, curPage, 5);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getMyFundCommList(Paging paging, int mNo) {
+		return mypageDao.selectAllMyFundCommList(paging, mNo);
+	}
+
+	@Override
+	public CommunityAnswer getCommentAnswerBycomNo(int mNo, int comNo) {
+		return mypageDao.selectCommAnsBycomNo(mNo, comNo);
+	}
+
+	@Override
+	public Paging getMyBoardPaging(int curPage, int mNo) {
+		int totalCount = mypageDao.selectCntMyBoard(mNo);
+		
+		if(totalCount > 0) {
+			return new Paging(totalCount, curPage);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getMyBoardList(Paging paging, int mNo) {
+		return mypageDao.selectAllBoardBymNo(paging, mNo);
+	}
+
+	@Override
+	public Paging getMessagePaging(int curPage, int mNo) {
+		int totalCount = mypageDao.selectCntChatBymNo(mNo);
+		
+		if(totalCount > 0 ) {
+			return new Paging(totalCount, curPage, 5);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getChatList(Paging paging, int mNo) {
+		
+		//회원이 참여중인 채팅방 번호를 조회한다.
+		List<Integer> chatNoList = mypageDao.selectChatNoBymNo(mNo);
+		logger.info("채팅방 번호 목록:{}", chatNoList);
+		
+		//회원번호가 다르면서 채팅방 번호가 같은 목록 조회(상대방 정보 까지 조회)
+		List<HashMap<String, Object>> msgList = null;
+		if(chatNoList != null) {
+				msgList = mypageDao.selectAllMyChatList(paging, chatNoList, mNo);
+		} 
+		return msgList;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getMessageList(List<Integer> chatNoList) {
+		List<HashMap<String, Object>> msgList = new ArrayList<HashMap<String,Object>>();
+		HashMap<String, Object> msgMap = null;
+		for(int i = 0; i < chatNoList.size(); i++) {
+			msgMap = mypageDao.selectMessageBycrNo(chatNoList.get(i));
+			msgList.add(msgMap);
+		}
+		return msgList;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getDetailMsg(int crNo) {
+		return mypageDao.selectAllMessageContent(crNo);
+	}
+
 
 }

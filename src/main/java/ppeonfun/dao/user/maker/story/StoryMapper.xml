@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ppeonfun.dao.user.maker.story.StoryDao">
+<select id="selectByState" resultType="Project" parameterType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
+  
+  <select id="selectIsStory" resultType="int" parameterType="Project">
+SELECT count(*) FROM story where p_no = #{pNo}
+  </select>
+  
+  <select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  <select id="selectStory" resultType="Story" parameterType="Project">
+  SELECT * FROM Story where p_no = #{pNo}
+  </select>
+ <update id="updateProjectState" parameterType="Story">
+  	update project set p_story = (select s_state FROM story where p_no=#{pNo}) where p_no=#{pNo}
+  </update>
+  <insert id="insertStory" parameterType="Story">
+  	<selectKey order="BEFORE" resultType="int" keyProperty="sNo">
+  		SELECT story_SEQ.nextval FROM dual
+  	</selectKey>
+  	insert into story(s_no,p_no,s_url,s_summery,s_story,s_state) values(#{sNo}, #{pNo}, #{sUrl}, #{sSummery}, #{sStory}, #{sState})
+  </insert>
+  
+  <insert id="insertStoryFile" parameterType="StoryFile">
+  	<selectKey order="BEFORE" keyProperty="sfNo" resultType="int">
+  		SELECT story_file_SEQ.nextval FROM dual
+  	</selectKey>
+  	insert into story_file(sf_no,s_no,sf_origin_name,sf_stored_name,sf_size,sf_content_type) values(#{sfNo}, #{sNo}, #{sfOriginName}, #{sfStoredName}, #{sfSize}, #{sfContentType})
+  </insert>
+  
+  <select id="selectAllStroyFile" resultType="StoryFile" parameterType="Story">
+  	SELECT * FROM story_file WHERE s_no = #{sNo}
+  </select>
+  
+  <delete id="deleteStoryFile" parameterType="StoryFile">
+  	DELETE FROM story_file where sf_No = #{sfNo}
+  	
+  </delete>
+  <update id="modifyStory" parameterType="Story">
+  UPDATE Story SET s_url = #{sUrl},s_summery=#{sSummery},s_story=#{sStory},s_state=#{sState} WHERE s_no = #{sNo}
+  </update>
+  
+  <select id="selectProject" parameterType="Project" resultType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
+  
+</mapper>

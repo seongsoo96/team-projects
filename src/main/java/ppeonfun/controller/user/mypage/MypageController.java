@@ -2,6 +2,7 @@ package ppeonfun.controller.user.mypage;
 
 import java.io.IOException; 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.service.user.member.MemberService;
 import ppeonfun.service.user.mypage.MypageService;
@@ -243,9 +246,15 @@ public class MypageController {
 		
 		int mNo = (int) session.getAttribute("mNo");
 		
+		Paging paging = mypageService.getPaymPaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
+		
 		//전체 펀딩 내역 조회
-		Paging paging = mypageService.getPaging(curPage, mNo);
-		List<Map<String, Object>> totalList = mypageService.getMyFundingListAll(paging, mNo);
+		List<Map<String, Object>> totalList = null;
+		
+		if(paging != null) {
+			totalList = mypageService.getMyFundingListAll(paging, mNo);	
+		}
 		logger.info("totalList: {}", totalList);
 		
 		model.addAttribute("paging", paging);
@@ -281,7 +290,7 @@ public class MypageController {
 	}
 	
 	
-	@RequestMapping(value = "/fundingchart/payback")
+	@RequestMapping(value="/fundingchart/payback")
 	public String viewMyPayback(HttpSession session, Model model) {
 		logger.info("***** /user/mypage/fundingchart/payback START *****");
 		
@@ -293,6 +302,141 @@ public class MypageController {
 		model.addAttribute("paystate","payback");
 		return "/user/mypage/fundingchart";
 	}
+	
+	
+	/* 서포터 */
+	
+	//마이페이지 좋아요--------------------------------------------------------------------
+	@RequestMapping(value="/favorite", method=RequestMethod.GET)
+	public void viewMyFavorite(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+		logger.info("***** /user/mypage/favorite [GET] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
+		
+		Paging paging = mypageService.getFavoritePaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
+		
+		//회원이 좋아요한 프로젝트 목록을 조회한다.
+		List<HashMap<String, Object>> favoriteList = null;
+
+		if(paging != null) {
+			favoriteList = mypageService.getMyFavoriteList(paging, mNo);
+		}
+		
+		logger.info("좋아요 목록 {}", favoriteList);
+		model.addAttribute("favoriteList", favoriteList);
+		model.addAttribute("paging", paging);
+	}
+	
+	
+	//마이페이지 내가 쓴 글--------------------------------------------------------------------
+	
+	@RequestMapping(value="/fundcomm", method=RequestMethod.GET)
+	public void viewMyFundComm(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+		logger.info("***** /user/mypage/fundcomm [GET] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
+		
+		Paging paging = mypageService.getFundCommPaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
+		
+		//회원이 프로젝트 커뮤니티에 작성한 글을 조회한다.
+		List<HashMap<String, Object>> fundCommList = null;
+
+		if(paging != null) {
+			fundCommList = mypageService.getMyFundCommList(paging, mNo);
+		}
+		
+		logger.info("펀딩 커뮤니티에 작성한 글 목록 {}", fundCommList);
+		model.addAttribute("fundCommList", fundCommList);
+		model.addAttribute("paging", paging);
+	}
+	
+	@RequestMapping(value="/fundcomm/ajax", method=RequestMethod.POST)
+	public String getMyFundCommAnswer(@RequestParam(required=true) int comNo, HttpSession session, Model model) {
+		logger.info("***** /user/mypage/fundcomm/ajax [POST] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
+
+		//작성 글에 대한 답변을 조회한다.
+		CommunityAnswer answer = mypageService.getCommentAnswerBycomNo(mNo, comNo);
+		
+		logger.info("펀딩 커뮤니티 답변 내용 {}", answer);
+		model.addAttribute("answer", answer);
+		
+		return "jsonView";
+	}
+	
+	@RequestMapping(value="/board", method=RequestMethod.GET)
+	public void viewMyBoard(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+		logger.info("***** /user/mypage/board [GET] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
+		
+		Paging paging = mypageService.getMyBoardPaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
+		
+		//회원이 게시판에 작성한 글 목록을 조회한다.
+		List<HashMap<String, Object>> myBoardList = null;
+
+		if(paging != null) {
+			 myBoardList = mypageService.getMyBoardList(paging, mNo);
+		}
+		
+		logger.info("게시판에 작성한 글 목록 {}", myBoardList);
+		model.addAttribute("boardList", myBoardList);
+		model.addAttribute("paging", paging);
+	}
+	
+	//마이페이지 메시지--------------------------------------------------------------------
+
+	@RequestMapping(value="/message", method=RequestMethod.GET)
+	public void viewMessage(HttpSession session, @RequestParam(defaultValue="1")int curPage, Model model) {
+		logger.info("***** /user/mypage/message [GET] START *****");
+		
+		int mNo = (int) session.getAttribute("mNo");
+
+		//메시지 페이징 객체 생성
+		Paging paging = mypageService.getMessagePaging(curPage, mNo);
+		logger.info("페이징:{}", paging);
+		
+		//참여중인 대화 목록 조회
+		List<HashMap<String, Object>> chatList = null;
+		if(paging != null) {
+			chatList = mypageService.getChatList(paging, mNo);
+		}
+		logger.info("대화 목록:{}", chatList);
+
+		
+		//최근 메시지 내용 조회
+		List<Integer> chatNoList = new ArrayList<Integer>();
+		List<HashMap<String, Object>> msgList = null;
+		
+		if(chatList != null) {
+			for(int i = 0; i < chatList.size(); i++) {
+				chatNoList.add(Integer.parseInt(String.valueOf(chatList.get(i).get("CR_NO"))));
+			}
+			logger.info("채팅방번호조회:{}", chatNoList);
+			
+			msgList = mypageService.getMessageList(chatNoList);
+			logger.info("메시지내용조회:{}", msgList);
+		}
+		
+		model.addAttribute("paging", paging);
+		model.addAttribute("chatList", chatList);
+		model.addAttribute("msgList", msgList);
+	}
+	
+	@RequestMapping(value="/message", method=RequestMethod.POST)
+	public String viewDetailMessage(@RequestParam(required=true) int crNo, HttpSession session, Model model) {
+		logger.info("***** /user/mypage/message [POST] START *****");
+		
+		List<HashMap<String, Object>> detailMsg = mypageService.getDetailMsg(crNo);
+		
+		model.addAttribute("detailMsg", detailMsg);
+		return "/user/mypage/detailMsg";
+	}
+	
 	
 	//마이페이지 오류--------------------------------------------------------------------
 	@RequestMapping(value = "/error")

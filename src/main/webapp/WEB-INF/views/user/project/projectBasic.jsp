@@ -50,7 +50,7 @@ hr {
 /*   	border: 1px solid red;   */
 	float: left;
 	width: 60%;
-	margin-left: 5px;
+/* 	margin-left: 5px; */
 /* 	padding-left: 10px; */
 }
 

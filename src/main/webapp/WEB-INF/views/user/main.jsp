@@ -68,10 +68,10 @@ function pagingSelect(pagingNumber) {
 		<div>
 			<c:choose>
 				<c:when test = "${fn:contains(info.iStoredName, 'test')}">
-					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/subLogo.png" width="200" height="150"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/subLogo.png" style="width:200px; height:150px;"/></a>
 				</c:when>
 				<c:otherwise>
-					<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }" width="200" height="150"/></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }" style="width:200px; height:150px;"/></a>
 				</c:otherwise>
 			</c:choose>
 			<p>${info.iTitle }</p>

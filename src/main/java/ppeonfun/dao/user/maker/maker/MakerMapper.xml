@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ppeonfun.dao.user.maker.maker.MakerDao">
+  	<select id="selectByState" resultType="Project" parameterType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
+  
+  <select id="selectIsMaker" resultType="int" parameterType="Project">
+SELECT count(*) FROM maker where p_no = #{pNo}
+  </select>
+  
+  <select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  <select id="selectMaker" resultType="Maker" parameterType="Project">
+  SELECT * FROM maker where p_no = #{pNo}
+  </select>
+  <insert id="insertMaker" parameterType="Maker">
+  	<selectKey order="BEFORE" keyProperty="maNo" resultType="int">
+  		SELECT maker_SEQ.nextval FROM dual
+  	</selectKey>
+  	INSERT INTO Maker(ma_no,p_no,ma_title,ma_origin_name,ma_stored_name,ma_email,ma_phone,ma_state,ma_size,ma_content_type) 
+  	values(#{maNo}, #{pNo}, #{maTitle}, #{maOriginName}, #{maStoredName}, #{maEmail}, #{maPhone}, #{maState}, #{maSize}, #{maContentType})
+  </insert>
+  <update id="updateProjectState" parameterType="Maker">
+  	update project set p_maker = (select ma_state FROM Maker where p_no=#{pNo}) where p_no=#{pNo}
+  </update>
+  <update id="updateMaker" parameterType="Maker">
+  UPDATE Maker SET  ma_title=#{maTitle},ma_origin_name=#{maOriginName},ma_stored_name=#{maStoredName},ma_email=#{maEmail},ma_phone=#{maPhone},ma_state=#{maState},ma_size=#{maSize},ma_content_type=#{maContentType}
+  WHERE ma_no = #{maNo}
+  </update>
+  
+  </mapper>
