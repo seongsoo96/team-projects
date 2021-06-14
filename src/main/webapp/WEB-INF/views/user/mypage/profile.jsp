@@ -7,20 +7,22 @@
 <style type="text/css">
 /* 프로필 사진 */
 .profile-img {position:relative; height:170px; text-align:center;}
-.profile-img img {width:130px; height:130px; border:2px solid tomato; margin:15px 0; border-radius:50%;}
+.profile-img img {width:130px; height:130px; margin:15px 0; border-radius:50%;}
 
 /* 요소 가운데 정렬 및 글씨 크기 지정 */
 .edit-img-btns, .my-introduce, .submit-btns {text-align:center; font-size:16px;}
 
 /* 프로필 사진 변경 버튼 */
-.edit-img-btns button {margin:0 5px 25px; background:none; border:none;}
+.edit-img-btns button {margin:0 5px 25px; background:none; border:none; text-decoration:underline;}
 .edit-img-btns button:hover {color:#4EE2EC;}
 
 /* 소개란 */
-.my-introduce textarea{margin:5px 0 25px; width:277px; height:90px; resize:none; border-radius:5px;}
+.form-group {width:50%; margin:10px auto 30px auto;}
+.form-group label {font-size:16px;}
+.form-group textarea {resize:none; width:80%; margin:0 auto; height:110px; overflow-y:auto; overflow-x:hidden;}
 
-/* 수정 완료, 취소 버튼 */
-.submit-btns button {margin:0 10px; width:100px; background:none; border: 1px solid rgba(0,0,0, 0.2); border-radius:5px;}
+/* 수정 완료 버튼 */
+.submit-btns button {margin:0 10px; width:65px; height:35px; background:none; border: 1px solid rgba(0,0,0, 0.2); border-radius:5px;}
 .submit-btns button:hover {border-color:#4EE2EC;}
 </style>
 
@@ -44,14 +46,16 @@
 		<button type="button" id="btnChangeImg">수정</button>
 		<button type="button" id="btnDeleteImg" onclick="deleteImg()">삭제</button>
 	</div>
-	<div class="my-introduce">
-		<h4>간단한 한 마디로 나를 소개 해주세요.</h4>
-		<c:if test="${not empty profile.myIntroduce }">
-			<textarea id="introduce" name="introduce">${profile.myIntroduce }</textarea>
-		</c:if>
-		<c:if test="${empty profile.myIntroduce }">
-			<textarea id="introduce" name="introduce"></textarea>
-		</c:if>
+	<div class="text-center">
+		<div class="form-group">
+			<label for="introduce">간단한 한 마디로 나를 소개 해주세요.</label>
+			<c:if test="${not empty profile.myIntroduce }">
+				<textarea id="introduce" class="form-control" name="introduce">${profile.myIntroduce }</textarea>
+			</c:if>
+			<c:if test="${empty profile.myIntroduce }">
+				<textarea id="introduce" class="form-control" name="introduce"></textarea>
+			</c:if>
+		</div>
 	</div>
 	<div class="submit-btns">
 		<button type="button" id="btnComplete">확인</button>
