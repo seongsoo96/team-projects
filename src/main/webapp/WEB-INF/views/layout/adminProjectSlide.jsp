@@ -1,5 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="requstUri" value="${requestScope['javax.servlet.forward.request_uri']}"></c:set> 
+<c:set var="uri" value="${fn:split(requstUri,'/')}"></c:set>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	<c:forEach var="info" items="${uri }" varStatus="url">
+		console.log("${info }");
+		console.log("${url.count}");
+		<c:if test="${url.count eq 2 }">
+			<c:choose>
+				<c:when test="${info eq 'news'}">$( '#news' ).addClass( 'background' )</c:when>
+				<c:when test="${info eq 'open'}">$( '#open' ).addClass( 'background' )</c:when>
+				<c:when test="${info eq 'supporter'}">$( '#supporter' ).addClass( 'background' )</c:when>
+				<c:when test="${info eq 'funding'}">$( '#funding' ).addClass( 'background' )</c:when>
+				<c:otherwise>$( '#project' ).addClass( 'background' )</c:otherwise>
+			</c:choose>
+		</c:if>
+	</c:forEach>
+	
+})
+
+</script>
+
+
 <style type="text/css">
 .side_list{
 	position: absolute;
@@ -39,11 +66,26 @@
     
 <div class="side_list">
 	<div class="title">
+		
 		<h3>${name }의<br>프로젝트 번호:${project.pNo}</h3>
 	</div>
-	<a href="/admin/project/view?pNo=${project.pNo}" class="side_link background">펀딩준비</a>
-	<a href="#" class="side_link">새소식</a>
-	<a href="#" class="side_link">오픈예정</a>
-	<a href="#" class="side_link">서포터</a>
-	<a href="#" class="side_link">펀딩현황</a>
+	
+	
+	<c:choose>
+		<c:when test="${project.pState ne 'Y' }">
+			<a href="/admin/project/view?pNo=${project.pNo}" id="project" class="side_link background">펀딩준비</a>
+			<a href="#" id="news" class="side_link">새소식&nbsp;<i class="fas fa-lock"></i></a>
+			<a href="#" id="open" class="side_link">오픈예정&nbsp;<i class="fas fa-lock"></i></a>
+			<a href="#" id="supporter" class="side_link">서포터&nbsp;<i class="fas fa-lock"></i></a>
+			<a href="#" id="funding" class="side_link">펀딩현황&nbsp;<i class="fas fa-lock"></i></a>
+		</c:when>
+		<c:otherwise>
+			<a href="/admin/project/view?pNo=${project.pNo}" id="project" class="side_link">펀딩준비</a>
+			<a href="/admin/news/list?pNo=${project.pNo}" id="news" class="side_link">새소식&nbsp;<i class="fas fa-lock-open"></i></a>
+			<a href="/admin/open/requirement?pNo=${project.pNo}" id="open" class="side_link">오픈예정&nbsp;<i class="fas fa-lock-open"></i></a>
+			<a href="/admin/supporter/list?pNo=${project.pNo}" id="supporter" class="side_link">서포터&nbsp;<i class="fas fa-lock-open"></i></a>
+			<a href="/admin/funding/view?pNo=${project.pNo}" id="funding" class="side_link">펀딩현황&nbsp;<i class="fas fa-lock-open"></i></a>
+		</c:otherwise>
+	</c:choose>
+	
 </div>

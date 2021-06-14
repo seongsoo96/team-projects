@@ -150,7 +150,7 @@ a:hover {text-decoration: none;}
 			<!-- 메이커 모드 -->
 			<div class="mymenu" id="maker-menu">
 				<div class="newpj">
-					<a href="#">
+					<a href="/user/maker/project/list">
 						<img src="/resources/img/test1.png"><br>
 						<span>새 프로젝트 개설하기</span>
 					</a>

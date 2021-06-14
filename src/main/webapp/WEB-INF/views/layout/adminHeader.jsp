@@ -49,7 +49,7 @@ $(document).ready(function(){
 	    </ul>
 	    <div>List</div>
 	    <ul>
-	      <li><a href="#">사용자 관리</a></li>
+	      <li><a href="/admin/user/list">사용자 관리</a></li>
 	      <li><a href="/admin/notice/list">공지사항 관리</a></li>
 	      <li><a href="/admin/board/list">게시판 관리</a></li>
 	      <li><a href="/admin/project/list">프로젝트 관리</a></li>

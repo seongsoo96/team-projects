@@ -14,7 +14,7 @@ import ppeonfun.dto.Requirement;
 import ppeonfun.dto.RequirementFile;
 import ppeonfun.service.admin.requirement.RequirementService;
 
-@Controller("user.RequirementController")
+@Controller("admin.RequirementController")
 @RequestMapping(value="/admin/requirement")
 public class RequirementController {
 	private static final Logger logger = LoggerFactory.getLogger(RequirementController.class);
@@ -39,11 +39,12 @@ public class RequirementController {
 		String name = requirementService.selectByName(project);
 		Requirement requirement = requirementService.viewRequirement(project);
 		RequirementFile requirementFile = requirementService.viewRequirementFile(requirement);
+		project = requirementService.viewProject(project);
 		
 		model.addAttribute("requirement", requirement);
 		model.addAttribute("requirementFile", requirementFile);
 		model.addAttribute("name", name);
-		
+		model.addAttribute("project", project);
 		return null;
 	}
 	

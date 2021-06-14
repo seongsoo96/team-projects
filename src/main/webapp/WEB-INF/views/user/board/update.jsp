@@ -32,7 +32,6 @@ $(document).ready(function(){
 	$("#btnUpdate").click(function(){
 		//스마트 에디터의 내용을 <textarea>에 적용하는 함수를 호출한다
 		submitContents( $("#btnUpdate") )
-		
 		$("#delFile").val(true)
 	})
 	$("#delFile").click(function(){
