@@ -7,7 +7,10 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import ppeonfun.dto.Board;
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.util.Paging;
 
@@ -141,5 +144,116 @@ public interface MypageDao {
 	 * @return		카테고리별 환불 금액
 	 */
 	public List<HashMap<String, Object>> selectPaybSumByNo(int mNo);
+
+	
+	/**
+	 * 회원이 좋아요한 프로젝트 수를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		좋아요 한 프로젝트 수
+	 */
+	public int selectCntFavorite(int mNo);
+	
+	
+	/**
+	 * favorite, project, information 테이블을 조인하여
+	 * 회원이 좋아요 한 프로젝트 목록을 조회한다.
+	 * 
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			좋아한 프로젝트 목록
+	 */
+	public List<HashMap<String, Object>> selectAllMyFavoriteList(@Param("paging")Paging paging, @Param("mNo")int mNo);
+
+
+	/**
+	 * 회원이 펀딩 커뮤니티에 작성한 글의 수를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		작성한 글 수
+	 */
+	public int selectCntFundComm(int mNo);
+
+
+	/**
+	 * community, project 테이블을 조인하여
+	 * 회원이 작성한 글 목록을 조회한다.
+	 * 
+	 * @param paging 	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			작성한 글 목록
+	 */
+	public List<HashMap<String, Object>> selectAllMyFundCommList(@Param("paging")Paging paging, @Param("mNo")int mNo);
+
+
+	/**
+	 * community, community_ans 테이블을 조인하여
+	 * 회원이 작성한 글의 답변을 조회한다.
+	 * 
+	 * @param mNo		회원번호
+	 * @param comNo		커뮤니티 질문 번호
+	 * @return			답변 DTO
+	 */
+	public CommunityAnswer selectCommAnsBycomNo(@Param("mNo")int mNo, @Param("comNo")int comNo);
+
+
+	/**
+	 * 회원이 작성한 게시글의 수를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		게시글 수
+	 */
+	public int selectCntMyBoard(int mNo);
+
+
+	/**
+	 * board 테이블에서 회원이 작성한 게시글을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			게시글 목록
+	 */
+	public List<HashMap<String, Object>> selectAllBoardBymNo(@Param("paging")Paging paging, @Param("mNo")int mNo);
+
+
+	/**
+	 * 회원이 참여중인 채팅방의 수를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		채팅방 수
+	 */
+	public int selectCntChatBymNo(int mNo);
+
+
+	/**
+	 * 회원이 참여중인 채팅방 번호를 조회한다.
+	 * @param mNo	회원번호
+	 * @return		채팅방 번호 목록
+	 */
+	public List<Integer> selectChatNoBymNo(int mNo);
+
+
+	/**
+	 * chat_participant, chat_room, mypage, member 테이블을 조인하여
+	 * 대화 목록을 조회한다.(상대방 정보 포함)
+	 * @param paging		페이징 정보 객체
+	 * @param chatNoList	채팅방 번호
+	 * @param mNo			회원 번호
+	 * @return				대화 목록
+	 */
+	public List<HashMap<String, Object>> selectAllMyChatList(@Param("paging")Paging paging, @Param("chatNoList")List<Integer> chatNoList, @Param("mNo")int mNo);
+
+
+	/**
+	 * message, chat_participant, member 테이블을 조인하여
+	 * 대화방의 최근 메시지를 조회한다.
+	 * @param integer	대화방 번호
+	 * @return			최근 메시지
+	 */
+	public HashMap<String, Object> selectMessageBycrNo(@Param("crNo")Integer chatRoomNo);
+
+
+	/**
+	 * message, chat_participant, member, chat_room 테이블을 조인하여
+	 * 해당 대화방의 모든 메시지를 조회한다.
+	 * @param crNo 	대화방 번호
+	 * @return		대화 상세 내용(모든 메시지)
+	 */
+	public List<HashMap<String, Object>> selectAllMessageContent(int crNo);
 
 }
