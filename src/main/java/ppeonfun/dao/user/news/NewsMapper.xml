@@ -80,6 +80,7 @@
 		SELECT count(*)
 		FROM favorite
 		WHERE p_no = #{pNo }
+			AND m_no = #{mNo }
 	</select>
 	
 	<select id="getTotalCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
@@ -98,5 +99,11 @@
 		INSERT INTO favorite (fav_no, p_no, m_no)
 		VALUES (favorite_seq.nextval, #{pNo }, #{mNo })
 	</insert>
+	
+<!-- 	<select id="selectCntNews" resultType="int" parameterType="ProjectPaging"> -->
+<!-- 		SELECT COUNT(*)  -->
+<!-- 		FROM news -->
+<!-- 		WHERE p_no = #{pNo } -->
+<!-- 	</select> -->
 
 </mapper>

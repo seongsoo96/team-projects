@@ -59,6 +59,7 @@
 		SELECT count(*)
 		FROM favorite
 		WHERE p_no = #{pNo }
+			AND m_no = #{mNo }
 	</select>
 	
 	<select id="getTotalCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
