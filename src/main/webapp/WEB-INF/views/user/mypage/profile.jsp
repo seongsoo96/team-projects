@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 
 <style type="text/css">
@@ -29,12 +30,14 @@
 	
 	<form action="/user/mypage/profile" method="post">
 	<div class="profile-img">
-		<c:if test="${not isDefaultImg }">
-			<img src="/upload/profile/${profile.myStoredName }" id="myimg">
-		</c:if>
-		<c:if test="${isDefaultImg }">
-			<img src="/resources/img/${profile.myOriginName }" id="myimg">
-		</c:if>
+		<c:choose>
+			<c:when test="${fn:contains(profile.myStoredName, 'test') or ('member.png' eq profile.myStoredName) }">
+				<img id="myimg" src="/resources/img/member.png">
+			</c:when>
+			<c:otherwise>
+				<img id="myimg" class="profile-img" src="/upload/profile/${profile.myStoredName }">
+			</c:otherwise>
+		</c:choose>
 	</div>
 	<div class="edit-img-btns">
 		<input type="file" id="profileImgFile" accept="image/*" style="display:none;" />
@@ -51,7 +54,6 @@
 		</c:if>
 	</div>
 	<div class="submit-btns">
-		<button type="button" id="btnCancle">취소</button>
 		<button type="button" id="btnComplete">확인</button>
 	</div>
 	</form>
@@ -72,11 +74,6 @@ $(document).ready(function() {
 	// '확인' 클릭 시 introduce 전송
 	$("#btnComplete").click(function() {
 		$("form").submit()
-	})
-	
-	// '취소' 클릭 시 마이페이지 홈으로 이동
-	$("#btnCancle").click(function() {
-		location.href = "/user/mypage/home"
 	})
 	
 })
