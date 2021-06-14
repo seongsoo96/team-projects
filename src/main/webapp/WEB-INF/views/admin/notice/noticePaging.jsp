@@ -25,10 +25,10 @@
 		<%-- 이전 페이징 리스트로 가기 --%>
 		<c:choose>
 			<c:when test="${paging.startPage gt paging.pageCount }">
-				<%-- <li onclick="goPage(${paging.startPage - paging.pageCount },${category }, ${search }, ${orderby })"
+				<li><%-- <li onclick="goPage(${paging.startPage - paging.pageCount },${category }, ${search }, ${orderby })"
 					style="color: #4EEDED; margin: 0px 5px; cursor: pointer;">&lt;이전</li> --%>
 				<a href="/admin/notice/list?curPage=${paging.startPage - paging.pageCount }&${category}&${search}&${orderby}"
-				style="border: none; color: black;">&lt;이전</a>
+				style="border: none; color: black; margin: 0px 5px;">&lt;이전</a></li>
 			</c:when>
 			<c:otherwise>
 			</c:otherwise>
@@ -70,7 +70,8 @@
 		<%-- 다음 페이징 리스트로 가기 --%>
 		<c:choose>
 			<c:when test="${paging.endPage ne paging.totalPage }">
-				<li><a href="/admin/notice/list?curPage=${paging.startPage + paging.pageCount }&${category}&${search}&${orderby}">다음 &gt;</a></li>
+				<li><a href="/admin/notice/list?curPage=${paging.startPage + paging.pageCount }&${category}&${search}&${orderby}"
+				style="border: none; color: black; margin: 0px 5px;">다음 &gt;</a></li>
 				<%-- <li onclick="goPage(${paging.startPage + paging.pageCount },${category }, ${search }, ${orderby })"
 					style="color: #4EEDED; margin: 0px 5px; cursor: pointer;">다음&gt;</li> --%>
 			</c:when>

@@ -27,7 +27,7 @@ function submitContents( elClickedObj ) {
 </script>
 
 <div id="content">
-<h1>글 수정</h1>
+<h1>게시글 수정</h1>
 <hr>
 
 <div class="anbody">
