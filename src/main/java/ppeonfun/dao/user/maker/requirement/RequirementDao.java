@@ -6,7 +6,7 @@ import ppeonfun.dto.Project;
 import ppeonfun.dto.Requirement;
 import ppeonfun.dto.RequirementFile;
 
-@Repository("admin.maker.RequirementDao")
+@Repository("user.maker.RequirementDao")
 public interface RequirementDao {
 	/**
 	 * 상태값 반환

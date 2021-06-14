@@ -9,6 +9,7 @@ import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
+import ppeonfun.util.ProjectPaging;
 
 @Repository("user.NewsDao")
 public interface NewsDao {
@@ -74,5 +75,13 @@ public interface NewsDao {
 	 * @param favorite
 	 */
 	public void insertFavorite(Favorite favorite);
+
+	/**
+	 * 전체 게시글 수
+	 * 
+	 * @param inDate
+	 * @return
+	 */
+	public int selectCntNews(ProjectPaging inDate);
 
 }

@@ -29,15 +29,15 @@ h1 {
 
 /* #content 하위 내 속성을 정할 div */
 .anbody1 {
-	margin-left: 0;
+	margin: 0 auto;
 	text-align: left !important;
-	width: 1200px;
+	width: 1070px;
 }
 
 .anbody2 {
-	margin-left: 0;
+	margin-left: 0 auto;
 	text-align: left !important;
-	width: 1000px;
+	width: 1070px;
 }
 
 /* table 설정 ("admin/notice/list.jsp") */
@@ -88,6 +88,7 @@ th {
 
 .CdAndHit {
 	border-bottom: 1px solid #ccc;
+	padding-bottom: 5px;
 }
 
 .CdAndHit > label {
@@ -98,6 +99,16 @@ th {
 .HitLabel {
 	color: #9797978a;
 	font-weight: 500;
+}
+
+.total_comments_btn:visited, .total_comments_btn:hover, .total_comments_btn:link {
+	color: black;
+	text-decoration: none;
+}
+
+.total_comments {
+	width: 25px;
+	height: 25px;
 }
 
 .viewContent {
@@ -222,6 +233,23 @@ th {
 	width: 55px;
 }
 
+.updateCompleteBtn {
+	background-color: white;
+	border: none;
+	color: silver; 
+	padding: 10px 50px 10px 0px; 
+	font-size: 11pt;
+}
+
+.updateCancelBtn {
+	background-color: white; 
+	border: none; 
+	color: silver; 
+	padding: 10px 30px 10px 0px; 
+	font-size: 11pt;
+}
+
+
 .viewbtn {
 	border: none;
 	margin-right: 20px;
@@ -267,6 +295,7 @@ th {
 .search {
 	border-color: snow;
 	height: 30px;
+	text-align: center;
 	width: 200px;
 }
 
