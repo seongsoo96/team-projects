@@ -64,7 +64,7 @@
 		<option value="title">제목만</option>
 		<option value="content">내용만</option>
 	</select>
-	<input type="text" class="search" name="search" placeholder="검색어를 입력해주세요"  />
+	<input type="text" class="search" name="search" placeholder="검색어를 입력해주세요" style="text-align: left;" />
 	<button class="searchBtn">검색</button>
 </div>
 
