@@ -7,6 +7,8 @@ import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
+import ppeonfun.util.Paging;
+import ppeonfun.util.ProjectPaging;
 
 public interface NewsService {
 
@@ -65,5 +67,13 @@ public interface NewsService {
 	 * @return
 	 */
 	public boolean favorite(Favorite favorite);
+
+	/**
+	 * 게시글 목록을 위한 페이징 객체
+	 * 
+	 * @param inDate
+	 * @return
+	 */
+//	public ProjectPaging getPaging(ProjectPaging inDate);
 
 }

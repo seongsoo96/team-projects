@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ppeonfun.dto.Favorite;
@@ -18,6 +19,8 @@ import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 import ppeonfun.service.user.news.NewsService;
+import ppeonfun.util.Paging;
+import ppeonfun.util.ProjectPaging;
 
 @Controller("user.NewsController")
 public class NewsController {
@@ -30,7 +33,8 @@ public class NewsController {
 	@RequestMapping(value = "/news")
 	public String news(
 			Model model, Information info, Supporter supporter, SupporterJoin suJoin,
-			News news, HttpSession session) {
+			News news, HttpSession session,
+			@RequestParam(value = "curPage", defaultValue = "0") int curPage) {
 		
 		//해당 프로젝트의 제목, 카테고리, 목표금액
 		info = newsService.projectInfo(info);
@@ -82,8 +86,17 @@ public class NewsController {
 		
 		//새소식 리스트
 		List<News> newsList = newsService.getList(news);
-		
+		//새소식 모델값 전달
 		model.addAttribute("newsList", newsList);
+		
+		
+		//페이징 계산
+//		ProjectPaging inDate = new ProjectPaging();
+//		inDate.setCurPage(curPage);
+//		inDate.setpNo(news.getpNo());
+//		
+//		ProjectPaging paging = newsService.getPaging(inDate);
+//		logger.info("더보기를 위한 paging값 확인 {}", paging);
 		
 		return "/user/project/news";
 	}
