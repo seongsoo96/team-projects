@@ -7,8 +7,8 @@
 /* 모든 a 태그 hover 시 밑줄 효과 제거 */
 a:hover {text-decoration: none;}
 
-/* '>' 아이콘 */
-svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
+/* '>' svg */
+.arrow-img {width:20px; height:20px; vertical-align:bottom;}
 
 /* 서포터, 메이커 버튼 */
 .mypage-header {position:relative; border:1px solid; width:100%; height:50px;}
@@ -76,12 +76,9 @@ svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 			<!-- 2-1-2. 닉네임-->
 			<div class="profile-nick">
 				<button type="button" onclick="location.href='/user/mypage/detail'">
-				<strong>
-					<span>${mNick }</span><span style="font-weight:400">님</span>
-					<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-						<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-					</svg>
-				</strong>
+					<span style="font-weight:600">${mNick }</span>
+					<span>님</span>
+					<img src="/resources/img/arrow.svg" class="arrow-img">
 				</button>
 			</div>
 			<!-- 2-1-3. 로그아웃 -->
@@ -99,22 +96,13 @@ svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 					<div class="myfunding">
 						<a href="/user/mypage/myfunding">
 							<span>나의 펀딩</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 					<div class="fundingchart">
 						<a href="/user/mypage/fundingchart">
 							<span>펀딩 내역</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
-						
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 					<div class="clearfix"></div>
@@ -124,32 +112,19 @@ svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 					<div class="favorite">
 						<a href="/user/mypage/favorite">
 							<span>좋아요</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 					<div class="message">
-						<a href="/user/mypage/sptmessage">
+						<a href="/user/mypage/message">
 							<span>메시지</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
-						
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 					<div class="mywrite">
 						<a href="/user/mypage/fundcomm">
 							<span>내가 쓴 글</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 					<div class="clearfix"></div>
@@ -159,22 +134,13 @@ svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 					<div class="myprofile">
 						<a href="/user/mypage/profile">
 							<span>프로필</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
-						
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 					<div class="myinfo">
 						<a href="/user/mypage/detail">
 							<span>회원정보</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 				</div>
@@ -184,7 +150,7 @@ svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 			<!-- 메이커 모드 -->
 			<div class="mymenu" id="maker-menu">
 				<div class="newpj">
-					<a href="#">
+					<a href="/user/maker/project/list">
 						<img src="/resources/img/test1.png"><br>
 						<span>새 프로젝트 개설하기</span>
 					</a>
@@ -193,31 +159,19 @@ svg {display:inline-block; width:20px; height:20px; vertical-align:middle;}
 					<div class="myopenpj">
 						<a href="/user/mypage/openpj">
 							<span>오픈 프로젝트</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 					<div class="myprepj">
 						<a href="/user/mypage/prepj">
 							<span>준비중인 프로젝트</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 					<div class="message">
-						<a href="/user/mypage/mkmessage">
+						<a href="/user/mypage/message">
 							<span>메시지</span>
-							<span>
-								<svg viewBox="0 0 40 40" focusable="false" role="presentation" aria-hidden="true">
-									<path d="M28 20L15 33l-1.4-1.4L25.2 20 13.6 8.4 15 7l13 13z"></path>
-								</svg>
-							</span>
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 				</div>

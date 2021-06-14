@@ -23,9 +23,13 @@ public class ProjectController {
 	@RequestMapping(value="/list")
 	public void list(Paging inData, Model model) {
 		logger.info("/user/project/list 실행");
+		logger.info("inData {}", inData);
 		Paging paging = projectService.getPaging(inData);
 		List<Information> list = projectService.selectAllProject(paging);
 		
+		
+		
+		model.addAttribute("category",inData.getCategory());
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 	}

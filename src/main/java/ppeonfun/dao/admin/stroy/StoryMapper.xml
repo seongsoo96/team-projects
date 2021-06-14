@@ -50,4 +50,8 @@ SELECT count(*) FROM story where p_no = #{pNo}
   UPDATE Story SET s_url = #{sUrl},s_summery=#{sSummery},s_story=#{sStory},s_state=#{sState} WHERE s_no = #{sNo}
   </update>
   
+  <select id="selectProject" parameterType="Project" resultType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
+  
 </mapper>

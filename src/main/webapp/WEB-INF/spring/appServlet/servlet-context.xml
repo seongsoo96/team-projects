@@ -31,13 +31,18 @@
 		  <mapping path="/user/board/**"/>
 		    <exclude-mapping path="/user/board/list"/>
 			<exclude-mapping path="/user/board/view"/>
+			<exclude-mapping path="/user/board/comments/list"/>
 			<exclude-mapping path="/user/board/error"/>
 		  <beans:bean class="ppeonfun.util.interceptor.user.UserInterceptor"/>	
-		</interceptor>
+		</interceptor> 
 		<interceptor>
 		  <mapping path="/user/mypage/**"/>
 			<exclude-mapping path="/user/mypage/error"/>
 		  <beans:bean class="ppeonfun.util.interceptor.user.MypageInterceptor"/>	
+		</interceptor>
+		<interceptor>
+		  <mapping path="/user/maker/**"/>
+		  <beans:bean class="ppeonfun.util.interceptor.user.UserMakerInterceptor"/>	
 		</interceptor>
 	</interceptors>
 	

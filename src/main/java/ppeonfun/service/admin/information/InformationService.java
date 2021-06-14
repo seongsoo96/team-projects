@@ -61,5 +61,11 @@ public interface InformationService {
 	 * @param file - 파일 재업로드
 	 */
 	public void modifyInformationFile(Information information, MultipartFile file);
+	/**
+	 * 프로젝트 정보 조회
+	 * @param project - 프로젝트 번호
+	 * @return - 프로젝트 정보 조회
+	 */
+	public Project viewProject(Project project);
 
 }

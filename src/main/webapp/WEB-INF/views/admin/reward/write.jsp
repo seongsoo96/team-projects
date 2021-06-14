@@ -81,6 +81,7 @@ function deleteReward(reNo) {
 		, dataType: "html"
 		, data: {
 			reNo: reNo
+			,pNo: ${project.pNo }
 		}
 		, success: function(res){
 			console.log("success")

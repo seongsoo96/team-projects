@@ -185,5 +185,8 @@ public class StroyServiceImpl implements StoryService {
 		} // for문 end (다중 첨부파일)
 		
 	}
-
+	@Override
+	public Project viewProject(Project project) {
+		return storyDao.selectProject(project);
+	}
 }

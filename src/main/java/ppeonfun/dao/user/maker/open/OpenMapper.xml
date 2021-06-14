@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ppeonfun.dao.user.maker.open.OpenDao">
+  	<select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  	<select id="selectProject" resultType="Project" parameterType="Project">
+  		 SELECT * FROM project WHERE p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectRequirement" resultType="Requirement" parameterType="Project">
+  		SELECT * FROM Requirement where p_no = #{pNo}
+  	</select>
+  	<select id="selectRequirementFile" resultType="RequirementFile" parameterType="Requirement">
+  		SELECT* FROM Requirement_file WHERE r_no =#{rNo}
+  	</select>
+  	<select id="selectInformation" resultType="Information" parameterType="Project">
+  		SELECT * FROM information where p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectStory" resultType="Story" parameterType="Project" >
+  		SELECT * FROM Story where p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectStoryFile" resultType="StoryFile" parameterType="Story">
+  		SELECT * FROM Story_file where s_no = #{sNo}
+  	</select>
+  	
+  	<select id="selectAllReward" resultType="Reward" parameterType="Project">
+  		SELECT * FROM reward where p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectMaker" resultType="Maker" parameterType="Project">
+  		SELECT * FROM maker where p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectCntAll" resultType="int" parameterType="Project">
+  		select count(*) from alarm 
+		inner join member 
+		ON alarm.m_no = member.m_no
+		WHERE p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectAllAlarm" resultType="hashmap" parameterType="hashmap">
+  	SELECT*FROM(
+		SELECT rownum rnum, P.* FROM(
+            SELECT a_no,m_id,m_nick,a_create_date
+            from alarm 
+            inner join member 
+            ON alarm.m_no = member.m_no
+            where p_no = #{project.pNo}
+            order by a_no desc
+    	) P
+	)R
+	WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+  	</select>
+  	
+  </mapper>

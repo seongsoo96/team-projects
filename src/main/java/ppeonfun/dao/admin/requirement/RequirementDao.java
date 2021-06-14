@@ -72,6 +72,13 @@ public interface RequirementDao {
 	 */
 	public void deleteRequirementFile(Requirement requirement);
 	
+	/**
+	 * 프로젝트 정보 가져오기
+	 * @param project - 프로젝트 번호
+	 * @return 프로젝트 정보 조회
+	 */
+	public Project selectProject(Project project);
+	
 	
 
 }

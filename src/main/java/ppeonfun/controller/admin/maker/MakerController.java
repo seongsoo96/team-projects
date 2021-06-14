@@ -41,7 +41,7 @@ public class MakerController {
 		
 		model.addAttribute("maker", maker);
 		model.addAttribute("name", name);
-		
+		model.addAttribute("project", project);
 		return null;
 	}
 	

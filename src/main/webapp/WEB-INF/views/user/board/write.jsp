@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/layout/userHeader.jsp"/><br>
+<c:import url="/WEB-INF/views/layout/userHeader.jsp"/><br><br>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- 스마트에디터 2 -->
@@ -41,23 +41,24 @@ $(document).ready(function(){
 })
 </script>
 
-<style type="text/css">
 
-</style>
 
 <div id="container">
 
-<h1>게시글 등록</h1>
-<hr>
+<div id="boardBody" style="width: 980px; margin: 0 auto;" >
 
+<h1 class="pull-left">게시글 등록</h1>
+<hr><br><br>
 <form id="write" action="/user/board/write" method="post" enctype="multipart/form-data">
 
 <table class="table table-bordered">
-
-<tr><td>닉네임</td><td>${mNick}</td></tr>
-<tr><td>제목</td><td><input type="text" name="bTitle" /></td></tr>
-<tr><td>본문</td></tr>
-<tr><td><input type="text" name="bContent" id="content"  /></td></tr>
+<tr>
+ <td class="info">닉네임</td>
+ <td>${mNick}</td>
+</tr>
+<tr><td class="info">제목</td><td><input type="text" name="bTitle" style="width:100%" /></td></tr>
+<tr><td class="info" colspan="4">내용</td></tr>
+<tr><td colspan="2"><input type="text" name="bContent" id="content"  /></td></tr>
 </table>
 
 <label>첨부파일 <input type="file" name="file" /></label>
@@ -69,6 +70,8 @@ $(document).ready(function(){
 </div>
 </form>
 
+
+</div>
 
 </div><!-- end.container -->
 

@@ -1,8 +1,11 @@
 package ppeonfun.dao.admin.maker;
 
+import org.springframework.stereotype.Repository;
+
 import ppeonfun.dto.Maker;
 import ppeonfun.dto.Project;
 
+@Repository("admin.MakerDao")
 public interface MakerDao {
 
 	/**

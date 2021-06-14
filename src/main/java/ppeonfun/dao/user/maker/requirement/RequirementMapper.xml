@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ppeonfun.dao.user.maker.requirement.RequirementDao">
+  
+  <select id="selectByState" resultType="Project" parameterType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
+  
+  <select id="selectIsRequirement" resultType="int" parameterType="Project">
+SELECT count(*) FROM requirement where p_no = #{pNo}
+  </select>
+  
+  <select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  <select id="selectRequirement" resultType="Requirement" parameterType="Project">
+  SELECT * FROM Requirement where p_no = #{pNo}
+  </select>
+  <insert id="insertRequirement" parameterType="Requirement">
+  	<selectKey order="BEFORE" keyProperty="rNo" resultType="int">
+  		SELECT requirement_SEQ.nextval FROM dual
+  	</selectKey>
+  	INSERT INTO Requirement(r_no,p_no,r_context,r_reward_plan,r_state) values(#{rNo}, #{pNo}, #{rContext}, #{rRewardPlan}, 'Y')
+  </insert>
+  
+  <update id="updateProjectState" parameterType="Requirement">
+  	update project set p_requirements = (select r_state FROM requirement where p_no=#{pNo}) where p_no=#{pNo}
+  </update>
+  
+  <insert id="insertRequirementFile" parameterType="RequirementFile">
+  <selectKey order="BEFORE" keyProperty="rfNo" resultType="int">
+  		SELECT requirement_file_SEQ.nextval FROM dual
+  	</selectKey>
+  	INSERT INTO requirement_file(rf_no,r_no,rf_origin_name,rf_stored_name,rf_size,rf_content_type) values(#{rfNo}, #{rNo}, #{rfOriginName}, #{rfStoredName}, #{rfSize}, #{rfContentType})
+  </insert>
+  
+  <select id="selectRequirementFile" resultType="RequirementFile" parameterType="Requirement">
+  	SELECT* FROM Requirement_file WHERE r_no =#{rNo}
+  </select>
+  
+  <update id="updateRequirement" parameterType="Requirement">
+  	UPDATE requirement SET r_context=#{rContext} ,r_reward_plan=#{rRewardPlan},r_state=#{rState} WHERE r_no = #{rNo}
+  </update>
+  
+  <delete id="deleteRequirementFile" parameterType="Requirement">
+  	DELETE FROM requirement_file where r_no = #{rNo}
+  </delete>
+   <select id="selectProject" parameterType="Project" resultType="Project">
+   	SELECT * FROM project WHERE p_no = #{pNo}
+   </select> 
+    
+  </mapper>

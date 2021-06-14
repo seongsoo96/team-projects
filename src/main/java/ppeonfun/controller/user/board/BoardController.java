@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
 import ppeonfun.dto.Comments;
+import ppeonfun.dto.Commentss;
+import ppeonfun.dto.Member;
 import ppeonfun.dto.Recommend;
 import ppeonfun.service.user.board.BoardService;
 import ppeonfun.util.Paging;
@@ -88,16 +90,11 @@ public class BoardController {
     	BoardFile viewfile =  boardService.viewfile(board);
     	logger.info("viewfile에 포함된 값 보기 : {}", viewfile);
     	
-        //댓글 리스트 불러오기
-//    	List<Comments> commentList = boardService.getCommentList(board);
-//    	logger.info("댓글 내용 불러오기 :{}", commentList);
-    	
     	//모델값 전달
     	model.addAttribute("detail", detail);
     	model.addAttribute("viewfile",viewfile);
-//      model.addAttribute("commentList", commentList);
-    	
     }
+	
 	@RequestMapping(value="/write", method=RequestMethod.GET)
 	public void write() {
 		logger.info("/write [GET]");
@@ -117,7 +114,7 @@ public class BoardController {
 	@RequestMapping(value="/download")
 	public String download(BoardFile boardfile, Model model) {
 		
-		BoardFile fileupload = boardService.getFile(boardfile);
+		BoardFile fileupload = boardService.getFile(boardfile);	
 		logger.info("다운로드 파일확인 {} :" ,fileupload);
 		//모델값 전달
 		model.addAttribute("downFile", fileupload);
@@ -194,11 +191,20 @@ public class BoardController {
 		logger.info("댓글리스트용 게시글번호 : {}", board);
 		
 		//댓글 리스트 불러오기
-		List<Comments> commentList = boardService.getCommentList(board);
+		List<HashMap<String, Object>> commentList = boardService.getCommentList(board);
 		logger.info("댓글 내용 불러오기 :{}", commentList);
+		
+		//대댓글 리스트를 불러오기 위해 해당 글의 댓글 번호 리스트 얻어오기
+        List<Integer> commentsslistbno = boardService.getCommentssList(board);
+    	logger.info("commentssno 값 조회 : {}",commentsslistbno);
+
+    	//얻어온 댓글 번호 리스트를 이용해서 대댓글 리스트 얻어오기
+    	List<HashMap<String, Object>> commentsslist = boardService.getcommentNolist(commentsslistbno);
+		logger.info("commentss 안에 값 확인 : {}",commentsslist);
 		
 		//모델값 전달
 		model.addAttribute("commentList", commentList);
+		model.addAttribute("commentsslist",commentsslist);
 	}
 	
 	@RequestMapping(value="/comments/insert", method=RequestMethod.POST)
@@ -230,29 +236,70 @@ public class BoardController {
 		
 	}
     @RequestMapping(value="/comments/update",method=RequestMethod.GET)
-	public void commentUpdate(Comments comments,String mNick,Model model) {
+	public String commentUpdate(Comments comments,Model model) {
 		logger.info("/comments/update [GET]");
 		logger.info("comments 안에 값 확인 : {}",comments);
-		
-		
+	
 		List<HashMap<String, Object>> cmtlist = boardService.getCommentlist(comments);
 		logger.info("cmltlist 안에 값 확인 : {}",cmtlist);
+		int cNo = comments.getcNo();
 		
+		model.addAttribute("cNo",cNo);
 		model.addAttribute("cmtlist",cmtlist);
+		
+		return "user/board/comments/updateForm";
+				
 	}
+    
     @RequestMapping(value="/comments/update", method=RequestMethod.POST )
-    public void commentUpdateProc(Comments comments,Model model) {
-    	
+    public String commentUpdateProc(Comments comments,Model model) {
        logger.info("/comments/update [POST]");
        logger.info("comments 수정 후 데이터 값 확인 : {}",comments );
+       boardService.updateComment(comments);
        
-       
-    	
-    
+       return "user/board/comments/update";
     }
-    
-    
+    @RequestMapping(value="/commentss/insert",method=RequestMethod.POST)
+    public String commentssInsert(Commentss commentss,HttpSession session) {
+    	logger.info("/commentss/insert [POST]");
+    	
+    	int mNo = (Integer)session.getAttribute("mNo");
+    	commentss.setmNo(mNo);
+    	logger.info("commentss안에 다른값 확인 : {}",commentss);
+    	
+    	
+    	boardService.insertCommentsS(commentss);
+    	
+    	return "/user/board/comments/list";
+    }
+    @RequestMapping(value="/commentss/delete")
+    public void commentssDelete(Commentss commentss,Writer writer) {
+    	logger.info("/commentss/delete [GET]");
+    	logger.info("commentssdelete값 확인 : {}",commentss);
+    	
+    	boolean success = boardService.deleteCommentss(commentss);
+    	logger.info("삭제된 cs_no 확인 :{}",success);
+    	
+    	try {
+			writer.append("{\"success\":"+success+"}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    @RequestMapping(value="/commentss/update",method=RequestMethod.POST)
+    public void commentssUpdate(Commentss commentss,Writer out) {
+    	logger.info("/commentss/update [POST]");
+    	logger.info("업데이트 할 commentss값 : {}",commentss);
+    	
+    	boardService.updateCommentss(commentss);
+    	
+    	logger.info("수정된 commentss값 :{}",commentss);
+    	
+    	try {
+			out.append("{\"success\",true}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
 
-	
-	
 }

@@ -79,12 +79,17 @@ public class MemberController {
 	    //true 아이디 존재
 	    if(isJoin) {
 	    	int mNo = memberService.kakaoMno((String)userInfo.get("email"));
+	    	String mNick = memberService.kakaoMnick(mNo);
 	    	session.setAttribute("mNo", mNo);
+	    	session.setAttribute("mNick", mNick);
 	    	session.setAttribute("accessToken", accessToken);
 	    }else { // 아이디가 존재 하지 않음 자동 회원가입
 	    	Member member=memberService.joinKakao(userInfo);
+	    	String mNick = memberService.kakaoMnick(member.getmNo());
+	    	memberService.inputMypage(member.getmNo());
 	    	if(member.getmNo() > 0) {
 				session.setAttribute("mNo", member.getmNo());
+				session.setAttribute("mNick", mNick);
 				session.setAttribute("accessToken", accessToken);
 			}
 	    }
@@ -140,6 +145,7 @@ public class MemberController {
 		member = memberService.encryption(member); //비밀번호 암호화
 		
 		Member result = memberService.join(member);
+		memberService.inputMypage(member.getmNo());
 		logger.info("result: {}", result);
 		
 		if(result.getmNo() > 0) {
