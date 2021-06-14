@@ -31,7 +31,7 @@
 	<form action="/user/mypage/profile" method="post">
 	<div class="profile-img">
 		<c:choose>
-			<c:when test="${fn:contains(profile.myStoredName, 'test') }">
+			<c:when test="${fn:contains(profile.myStoredName, 'test') or ('member.png' eq profile.myStoredName) }">
 				<img id="myimg" src="/resources/img/member.png">
 			</c:when>
 			<c:otherwise>
@@ -54,7 +54,6 @@
 		</c:if>
 	</div>
 	<div class="submit-btns">
-		<button type="button" id="btnCancle">취소</button>
 		<button type="button" id="btnComplete">확인</button>
 	</div>
 	</form>
@@ -75,11 +74,6 @@ $(document).ready(function() {
 	// '확인' 클릭 시 introduce 전송
 	$("#btnComplete").click(function() {
 		$("form").submit()
-	})
-	
-	// '취소' 클릭 시 마이페이지 홈으로 이동
-	$("#btnCancle").click(function() {
-		location.href = "/user/mypage/home"
 	})
 	
 })

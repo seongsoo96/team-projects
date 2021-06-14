@@ -68,7 +68,7 @@ a:hover {text-decoration: none;}
 			<!-- 2-1-1. 프로필 사진 -->
 			<a href="/user/mypage/profile">
 			<c:choose>
-				<c:when test="${fn:contains(profile.myStoredName, 'test') }">
+				<c:when test="${fn:contains(profile.myStoredName, 'test') or ('member.png' eq profile.myStoredName) }">
 					<img class="profile-img" src="/resources/img/member.png">
 				</c:when>
 				<c:otherwise>

@@ -66,7 +66,7 @@ public class MypageController {
 		logger.info("소개:{}", introduce);
 		
 		mypageService.updateMyIntroByNo(introduce, (int) session.getAttribute("mNo"));
-		return "redirect:/user/mypage/profile";
+		return "redirect:/user/mypage/home";
 	}
 	
 	@RequestMapping(value="/profile/ajax", method=RequestMethod.POST)
