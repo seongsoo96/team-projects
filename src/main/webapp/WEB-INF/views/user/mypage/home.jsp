@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 
 <style type="text/css">
@@ -66,13 +67,16 @@ a:hover {text-decoration: none;}
 		<div class="profile-box">
 			<!-- 2-1-1. 프로필 사진 -->
 			<a href="/user/mypage/profile">
-			<c:if test="${not isDefaultImg }">
-				<img class="profile-img" src="/upload/profile/${profile.myStoredName }" alt="프로필사진">
-			</c:if>
-			<c:if test="${isDefaultImg }">
-				<img class="profile-img" src="/resources/img/${profile.myOriginName }" alt="프로필사진">
-			</c:if>
+			<c:choose>
+				<c:when test="${fn:contains(profile.myStoredName, 'test') or ('member.png' eq profile.myStoredName) }">
+					<img class="profile-img" src="/resources/img/member.png">
+				</c:when>
+				<c:otherwise>
+					<img class="profile-img" src="/upload/profile/${profile.myStoredName }">
+				</c:otherwise>
+			</c:choose>
 			</a>
+			
 			<!-- 2-1-2. 닉네임-->
 			<div class="profile-nick">
 				<button type="button" onclick="location.href='/user/mypage/detail'">

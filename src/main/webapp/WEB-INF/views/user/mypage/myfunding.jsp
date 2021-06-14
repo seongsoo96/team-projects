@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 
 <style type="text/css">
@@ -71,8 +72,15 @@ h4 a:hover{text-decoration:none;}
 							</c:if>
 						</div>
 						
-						<a href="/user/project?pNo=${tlist.P_NO }">
-							<img alt="프로젝트 대표 사진" src="/upload/imformation/${tlist.I_STORED_NAME }">
+						<a href="/story?pNo=${tlist.P_NO }">
+						<c:choose>
+							<c:when test="${fn:contains(tlist.I_STORED_NAME, 'test') }">
+								<img src="/resources/img/${tlist.I_STORED_NAME }">
+							</c:when>
+							<c:otherwise>
+								<img src="/upload/imformation/${tlist.I_STORED_NAME }">
+							</c:otherwise>
+						</c:choose>
 						</a>
 						<div class="caption">
 							<div class="pjname">${tlist.P_NAME }</div>
