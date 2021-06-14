@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/layout/userHeader.jsp"/><br>
+<c:import url="/WEB-INF/views/layout/userHeader.jsp"/><br><br>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- 스마트에디터 2 -->
@@ -44,9 +44,11 @@ $(document).ready(function(){
 
 
 <div id="container">
-<h1>게시글 등록</h1>
-<hr>
 
+<div id="boardBody" style="width: 980px; margin: 0 auto;" >
+
+<h1 class="pull-left">게시글 등록</h1>
+<hr><br><br>
 <form id="write" action="/user/board/write" method="post" enctype="multipart/form-data">
 
 <table class="table table-bordered">
@@ -67,6 +69,9 @@ $(document).ready(function(){
   <button  id="btnWrite" class="btn btn-info">작성</button>
 </div>
 </form>
+
+
+</div>
 
 </div><!-- end.container -->
 
