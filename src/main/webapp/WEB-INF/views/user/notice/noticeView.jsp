@@ -227,7 +227,8 @@ function Cmtdelete(c_no, b_no){
 		}
 		, dataType: ""
 		, success: function(res){
-			$("#comment_list").html(res)
+			$("#comment_list").html(res);
+			refreshHeart();
 		}
 		, error: function(res){
 			
@@ -239,40 +240,24 @@ function Cmtdelete(c_no, b_no){
 
 /* 댓글에서 "답글쓰기" 버튼 누르면 나오는 대댓글 폼 삽입 시작 */
 function CmtssInsertFormAfterCmts(c_no){
-	var cmtcmt = document.getElementById("comment"+c_no);
 	$("#additoryDiv").remove();
 	$("#CmtCmtText").remove();
-	
-	var div = document.createElement('div');
-	div.setAttribute("id", "CmtCmtText");
-	div.setAttribute("style", "padding-bottom: 10px;");
-	
-	var textarea = document.createElement('textarea');
-	textarea.setAttribute("id", "comment_comment_make");
-	textarea.setAttribute("cols", "170");
-	textarea.setAttribute("rows", "3");
-	textarea.setAttribute("placeholder", "댓글을 남겨보세요");
-	textarea.setAttribute("style", "margin: 10px 0px 0px 50px;");
-	
-	var insertBtn = document.createElement('input');
-	insertBtn.setAttribute("type", "button");
-	insertBtn.setAttribute("class", "pull-right");
-	insertBtn.setAttribute("onclick", "CmtssInsertAfterCmts("+c_no+")");
-	insertBtn.setAttribute("style", "background-color: white; border: none; color: silver; padding: 10px 50px 10px 0px; font-size: 11pt;");
-	insertBtn.setAttribute("value", "등록");
-	
-	var cancelBtn = document.createElement('input');
-	cancelBtn.setAttribute("type", "button");
-	cancelBtn.setAttribute("class", "pull-right");
-	cancelBtn.setAttribute("onclick", "CmtssCancelAfterCmts("+c_no+")");
-	cancelBtn.setAttribute("style", "background-color: white; border: none; color: silver; padding: 10px 30px 10px 0px; font-size: 11pt;");
-	cancelBtn.setAttribute("value", "취소");
-	
-	
-		cmtcmt.append(div);
-		div.append(textarea);
-		div.append(insertBtn);
-		div.append(cancelBtn);
+		
+	$.ajax({
+		type: "GET"
+		, url: "/user/notice/comments/insert"
+		, data: {
+			cNo: c_no
+			, bNo: ${viewBoard.B_NO}
+		}
+		, dataType: "html"
+		, success: function(res){
+			$("#comment"+c_no).append(res)
+		}
+		, error: function(res){
+			
+		}
+	})
 }
 /* 댓글에서 "답글쓰기" 버튼 누르면 나오는 대댓글 폼 삽입 끝 */
 
@@ -281,7 +266,7 @@ function CmtssInsertAfterCmts(c_no){
 	var text = document.getElementById('comment_comment_make').value;
 	
 	$.ajax({
-		type: "GET"
+		type: "POST"
 		, url: "/user/notice/comments/insert"
 		, data: {
 			cNo: c_no
@@ -345,6 +330,7 @@ function CmtCmtInsert(cs_no, c_no, m_nick){
 		, dataType: ""
 		, success: function(res){
 			$("#comment_list").html(res);
+			refreshHeart();
 		}
 		, error: function(res){
 			
@@ -378,6 +364,9 @@ function CmtCmtInsertCancel(cs_no, m_nick){
 
 /* 대댓글 수정 폼 출력 시작 */
 function CmtCmtUpdateForm(cs_no, m_nick, cs_content){
+	$("#additoryDiv").remove();
+	$("#CmtCmtText").remove();
+	
  	$.ajax({
  		type: "GET"
  		, url: "/user/notice/commentss/update"
@@ -385,10 +374,11 @@ function CmtCmtUpdateForm(cs_no, m_nick, cs_content){
  			csNo: cs_no
  			, mNick: m_nick
  			, csContent: cs_content
+ 			, bNo: ${viewBoard.B_NO}
  		}
  		, dataType: "html"
  		, success: function(res){
- 			$("#comment_comment"+cs_no).html(res);
+ 			$("#comment_list").html(res);
  		}
  		, error: function(res){
  			
@@ -423,14 +413,12 @@ function CmtCmtUpdate(cs_no, m_nick){
  
  
 /* 대댓글 수정 폼 출력 후 취소 시작 */
-function CmtCmtUpdateCancel(cs_no, m_nick){
+function CmtCmtUpdateCancel(){
 	$.ajax({
 		type: "GET" 
 		, url: "/user/notice/commentss/updatecancel"
 		, data: {
-			csNo: cs_no
-			, mNick: m_nick
-			, bNo: ${viewBoard.B_NO}
+			bNo: ${viewBoard.B_NO}
 		}
 		, dataType: "html"
 		, success: function(res){
@@ -456,6 +444,7 @@ function CmtCmtdelete(cs_no, b_no){
 		, dataType: ""
 		, success: function(res){
 			$("#comment_list").html(res);
+			refreshHeart();
 		}
 		, error: function(res){
 			
@@ -464,7 +453,24 @@ function CmtCmtdelete(cs_no, b_no){
 }
 /* 삭제버튼을 누를 시 대댓글 삭제 끝 */
 
-
+/* 댓글 삽입 혹은 삭제를 할 시 우상단의 총 댓글수 초기화 시작 */
+function refreshHeart(){
+	$.ajax({
+		type: "GET"
+		, url: "/admin/notice/refreshHeart"
+		, data: {
+			bNo: ${viewBoard.B_NO}
+		}
+		, dataType: "json"
+		, success: function(res){
+			$("#heart").html(res.heart);
+		}
+		, error: function(res){
+			
+		}
+	})
+}
+/* 댓글 삽입 혹은 삭제를 할 시 우상단의 총 댓글수 초기화 끝 */
 </script>
 
 <div id="content">
@@ -487,7 +493,7 @@ function CmtCmtdelete(cs_no, b_no){
 		<c:if test="${not chkRec }">
 			<label id="recommend" style="cursor: pointer;"><span>&nbsp;&#x2764;</span>&nbsp;추천&nbsp;${rec }</label>
 		</c:if>
-		<a href="#CommentBox" class="total_comments_btn pull-right" style="color: black;"><img class="total_comments" src="/resources/img/comments_icon.png" style="width: 25px; height: 25px;">&nbsp;댓글&nbsp;&nbsp;${viewBoard.COMMENTS + viewBoard.COMMENTSS }</a>
+		<a href="#CommentBox" class="total_comments_btn pull-right" style="color: black;"><img class="total_comments" src="/resources/img/comments_icon.png" style="width: 25px; height: 25px;">&nbsp;댓글&nbsp;&nbsp;<label id="heart">${viewBoard.COMMENTS + viewBoard.COMMENTSS }</label></a>
 	</div><br>
 	
 	<div class="viewContent" style="text-align: left;"><label>${viewBoard.B_CONTENT }</label></div>
@@ -571,7 +577,7 @@ function CmtCmtdelete(cs_no, b_no){
 			<c:if test="${not empty sessionScope.mNo }">
 				<label>${sessionScope.mNick }</label>
 				<textarea id="comment_make" cols="178" rows="3" placeholder="댓글을 입력하세요"></textarea>
-				<button id="comment_ok">완료</button>
+				<button id="comment_ok" onclick="comment_ok()">완료</button>
 			</c:if>
 			<c:if test="${empty sessionScope.mNo }">
 				<textarea id="comment_nologin" cols="178" rows="3" placeholder="로그인이 필요합니다"></textarea>

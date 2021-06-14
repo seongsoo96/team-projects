@@ -445,6 +445,7 @@ public class NoticeController {
 	}
 	
 	
+	
 	@RequestMapping(value="/commentss/delete")
 	public String CmtCmtDelete(int csNo, int bNo, Model model) {
 		logger.info("얻어온 csNo 값 확인 : {}", csNo);
@@ -521,8 +522,6 @@ public class NoticeController {
 	
 	@RequestMapping(value="/refreshHeart", method=RequestMethod.GET)
 	public ModelAndView refreshHeart(int bNo, ModelAndView mav) {
-		logger.info("여기까진 오니?");
-		
 		int res = noticeService.getCntCommentss(bNo);
 		
 		mav.setViewName("jsonView");

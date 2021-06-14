@@ -235,6 +235,8 @@ public interface BoardService {
 	 */
 	public List<HashMap<String, Object>> getCommentsListForArray(int bNo, String standard);
 
+	public int getCntCommentss(int bNo);
+
 
 
 }

@@ -290,6 +290,10 @@ public interface BoardDao {
 	 */
 	public List<HashMap<String, Object>> selectCommentssListForArray(HashMap<String, Object> map);
 
+	public int selectCntCmts(int bNo);
+
+	public int selectCntCmtssBybNo(int bNo);
+
 
 
 }

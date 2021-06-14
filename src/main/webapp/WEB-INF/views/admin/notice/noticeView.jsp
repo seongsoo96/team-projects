@@ -241,8 +241,6 @@ function Cmtdelete(c_no, b_no){
 
 /* 댓글에서 "답글쓰기" 버튼 누르면 나오는 대댓글 폼 삽입 시작 */
 function CmtssInsertFormAfterCmts(c_no){
-	console.log("오아아");
-	
 	$("#additoryDiv").remove();
 	$("#CmtCmtText").remove();
 		
@@ -251,6 +249,7 @@ function CmtssInsertFormAfterCmts(c_no){
 		, url: "/admin/notice/comments/insert"
 		, data: {
 			cNo: c_no
+			, bNo: ${viewBoard.B_NO}
 		}
 		, dataType: "html"
 		, success: function(res){
@@ -417,8 +416,6 @@ function CmtCmtUpdate(cs_no, m_nick){
  
 /* 대댓글 수정 폼 출력 후 취소 시작 */
 function CmtCmtUpdateCancel(){
-	console.log("대댓글 업데이트폼 이후 취소버튼 클릭");
-	
 	$.ajax({
 		type: "GET" 
 		, url: "/admin/notice/commentss/updatecancel"
