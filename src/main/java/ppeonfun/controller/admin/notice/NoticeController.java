@@ -503,6 +503,13 @@ public class NoticeController {
 		return "redirect:/admin/notice/list";
 	}
 	
+	
+	
+	@RequestMapping(value="/errorpage")
+	public String errorPage() {
+		return "admin/notice/noticeErrorPage";
+	}
+	
 
 	
 }

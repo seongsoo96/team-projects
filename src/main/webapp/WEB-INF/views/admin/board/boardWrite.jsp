@@ -48,9 +48,9 @@ $(document).ready(function() {
 
 <div id="content">
 
-<div class="writebody">
+<div class="anbody2">
 
-<label class="headname">글 쓰기</label>
+<label class="headname">게시글 쓰기</label>
 <div class="buttonbox">
 <button id="btnCancel" class="viewbtn pull-right">취소</button>
 <button id="btnWrite" class="viewbtn pull-right">완료</button>
@@ -81,7 +81,7 @@ function setThumbnail(event) {
 
 <input multiple="multiple" type="file" name="file" onchange="setThumbnail(event);" />
 
-<div id="image_container" ></div>
+<div id="image_container" ></div> 
 
 </form>
 </div> <%-- anbody end --%>
@@ -99,3 +99,4 @@ nhn.husky.EZCreator.createInIFrame({
 </script>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp" />
+

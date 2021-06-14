@@ -4,14 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
 import ppeonfun.dto.Comments;
 import ppeonfun.dto.Commentss;
 import ppeonfun.dto.Recommend;
-import ppeonfun.util.Paging;
 
 @Repository("admin.NoticeDao")
 public interface NoticeDao {

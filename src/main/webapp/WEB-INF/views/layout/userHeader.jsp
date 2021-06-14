@@ -112,7 +112,7 @@ function searchEnter(){
 		<li>
 			<a href="#">더보기</a>
 			<ul>
-				<li><a href="#">공지사항</a></li>
+				<li><a href="/user/notice/list">공지사항</a></li>
 				<li><a href="/user/board/list">게시판</a></li>
 			</ul>
 		</li>

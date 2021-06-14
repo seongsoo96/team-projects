@@ -69,7 +69,16 @@
 				SELECT board.*, member.m_nick , (
 					SELECT count(*) FROM recommend
 					WHERE recommend.b_no = board.b_no
-				) AS RECOMMEND
+				) AS RECOMMEND, (
+					SELECT count(*) FROM comments
+					WHERE comments.b_no = board.b_no AND c_delete_state = 'Y'
+				) AS COMMENTS, (
+					SELECT count(*) FROM commentss
+					WHERE commentss.c_no IN(
+						SELECT c_no FROM comments
+						WHERE comments.b_no = board.b_no
+					)
+				) AS COMMENTSS
 				FROM board, member
 				WHERE b_grade = 'N' AND board.m_no = member.m_no
 				ORDER BY b_no DESC
@@ -98,7 +107,16 @@
 				SELECT board.*, member.m_nick , (
 					SELECT count(*) FROM recommend
 					WHERE recommend.b_no = board.b_no
-				) AS RECOMMEND
+				) AS RECOMMEND, (
+					SELECT count(*) FROM comments
+					WHERE comments.b_no = board.b_no AND c_delete_state = 'Y'
+				) AS COMMENTS, (
+					SELECT count(*) FROM commentss
+					WHERE commentss.c_no IN(
+						SELECT c_no FROM comments
+						WHERE comments.b_no = board.b_no
+					)
+				) AS COMMENTSS
 				FROM board, member
 				WHERE b_grade = 'N' AND board.m_no = member.m_no
 				ORDER BY 
@@ -164,7 +182,16 @@
 	</select>
 	
 	<select id="selectByBoardno" parameterType="int" resultType="hashmap">
-		SELECT board.*, member.m_nick
+		SELECT board.*, member.m_nick, (
+			SELECT count(*) FROM comments
+			WHERE b_no = #{bNo}
+		)AS COMMENTS, (
+			SELECT count(*) FROM commentss
+			WHERE c_no IN(
+				SELECT c_no FROM comments
+				WHERE b_no = #{bNo}
+			)
+		)AS COMMENTSS
 		FROM board, member
 		WHERE b_no = #{bNo} AND board.m_no = member.m_no
 	</select>

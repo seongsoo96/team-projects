@@ -31,7 +31,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 			logger.info(">>접속 불가 : 비 로그인 상태");
 			
 			//에러안내 페이지로 리다이렉트
-			response.sendRedirect("/");
+			response.sendRedirect("/user/member/loginForm");
 			
 			return false; //컨트롤러 접근 금지
 		}

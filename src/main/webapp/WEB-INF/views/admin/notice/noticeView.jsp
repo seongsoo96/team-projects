@@ -474,6 +474,7 @@ function CmtCmtdelete(cs_no, b_no){
 		<c:if test="${not chkRec }">
 			<label id="recommend" style="cursor: pointer;"><span>&nbsp;&#x2764;</span>&nbsp;추천&nbsp;${rec }</label>
 		</c:if>
+		<a href="#CommentBox" class="total_comments_btn pull-right" style="color: black;"><img class="total_comments" src="/resources/img/comments_icon.png" style="width: 25px; height: 25px;">&nbsp;댓글&nbsp;&nbsp;${viewBoard.COMMENTS + viewBoard.COMMENTSS }</a>
 	</div><br>
 	
 	<div class="viewContent" style="text-align: left;"><label>${viewBoard.B_CONTENT }</label></div>

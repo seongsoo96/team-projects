@@ -24,6 +24,7 @@
 			<mapping path="/admin/**" />
 			<!-- 인터셉터에 적용되지 않도록 제외할 페이지(예외 페이지) -->
 			<exclude-mapping path="/admin/fail"/>
+			<exclude-mapping path="/admin/notice/errorpage"/>
 			<!-- 인터셉터 클래스 지정 -->
 			<beans:bean class="ppeonfun.util.interceptor.admin.AdminInterceptor"/>
 		</interceptor>

@@ -88,6 +88,7 @@ th {
 
 .CdAndHit {
 	border-bottom: 1px solid #ccc;
+	padding-bottom: 5px;
 }
 
 .CdAndHit > label {
@@ -98,6 +99,16 @@ th {
 .HitLabel {
 	color: #9797978a;
 	font-weight: 500;
+}
+
+.total_comments_btn:visited, .total_comments_btn:hover, .total_comments_btn:link {
+	color: black;
+	text-decoration: none;
+}
+
+.total_comments {
+	width: 25px;
+	height: 25px;
 }
 
 .viewContent {
@@ -284,6 +295,7 @@ th {
 .search {
 	border-color: snow;
 	height: 30px;
+	text-align: center;
 	width: 200px;
 }
 

@@ -12,7 +12,7 @@
 <fmt:formatDate value="<%=new Date() %>" pattern="yyMMdd" var="nowStr" />
 
 <div id="content">
-<h1>공지사항 관리</h1>
+	<h1>공지사항 관리</h1>
 <hr>
 
 <div class="anbody1">
@@ -36,7 +36,7 @@
 	<tr>
 		<td>${n.B_NO }</td>
 		<td style="text-align: left; padding-left: 25px;">
-		<a class="titleLink" href="/admin/notice/view?bNo=${n.B_NO }">${n.B_TITLE }</a></td>
+		<a class="titleLink" href="/admin/notice/view?bNo=${n.B_NO }">${n.B_TITLE }&nbsp;[${n.COMMENTS+n.COMMENTSS }]</a></td>
 		<td>${n.M_NICK }</td>
 		<td>
 		<c:if test="${brdStr eq nowStr }">
