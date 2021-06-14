@@ -259,10 +259,10 @@ hr {
 		</p>
 	</div>
 	<div class="funding">
-		<button class="btn_funding">펀딩하기</button>
+		<a href="/user/reward/view?pNo=${info.pNo }"><button class="btn_funding">펀딩하기</button></a>
 	</div>
 	<div class="refund">
-		<button class="btn_refund">환불하기</button>
+		<a href="/user/payback/view?pNo=${info.pNo }"><button class="btn_refund">환불하기</button></a>
 	</div>
 	<div class="buttons">
 		<div class="heart">
