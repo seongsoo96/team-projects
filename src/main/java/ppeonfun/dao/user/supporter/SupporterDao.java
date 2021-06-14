@@ -61,4 +61,6 @@ public interface SupporterDao {
 
 	public void insertFavorite(Favorite favorite);
 
+	public int getTotalCntFavorite(Favorite favorite);
+
 }
