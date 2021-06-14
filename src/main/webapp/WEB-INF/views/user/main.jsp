@@ -37,7 +37,7 @@ function pagingSelect(pagingNumber) {
                     <span>${info.iCategory }</span>
                 </div>  
 				<c:choose>
-				<c:when test = "${fn:contains(info.iStoredName, 'test')}">
+				<c:when test = "${fn:contains(info.iStoredName, 'test') or fn:contains(info.iStoredName, 'search')}">
 					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/logo.png" style="width: 400px; height: 400px; margin: 0 auto;"></a>
 				</c:when>
 				<c:otherwise>
@@ -67,7 +67,7 @@ function pagingSelect(pagingNumber) {
 	<c:forEach items="${list }" var="info">
 		<div>
 			<c:choose>
-				<c:when test = "${fn:contains(info.iStoredName, 'test')}">
+				<c:when test = "${fn:contains(info.iStoredName, 'test') or fn:contains(info.iStoredName, 'search')}">
 					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/subLogo.png" style="width:200px; height:150px;"/></a>
 				</c:when>
 				<c:otherwise>
