@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 <style type="text/css">
 /* 상단 메뉴 */
@@ -39,7 +40,14 @@
 		<!-- 메시지 목록  -->
 		<c:forEach var="clist" items="${chatList }" varStatus="cStatus">
 			<div class="divChatList">
-				<img src="/upload/profile/${clist.MY_STORED_NAME }">
+				<c:choose>
+					<c:when test="${fn:contains(clist.MY_STORED_NAME, 'test') or ('member.png' eq clist.MY_STORED_NAME) }">
+						<img src="/resources/img/member.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/upload/profile/${clist.MY_STORED_NAME }">
+					</c:otherwise>
+				</c:choose>
 			 	<div class="divOtherNick">${clist.M_NICK }</div>
 			 	<div class="divMsgContent">
 			 		<c:if test="${msgList[cStatus.index].M_NO eq mNo }">
