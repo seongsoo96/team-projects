@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
@@ -106,8 +105,6 @@ public interface NoticeService {
 	 * @return 해당 글의 모든 댓글의 모든 대댓글 리스트
 	 */
 	public List<HashMap<String, Object>> getCommentssList(int bNo);
-	
-	
 	
 	
 	
@@ -230,8 +227,14 @@ public interface NoticeService {
 	 */
 	public Commentss getOneCommentss(Commentss cmtss);
 
-	
-
+	/**
+	 * 공지사항 상세보기에서 등록순, 최신순으로 정렬하여 댓글을 요청한다
+	 * 
+	 * @param bNo - 댓글을 조회할 기준이 될 글 번호
+	 * @param standard - 등록순 정렬 혹은 최신순 정렬을 할 기준
+	 * @return standard의 값에 따라 정렬이 된 댓글 리스트
+	 */
+	public List<HashMap<String, Object>> getCommentsListForArray(int bNo, String standard);
 
 
 }
