@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ppeonfun.dao.admin.news.NewsDao">
+  	<select id="selectCntAll" resultType="int" parameterType="hashmap">
+  		SELECT count(*) FROM news WHERE p_no = #{pNo}
+  		<if test="category != null and 'title'.equals(category)">
+  		AND n_title like '%'||#{search}||'%'
+  		</if>
+  		<if test="category != null and 'content'.equals(category)">
+  		AND n_context like '%'||#{search}||'%'
+  		</if>
+  		<if test="category != null and 'mix'.equals(category)">
+  		AND (n_title like '%'||#{search}||'%'
+  		OR n_context like '%'||#{search}||'%')
+  		</if>
+  	</select>
+  	<select id="selectAll" resultType="News" parameterType="hashmap">
+  	SELECT*FROM(
+		SELECT rownum rnum, P.* FROM(
+		        SELECT *
+            FROM news
+            WHERE 1=1
+            and p_no = #{pNo}
+            <if test="category != null and 'title'.equals(category)">
+	  		AND n_title like '%'||#{search}||'%'
+	  		</if>
+	  		<if test="category != null and 'content'.equals(category)">
+	  		AND n_context like '%'||#{search}||'%'
+	  		</if>
+	  		<if test="category != null and 'mix'.equals(category)">
+	  		AND (n_title like '%'||#{search}||'%'
+	  		OR n_context like '%'||#{search}||'%')
+	  		</if>
+            order by n_no desc
+    	) P
+	)R
+	WHERE rnum BETWEEN #{startNo} AND #{endNo}
+  	</select>
+  	
+  	<select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  	
+  	
+  	<select id="selectProject" resultType="Project" parameterType="Project">
+  	SELECT * FROM project WHERE p_no = #{pNo}
+  	</select>
+  	
+  	<insert id="insertNews" parameterType="News">
+  	<selectKey order="BEFORE" resultType="int" keyProperty="nNo">
+  		select news_SEQ.nextval FROM dual
+  	</selectKey>
+  		insert into news(n_no,p_no,n_title,n_context,n_category,n_open_date) 
+  		values(#{nNo}, #{pNo}, #{nTitle}, #{nContext}, #{nCategory}, #{nOpenDate})
+  	</insert>
+  	
+  	<select id="selectByOpenDate" parameterType="News" resultType="Date">
+  		select i_start_date from information where p_no = #{pNo}
+  	</select>
+  	
+  	<insert id="insertNewsFile" parameterType="NewsFile">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="nfNo">
+  		select news_file_SEQ.nextval FROM dual
+  	</selectKey>
+  	insert into news_file(nf_no,n_no,nf_origin_name,nf_stored_name,nf_size,nf_content_type) 
+  	values(#{nfNo}, #{nNo}, #{nfOriginName}, #{nfStoredName}, #{nfSize}, #{nfContentType})
+  	</insert>
+  	
+  	<select id="selectNews" parameterType="News" resultType="News">
+  	SELECT * FROM news WHERE n_no = #{nNo}
+  	</select>
+  	
+  	<select id="selectNewsFile" parameterType="News" resultType="NewsFile">
+  	SELECT*FROM news_file where n_no = #{nNo}
+  	</select>
+  	
+  	<delete id="deleteNewsFile" parameterType="NewsFile">
+  	DELETE FROM news_file where nf_no = #{nfNo}
+  	</delete>
+  	
+  	<update id="updateNews" parameterType="News">
+  		UPDATE news SET n_title= #{nTitle},n_context=#{nContext},n_category=#{nCategory} WHERE n_no = #{nNo}
+  	</update>
+  	
+  	<delete id="deleteNews" parameterType="News">
+  		DELETE FROM news where n_no = #{nNo}
+  	</delete>
+  </mapper>

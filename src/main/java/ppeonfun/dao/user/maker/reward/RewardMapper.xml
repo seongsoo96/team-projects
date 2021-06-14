@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="ppeonfun.dao.user.maker.reward.RewardDao">
+ <select id="selectByState" resultType="Project" parameterType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
+  
+  <select id="selectIsReward" resultType="int" parameterType="Project">
+SELECT count(*) FROM reward where p_no = #{pNo}
+  </select>
+  
+  <select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  <select id="selectRewardList" resultType="Reward" parameterType="Project">
+  SELECT * FROM reward where p_no = #{pNo}
+  </select>
+ <insert id="insertReward" parameterType="Reward">
+ <selectKey order="BEFORE" resultType="int" keyProperty="reNo">
+ SELECT reward_SEQ.nextval FROM dual
+ </selectKey>
+ 
+ INSERT INTO reward(re_no,p_no,re_money,re_title,re_context,re_option,re_option_context,re_delivery,re_delivery_money,re_limit_quantity,re_state) 
+ VALUES(#{reNo}, #{pNo}, #{reMoney}, #{reTitle}, #{reContext}, #{reOption}, #{reOptionContext}, #{reDelivery}, #{reDeliveryMoney}, #{reLimitQuantity}, #{reState})
+ </insert>
+ 
+ <delete id="deleteReward" parameterType="Reward">
+ DELETE FROM reward where re_no = #{reNo}
+ </delete>
+ <update id="updateProjectState" parameterType="Project">
+ UPDATE project SET p_reward=#{pReward} WHERE p_no = #{pNo}
+ </update>
+ 
+ 
+ </mapper>

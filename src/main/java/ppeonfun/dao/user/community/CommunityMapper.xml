@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  
+<mapper namespace="ppeonfun.dao.user.community.CommunityDao">
+
+	<resultMap type="ppeonfun.dto.Information" id="Information">
+		<result column="i_no" property="iNo"/>
+		<result column="p_no" property="pNo"/>
+		<result column="i_title" property="iTitle"/>
+		<result column="i_money" property="iMoney"/>
+		<result column="i_origin_name" property="iOriginName"/>
+		<result column="i_stored_name" property="iStoredName"/>
+		<result column="i_category" property="iCategory"/>
+		<result column="i_start_date" property="iStartDate"/>
+		<result column="i_end_date" property="iEndDate"/>
+		<result column="i_create_date" property="iCreateDate"/>
+		<result column="i_state" property="iState"/>
+		<result column="i_size" property="iSize"/>
+		<result column="i_content_type" property="iContentType"/>
+	</resultMap>
+	
+	<select id="selectInfo" parameterType="ppeonfun.dto.Information" resultMap="Information">
+		select i_category, i_title, i_money, p_no
+		from information
+		where p_no = #{pNo }	
+	</select>
+	
+	<select id="selectCntSupporter" parameterType="ppeonfun.dto.Supporter" resultType="int">
+		SELECT count(*)
+		FROM supporter
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<select id="selectRemainDay" parameterType="ppeonfun.dto.SupporterJoin" resultType="int">
+		select 
+		    to_date(to_char(i_end_date, 'YYYYMMDD')) - to_date(to_char(sysdate, 'YYYYMMDD'))
+		from information
+		where p_no = #{pNo }
+	</select>
+	
+	<select id="selectTotalAmount" parameterType="ppeonfun.dto.SupporterJoin" resultType="int">
+		SELECT sum(re_money + su_add_money)
+		FROM reward r, supporter s
+		WHERE s.re_no = r.re_no and s.p_no = #{pNo }		
+	</select>
+	
+	<select id="selectCntNews" parameterType="ppeonfun.dto.News" resultType="int">
+		SELECT count(*)
+		FROM news
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<select id="selectCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<select id="getTotalCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<delete id="deleteFavorite" parameterType="ppeonfun.dto.Favorite">
+		DELETE favorite
+		WHERE m_no = #{mNo }
+			AND p_no = #{pNo }
+	</delete>
+	
+	<insert id="insertFavorite" parameterType="ppeonfun.dto.Favorite">
+		INSERT INTO favorite (fav_no, p_no, m_no)
+		VALUES (favorite_seq.nextval, #{pNo }, #{mNo })
+	</insert>
+	
+	<select id="selectList" parameterType="ppeonfun.dto.CommunityJoin" resultType="ppeonfun.dto.CommunityJoin">
+<!-- 		SELECT com_no, m_id, com_content, com_date -->
+<!-- 		FROM community c, member m -->
+<!-- 		WHERE c.m_no = m.m_no AND p_no = #{pNo } -->
+		SELECT cm.p_no, cm.com_no, cm.cid, cm.com_content, cm.com_date, cam.caid, cam.ca_content, cam.ca_date 
+		FROM(
+		    SELECT p_no, com_no, m_id cid, com_content, com_date
+		    FROM community c inner join member m
+		    ON c.m_no = m.m_no) cm
+		left outer join (
+		    SELECT com_no, m_id caid, ca_content, ca_date
+		    FROM community_answer ca inner join member m
+		    ON ca.m_no = m.m_no) cam
+		ON cm.com_no = cam.com_no
+		where cm.p_no = #{pNo }
+		order by cm.com_no desc
+	</select>
+	
+	<insert id="insertCommunity" parameterType="ppeonfun.dto.Community">
+		INSERT INTO community (com_no, p_no, m_no, com_content)
+		VALUES (COMMUNITY_SEQ.nextval, #{pNo }, #{mNo }, #{comContent })
+	</insert>
+
+</mapper>

@@ -170,4 +170,9 @@ public class InformationServiceImpl implements InformationService {
 		informationDao.updateProjectState(information);
 		
 	}
+	
+	@Override
+	public Project viewProject(Project project) {
+		return informationDao.selectProject(project);
+	}
 }

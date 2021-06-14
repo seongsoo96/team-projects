@@ -81,6 +81,15 @@
  		SELECT m_email, m_id FROM member WHERE m_id = #{mId}
  	</select>
  	
+ 	<select id="selectKakaoNick" resultType="String" parameterType="int">
+ 		SELECT m_nick FROM member WHERE m_no = #{mNo}
+ 	</select>
+ 	
+ 	<insert id="insertMyPage" parameterType="MyPage">
+ 		insert into mypage(my_no,my_origin_name,my_stored_name,my_introduce,my_size,my_content_type) 
+ 		VALUES(#{myNo},#{myOriginName},#{myStoredName}, #{myIntroduce}, #{mySize}, #{myContentType})
+ 	</insert>
+ 	
  </mapper>  
     
   

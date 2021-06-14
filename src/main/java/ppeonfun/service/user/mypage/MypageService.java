@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.util.Paging;
 
@@ -109,7 +111,7 @@ public interface MypageService {
 	 * @param mNo 		회원번호
 	 * @return			페이지에 따른 페이징
 	 */
-	public Paging getPaging(int curPage, int mNo);
+	public Paging getPaymPaging(int curPage, int mNo);
 
 
 	/**
@@ -135,5 +137,103 @@ public interface MypageService {
 	 * @return		카테고리별 환불 금액
 	 */
 	public List<HashMap<String, Object>> getPaybackSum(int mNo);
+
+
+	/**
+	 * 회원이 좋아요한 프로젝트 목록의 페이징을 생성한다.
+	 * @param curPage 	현재 페이지
+	 * @param mNo		회원번호
+	 * @return			페이징 정보 객체
+	 */
+	public Paging getFavoritePaging(int curPage, int mNo);
+	
+	
+	/**
+	 * 회원이 좋아요한 프로젝트 목록을 조회한다.
+	 * @param paging 	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			좋아요한 프로젝트 목록
+	 */
+	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo);
+
+
+	/**
+	 * 펀딩 커뮤니티의 페이징 객체를 생성한다.
+	 * @param curPage	현재 페이지
+	 * @param mNo		회원 번호
+	 * @return			페이징 정보 객체
+	 */
+	public Paging getFundCommPaging(int curPage, int mNo);
+
+
+	/**
+	 * 회원이 펀딩 커뮤니티에 작성한 글 목록을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원 번호
+	 * @return			작성한 글 목록 
+	 */
+	public List<HashMap<String, Object>> getMyFundCommList(Paging paging, int mNo);
+
+
+	/**
+	 * 회원이 펀딩 커뮤니티에 작성한 글의 답변을 조회한다.
+	 * @param mNo		회원번호
+	 * @param comNo		커뮤니티 질문 번호
+	 * @return			답변 DTO
+	 */
+	public CommunityAnswer getCommentAnswerBycomNo(int mNo, int comNo);
+
+
+	/**
+	 * 회원이 게시판에 작성한 글의 수로 페이징을 생성한다.
+	 * @param curPage	현재 페이지
+	 * @param mNo		회원번호
+	 * @return			페이징 정보 객체
+	 */
+	public Paging getMyBoardPaging(int curPage, int mNo);
+
+
+	/**
+	 * 회원이 작성한 게시글 목록을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			게시글 목록
+	 */
+	public List<HashMap<String, Object>> getMyBoardList(Paging paging, int mNo);
+
+	
+	/**
+	 * 메시지 목록의 페이징 객체를 생성한다.
+	 * @param curPage	현재 페이지
+	 * @param mNo		회원번호
+	 * @return			페이징 정보 객체
+	 */
+	public Paging getMessagePaging(int curPage, int mNo);
+
+
+	/**
+	 * 회원이 참여중인 대화 목록을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			대화 목록
+	 */
+	public List<HashMap<String, Object>> getChatList(Paging paging, int mNo);
+
+
+	/**
+	 * 대화의 최근 메시지 내용을 조회한다.
+	 * @param chatNoList	채팅방 번호 리스트
+	 * @return				최근 메시지
+	 */
+	public List<HashMap<String, Object>> getMessageList(List<Integer> chatNoList);
+
+
+	/**
+	 * 대화 상세 내용을 조회한다.
+	 * @param crNo	채팅방 번호
+	 * @return		대화 상세 내용
+	 */
+	public List<HashMap<String, Object>> getDetailMsg(int crNo);
+
 
 }

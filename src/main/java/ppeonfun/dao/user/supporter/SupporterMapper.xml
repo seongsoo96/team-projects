@@ -24,7 +24,7 @@
 		<result column="i_no" property="iNo"/>
 		<result column="p_no" property="pNo"/>
 		<result column="i_title" property="iTitle"/>
-		<result column="i_mondy" property="iMoney"/>
+		<result column="i_money" property="iMoney"/>
 		<result column="i_origin_name" property="iOriginName"/>
 		<result column="i_stored_name" property="iStoredName"/>
 		<result column="i_category" property="iCategory"/>
@@ -63,9 +63,38 @@
 	</select>
 	
 	<select id="selectInfo" parameterType="ppeonfun.dto.Information" resultMap="Information">
-		select i_category, i_title 
+		select i_category, i_title, i_money, p_no
 		from information
 		where p_no = #{pNo }		
 	</select>
+	
+	<select id="selectCntNews" parameterType="ppeonfun.dto.News" resultType="int">
+		SELECT count(*)
+		FROM news
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<select id="selectCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<select id="getTotalCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<delete id="deleteFavorite" parameterType="ppeonfun.dto.Favorite">
+		DELETE favorite
+		WHERE m_no = #{mNo }
+			AND p_no = #{pNo }
+	</delete>
+	
+	<insert id="insertFavorite" parameterType="ppeonfun.dto.Favorite">
+		INSERT INTO favorite (fav_no, p_no, m_no)
+		VALUES (favorite_seq.nextval, #{pNo }, #{mNo })
+	</insert>
 
 </mapper>

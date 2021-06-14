@@ -69,4 +69,11 @@ public interface RequirementService {
 	 */
 	public Requirement getRequirement(Requirement requirement);
 	
+	/**
+	 * 프로젝트의 정보 조회
+	 * @param project
+	 * @return 프로젝트 정보 조회
+	 */
+	public Project viewProject(Project project);
+	
 }
