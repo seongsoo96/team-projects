@@ -3,6 +3,8 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -61,7 +63,16 @@ $(document).ready(function() {
 				<c:forEach items="${searchList }" var="list">
 					<div class="SearchList_result_project">
 						<a href="/story?pNo=${list.P_NO }">
-							<img class="project_img" alt="테스트" src="/resources/img/${list.I_STORED_NAME }"><!-- ${list.I_STORED_NAME } -->
+						
+							<c:choose>
+								<c:when test = "${fn:contains(list.I_STORED_NAME, 'search')}">
+									<img class="project_img" alt="테스트" src="/resources/img/${list.I_STORED_NAME }"><!-- ${list.I_STORED_NAME } -->
+								</c:when>
+								<c:otherwise>
+									<img class="project_img" alt="테스트" src="/upload/information/${list.I_STORED_NAME }"><!-- ${list.I_STORED_NAME } -->
+								</c:otherwise>
+							</c:choose>
+<%-- 							<img class="project_img" alt="테스트" src="/resources/img/${list.I_STORED_NAME }"><!-- ${list.I_STORED_NAME } --> --%>
 							<p>
 								<strong class="project_title">${list.P_NAME }</strong>
 								<small class="project_info">

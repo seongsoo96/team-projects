@@ -42,8 +42,10 @@ public class UserController {
 		} else {
 			paging = userService.getPaging(inData, category, search);
 			list = userService.list(paging, category, search);
-			model.addAttribute("category", category);
-			model.addAttribute("search", search);
+			paging.setSearch(search);
+			paging.setCategory(category);
+//			model.addAttribute("category", category);
+//			model.addAttribute("search", search);
 		}
 		
 		//페이징 계산
@@ -69,10 +71,6 @@ public class UserController {
 		HashMap<String, Object> view = userService.view(m_no);
 		logger.info("view : " + view.toString());
 		
-		//댓글 불러오기
-//		List<Comment> list = boardService.commentList(boardNo);
-//		List<HashMap<String, Object>> list = userService.commentList(boardNo);
-//		logger.info("view에 보낼 값 : {}", list.toString());
 		
 		model.addAttribute("view", view);
 //		model.addAttribute("comment", list);
