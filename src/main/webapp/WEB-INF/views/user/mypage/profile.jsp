@@ -14,7 +14,8 @@
 
 /* 프로필 사진 변경 버튼 */
 .edit-img-btns button {margin:0 5px 25px; background:none; border:none; text-decoration:underline;}
-.edit-img-btns button:hover {color:#4EE2EC;}
+.edit-img-btns #btnChangeImg:hover {color:#4EE2EC;}
+.edit-img-btns #btnDeleteImg:hover {color:#ff8080;}
 
 /* 소개란 */
 .form-group {width:50%; margin:10px auto 30px auto;}
@@ -23,7 +24,7 @@
 
 /* 수정 완료 버튼 */
 .submit-btns button {margin:0 10px; width:65px; height:35px; background:none; border: 1px solid rgba(0,0,0, 0.2); border-radius:5px;}
-.submit-btns button:hover {border-color:#4EE2EC;}
+.submit-btns button:hover {border-color:#4EE2EC; background:#4EE2EC; color:#fff;}
 </style>
 
 <div class="container">

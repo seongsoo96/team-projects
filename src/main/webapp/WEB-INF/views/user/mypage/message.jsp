@@ -8,8 +8,7 @@
 .fa-house-user {font-size:30px; position:relative; left:750px;}
 
 /* 대화 상세 조회 */
-.divDetailMsg {border:2px solid coral; float:right; width:48%; height:565px; overflow-x:hidden; overflow-y:scroll;}
-.divInputMsg {border:1px solid green; height:40px; width:48%; position:relative; top:65px; right:-52%; padding:6px 0;}
+.divDetailMsg {border:2px solid coral; float:right; width:48%; height:565px; overflow-x:hidden; overflow-y:auto;}
 
 /* 대화 목록 */
 .divChatList {border:2px solid #CCC; margin:20px 0; width:50%; height:105px;}
@@ -17,6 +16,11 @@
 .divChatList .divOtherNick {position:relative; top:-100px; left:120px; font-size:16px; font-weight:600; margin-top:10px;}
 .divChatList .divMsgContent {position:relative; top:-80px; left:120px; font-size:14px;}
 .pagingLoc {position:relative;}
+
+/* 메시지 입력 */
+.divInputMsg {border:1px solid green; height:40px; width:48%; position:relative; top:65px; right:-52%; padding:6px 0;}
+.divInputMsg button {margin: 0 10px;}
+.divInputMsg input {width: 76%;}
 </style>
 
 <div class="container" style="margin-bottom:5%;">
@@ -65,7 +69,8 @@
 			
 		<!-- 메시지 입력창 -->
 		<div class="divInputMsg">
-			<span>파일아이콘</span>
+			<button type="button" id="btnAttachFile"><span class="glyphicon glyphicon-picture"></span></button>
+			<input type="file" id="inputMsgFile" accept="image/*" style="display:none;" />
 			<input type="text" placeholder="메시지를 입력하세요"/>
 			<span><button type="button" id="btnSendMsg"><i class="far fa-paper-plane"></i></button></span>
 		</div>
@@ -80,6 +85,14 @@ $(document).ready(function() {
 	//메시지 상세 조회 hide
 	$(".divDetailMsg").hide()
 	$(".divInputMsg").hide()
+	
+	//파일 첨부 아이콘 클릭 시 파일 첨부
+	$("#btnAttachFile").click(function() {
+		$("#inputMsgFile").click()
+	})
+	
+	$("#inputMsgFile").on('change', attachFile(${detailMsg }))
+	
 })
 </script>
 <script type="text/javascript">
@@ -98,6 +111,11 @@ function getDetailMsg(crNo) {
 		}
 		, error: function() { console.log("실패"), res}
 	})
+}
+</script>
+<script type="text/javascript">
+function attachFile(detailMsg) {
+	console.log(detailMsg)
 }
 </script>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
