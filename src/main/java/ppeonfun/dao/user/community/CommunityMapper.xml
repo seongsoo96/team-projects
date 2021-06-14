@@ -58,8 +58,7 @@
 	<select id="selectCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
 		SELECT count(*)
 		FROM favorite
-		WHERE m_no = #{mNo }
-			AND p_no = #{pNo }
+		WHERE p_no = #{pNo }
 	</select>
 	
 	<select id="getTotalCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
@@ -77,6 +76,29 @@
 	<insert id="insertFavorite" parameterType="ppeonfun.dto.Favorite">
 		INSERT INTO favorite (fav_no, p_no, m_no)
 		VALUES (favorite_seq.nextval, #{pNo }, #{mNo })
+	</insert>
+	
+	<select id="selectList" parameterType="ppeonfun.dto.CommunityJoin" resultType="ppeonfun.dto.CommunityJoin">
+<!-- 		SELECT com_no, m_id, com_content, com_date -->
+<!-- 		FROM community c, member m -->
+<!-- 		WHERE c.m_no = m.m_no AND p_no = #{pNo } -->
+		SELECT cm.p_no, cm.com_no, cm.cid, cm.com_content, cm.com_date, cam.caid, cam.ca_content, cam.ca_date 
+		FROM(
+		    SELECT p_no, com_no, m_id cid, com_content, com_date
+		    FROM community c inner join member m
+		    ON c.m_no = m.m_no) cm
+		left outer join (
+		    SELECT com_no, m_id caid, ca_content, ca_date
+		    FROM community_answer ca inner join member m
+		    ON ca.m_no = m.m_no) cam
+		ON cm.com_no = cam.com_no
+		where cm.p_no = #{pNo }
+		order by cm.com_no desc
+	</select>
+	
+	<insert id="insertCommunity" parameterType="ppeonfun.dto.Community">
+		INSERT INTO community (com_no, p_no, m_no, com_content)
+		VALUES (COMMUNITY_SEQ.nextval, #{pNo }, #{mNo }, #{comContent })
 	</insert>
 
 </mapper>

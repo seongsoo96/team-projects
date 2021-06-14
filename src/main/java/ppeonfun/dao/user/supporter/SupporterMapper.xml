@@ -77,8 +77,7 @@
 	<select id="selectCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
 		SELECT count(*)
 		FROM favorite
-		WHERE m_no = #{mNo }
-			AND p_no = #{pNo }
+		WHERE p_no = #{pNo }
 	</select>
 	
 	<select id="getTotalCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">

@@ -86,7 +86,7 @@ public class NewsServiceImpl implements NewsService {
 	
 	@Override
 	public int getTotalCntFavorite(Favorite favorite) {
-		return newsDao.selectCntFavorite(favorite);
+		return newsDao.getTotalCntFavorite(favorite);
 	}
 
 }

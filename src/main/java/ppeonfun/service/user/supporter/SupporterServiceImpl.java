@@ -81,7 +81,7 @@ public class SupporterServiceImpl implements SupporterService {
 	
 	@Override
 	public int getTotalCntFavorite(Favorite favorite) {
-		return supporterDao.selectCntFavorite(favorite);
+		return supporterDao.getTotalCntFavorite(favorite);
 	}
 
 }
