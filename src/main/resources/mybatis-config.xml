@@ -21,6 +21,7 @@
 	
 	<typeAliases>
 		<typeAlias type="ppeonfun.util.Paging" alias="Paging"/>
+		<typeAlias type="ppeonfun.util.ProjectPaging" alias="ProjectPaging"/>
 		<package name="ppeonfun.dto"/>
 	</typeAliases>
 	

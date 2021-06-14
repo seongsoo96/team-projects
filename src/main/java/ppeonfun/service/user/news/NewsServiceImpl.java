@@ -13,6 +13,8 @@ import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
+import ppeonfun.util.Paging;
+import ppeonfun.util.ProjectPaging;
 
 @Service("user.NewsService")
 public class NewsServiceImpl implements NewsService {
@@ -88,5 +90,17 @@ public class NewsServiceImpl implements NewsService {
 	public int getTotalCntFavorite(Favorite favorite) {
 		return newsDao.getTotalCntFavorite(favorite);
 	}
+	
+//	@Override
+//	public ProjectPaging getPaging(ProjectPaging inDate) {
+//		
+//		//총 게시글 수 조회
+//		int totalCount = newsDao.selectCntNews(inDate);
+//		
+//		//페이징 계산
+//		ProjectPaging paging = new ProjectPaging(totalCount, inDate.getCurPage());
+//		
+//		return paging;
+//	}
 
 }
