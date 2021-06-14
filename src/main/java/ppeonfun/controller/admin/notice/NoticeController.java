@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import ppeonfun.dto.Board;
 import ppeonfun.dto.BoardFile;
@@ -329,8 +330,16 @@ public class NoticeController {
 	}
 	
 	
+	@RequestMapping(value="/comments/insert", method=RequestMethod.GET)
+	public String CmtCmtInsertForm(int cNo, Model model) {
+		model.addAttribute("cNo", cNo);
+		
+		return "admin/notice/noticeCmtCmtInsertForm";
+	}
 	
-	@RequestMapping(value="/comments/insert")
+	
+	
+	@RequestMapping(value="/comments/insert", method=RequestMethod.POST)
 	public String CmtCmtInsert(Commentss cmtss, int bNo, Model model) {
 		logger.info("답글 쓰기 후 등록 시 얻어오는 데이터 : {}", cmtss);
 		
@@ -391,11 +400,18 @@ public class NoticeController {
 	
 	
 	@RequestMapping(value="/commentss/update", method=RequestMethod.GET)
-	public String CmtCmtUpdateForm(Commentss cmtss, String mNick, Model model) {
+	public String CmtCmtUpdateForm(Commentss cmtss, String mNick, int bNo, Model model) {
 		logger.info("commentss update용으로 얻어온 기존 대댓글 데이터 : {}", cmtss);
 		logger.info("수정하려는 대댓글의 회원 닉네임 : {}", mNick);
 		model.addAttribute("cmtss", cmtss);
 		model.addAttribute("mNick", mNick);
+		
+		List<HashMap<String, Object>> clist = noticeService.getCommentsList(bNo);
+		model.addAttribute("clist", clist);
+		
+		//삽입한 신규 대댓글을 포함한 전체 대댓글 리스트 얻어오기
+		List<HashMap<String, Object>> cclist = noticeService.getCommentssList(bNo);
+		model.addAttribute("cclist", cclist);
 		
 		return "admin/notice/noticeCmtCmtUpdateForm";
 	}
@@ -417,14 +433,13 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/commentss/updatecancel", method=RequestMethod.GET)
-	public String CmtssUpdateCancelAfterCmts(Commentss cmtss, String mNick, int bNo, Model model) {
-		logger.info("얻어온 cmtss 데이터 확인 : {}", cmtss);
+	public String CmtssUpdateCancelAfterCmts(int bNo, Model model) {
 		
-		//해당 댓글 다시 가져오기
-		Commentss result = noticeService.getOneCommentss(cmtss);
-		model.addAttribute("cmtss", result);
-		model.addAttribute("mNick", mNick);
-		model.addAttribute("bNo", bNo);
+		List<HashMap<String, Object>> clist = noticeService.getCommentsList(bNo);
+		model.addAttribute("clist", clist);
+		
+		List<HashMap<String, Object>> cclist = noticeService.getCommentssList(bNo);
+		model.addAttribute("cclist", cclist);
 		
 		return "admin/notice/noticeCmtCmtUpdateCancel";
 	}
@@ -504,12 +519,16 @@ public class NoticeController {
 	}
 	
 	
-	
-	@RequestMapping(value="/errorpage")
-	public String errorPage() {
-		return "admin/notice/noticeErrorPage";
+	@RequestMapping(value="/refreshHeart", method=RequestMethod.GET)
+	public ModelAndView refreshHeart(int bNo, ModelAndView mav) {
+		logger.info("여기까진 오니?");
+		
+		int res = noticeService.getCntCommentss(bNo);
+		
+		mav.setViewName("jsonView");
+		mav.addObject("heart", res);
+		
+		return mav;
 	}
-	
-
 	
 }

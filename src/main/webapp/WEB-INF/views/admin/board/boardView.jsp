@@ -24,31 +24,42 @@ $(document).ready(function(){
 		})
 	})
 	
-	$("#comment_ok").click(function(){
-		$.ajax({
-			type: "GET"
-			, url: "/admin/board/comment/insert"
-			, data: {
-				cContent: $("#comment_make").val(),
-				bNo : ${viewBoard.B_NO },
-				mNo : ${sessionScope.mNo }
-			}
-			, dataType: ""
-			, success: function(res){
-				$("#comment_list").html(res);
-				$("#comment_make").val('');
-			}
-			, error: function(res){
-				
-			}
-		})
+function comment_ok(){
+	$.ajax({
+		type: "GET"
+		, url: "/admin/board/comment/insert"
+		, data: {
+			cContent: $("#comment_make").val(),
+			bNo : ${viewBoard.B_NO },
+			mNo : ${sessionScope.mNo }
+		}
+		, dataType: ""
+		, success: function(res){
+			$("#comment_list").html(res);
+			$("#comment_make").val('');
+		}
+		, error: function(res){
+			
+		}
 	})
+}
 	
 	$("#comment_nologin").click(function(){
 		location.href="/user/member/loginForm"
 	})
 	
 })
+
+function deleteBoard(){
+	
+	var test = confirm("정말로 삭제하시겠습니까?");
+	
+	if(test == true){
+		location.href='/admin/board/delete?bNo='+${viewBoard.B_NO}
+	} else {
+		return
+	}
+}
 
 /* 댓글 새로고침 기능 시작 */
 function refreshList(b_no, array){
@@ -534,7 +545,6 @@ function CmtCmtdelete(cs_no, b_no){
 								<label class="comment_comment_content">${cc.CS_CONTENT }</label><br>
 								<label class="comment_comment_date">
 								<fmt:formatDate value="${cc.CS_CREATE_DATE }" pattern="yyyy.MM.dd HH:mm" /></label>
-								<label class="create_commentss" onclick="CmtssInsertFormAfterCmtss(${cc.CS_NO }, ${cc.C_NO }, '${cc.M_NICK }')">답글 쓰기</label>
 								<label id="#comment${cc.CS_NO }" class="btn-example pull-right" onclick="comment_layer_data(${cc.CS_NO })">…</label>
 								<div id="comment${cc.CS_NO }" class="comment-pop-layer">
 									<div class="comment-pop-container">
@@ -559,7 +569,7 @@ function CmtCmtdelete(cs_no, b_no){
 			<c:if test="${not empty sessionScope.mNo }">
 				<label>${sessionScope.mNick }</label>
 				<textarea id="comment_make" cols="178" rows="3" placeholder="댓글을 입력하세요"></textarea>
-				<button id="comment_ok">완료</button>
+				<button id="comment_ok" onclick="comment_ok()">완료</button>
 			</c:if>
 			<c:if test="${empty sessionScope.mNo }">
 				<textarea id="comment_nologin" cols="178" rows="3" placeholder="로그인이 필요합니다"></textarea>
@@ -569,11 +579,9 @@ function CmtCmtdelete(cs_no, b_no){
 	</div>
 	
 	<div class="btnbox">
-		<c:if test="${viewBoard.M_NO eq sessionScope.mNo}">
-			<button class="viewbtn" onclick="location.href='/admin/board/update?bNo=${viewBoard.B_NO}'">수정</button>
-			<button class="viewbtn" onclick="location.href='/admin/board/delete?bNo=${viewBoard.B_NO}'">삭제</button>
-		</c:if>
-	<button class="viewbtn" onclick="location.href='/admin/board/list'">목록</button>
+		<button class="viewbtn" onclick="location.href='/admin/board/update?bNo=${viewBoard.B_NO}'">수정</button>
+		<button class="viewbtn" onclick="deleteBoard()">삭제</button>
+		<button class="viewbtn" onclick="location.href='/admin/board/list'">목록</button>
 	</div>
 
 </div> <%-- anbody end --%>

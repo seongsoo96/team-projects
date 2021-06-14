@@ -80,7 +80,7 @@
 	<c:if test="${not empty sessionScope.mNo }">
 		<label>${sessionScope.mNick }</label>
 		<textarea id="comment_make" cols="178" rows="3" placeholder="댓글을 입력하세요"></textarea>
-		<button id="comment_ok">완료</button>
+		<button id="comment_ok" onclick="comment_ok()">완료</button>
 	</c:if>
 	<c:if test="${empty sessionScope.mNo }">
 		<textarea id="comment_nologin" cols="178" rows="3" placeholder="로그인이 필요합니다"></textarea>

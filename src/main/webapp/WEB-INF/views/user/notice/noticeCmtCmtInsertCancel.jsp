@@ -7,7 +7,6 @@
 <label class="comment_comment_content">${cmtss.csContent }</label><br>
 <label class="comment_comment_date">
 <fmt:formatDate value="${cmtss.csCreateDate }" pattern="yyyy.MM.dd HH:mm" /></label>
-<label class="create_commentss" onclick="CmtssInsertFormAfterCmtss(${cmtss.csNo }, ${cmtss.cNo }, '${mNick }')">답글 쓰기</label>
 <label id="#comment${cmtss.csNo }" class="btn-example pull-right" onclick="comment_layer_data(${cmtss.csNo })">…</label>
 <div id="comment${cmtss.csNo }" class="comment-pop-layer">
 	<div class="comment-pop-container">
