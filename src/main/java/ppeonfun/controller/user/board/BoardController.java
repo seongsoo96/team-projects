@@ -197,11 +197,7 @@ public class BoardController {
 		//대댓글 리스트를 불러오기 위해 해당 글의 댓글 번호 리스트 얻어오기
         List<Integer> commentsslistbno = boardService.getCommentssList(board);
     	logger.info("commentssno 값 조회 : {}",commentsslistbno);
-//    	logger.info("각각의 조회 : {}",commentsslistbno.get(0) );
-    	
-    	
-    	int mNo = (Integer)session.getAttribute("mNo");
-    	commentsslistbno.add(mNo);
+
     	//얻어온 댓글 번호 리스트를 이용해서 대댓글 리스트 얻어오기
     	List<HashMap<String, Object>> commentsslist = boardService.getcommentNolist(commentsslistbno);
 		logger.info("commentss 안에 값 확인 : {}",commentsslist);

@@ -8,9 +8,10 @@ $(document).ready(function(){
 	$(".commentss").click(function(){
 		
 		$(this).nextAll(".commentssregister").toggleClass("showcommentss")
-		
 	})
 })
+
+
 //대댓글등록하기
 function registerss( element ){
 	var c_No = $(element).attr("data-cNo");
@@ -41,7 +42,8 @@ function deletecommentss(element){
 	var cs_No = $(element).attr("data-csNo");
 	console.log("@@@@@@12s", cs_No)
 	
-	$("#comcsdelete").parent().parent().remove();
+	$("#comcsdelete").parent().remove();
+	
 	$.ajax({
 		type:"get"
 		,url:"/user/board/commentss/delete"
@@ -81,8 +83,6 @@ function updatecommentss(element){
 	  }	
 	})
 	
-	
-	
 }
 
 </script>
@@ -102,7 +102,49 @@ function updatecommentss(element){
 #cshidden{
  visibility : hidden;
 }
-
+#comdelete{
+ border-top-left-radius:5px;
+ border-bottom-left-radius: 5px;
+ margin-right:-4px;
+}
+#comdeupdate{
+ border-top-right-radius: 5px;
+ border-bottom-right-radius: 5px;
+ margin-left:-3px;
+}
+#btn_group button{
+ border: 1px solid skyblue;
+ background-color: rgba(0,0,0,0);
+ color:skyblue;
+ padding: 5px;
+}
+#btn_group button:hover{
+ color:white;
+ background-color:skyblue;
+}
+#comcsdelete{
+  border-top-left-radius:5px;
+ border-bottom-left-radius: 5px;
+ margin-right:-4px;
+}
+#comsupdate{
+  border-top-right-radius: 5px;
+ border-bottom-right-radius: 5px;
+ margin-left:-3px;
+}
+.commentssdate button{
+  border: 1px solid skyblue;
+ background-color: rgba(0,0,0,0);
+ color:skyblue;
+ padding: 5px;
+}
+.commentssdate button:hover{
+  color:white;
+ background-color:skyblue;
+}
+#btn-tag{
+ visibility : hidden;
+}
 </style>
 
  <c:forEach items="${commentList}" var="c">
@@ -111,26 +153,27 @@ function updatecommentss(element){
     <div><label id="hidden" name="commentNo" >${c.C_NO }</label></div>
      <label><div>${c.M_NICK }</div>
       <font size="2" color="lightgray"><fmt:formatDate value="${c.C_CREATE_DATE}" pattern="yy-MM-dd HH:mm:ss" /></font>
-     </label>
+     </label><br>
     <label class="comment-txt">
     <c:if test="${sessionScope.mNo eq c.M_NO}">
      <textarea id="content" name="content" rows="4" cols="70" >${c.C_CONTENT }</textarea>
     </c:if>
     <c:if test="${sessionScope.mNo ne c.M_NO}">
      <textarea id="content" name="content" rows="4" cols="70" readonly="readonly" >${c.C_CONTENT }</textarea>
-    </c:if>
+    </c:if><br>
     </label>
-    <label class="pop-layer">
+    <label id="btn_group">
       <c:if test="${sessionScope.mNo eq c.M_NO}">
-        <button id="comdelete"  class="btn btn-danger" onclick="deletecomment(${c.C_NO})" >삭제</button><br>
-        <button id="comdeupdate"  class="btn btn-info" onclick="updatecomment(${c.C_NO})" >수정</button> 
+        <button id="comdelete"  onclick="deletecomment(${c.C_NO})" >삭제</button><br>
+        <button id="comdeupdate" onclick="updatecomment(${c.C_NO})" >수정</button> 
       </c:if>
     </label>
    </div>
    
     <button  class="btn btn-link commentss">답글 작성</button><br><br>
+    
     <div class="commentssregister showcommentss">
-       <div><label>닉네임</label></div>
+       <div><label>${c.M_NICK}</label></div>
        <textarea id="commentsscontent" name="commentsscontent" row="4" cols="60" placeholder="내용을 작성하세요"></textarea>
        <button class="registerssaa" onclick="registerss(this)" data-cNo="${c.C_NO}">등록</button>
     </div>
@@ -139,8 +182,10 @@ function updatecommentss(element){
      
   <c:if test="${c.C_NO eq cs.C_NO}">
       
-   <div data-commetnssNo ="${cs.CS_NO}">
-    <div><label>${cs.M_NICK}</label></div>
+   <div class="commentssdate" data-commetnssNo ="${cs.CS_NO}">
+    <label>${cs.M_NICK}
+       <font size="2" color="lightgray"><fmt:formatDate value="${cs.CS_CREATE_DATE }" pattern="yy-MM-dd HH:mm:ss" /></font> 
+    </label>
      <label class="commentss-txt">
        <c:if test="${cs.M_NO eq sessionScope.mNo }">
      	<textarea class="cscontent" >${cs.CS_CONTENT }</textarea>
@@ -148,10 +193,10 @@ function updatecommentss(element){
        <c:if test="${cs.M_NO ne sessionScope.mNo }">
          <div class="cscontent" >${cs.CS_CONTENT }</div>
        </c:if>
-     </label>	
+     </label>
      	<c:if test="${cs.M_NO eq sessionScope.mNo }">
-	     	<button id="comcsdelete"  class="btn btn-danger" onclick="deletecommentss(this)" data-csNo="${cs.CS_NO}">삭제</button>
-        	<button id="comsupdate"  class="btn btn-info comcsdeupdate" onclick="updatecommentss(this)"  data-csNo="${cs.CS_NO}">수정</button> 
+	     	<button id="comcsdelete"  onclick="deletecommentss(this)" data-csNo="${cs.CS_NO}">삭제</button>
+        	<button id="comsupdate"  class="comcsdeupdate" onclick="updatecommentss(this)"  data-csNo="${cs.CS_NO}">수정</button> 
         </c:if>
    </div> 
   </c:if>
