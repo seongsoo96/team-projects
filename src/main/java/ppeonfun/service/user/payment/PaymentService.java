@@ -42,8 +42,9 @@ public interface PaymentService {
 	 * @param suAddMoney - 추가 금액
 	 * @param payment - 결제 정보
 	 * @param mNo - 회원번호
+	 * @param suGroup - 그룹번호
 	 */
-	public void inputPayment(HashMap<String, Integer> rewardCount, String suAddMoney, Payment payment, int mNo);
+	public void inputPayment(HashMap<String, Integer> rewardCount, String suAddMoney, Payment payment, int mNo, int suGroup);
 	
 	/**
 	 * 결제 완료 서포터 삽입
@@ -51,8 +52,9 @@ public interface PaymentService {
 	 * @param suAddMoney 추가 금액
 	 * @param payment 결제 정보
 	 * @param mNo - 회원번호
+	 * @return suGroup 값 반환
 	 */
-	public void inputSupporter(HashMap<String, Integer> rewardCount, String suAddMoney, Payment payment, int mNo);
+	public int inputSupporter(HashMap<String, Integer> rewardCount, String suAddMoney, Payment payment, int mNo);
 	
 
 }

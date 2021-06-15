@@ -9,10 +9,13 @@ public class Supporter {
 	private int reNo;
 	private Date suCreateDate;
 	private int suAddMoney;
+	private int suGroup;
+	
+	
 	@Override
 	public String toString() {
 		return "Supporter [suNo=" + suNo + ", pNo=" + pNo + ", mNo=" + mNo + ", reNo=" + reNo + ", suCreateDate="
-				+ suCreateDate + ", suAddMoney=" + suAddMoney + "]";
+				+ suCreateDate + ", suAddMoney=" + suAddMoney + ", suGroup=" + suGroup + "]";
 	}
 	public int getSuNo() {
 		return suNo;
@@ -50,6 +53,13 @@ public class Supporter {
 	public void setSuAddMoney(int suAddMoney) {
 		this.suAddMoney = suAddMoney;
 	}
+	public int getSuGroup() {
+		return suGroup;
+	}
+	public void setSuGroup(int suGroup) {
+		this.suGroup = suGroup;
+	}
+	
 	
 	
 }

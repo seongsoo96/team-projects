@@ -50,4 +50,10 @@ public interface PaymentDao {
 	 */
 	public void insertSupporter(Supporter supporter);
 	
+	/**
+	 * 현재 su_group값 가져오기
+	 * @return su_group
+	 */
+	public int selectBySuGroup();
+	
 }

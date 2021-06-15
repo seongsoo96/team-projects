@@ -52,7 +52,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 	
 	@Override
-	public void inputPayment(HashMap<String, Integer> rewardCount, String suAddMoney, Payment payment, int mNo) {
+	public void inputPayment(HashMap<String, Integer> rewardCount, String suAddMoney, Payment payment, int mNo, int suGroup) {
 		// TODO Auto-generated method stub
 		logger.info("service inputPayment");
 		int addMoney = Integer.parseInt(suAddMoney); //추가 금액
@@ -71,6 +71,7 @@ public class PaymentServiceImpl implements PaymentService {
 				payment.setmNo(mNo);
 				payment.setReNo(Integer.parseInt(key));
 				payment.setPaymAmount(amount); //결제금액 대입
+				payment.setSuGroup(suGroup);
 				paymentDao.insertPayment(payment);
 			}
 		}
@@ -78,12 +79,12 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 	
 	@Override
-	public void inputSupporter(HashMap<String, Integer> rewardCount, String suAddMoney, Payment payment, int mNo) {
+	public int inputSupporter(HashMap<String, Integer> rewardCount, String suAddMoney, Payment payment, int mNo) {
 		// TODO Auto-generated method stub
 		logger.info("service inputSupporter");
 		int addMoney = Integer.parseInt(suAddMoney); //추가 금액
 		int money = payment.getPaymAmount(); //결제금액 1800원
-
+		int suGroup = paymentDao.selectBySuGroup();
 		//payment 삽입
 		for(String key: rewardCount.keySet()) {
 			for(int i=0; i<rewardCount.get(key); i++) { // 개수만큼 반복한다
@@ -96,10 +97,11 @@ public class PaymentServiceImpl implements PaymentService {
 				supporter.setmNo(mNo); //회원번호
 				supporter.setpNo(payment.getpNo()); // 프로젝트 번호
 				supporter.setReNo(Integer.parseInt(key)); //리워드 번호
+				supporter.setSuGroup(suGroup);
 				paymentDao.insertSupporter(supporter);
 			}
 		}
-		
+		return suGroup;
 	}
 	
 }

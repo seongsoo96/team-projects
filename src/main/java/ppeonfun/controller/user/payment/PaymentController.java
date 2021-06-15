@@ -55,7 +55,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="/complete")
-	public String complete(Payment payment, String[] count, String [] reward, String suAddMoney, Project project, Model model, HttpSession session) {
+	public void complete(Payment payment, String[] count, String [] reward, String suAddMoney, Project project, Model model, HttpSession session) {
 		logger.info("/user/payment/complete");
 		HashMap<String, Integer> rewardCount = paymentService.getRewardCount(reward, count);
 		for(int i=0; i<reward.length; i++) {
@@ -70,10 +70,11 @@ public class PaymentController {
 		logger.info("suAddMoney {}", suAddMoney);
 		logger.info("project {}", project);
 		
-		paymentService.inputSupporter(rewardCount, suAddMoney,  payment, (int)session.getAttribute("mNo"));
-		paymentService.inputPayment(rewardCount, suAddMoney,  payment, (int)session.getAttribute("mNo"));
+		int suGroup=paymentService.inputSupporter(rewardCount, suAddMoney,  payment, (int)session.getAttribute("mNo"));
+		paymentService.inputPayment(rewardCount, suAddMoney,  payment, (int)session.getAttribute("mNo"),suGroup);
+		model.addAttribute("project", project);
 		
-		return null;
+	
 	}
 	
 	
