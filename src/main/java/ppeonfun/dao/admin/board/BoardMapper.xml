@@ -339,5 +339,18 @@
 			DESC
 		</if>
 	</select>
+	
+	<select id="selectCntCmts" parameterType="int" resultType="int">
+		SELECT count(*) FROM comments
+		WHERE comments.b_no = #{bNo} AND c_delete_state = 'Y'
+	</select>
+	
+	<select id="selectCntCmtssBybNo" parameterType="int" resultType="int">
+		SELECT count(*) FROM commentss
+		WHERE commentss.c_no IN(
+			SELECT c_no FROM comments
+			WHERE comments.b_no = #{bNo}
+		)
+	</select>
 
 </mapper>

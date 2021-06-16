@@ -235,7 +235,7 @@ public class NoticeController {
 	
 	
 	
-	@RequestMapping(value="/comment/insert")
+	@RequestMapping(value="/comment/insert", method=RequestMethod.GET)
 	public String CmtInsert(Comments cmts, Model model) {
 		logger.info("받아온 cmt객체 정보 확인 : {}", cmts);
 		
@@ -330,7 +330,15 @@ public class NoticeController {
 	
 	
 	
-	@RequestMapping(value="/comments/insert")
+	@RequestMapping(value="/comments/insert", method=RequestMethod.GET)
+	public String CmtCmtInsertForm(int cNo, int bNo, Model model) {
+		model.addAttribute("cNo", cNo);
+		
+		return "admin/notice/noticeCmtCmtInsertForm";
+	}
+	
+	
+	@RequestMapping(value="/comments/insert", method=RequestMethod.POST)
 	public String CmtCmtInsert(Commentss cmtss, int bNo, Model model) {
 		logger.info("답글 쓰기 후 등록 시 얻어오는 데이터 : {}", cmtss);
 		
@@ -391,11 +399,17 @@ public class NoticeController {
 	
 	
 	@RequestMapping(value="/commentss/update", method=RequestMethod.GET)
-	public String CmtCmtUpdateForm(Commentss cmtss, String mNick, Model model) {
+	public String CmtCmtUpdateForm(Commentss cmtss, String mNick, int bNo, Model model) {
 		logger.info("commentss update용으로 얻어온 기존 대댓글 데이터 : {}", cmtss);
 		logger.info("수정하려는 대댓글의 회원 닉네임 : {}", mNick);
 		model.addAttribute("cmtss", cmtss);
 		model.addAttribute("mNick", mNick);
+		
+		List<HashMap<String, Object>> clist = noticeService.getCommentsList(bNo);
+		model.addAttribute("clist", clist);
+		
+		List<HashMap<String, Object>> cclist = noticeService.getCommentssList(bNo);
+		model.addAttribute("cclist", cclist);
 		
 		return "user/notice/noticeCmtCmtUpdateForm";
 	}

@@ -236,5 +236,13 @@ public interface NoticeService {
 	 */
 	public List<HashMap<String, Object>> getCommentsListForArray(int bNo, String standard);
 
+	/**
+	 * 댓글 및 대댓글 삽입, 수정시 상세보기 우상단의 댓글수를 최신화한다
+	 * 
+	 * @param bNo - 댓글수를 조회할 게시글 번호
+	 * @return 게시글 번호가 일치하는 모든 댓글과 대댓글의 수
+	 */
+	public int getCntCommentss(int bNo);
+
 
 }

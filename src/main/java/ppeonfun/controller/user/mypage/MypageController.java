@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
-import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.service.user.member.MemberService;
 import ppeonfun.service.user.mypage.MypageService;
@@ -45,17 +44,9 @@ public class MypageController {
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public void getMypage(HttpSession session, Model model) {
 		logger.info("***** /user/mypage/home START *****");
-		MyPage profileimg = mypageService.getProfileImg((int) session.getAttribute("mNo"));
-		String storedName = profileimg.getMyStoredName();
 		
-		//저장된 프로필 사진이 기본 이미지인 경우
-		if("member.png".equals(storedName)) {
-			model.addAttribute("isDefaultImg", true);
-		} else {//업로드된 파일인 경우
-			model.addAttribute("isDefaultImg", false);
-		}
-		
-		model.addAttribute("profile", profileimg);
+		MyPage profile = mypageService.getProfileImg((int) session.getAttribute("mNo"));
+		model.addAttribute("profile", profile);
 	}
 	
 	
@@ -64,16 +55,8 @@ public class MypageController {
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public void editMyProfile(HttpSession session, Model model) {
 		logger.info("***** /user/mypage/profile [GET] START *****");
+		
 		MyPage profile = mypageService.getProfileImg((int) session.getAttribute("mNo"));
-		String storedName =  profile.getMyStoredName();
-		
-		//저장된 프로필 사진이 기본 이미지인 경우
-		if("member.png".equals(storedName)) {
-			model.addAttribute("isDefaultImg", true);
-		} else {//업로드된 파일인 경우
-			model.addAttribute("isDefaultImg", false);
-		}
-		
 		model.addAttribute("profile", profile);
 	}
 	
@@ -83,7 +66,7 @@ public class MypageController {
 		logger.info("소개:{}", introduce);
 		
 		mypageService.updateMyIntroByNo(introduce, (int) session.getAttribute("mNo"));
-		return "redirect:/user/mypage/profile";
+		return "redirect:/user/mypage/home";
 	}
 	
 	@RequestMapping(value="/profile/ajax", method=RequestMethod.POST)
@@ -239,26 +222,33 @@ public class MypageController {
 		return "jsonView";
 	}
 	
-	//마이페이지 나의프로젝트--------------------------------------------------------------------
+	//마이페이지 나의펀딩/펀딩내역--------------------------------------------------------------------
 	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
-	public void viewMyFunding(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMyFunding(HttpSession session, Model model, String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/myfunding [GET] START *****");
-		
+		logger.info("category:{}", category);
+
 		int mNo = (int) session.getAttribute("mNo");
 		
-		Paging paging = mypageService.getPaymPaging(curPage, mNo);
+		String[] categoryArr = null;
+		if(category != null) {
+			categoryArr = category.split(",");
+		}
+		
+		Paging paging = mypageService.getPaymPaging(curPage, mNo, categoryArr);
 		logger.info("페이징:{}", paging);
 		
 		//전체 펀딩 내역 조회
 		List<Map<String, Object>> totalList = null;
 		
 		if(paging != null) {
-			totalList = mypageService.getMyFundingListAll(paging, mNo);	
+			totalList = mypageService.getMyFundingListAll(paging, mNo, categoryArr);	
 		}
 		logger.info("totalList: {}", totalList);
 		
-		model.addAttribute("paging", paging);
 		model.addAttribute("totalList", totalList);
+		model.addAttribute("paging", paging);
+		model.addAttribute("categoryArr", categoryArr);
 	}
 	
 	@RequestMapping(value="/fundingchart", method=RequestMethod.GET)

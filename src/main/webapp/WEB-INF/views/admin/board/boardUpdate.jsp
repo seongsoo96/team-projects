@@ -26,6 +26,23 @@ function submitContents( elClickedObj ) {
 }
 </script>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	//작성버튼 동작
+	$("#btnUpdate").click(function() {
+		
+		//스마트 에디터의 내용을 <textarea>에 적용하는 함수를 호출한다
+		submitContents( $("#btnUpdate") )
+		
+		//<form> submit
+		$("form").submit();
+	});
+	
+});
+</script>
+
+
 <div id="content">
 <h1>게시글 수정</h1>
 <hr>
@@ -45,7 +62,7 @@ function submitContents( elClickedObj ) {
 
 <input type="hidden" name="bNo" value="${board.bNo }" />
 <div class="buttonbox">
-<button>수정 완료</button>
+<button id="btnUpdate">수정 완료</button>
 <input type="button" onclick="history.go(-1)" value="취소" />
 </div>
 </form>

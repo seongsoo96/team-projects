@@ -16,7 +16,6 @@
 		        select 
 		            m_no, m_name, m_id, m_nick, m_birth, m_email, m_caution
 		        from member
-		        where m_grade = 'U'
 		        order by m_no desc
 		    ) B
 		) R
@@ -34,17 +33,14 @@
 		        select 
 		             m_no, m_name, m_id, m_nick, m_birth, m_email, m_caution
 		        from member
-		        where m_grade = 'U' 
-		        and ${category} like '%' || #{search} || '%'
+		        where ${category} like '%' || #{search} || '%'
+		        order by m_no desc
 		    ) B
 		) R
 		where rnum between #{paging.startNo} and #{paging.endNo}
 	</select>	
 	
 	<select id="selectByMno" resultType="hashmap" parameterType="int">
-<!-- 		SELECT my.my_stored_name, m.* FROM member m, mypage my -->
-<!-- 		where m_no = my_no -->
-<!-- 		and m_no = #{m_no} -->
 		SELECT my.my_stored_name, m.* 
 		FROM member m 
 		LEFT JOIN mypage my

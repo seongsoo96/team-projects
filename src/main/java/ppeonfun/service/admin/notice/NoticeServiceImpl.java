@@ -334,5 +334,12 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.selectCommentsListForArray(map);
 	}
 
+	@Override
+	public int getCntCommentss(int bNo) {
+		int CntCmts = noticeDao.selectCntCmts(bNo);
+		int CntCmtss = noticeDao.selectCntCmtssBybNo(bNo);
+		return CntCmts + CntCmtss;
+	}
+
 
 } // Class end

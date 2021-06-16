@@ -33,6 +33,13 @@ input[id="checkAgree"]:checked + label {background-color:#4EE2EC;}
 
 /* 이메일 폼 */
 .form-group {margin: 20px 0;}
+
+/* 메일 - 재전송, 확인 버튼 */
+#btnResend:hover, #btnEmailAuth:hover {box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);}
+
+/* 회원탈퇴 버튼 */
+#btnUnsub {background:#ff8080; border:1px solid #e0e0e0; font-weight:600; color:#fff;}
+#btnUnsub:hover {border:none; background:#ff6666;}
 </style>
 <div class="container">
 	<!-- 모달창 -->
