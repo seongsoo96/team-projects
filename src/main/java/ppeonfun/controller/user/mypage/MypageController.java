@@ -224,24 +224,31 @@ public class MypageController {
 	
 	//마이페이지 나의프로젝트--------------------------------------------------------------------
 	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
-	public void viewMyFunding(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMyFunding(HttpSession session, Model model, String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/myfunding [GET] START *****");
-		
+		logger.info("category:{}", category);
+
 		int mNo = (int) session.getAttribute("mNo");
 		
-		Paging paging = mypageService.getPaymPaging(curPage, mNo);
+		String[] categoryArr = null;
+		if(category != null) {
+			categoryArr = category.split(",");
+		}
+		
+		Paging paging = mypageService.getPaymPaging(curPage, mNo, categoryArr);
 		logger.info("페이징:{}", paging);
 		
 		//전체 펀딩 내역 조회
 		List<Map<String, Object>> totalList = null;
 		
 		if(paging != null) {
-			totalList = mypageService.getMyFundingListAll(paging, mNo);	
+			totalList = mypageService.getMyFundingListAll(paging, mNo, categoryArr);	
 		}
 		logger.info("totalList: {}", totalList);
 		
-		model.addAttribute("paging", paging);
 		model.addAttribute("totalList", totalList);
+		model.addAttribute("paging", paging);
+		model.addAttribute("categoryArr", categoryArr);
 	}
 	
 	@RequestMapping(value="/fundingchart", method=RequestMethod.GET)

@@ -53,7 +53,9 @@
 	float:left; width:50%; font-size:15px; padding: 0 5%; margin:15px 0;
 }
 
-/* div.mywrite::after {display:block; content:""; clear:both;} */
+/* clearfix
+div.mywrite::after {display:block; content:""; clear:both;} 
+*/
 
 /* 바로가기 메뉴 - 메이커 모드 (새 프로젝트 생성) */
 #maker-menu .newpj {
