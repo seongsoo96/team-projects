@@ -224,31 +224,30 @@ public class MypageController {
 	
 	//마이페이지 나의펀딩/펀딩내역--------------------------------------------------------------------
 	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
-	public void viewMyFunding(HttpSession session, Model model, String category, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMyFunding(HttpSession session, Model model, @RequestParam(defaultValue="전체")String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/myfunding [GET] START *****");
 		logger.info("category:{}", category);
 
+		//category가 전체일 때 null로 값 변경
+		if("전체".equals(category)) { category = null; }
+		
+		//회원번호 mNo
 		int mNo = (int) session.getAttribute("mNo");
 		
-		String[] categoryArr = null;
-		if(category != null) {
-			categoryArr = category.split(",");
-		}
-		
-		Paging paging = mypageService.getPaymPaging(curPage, mNo, categoryArr);
+		//페이징 생성
+		Paging paging = mypageService.getPaymPaging(curPage, mNo, category);
 		logger.info("페이징:{}", paging);
 		
 		//전체 펀딩 내역 조회
 		List<Map<String, Object>> totalList = null;
 		
 		if(paging != null) {
-			totalList = mypageService.getMyFundingListAll(paging, mNo, categoryArr);	
+			totalList = mypageService.getMyFundingListAll(paging, mNo);	
 		}
 		logger.info("totalList: {}", totalList);
 		
 		model.addAttribute("totalList", totalList);
 		model.addAttribute("paging", paging);
-		model.addAttribute("categoryArr", categoryArr);
 	}
 	
 	@RequestMapping(value="/fundingchart", method=RequestMethod.GET)
@@ -294,26 +293,30 @@ public class MypageController {
 	}
 	
 	
-	/* 서포터 */
-	
 	//마이페이지 좋아요--------------------------------------------------------------------
 	@RequestMapping(value="/favorite", method=RequestMethod.GET)
-	public void viewMyFavorite(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMyFavorite(HttpSession session, Model model, @RequestParam(defaultValue="전체")String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/favorite [GET] START *****");
+		logger.info("category:{}", category);
 		
+		//category가 전체일 때 null로 값 변경
+		if("전체".equals(category)) { category = null; }
+
+		//회원번호 mNo
 		int mNo = (int) session.getAttribute("mNo");
 		
-		Paging paging = mypageService.getFavoritePaging(curPage, mNo);
+		//페이징 생성
+		Paging paging = mypageService.getFavoritePaging(curPage, mNo, category);
 		logger.info("페이징:{}", paging);
 		
 		//회원이 좋아요한 프로젝트 목록을 조회한다.
 		List<HashMap<String, Object>> favoriteList = null;
-
+		
 		if(paging != null) {
 			favoriteList = mypageService.getMyFavoriteList(paging, mNo);
 		}
-		
 		logger.info("좋아요 목록 {}", favoriteList);
+		
 		model.addAttribute("favoriteList", favoriteList);
 		model.addAttribute("paging", paging);
 	}
