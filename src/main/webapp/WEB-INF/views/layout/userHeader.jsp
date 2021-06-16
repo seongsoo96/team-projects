@@ -22,7 +22,8 @@
 <!-- bootstrap icon 적용 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+<!-- 마이페이지 목록형 페이지 css -->
+<link rel="stylesheet" href="/resources/css/mypageList.css" type="text/css">
 <script type="text/javascript">
 
 // <ul class="keyword_ul">

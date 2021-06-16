@@ -5,25 +5,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 
-<style type="text/css">
-/* 상단 메뉴 - 홈 아이콘 */
-.fa-house-user {font-size:30px; position:relative; left:750px;}
-
-/* 좋아한 프로젝트 없는 경우 스타일*/
-.arrow-img {width:20px; height:20px; vertical-align:bottom;}
-h4 a:hover{text-decoration:none;}
-
-/* 좋아한 프로젝트 있는 경우 스타일 */
-.divFundMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px;}
-.selectMyFund {text-align-last:center; font-size:17px; width:150px; height:35px; margin:0 45% 15px;}
-.thumbnail a img {width:80%; height:200px; border:1px solid coral;}
-.dday span {display:inline-block; width:100px; margin:10px 0;}
-.pjname {font-weight:600; font-size:16px;}
-</style>
-
-<div class="container">
-	<h2 style="display:inline-block">좋아요</h2>
-	<span><a href="/user/mypage/home"><i class="fas fa-house-user"></i></a></span>
+<div class="container" style="margin-bottom:50px;">
+	<div class="divFundMenu">
+		<h2 style="display:inline-block;"><a href="/user/mypage/favorite" style="color:black;">좋아요</a></h2>
+		<span><a href="/user/mypage/home"><i class="fas fa-house-user" style="left:505%"></i></a></span>
+	</div>
 	<hr>
 	
 	<c:if test="${empty favoriteList }">
@@ -39,10 +25,8 @@ h4 a:hover{text-decoration:none;}
 	</c:if>
 	
 	<c:if test="${not empty favoriteList }">
-		<select class="selectMyFund">
-			<option selected>카테고리 전체</option>
-		</select>
-	
+		<c:import url="/WEB-INF/views/layout/myCategoryCheckbox.jsp"/>
+		
 		<%-- 현재 날짜 --%>
 		<jsp:useBean id="now" class="java.util.Date"/>
 		<fmt:formatDate value="${now }" var="nowFormat" pattern="yyyy-MM-dd"/>
@@ -85,7 +69,10 @@ h4 a:hover{text-decoration:none;}
 				</div>
 			</c:forEach>
 		</div>
+		<c:if test="${paging.totalPage > 1 }">
 			<c:import url="/WEB-INF/views/layout/paging.jsp"/>
+		</c:if>
 	</c:if>
 </div><!-- div.container -->
+<script src="/resources/js/mypageList.js" type="text/javascript"></script>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
