@@ -126,26 +126,6 @@ public interface MypageService {
 
 	
 	/**
-	 * 카테고리에 따른 나의 펀딩 페이징을 생성한다.
-	 * @param curPage	페이지 기본값
-	 * @param mNo		회원번호
-	 * @param category	카테고리 목록
-	 * @return			카테고리에 따른 페이징
-	 */
-	public Paging getMyFundPagingByCategory(int curPage, int mNo, List<String> category);
-	
-
-	/**
-	 * 카테고리에 따른 나의 펀딩 내역을 조회한다.
-	 * @param paging	페이징 정보 객체
-	 * @param mNo		회원번호
-	 * @param category	카테고리 목록
-	 * @return			펀딩한 프로젝트 목록
-	 */
-	public List<Map<String, Object>> getMyFundingListByCategory(Paging paging, int mNo, List<String> category);
-	
-	
-	/**
 	 * 회원의 카테고리별 결제 완료 금액을 조회한다.
 	 * @param mNo	회원번호
 	 * @return		카테고리별 결제 금액

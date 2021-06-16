@@ -138,50 +138,6 @@
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
  	</select>
  	
- 	<select id="selectCntPaymByCategory" parameterType="hashmap" resultType="int">
-	SELECT COUNT(*) 
-	FROM payment P
-			INNER JOIN information I
-			ON P.p_no = I.p_no
-	WHERE
-		 P.m_no = #{mNo} 
-		 	AND P.paym_state = 'Y' 	
-			<if test="category != null">
-			AND I.i_category IN
-			<foreach collection="category" item="cate" open="(" separator="," close=")">
-		            #{cate} 
-			</foreach>
-			</if>
- 	</select>
- 	
- 	<select id="selectMyFundingListByCategory" parameterType="hashmap" resultType="hashmap">
-	SELECT * FROM (
-	    SELECT rownum rnum, RES.* FROM (
-	        SELECT 
-	            PM.paym_amount
-	            , PJ.p_no, PJ.p_name, PJ.p_progress_state
-	            , I.i_category, I.i_stored_name, I.i_end_date
-	        FROM (
-	        	payment PM
-		        INNER JOIN project PJ
-		            ON PM.p_no = PJ.p_no
-		        INNER JOIN information I
-		            ON PM.p_no = I.p_no
-		    )
-	        WHERE 
-	        	PM.m_no = #{mNo} 
-	        	AND PM.paym_state = 'Y'
-	       		<if test="category != null">
-				AND I.i_category IN
-				<foreach collection="category" item="cate" open="(" separator="," close=")">
-		            #{cate} 
-				</foreach>
-				</if>
-	        ORDER BY PM.paym_no DESC
-	    ) RES
-	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
- 	</select>
- 	
  	<select id="selectPaymSumByNo" parameterType="int" resultType="hashmap">
 	SELECT i_category as category, sum(paym_amount) as count 
 	FROM (payment 

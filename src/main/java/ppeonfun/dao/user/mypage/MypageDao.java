@@ -129,27 +129,6 @@ public interface MypageDao {
 	 */
 	public List<Map<String, Object>> selectMyFundingListAll(@Param("paging")Paging paging, @Param("mNo")int mNo, @Param("categoryArr") String[] categoryArr);
 
-	
-	/**
-	 * payment, information 테이블을 조인하여
-	 * 회원이 펀딩한 프로젝트 수를 조회한다. (카테고리 기준)
-	 * @param mNo		회원번호
-	 * @param category	카테고리 목록
-	 * @return			펀딩한 프로젝트 수
-	 */
-	public int selectCntPaymByCategory(@Param("mNo")int mNo, @Param("category")List<String> category);
-	
-	
-	/**
-	 * 테이블을 조인하여
-	 * 회원이 펀딩한 프로젝트 목록을 조회한다. (카테고리 기준)
-	 * @param paging	페이징 정보 객체
-	 * @param mNo		회원번호
-	 * @param category	카테고리 목록
-	 * @return			펀딩한 프로젝트 목록
-	 */
-	public List<Map<String, Object>> selectMyFundingListByCategory(@Param("paging")Paging paging, @Param("mNo")int mNo, @Param("category")List<String> category);
-	
 
 	/**
 	 * payment와 information 테이블을 조인하여
