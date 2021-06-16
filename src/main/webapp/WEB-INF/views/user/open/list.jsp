@@ -125,7 +125,7 @@
 	      <div class="caption">
 	        <h3>${info.iTitle }</h3>
 	        <p>${info.iCategory }</p>
-	        <p><a href="#" class="btn" style="background: #4EE2EC; color: #FFFFFF" role="button">둘러보기</a> 
+	        <p><a href="/user/open/view?pNo=${info.pNo }" class="btn" style="background: #4EE2EC; color: #FFFFFF" role="button">둘러보기</a> 
 	      </div>
 	    </div>
 	  </div>

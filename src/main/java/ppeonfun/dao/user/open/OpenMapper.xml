@@ -37,5 +37,24 @@
 		)R
 		WHERE rnum BETWEEN #{startNo} AND #{endNo}
   	</select>
-  
+  	
+  	<select id="selectInformation" resultType="Information" parameterType="Project">
+  		SELECT * FROM information WHERE p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectCheckAlarm" resultType="int" parameterType="Project">
+  		SELECT count(*) FROM alarm WHERE p_no = #{pNo} AND m_no = #{mNo}
+  	</select>
+  	
+  	<insert id="insertAlarm" parameterType="Alarm">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="aNo">
+  			SELECT alarm_SEQ.nextval FROM dual
+  		</selectKey>
+  		insert into alarm(a_no,p_no,m_no) values(#{aNo}, #{pNo}, #{mNo})
+  	</insert>
+  	
+  	<delete id="deleteAlarm" parameterType="Alarm">
+  		DELETE FROM alarm WHERE p_no = #{pNo} AND m_no = #{mNo}
+  	</delete>
+  	
   </mapper>

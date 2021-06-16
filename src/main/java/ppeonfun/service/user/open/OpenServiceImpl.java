@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ppeonfun.dao.user.open.OpenDao;
+import ppeonfun.dto.Alarm;
 import ppeonfun.dto.Information;
+import ppeonfun.dto.Project;
 import ppeonfun.util.Paging;
 
 @Service("user.OpenService")
@@ -33,5 +35,38 @@ private Logger logger = LoggerFactory.getLogger(OpenServiceImpl.class);
 	public List<Information> selectAllProject(Paging paging) {
 		
 		return openDao.selectAll(paging);
+	}
+	
+	@Override
+	public Information viewInformation(Project project) {
+		// TODO Auto-generated method stub
+		return openDao.selectInformation(project);
+	}
+	
+	@Override
+	public boolean checkAlarm(Project project, int mNo) {
+		project.setmNo(mNo);
+		
+		if(openDao.selectCheckAlarm(project)>0) {
+			return false;
+		}
+	
+		return true;
+	}
+	@Override
+	public void inputArarm(Project project, int mNo) {
+		// TODO Auto-generated method stub
+		Alarm alarm = new Alarm();
+		alarm.setmNo(mNo);
+		alarm.setpNo(project.getpNo());
+		openDao.insertAlarm(alarm);
+	}
+	@Override
+	public void removeArarm(Project project, int mNo) {
+		// TODO Auto-generated method stub
+		Alarm alarm = new Alarm();
+		alarm.setmNo(mNo);
+		alarm.setpNo(project.getpNo());
+		openDao.deleteAlarm(alarm);
 	}
 }

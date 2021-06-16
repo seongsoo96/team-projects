@@ -205,8 +205,11 @@ a span svg {margin-right:10px;}
 				<div>
 					<div class="myopenpj">
 						<a href="/user/maker/project/start">
-							<span>오픈 프로젝트</span>
-							<img src="/resources/img/arrow.svg" class="arrow-img">
+							<span class="span-menu-name">
+								<i class="fas fa-play"></i>
+								<span>오픈 프로젝트</span>
+								<img src="/resources/img/arrow.svg" class="arrow-img">
+							</span>
 						</a>
 					</div>
 					<div class="myprepj">

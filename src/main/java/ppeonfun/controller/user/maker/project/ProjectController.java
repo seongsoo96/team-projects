@@ -71,6 +71,30 @@ public class ProjectController {
 		model.addAttribute("paging", paging);
 	}
 	
+	@RequestMapping(value="/start")
+	public void start(Paging inData, Model model, HttpSession session) {
+		logger.info("/user/maker/project/list 실행");
+		logger.info("inData {}", inData);
+		int mNo = 0;
+		if(session.getAttribute("mNo")!=null) {
+			mNo=(int)session.getAttribute("mNo");
+		}
+		String type = "start";
+		Paging paging = projectService.getPaging(inData,mNo,type);
+		List<Information> list = projectService.selectAllProject(paging,mNo,type);
+		
+		logger.info("paging {}", paging);
+		logger.info("mNo {}", mNo);
+		for(int i=0; i<list.size(); i++) {
+			logger.info("value {}", list.get(i));
+		}
+		
+		
+		model.addAttribute("category",inData.getCategory());
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+	}
+	
 	@RequestMapping(value="/view")
 	public void view(Project project, Model model) {
 		logger.info("/user/maker/project/view 실행");
