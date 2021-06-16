@@ -222,7 +222,7 @@ public class MypageController {
 		return "jsonView";
 	}
 	
-	//마이페이지 나의프로젝트--------------------------------------------------------------------
+	//마이페이지 나의펀딩/펀딩내역--------------------------------------------------------------------
 	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
 	public void viewMyFunding(HttpSession session, Model model, String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/myfunding [GET] START *****");

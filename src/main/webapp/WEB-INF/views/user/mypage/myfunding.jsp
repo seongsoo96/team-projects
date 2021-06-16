@@ -11,15 +11,23 @@
 .divFundMenu span a:hover {text-decoration:none; color:#4EE2EC;}
 .fa-house-user {font-size:30px; position:relative; left:550px;}
 
+/* 체크박스 */
+input[type="checkbox"] {display:none;}
+.divCheckbox span[id="okicon"] {
+	display:inline-block; width:15px; height:15px; border:1px solid #ccc; cursor:pointer;
+	position:relative; top:-2px; font-size:10px; color:#fff; margin: 0 3px; padding-top:1px;
+}
+input[type="checkbox"]:checked + label > span[id="okicon"] {background-color:#4EE2EC;}
+
 /* 프로젝트 없는 경우 스타일*/
 .arrow-img {width:20px; height:20px; vertical-align:bottom;}
 h4 a:hover{text-decoration:none;}
 
 /* 프로젝트 있는 경우 스타일 */
 .divCheckbox {height:50px; font-size:15px; text-align:center; margin:2% 0;}
-.divCheckbox label {display:inline-block; margin:0 7px; font-weight:600; height:100%; padding-top:7px;}
+.divCheckbox label {display:inline-block; margin-right:10px; font-weight:600; height:100%; padding-top:7px;}
 .divCheckbox label input {width:15px; vertical-align:text-top;}
-.divCheckbox span {margin-left:2%;}
+/* .divCheckbox span {margin-left:2%;} */
 .divCheckbox span button {background:none; border:none;}
 .divCheckbox span button:hover {color:#4EE2EC;}
 
@@ -54,17 +62,39 @@ h4 a:hover{text-decoration:none;}
 	<c:if test="${not empty totalList }">
 		<form action="/user/mypage/myfunding" method="get">
 		<div class="form-control divCheckbox">
-			<label><input type="checkbox" name="category" value="전체" checked>카테고리 전체</label>
-			<label><input type="checkbox" name="category" value="테크/가전">테크/가전</label>
-			<label><input type="checkbox" name="category" value="반려동물">반려동물</label>
-			<label><input type="checkbox" name="category" value="출판">출판</label>
-			<label><input type="checkbox" name="category" value="기부/후원">기부/후원</label>
-			<label><input type="checkbox" name="category" value="푸드">푸드</label>
-			<label><input type="checkbox" name="category" value="운동">운동</label>
-			<label><input type="checkbox" name="category" value="여행">여행</label>
-			<label><input type="checkbox" name="category" value="뷰티">뷰티</label>
-			<label><input type="checkbox" name="category" value="패션">패션</label>
-			<label><input type="checkbox" name="category" value="디자인소품">디자인소품</label>
+			<input type="checkbox" name="category" id="default" value="전체" checked/>
+			<label for="default"><span class="glyphicon glyphicon-ok" id="okicon"></span>카테고리 전체</label>
+			
+			<input type="checkbox" name="category" id="tech" value="테크/가전"/>
+			<label for="tech"><span class="glyphicon glyphicon-ok" id="okicon"></span>테크/가전</label>
+
+			<input type="checkbox" name="category" id="pet" value="반려동물"/>
+			<label for="pet"><span class="glyphicon glyphicon-ok" id="okicon"></span>반려동물</label>
+			
+			<input type="checkbox" name="category" id="book" value="출판"/>
+			<label for="book"><span class="glyphicon glyphicon-ok" id="okicon"></span>출판</label>
+			
+			<input type="checkbox" name="category" id="donate" value="기부/후원"/>
+			<label for="donate"><span class="glyphicon glyphicon-ok" id="okicon"></span>기부/후원</label>
+			
+			<input type="checkbox" name="category" id="food" value="푸드"/>
+			<label for="food"><span class="glyphicon glyphicon-ok" id="okicon"></span>푸드</label>
+
+			<input type="checkbox" name="category" id="exercise" value="운동"/>
+			<label for="exercise"><span class="glyphicon glyphicon-ok" id="okicon"></span>운동</label>
+			
+			<input type="checkbox" name="category" id="trip" value="여행"/>
+			<label for="trip"><span class="glyphicon glyphicon-ok" id="okicon"></span>여행</label>
+			
+			<input type="checkbox" name="category" id="beauty" value="뷰티"/>
+			<label for="beauty"><span class="glyphicon glyphicon-ok" id="okicon"></span>뷰티</label>
+			
+			<input type="checkbox" name="category" id="fashion" value="패션"/>
+			<label for="fashion"><span class="glyphicon glyphicon-ok" id="okicon"></span>패션</label>
+			
+			<input type="checkbox" name="category" id="design" value="디자인소품"/>
+			<label for="design"><span class="glyphicon glyphicon-ok" id="okicon"></span>디자인소품</label>
+
 			<span><button type="button" id="btnSelectCategory"><i class="fas fa-search"></i></button></span>
 		</div>
 		</form>
@@ -121,14 +151,15 @@ h4 a:hover{text-decoration:none;}
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	var categorybox = $("input:checkbox[name='category']")
+	var categorybox = $("input:checkbox[type='checkbox']")
 	
 	/* 체크 박스 옵션 선택 시 */
-	categorybox.change(function() {
+ 	categorybox.change(function() {
 		console.log("checkbox change!")
 		
-		/* 0번째 옵션(전체) unchecked */
-		categorybox.eq(0).prop('checked', false)
+		//0번째 옵션(카테고리 전체) unchecked 및 css 수정
+		categorybox.eq(0).attr({'checked':false, 'disabled':true})
+		$("input:checkbox[type='checkbox']:eq(0)+label").css('color', '#ccc')
 	})
 	
 	/* 검색 아이콘 클릭 시 카테고리 폼 데이터 전송*/
