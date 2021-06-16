@@ -10,23 +10,6 @@
 		where p_name like '%' || #{keyword} || '%'
 	</select>
 	
-<!-- 	<select id="selectSearchList" parameterType="hashmap" resultType="hashmap"> -->
-<!-- 		select * from ( -->
-<!-- 			select rownum rnum, S.* from (	 -->
-<!-- 				select  -->
-<!-- 				    (select sum(paym_amount) from payment where p_no = p.p_no) funded_money -->
-<!-- 				    , i.i_money -->
-<!-- 				    , (select round( ( (select sum(paym_amount) from payment where p_no = p.p_no ) / i.i_money ) * 100, 2 ) || '%' from dual) funded_percent -->
-<!-- 				    , i.i_stored_name, i.i_category, i.i_end_date, p.* -->
-<!-- 				from project p, information i -->
-<!-- 				where p.p_no = i.p_no -->
-<!-- 				and p.p_name like '%' || #{keyword} || '%' -->
-<!-- 				order by p.p_no desc -->
-<!-- 			) S -->
-<!-- 		) R -->
-<!-- 		where rnum between #{paging.startNo} and #{paging.endNo}		 -->
-<!-- 	</select> -->
-
 	<select id="selectSearchList" parameterType="hashmap" resultType="hashmap">
 		select * from (
 		    select rownum rnum, S.* from (	
@@ -43,8 +26,6 @@
 		) R
 		where rnum between #{paging.startNo} and #{paging.endNo}
 	</select>
-	
-	
 	
 	
 	<select id="selectCntAllByFilter" parameterType="hashmap" resultType="int">

@@ -42,7 +42,6 @@
 					<label class="comment_comment_content">${cc.CS_CONTENT }</label><br>
 					<label class="comment_comment_date">
 					<fmt:formatDate value="${cc.CS_CREATE_DATE }" pattern="yyyy.MM.dd HH:mm" /></label>
-					<label class="create_commentss" onclick="CmtssInsertFormAfterCmts(${c.C_NO})">답글 쓰기</label>
 					<label id="#comment${cc.CS_NO }" class="btn-example pull-right" onclick="comment_layer_data(${cc.CS_NO })">…</label>
 					<div id="comment${cc.CS_NO }" class="comment-pop-layer">
 						<div class="comment-pop-container">

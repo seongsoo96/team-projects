@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
 <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-<!-- <link rel="stylesheet" href="jqueryui/style.css"> -->
 
 
 <script>
@@ -53,7 +52,6 @@ $(document).ready(function() {
 	
 	//필터 클릭
 	$(".filterbtn").click(function(){
-// 		$(this).toggleClass('filter_clicked')
 		
 		if($(this).hasClass('filter_clicked')==false){
 			$(this).addClass('filter_clicked')
@@ -120,7 +118,6 @@ $(document).ready(function() {
 		filterSubmit(cp);
 		$('.SearchBox_shadow').addClass('hidden')
 		
-// 		var arrList = $('.filtered_item').get()
 		
 		//검색메인창 필터리스트 추가		
 		var arrText = [];
@@ -183,7 +180,6 @@ var keyword = '${param.keyword}';
 var cnt = 9
 
 function filterSubmit(cp){
-// 	$("input[name='category']").change(function() {
 		console.log("-------filterSubmit()----------")
 		console.log("--------------------------------")
 		console.log("전역변수 curPage : " + curPage)
@@ -237,7 +233,6 @@ function filterSubmit(cp){
 }
 
 
-// function viewMore(curPage, keyword, step, category, s1min, s1max, s2min, s2max){
 function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 	console.log("-----------------viewMore-------------------")
 	console.log("viewMore의 매개변수 cp : " + cp)
@@ -252,17 +247,7 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 	console.log("------------------------------------------")
 		if(curPage>totalPage) {
 			return false
-		} else {
-// 			curPage++
-		}
-// 	console.log("파라미터 curPage : " + curPage)
-// 	console.log("파라미터 keyword : " + keyword)
-// 	console.log("파라미터 step : " + step)
-// 	console.log("파라미터 category : " + category)
-// 	console.log("파라미터 s1min : " + s1min)
-// 	console.log("파라미터 s1max : " + s1max)
-// 	console.log("파라미터 s2min : " + s2min)
-// 	console.log("파라미터 s2max : " + s2max)
+		} 
 		console.log("ajax 실행할 때 curPage : " + curPage)
 		$.ajax({
 			type: "get"
@@ -279,13 +264,9 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 			}
 			, dataType: "html"
 			, success: function(res){
-				console.log("성공")
 				
-				console.log("---------searchMore.jsp 시작-------")
 				//더보기 리스트 추가
 				$('.SearchList_result_wrap').append(res)
-				
-// 				console.log("필터 적용 눌렀을때 대입 전 totalCount : " + totalCount)
 				$('.totalCount').text(totalCount)
 				
 				//현재 페이지가 1일때
@@ -295,7 +276,6 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 				
 				//listCount가 totalCount보다 작을때
 				if(cnt < totalCount) {
-// 					$('#btnViewMore').prop("disabled", false)
 					$('.listCount').text(cnt)
 					curPage++
 				
@@ -448,8 +428,6 @@ function viewMore(cp, keyword, step, category, s1min, s1max, s2min, s2max){
 									<img class="project_img" alt="테스트" src="/upload/information/${list.I_STORED_NAME }">
 								</c:otherwise>
 							</c:choose>
-							
-							
 							<p>
 								<strong class="project_title">${list.P_NAME }</strong>
 								<small class="project_info">
