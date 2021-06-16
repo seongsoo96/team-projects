@@ -5,8 +5,8 @@
 
 <style type="text/css">
 /* 상단 메뉴 - 홈 아이콘 */
-.fa-house-user {font-size:30px; position:relative; left:650px; color:#4EE2EC;}
-.fa-house-user:hover {color:#4EEDED;}
+.fa-house-user {font-size:30px; position:relative; left:650px; color:black;}
+.fa-house-user:hover {color:#4EE2EC;}
 
 
 /* 기본 정보 수정, 비민번호 변경 버튼*/

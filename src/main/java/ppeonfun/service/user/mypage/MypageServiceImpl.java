@@ -185,37 +185,23 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public Paging getPaymPaging(int curPage, int mNo, String[] categoryArr) {
-		int totalCount = mypageDao.selectCntPayment(mNo, categoryArr);
+	public Paging getPaymPaging(int curPage, int mNo, String category) {
+		int totalCount = mypageDao.selectCntPayment(mNo, category);
 		
 		if( totalCount > 0 ) {
-			return new Paging(totalCount, curPage, 6);
+			Paging paging = new Paging(totalCount, curPage, 6);
+			paging.setCategory(category);
+			
+			return paging;
 		} else {
 			return null;
 		}
 	}
 
 	@Override
-	public List<Map<String, Object>> getMyFundingListAll(Paging paging, int mNo, String[] categoryArr) {
-		return mypageDao.selectMyFundingListAll(paging, mNo, categoryArr);
+	public List<Map<String, Object>> getMyFundingListAll(Paging paging, int mNo) {
+		return mypageDao.selectMyFundingListAll(paging, mNo);
 	}
-	
-	@Override
-	public Paging getMyFundPagingByCategory(int curPage, int mNo, List<String> category) {
-		int totalCount = mypageDao.selectCntPaymByCategory(mNo, category);
-		
-		if( totalCount > 0 ) {
-			return new Paging(totalCount, curPage, 6);
-		} else {
-			return null;
-		}
-	}
-	
-	@Override
-	public List<Map<String, Object>> getMyFundingListByCategory(Paging paging, int mNo, List<String> category) {
-		return mypageDao.selectMyFundingListByCategory(paging, mNo, category);
-	}
-
 
 	@Override
 	public List<HashMap<String, Object>> getPaymentSum(int mNo) {
@@ -228,11 +214,14 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public Paging getFavoritePaging(int curPage, int mNo) {
-		int totalCount = mypageDao.selectCntFavorite(mNo);
+	public Paging getFavoritePaging(int curPage, int mNo, String category) {
+		int totalCount = mypageDao.selectCntFavorite(mNo, category);
 		
 		if(totalCount > 0) {
-			return new Paging(totalCount, curPage, 6);
+			Paging paging = new Paging(totalCount, curPage, 6);
+			paging.setCategory(category);
+			
+			return paging;
 		} else {
 			return null;
 		}

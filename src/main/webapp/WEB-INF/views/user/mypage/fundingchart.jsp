@@ -4,11 +4,12 @@
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 <style type="text/css">
 /* 상단 메뉴 */
-.divFundMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px;}
+.divFundMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px; color:black;}
+.divFundMenu span a:hover {text-decoration:none; color:#4EE2EC;}
 .fa-house-user {font-size:30px; position:relative; left:550px;}
 
 /* 카테고리 */
-.selectMyFund {text-align-last:center; font-size:17px; width:150px; height:35px; margin:0 45% 40px;}
+.selectMyFund {text-align-last:center; font-size:15px; width:125px; height:30px; margin:0 45% 35px;}
 </style>
 
 <div class="container">

@@ -109,41 +109,20 @@ public interface MypageService {
 	 * 전체 펀딩의 페이징 객체를 생성한다.
 	 * @param curPage		현재 페이지
 	 * @param mNo 			회원번호
-	 * @param categoryArr	카테고리 목록
+	 * @param category	카테고리 목록`
 	 * @return				페이지에 따른 페이징
 	 */
-	public Paging getPaymPaging(int curPage, int mNo, String[] categoryArr);
+	public Paging getPaymPaging(int curPage, int mNo, String category);
 
 
 	/**
 	 * 페이징이 적용된 전체 펀딩 목록을 조회한다.
 	 * @param paging		페이징 정보
 	 * @param mNo			회원번호
-	 * @param categoryArr	카테고리 목록
 	 * @return				페이징에 따른 목록
 	 */
-	public List<Map<String, Object>> getMyFundingListAll(Paging paging, int mNo, String[] categoryArr);
+	public List<Map<String, Object>> getMyFundingListAll(Paging paging, int mNo);
 
-	
-	/**
-	 * 카테고리에 따른 나의 펀딩 페이징을 생성한다.
-	 * @param curPage	페이지 기본값
-	 * @param mNo		회원번호
-	 * @param category	카테고리 목록
-	 * @return			카테고리에 따른 페이징
-	 */
-	public Paging getMyFundPagingByCategory(int curPage, int mNo, List<String> category);
-	
-
-	/**
-	 * 카테고리에 따른 나의 펀딩 내역을 조회한다.
-	 * @param paging	페이징 정보 객체
-	 * @param mNo		회원번호
-	 * @param category	카테고리 목록
-	 * @return			펀딩한 프로젝트 목록
-	 */
-	public List<Map<String, Object>> getMyFundingListByCategory(Paging paging, int mNo, List<String> category);
-	
 	
 	/**
 	 * 회원의 카테고리별 결제 완료 금액을 조회한다.
@@ -165,16 +144,17 @@ public interface MypageService {
 	 * 회원이 좋아요한 프로젝트 목록의 페이징을 생성한다.
 	 * @param curPage 	현재 페이지
 	 * @param mNo		회원번호
+	 * @param category	카테고리
 	 * @return			페이징 정보 객체
 	 */
-	public Paging getFavoritePaging(int curPage, int mNo);
+	public Paging getFavoritePaging(int curPage, int mNo, String category);
 	
 	
 	/**
 	 * 회원이 좋아요한 프로젝트 목록을 조회한다.
-	 * @param paging 	페이징 정보 객체
-	 * @param mNo		회원번호
-	 * @return			좋아요한 프로젝트 목록
+	 * @param paging 		페이징 정보 객체
+	 * @param mNo			회원번호
+	 * @return				좋아요한 프로젝트 목록
 	 */
 	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo);
 
