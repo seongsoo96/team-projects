@@ -99,16 +99,13 @@
  	<select id="selectCntPayment" parameterType="hashmap" resultType="int">
 	SELECT COUNT(*) 
 	FROM payment P
-		<if test="categoryArr != null">
+		<if test="category != null and !''.equals(category)">
 		INNER JOIN information I
 				ON P.p_no = I.p_no
 		</if>
 	WHERE P.m_no = #{mNo} AND P.paym_state = 'Y'
-		<if test="categoryArr != null">
-			AND I.i_category IN
-			<foreach collection="categoryArr" item="category" open="(" separator="," close=")">
-		            #{category} 
-			</foreach>
+		<if test="category != null and !''.equals(category)">
+			AND I.i_category = #{category} 
 		</if>
  	</select>
  	
@@ -127,11 +124,8 @@
 		            ON PM.p_no = I.p_no
 		    )
 	        WHERE PM.m_no = #{mNo} AND PM.paym_state = 'Y'
-		        <if test="categoryArr != null">
-				AND I.i_category IN
-				<foreach collection="categoryArr" item="category" open="(" separator="," close=")">
-			            #{category} 
-				</foreach>
+		        <if test="paging.category != null and !''.equals(paging.category)">
+				AND I.i_category = #{paging.category} 
 				</if>
 	        ORDER BY PM.paym_no DESC
 	    ) RES
@@ -161,16 +155,13 @@
  	<select id="selectCntFavorite" parameterType="hashmap" resultType="int">
  	SELECT COUNT(*)
  	FROM favorite F
- 		<if test="categoryArr != null">
+ 		<if test="category != null and !''.equals(category)">
 		INNER JOIN information I
 				ON F.p_no = I.p_no
 		</if>
  	WHERE F.m_no = #{mNo}
- 		<if test="categoryArr != null">
-			AND I.i_category IN
-			<foreach collection="categoryArr" item="category" open="(" separator="," close=")">
-		            #{category} 
-			</foreach>
+ 		<if test="category != null and !''.equals(category)">
+			AND I.i_category = #{category} 
 		</if>
  	ORDER BY F.fav_no DESC
  	</select>
@@ -190,11 +181,8 @@
 		            ON F.p_no = I.p_no
 		    )
 	        WHERE F.m_no = #{mNo}
-	        	<if test="categoryArr != null">
-				AND I.i_category IN
-				<foreach collection="categoryArr" item="category" open="(" separator="," close=")">
-			            #{category} 
-				</foreach>
+	        	<if test="paging.category != null and !''.equals(paging.category)">
+				AND I.i_category = #{paging.category} 
 				</if>
 	        ORDER BY F.fav_no DESC
 	    ) RES

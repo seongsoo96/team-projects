@@ -113,10 +113,10 @@ public interface MypageDao {
 	/**
 	 * 회원이 펀딩한 전체 내역을 조회한다.
 	 * @param mNo			회원번호
-	 * @param categoryArr	카테고리 목록
+	 * @param category	카테고리 목록
 	 * @return				전체 내역 수
 	 */
-	public int selectCntPayment(@Param("mNo")int mNo, @Param("categoryArr")String[] categoryArr);
+	public int selectCntPayment(@Param("mNo")int mNo, @Param("category")String category);
 
 	
 	/**
@@ -124,10 +124,9 @@ public interface MypageDao {
 	 *  회원이 펀딩한 프로젝트 전체 목록을 조회한다. (페이징 적용)
 	 * @param paging		페이징 정보
 	 * @param mNo			회원번호
-	 * @param categoryArr	카테고리 목록
 	 * @return				펀딩한 프로젝트 목록
 	 */
-	public List<Map<String, Object>> selectMyFundingListAll(@Param("paging")Paging paging, @Param("mNo")int mNo, @Param("categoryArr") String[] categoryArr);
+	public List<Map<String, Object>> selectMyFundingListAll(@Param("paging")Paging paging, @Param("mNo")int mNo);
 
 
 	/**
@@ -150,11 +149,11 @@ public interface MypageDao {
 	
 	/**
 	 * 회원이 좋아요한 프로젝트 수를 조회한다.
-	 * @param mNo			회원번호
-	 * @param categoryArr 	카테고리 목록
-	 * @return				좋아요 한 프로젝트 수
+	 * @param mNo		회원번호
+	 * @param category 	카테고리
+	 * @return			좋아요 한 프로젝트 수
 	 */
-	public int selectCntFavorite(@Param("mNo")int mNo, @Param("categoryArr")String[] categoryArr);
+	public int selectCntFavorite(@Param("mNo")int mNo, @Param("category")String category);
 	
 	
 	/**
@@ -163,10 +162,9 @@ public interface MypageDao {
 	 * 
 	 * @param paging		페이징 정보 객체
 	 * @param mNo			회원번호
-	 * @param categoryArr 	카테고리 목록
 	 * @return				좋아한 프로젝트 목록
 	 */
-	public List<HashMap<String, Object>> selectAllMyFavoriteList(@Param("paging")Paging paging, @Param("mNo")int mNo, @Param("categoryArr")String[] categoryArr);
+	public List<HashMap<String, Object>> selectAllMyFavoriteList(@Param("paging")Paging paging, @Param("mNo")int mNo);
 
 
 	/**

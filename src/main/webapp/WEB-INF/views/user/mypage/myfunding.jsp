@@ -14,7 +14,8 @@
 	</div>
 	<hr>
 	
-	<c:if test="${empty totalList } ">
+	<c:import url="/WEB-INF/views/layout/myCategoryBtn.jsp"/>
+	<c:if test="${empty totalList }">
 		<div class="text-center" style="height:210px; margin-top:100px;">
 			<h3>펀딩 프로젝트에 참여한 이력이 없습니다.</h3>
 			<h4>
@@ -27,8 +28,6 @@
 	</c:if>
 	
 	<c:if test="${not empty totalList }">
-		<c:import url="/WEB-INF/views/layout/myCategoryCheckbox.jsp"/>
-		
 		<%-- 현재 날짜 --%>
 		<jsp:useBean id="now" class="java.util.Date"/>
 		<fmt:formatDate value="${now }" var="nowFormat" pattern="yyyy-MM-dd"/>
@@ -77,5 +76,4 @@
 		</c:if>
 </c:if>
 </div><!-- div.container -->
-<script src="/resources/js/mypageList.js" type="text/javascript"></script>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
