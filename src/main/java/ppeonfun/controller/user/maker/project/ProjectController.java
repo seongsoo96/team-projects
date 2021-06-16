@@ -31,9 +31,33 @@ public class ProjectController {
 		if(session.getAttribute("mNo")!=null) {
 			mNo=(int)session.getAttribute("mNo");
 		}
+		String type = "list";
+		Paging paging = projectService.getPaging(inData,mNo,type);
+		List<Information> list = projectService.selectAllProject(paging,mNo,type);
 		
-		Paging paging = projectService.getPaging(inData,mNo);
-		List<Information> list = projectService.selectAllProject(paging,mNo);
+		logger.info("paging {}", paging);
+		logger.info("mNo {}", mNo);
+		for(int i=0; i<list.size(); i++) {
+			logger.info("value {}", list.get(i));
+		}
+		
+		
+		model.addAttribute("category",inData.getCategory());
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+	}
+	
+	@RequestMapping(value="/open")
+	public void open(Paging inData, Model model, HttpSession session) {
+		logger.info("/user/maker/project/list 실행");
+		logger.info("inData {}", inData);
+		int mNo = 0;
+		if(session.getAttribute("mNo")!=null) {
+			mNo=(int)session.getAttribute("mNo");
+		}
+		String type = "open";
+		Paging paging = projectService.getPaging(inData,mNo,type);
+		List<Information> list = projectService.selectAllProject(paging,mNo,type);
 		
 		logger.info("paging {}", paging);
 		logger.info("mNo {}", mNo);

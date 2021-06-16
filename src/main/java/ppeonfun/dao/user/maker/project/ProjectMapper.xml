@@ -18,6 +18,16 @@
  	<if test='search !=null and !"".equals(search)'>
  			AND i_title like'%'||#{search}||'%'
  	</if>
+ 	<if test='open !=null and !"".equals(open)'>
+ 			AND P.p_state = 'Y' AND P.p_progress_state = 'W'
+ 	</if>
+ 	<if test='list !=null and !"".equals(list)'>
+ 			AND P.p_state = 'W'
+ 	</if>
+ 	<if test='start !=null and !"".equals(start)'>
+ 			AND P.p_state = 'Y' AND P.p_progress_state = 'Y'
+ 	</if>
+ 	
   </select>
   <select id="selectAll" resultType="Information" parameterType="hashmap">
   	SELECT*FROM(
@@ -32,6 +42,15 @@
 				 	</if>
 				 	<if test='search !=null and !"".equals(search)'>
 				 			AND i_title like '%'||#{search}||'%'
+				 	</if>
+				 	<if test='open !=null and !"".equals(open)'>
+				 			AND P.p_state = 'Y' AND P.p_progress_state = 'W'
+				 	</if>
+				 	<if test='list !=null and !"".equals(list)'>
+				 			AND P.p_state = 'W'
+				 	</if>
+				 	<if test='start !=null and !"".equals(start)'>
+				 			AND P.p_state = 'Y' AND P.p_progress_state = 'Y'
 				 	</if>
 		            order by P.p_no desc
 		    ) I
