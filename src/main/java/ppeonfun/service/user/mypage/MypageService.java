@@ -163,9 +163,10 @@ public interface MypageService {
 	 * 펀딩 커뮤니티의 페이징 객체를 생성한다.
 	 * @param curPage	현재 페이지
 	 * @param mNo		회원 번호
+	 * @param category	카테고리
 	 * @return			페이징 정보 객체
 	 */
-	public Paging getFundCommPaging(int curPage, int mNo);
+	public Paging getFundCommPaging(int curPage, int mNo, String category);
 
 
 	/**

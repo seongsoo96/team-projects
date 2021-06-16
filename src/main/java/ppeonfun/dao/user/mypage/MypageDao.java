@@ -169,14 +169,15 @@ public interface MypageDao {
 
 	/**
 	 * 회원이 펀딩 커뮤니티에 작성한 글의 수를 조회한다.
-	 * @param mNo	회원번호
-	 * @return		작성한 글 수
+	 * @param mNo		회원번호
+	 * @param category	카테고리
+	 * @return			작성한 글 수
 	 */
-	public int selectCntFundComm(int mNo);
+	public int selectCntFundComm(@Param("mNo")int mNo, @Param("category")String category);
 
 
 	/**
-	 * community, project 테이블을 조인하여
+	 * community, project, information 테이블을 조인하여
 	 * 회원이 작성한 글 목록을 조회한다.
 	 * 
 	 * @param paging 	페이징 정보 객체

@@ -323,14 +323,19 @@ public class MypageController {
 	
 	
 	//마이페이지 내가 쓴 글--------------------------------------------------------------------
-	
 	@RequestMapping(value="/fundcomm", method=RequestMethod.GET)
-	public void viewMyFundComm(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMyFundComm(HttpSession session, Model model, @RequestParam(defaultValue="전체")String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/fundcomm [GET] START *****");
+		logger.info("category:{}", category);
+
+		//category가 전체일 때 null로 값 변경
+		if("전체".equals(category)) { category = null; }
 		
+		//회원번호 mNo
 		int mNo = (int) session.getAttribute("mNo");
 		
-		Paging paging = mypageService.getFundCommPaging(curPage, mNo);
+		//페이징 생성
+		Paging paging = mypageService.getFundCommPaging(curPage, mNo, category);
 		logger.info("페이징:{}", paging);
 		
 		//회원이 프로젝트 커뮤니티에 작성한 글을 조회한다.
@@ -339,8 +344,8 @@ public class MypageController {
 		if(paging != null) {
 			fundCommList = mypageService.getMyFundCommList(paging, mNo);
 		}
-		
 		logger.info("펀딩 커뮤니티에 작성한 글 목록 {}", fundCommList);
+		
 		model.addAttribute("fundCommList", fundCommList);
 		model.addAttribute("paging", paging);
 	}

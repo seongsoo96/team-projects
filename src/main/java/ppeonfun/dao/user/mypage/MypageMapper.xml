@@ -189,10 +189,17 @@
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
  	</select>
  	
- 	<select id="selectCntFundComm" parameterType="int" resultType="int">
+ 	<select id="selectCntFundComm" parameterType="hashmap" resultType="int">
  	SELECT COUNT(*)
- 	FROM community
+ 	FROM community C
+ 		<if test="category != null and !''.equals(category)">
+		INNER JOIN information I
+				ON C.p_no = I.p_no
+		</if>
  	WHERE m_no = #{mNo}
+ 		<if test="category != null and !''.equals(category)">
+			AND I.i_category = #{category} 
+		</if>
  	ORDER BY com_no DESC
  	</select>
  	
@@ -206,11 +213,19 @@
 	        	community C
 		        INNER JOIN project PJ
 		            ON C.p_no = PJ.p_no
+		        <if test="paging.category != null and !''.equals(paging.category)">
+		        INNER JOIN information I
+		        	ON C.p_no = I.p_no
+		        </if>
 		    )
 	        WHERE C.m_no = #{mNo}
+	        	<if test="paging.category != null and !''.equals(paging.category)">
+				AND I.i_category = #{paging.category} 
+				</if>
+			ORDER BY C.com_no DESC
 	    ) RES
+		ORDER BY rnum
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
-	ORDER BY rnum DESC 
  	</select>
  	
  	<select id="selectCommAnsBycomNo" parameterType="hashmap" resultType="CommunityAnswer">
