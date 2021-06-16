@@ -96,10 +96,20 @@
  	WHERE m_no = #{mNo}
  	</update>
  	
- 	<select id="selectCntPayment" parameterType="int" resultType="int">
+ 	<select id="selectCntPayment" parameterType="hashmap" resultType="int">
 	SELECT COUNT(*) 
-	FROM payment
-	WHERE m_no = #{mNo} AND paym_state = 'Y'
+	FROM payment P
+		<if test="categoryArr != null">
+		INNER JOIN information I
+				ON P.p_no = I.p_no
+		</if>
+	WHERE P.m_no = #{mNo} AND P.paym_state = 'Y'
+		<if test="categoryArr != null">
+			AND I.i_category IN
+			<foreach collection="categoryArr" item="category" open="(" separator="," close=")">
+		            #{category} 
+			</foreach>
+		</if>
  	</select>
  	
  	<select id="selectMyFundingListAll" parameterType="hashmap" resultType="hashmap">
@@ -117,9 +127,59 @@
 		            ON PM.p_no = I.p_no
 		    )
 	        WHERE PM.m_no = #{mNo} AND PM.paym_state = 'Y'
+		        <if test="categoryArr != null">
+				AND I.i_category IN
+				<foreach collection="categoryArr" item="category" open="(" separator="," close=")">
+			            #{category} 
+				</foreach>
+				</if>
 	        ORDER BY PM.paym_no DESC
 	    ) RES
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
+ 	
+ 	<select id="selectCntPaymByCategory" parameterType="hashmap" resultType="int">
+	SELECT COUNT(*) 
+	FROM payment P
+			INNER JOIN information I
+			ON P.p_no = I.p_no
+	WHERE
+		 P.m_no = #{mNo} 
+		 	AND P.paym_state = 'Y' 	
+			<if test="category != null">
+			AND I.i_category IN
+			<foreach collection="category" item="cate" open="(" separator="," close=")">
+		            #{cate} 
+			</foreach>
+			</if>
+ 	</select>
+ 	
+ 	<select id="selectMyFundingListByCategory" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	            PM.paym_amount
+	            , PJ.p_no, PJ.p_name, PJ.p_progress_state
+	            , I.i_category, I.i_stored_name, I.i_end_date
+	        FROM (
+	        	payment PM
+		        INNER JOIN project PJ
+		            ON PM.p_no = PJ.p_no
+		        INNER JOIN information I
+		            ON PM.p_no = I.p_no
+		    )
+	        WHERE 
+	        	PM.m_no = #{mNo} 
+	        	AND PM.paym_state = 'Y'
+	       		<if test="category != null">
+				AND I.i_category IN
+				<foreach collection="category" item="cate" open="(" separator="," close=")">
+		            #{cate} 
+				</foreach>
+				</if>
+	        ORDER BY PM.paym_no DESC
+	    ) RES
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
  	</select>
  	
  	<select id="selectPaymSumByNo" parameterType="int" resultType="hashmap">
@@ -274,7 +334,7 @@
  	</select>
  	
  	<select id="selectAllMessageContent" parameterType="int" resultType="hashmap">
- 	SELECT MSG.msg_no, MSG.msg_content, MSG.msg_time, MSG.cr_no, CP.m_no, M.m_nick, CR.cr_name
+ 	SELECT MSG.msg_no, MSG.msg_content, MSG.msg_time, MSG.cr_no, CP.cp_no, CP.m_no, M.m_nick, CR.cr_name
     FROM ( message MSG
         INNER JOIN chat_participant CP
             ON MSG.cp_no = CP.cp_no
