@@ -158,11 +158,21 @@
 	GROUP BY i_category
  	</select>
  	
- 	<select id="selectCntFavorite" parameterType="int" resultType="int">
+ 	<select id="selectCntFavorite" parameterType="hashmap" resultType="int">
  	SELECT COUNT(*)
- 	FROM favorite
- 	WHERE m_no = #{mNo}
- 	ORDER BY fav_no DESC
+ 	FROM favorite F
+ 		<if test="categoryArr != null">
+		INNER JOIN information I
+				ON F.p_no = I.p_no
+		</if>
+ 	WHERE F.m_no = #{mNo}
+ 		<if test="categoryArr != null">
+			AND I.i_category IN
+			<foreach collection="categoryArr" item="category" open="(" separator="," close=")">
+		            #{category} 
+			</foreach>
+		</if>
+ 	ORDER BY F.fav_no DESC
  	</select>
  	
  	<select id="selectAllMyFavoriteList" parameterType="hashmap" resultType="hashmap">
@@ -180,6 +190,12 @@
 		            ON F.p_no = I.p_no
 		    )
 	        WHERE F.m_no = #{mNo}
+	        	<if test="categoryArr != null">
+				AND I.i_category IN
+				<foreach collection="categoryArr" item="category" open="(" separator="," close=")">
+			            #{category} 
+				</foreach>
+				</if>
 	        ORDER BY F.fav_no DESC
 	    ) RES
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}

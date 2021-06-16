@@ -230,11 +230,13 @@ public class MypageController {
 
 		int mNo = (int) session.getAttribute("mNo");
 		
+		//선택된 카테고리
 		String[] categoryArr = null;
 		if(category != null) {
 			categoryArr = category.split(",");
 		}
 		
+		//페이징 생성
 		Paging paging = mypageService.getPaymPaging(curPage, mNo, categoryArr);
 		logger.info("페이징:{}", paging);
 		
@@ -294,28 +296,35 @@ public class MypageController {
 	}
 	
 	
-	/* 서포터 */
-	
 	//마이페이지 좋아요--------------------------------------------------------------------
 	@RequestMapping(value="/favorite", method=RequestMethod.GET)
-	public void viewMyFavorite(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMyFavorite(HttpSession session, Model model, String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/favorite [GET] START *****");
+		logger.info("category:{}", category);
 		
 		int mNo = (int) session.getAttribute("mNo");
 		
-		Paging paging = mypageService.getFavoritePaging(curPage, mNo);
+		//선택된 카테고리
+		String[] categoryArr = null;
+		if(category != null) {
+			categoryArr = category.split(",");
+		}
+		
+		//페이징 생성
+		Paging paging = mypageService.getFavoritePaging(curPage, mNo, categoryArr);
 		logger.info("페이징:{}", paging);
 		
 		//회원이 좋아요한 프로젝트 목록을 조회한다.
 		List<HashMap<String, Object>> favoriteList = null;
-
-		if(paging != null) {
-			favoriteList = mypageService.getMyFavoriteList(paging, mNo);
-		}
 		
+		if(paging != null) {
+			favoriteList = mypageService.getMyFavoriteList(paging, mNo, categoryArr);
+		}
 		logger.info("좋아요 목록 {}", favoriteList);
+		
 		model.addAttribute("favoriteList", favoriteList);
 		model.addAttribute("paging", paging);
+		model.addAttribute("categoryArr", categoryArr);
 	}
 	
 	

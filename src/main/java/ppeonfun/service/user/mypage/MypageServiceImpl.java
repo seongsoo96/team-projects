@@ -211,8 +211,8 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public Paging getFavoritePaging(int curPage, int mNo) {
-		int totalCount = mypageDao.selectCntFavorite(mNo);
+	public Paging getFavoritePaging(int curPage, int mNo, String[] categoryArr) {
+		int totalCount = mypageDao.selectCntFavorite(mNo, categoryArr);
 		
 		if(totalCount > 0) {
 			return new Paging(totalCount, curPage, 6);
@@ -222,8 +222,8 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo) {
-		return mypageDao.selectAllMyFavoriteList(paging, mNo);
+	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo, String[]categoryArr) {
+		return mypageDao.selectAllMyFavoriteList(paging, mNo, categoryArr);
 	}
 
 	@Override

@@ -143,20 +143,22 @@ public interface MypageService {
 
 	/**
 	 * 회원이 좋아요한 프로젝트 목록의 페이징을 생성한다.
-	 * @param curPage 	현재 페이지
-	 * @param mNo		회원번호
-	 * @return			페이징 정보 객체
+	 * @param curPage 		현재 페이지
+	 * @param mNo			회원번호
+	 * @param categoryArr 	카테고리 목록
+	 * @return				페이징 정보 객체
 	 */
-	public Paging getFavoritePaging(int curPage, int mNo);
+	public Paging getFavoritePaging(int curPage, int mNo, String[] categoryArr);
 	
 	
 	/**
 	 * 회원이 좋아요한 프로젝트 목록을 조회한다.
-	 * @param paging 	페이징 정보 객체
-	 * @param mNo		회원번호
-	 * @return			좋아요한 프로젝트 목록
+	 * @param paging 		페이징 정보 객체
+	 * @param mNo			회원번호
+	 * @param categoryArr 	카테고리 목록
+	 * @return				좋아요한 프로젝트 목록
 	 */
-	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo);
+	public List<HashMap<String, Object>> getMyFavoriteList(Paging paging, int mNo, String[] categoryArr);
 
 
 	/**
