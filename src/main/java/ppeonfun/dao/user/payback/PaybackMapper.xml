@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ppeonfun.dao.user.payback.PaybackDao">
+	<select id="selectAllPayment" parameterType="Project" resultType="PaymentReward">
+		SELECT * FROM payment P
+		inner join reward R
+		ON R.re_no = P.re_no
+		WHERE P.m_no = #{mNo} AND P.p_no = #{pNo} AND P.paym_state = 'Y'
+	</select>
+	
+	<select id="selectPayment" resultType="Payment" parameterType="int">
+		SELECT * FROM payment WHERE su_group = #{suGroup}
+	</select>
+	
+	<select id="selectMember" resultType="Member" parameterType="int">
+		SELECT * FROM member WHERE m_no = #{mNo}
+	</select>
+	
+	<insert id="insertPayback" parameterType="Payback">
+	<selectKey order="BEFORE" resultType="int" keyProperty="paybNo">
+		SELECT payback_SEQ.nextval FROM dual
+	</selectKey>
+	insert into payback(payb_no,paym_no,payb_amount,payb_tax_free,payb_checksum,payb_reason,payb_refund_holder,payb_refund_bank,payb_refund_account) 
+	values(#{paybNo}, #{paymNo},#{paybAmount}, #{paybTaxFree}, #{paybChecksum},#{paybReason},#{paybRefundHolder}, #{paybRefundBank}, #{paybRefundAccount})
+	</insert>
+	
+	<update id="updatePaymentState" parameterType="Payment">
+		update payment set paym_state = 'N' where paym_no =  #{paymNo}
+	</update>
+	
+	<delete id="deleteSupoorter" parameterType="int">
+		delete from supporter where su_group = #{suGroup}
+	</delete>
+	
+</mapper>

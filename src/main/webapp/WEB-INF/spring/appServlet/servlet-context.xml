@@ -45,6 +45,15 @@
 		  <beans:bean class="ppeonfun.util.interceptor.user.UserMakerInterceptor"/>	
 		</interceptor>
 		<interceptor>
+
+		  <mapping path="/user/payback/**"/>
+		  <beans:bean class="ppeonfun.util.interceptor.user.UserPaybackInterceptor"/>	
+		</interceptor>
+		<interceptor>
+		  <mapping path="/user/payment/**"/>
+		  <beans:bean class="ppeonfun.util.interceptor.user.UserPaymentInterceptor"/>	
+		</interceptor>
+		<interceptor>
 			<mapping path="/user/notice/**" />
 			<beans:bean class="ppeonfun.util.interceptor.user.NoticeInterceptor" />
 		</interceptor>

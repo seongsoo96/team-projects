@@ -12,8 +12,7 @@ $(document).ready(function() {
 	} else { //좋아요 누르지 않은 상태
 		
 	}
-	
-	
+
 	$(".btn_heart").click(function() {
 		
 		$.ajax({
@@ -42,7 +41,7 @@ $(document).ready(function() {
 			}
 		})
 	}) //$(".btn_heart").click(function() end
-			
+	requirementView(${info.pNo})
 });
 </script>
 
@@ -91,9 +90,8 @@ hr {
 
 #left {
 	/* 영역 확인용 */
-	border: 1px solid red; 
 	float: left;
-	width: 60%;
+	width: 65%;
 	height: 400px;
 /* 	margin-left: 5px; */
 /* 	padding-left: 10px; */
@@ -103,7 +101,7 @@ hr {
 	/* 영역 확인용 */
 /* 	border: 1px solid green;  */
 	float: right;
-	width: 35%;
+	width: 30%;
 	height: 400px;
 	margin-right: 15px;
 	padding-top: 15px;
@@ -237,8 +235,8 @@ hr {
 </div> <hr><br>
 
 
-<div id="left">
-
+<div id="left" class="form-group">
+	<c:import url="/WEB-INF/views/user/project/story/storyPaging.jsp"></c:import>
 </div><!-- #left end -->
 
 
@@ -259,10 +257,10 @@ hr {
 		</p>
 	</div>
 	<div class="funding">
-		<button class="btn_funding">펀딩하기</button>
+		<a href="/user/reward/view?pNo=${info.pNo }"><button class="btn_funding">펀딩하기</button></a>
 	</div>
 	<div class="refund">
-		<button class="btn_refund">환불하기</button>
+		<a href="/user/payback/view?pNo=${info.pNo }"><button class="btn_refund">환불하기</button></a>
 	</div>
 	<div class="buttons">
 		<div class="heart">
@@ -283,5 +281,10 @@ hr {
 <div style="clear: both;"></div>
 </div>
 
-<br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <c:import url="/WEB-INF/views/layout/footer.jsp" />

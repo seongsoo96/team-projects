@@ -204,16 +204,13 @@ a span svg {margin-right:10px;}
 				</div>
 				<div>
 					<div class="myopenpj">
-						<a href="/user/mypage/openpj">
-							<span class="span-menu-name">
-								<i class="fas fa-play"></i>
-								<span>오픈 프로젝트</span>
-								<img src="/resources/img/arrow.svg" class="arrow-img">
-							</span>
+						<a href="/user/maker/project/start">
+							<span>오픈 프로젝트</span>
+							<img src="/resources/img/arrow.svg" class="arrow-img">
 						</a>
 					</div>
 					<div class="myprepj">
-						<a href="/user/mypage/prepj">
+						<a href="/user/maker/project/open">
 							<span class="span-menu-name">
 								<i class="fas fa-map"></i>
 								<span>오픈예정 프로젝트</span>

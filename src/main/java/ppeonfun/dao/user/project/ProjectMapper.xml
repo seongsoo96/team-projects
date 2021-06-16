@@ -37,5 +37,41 @@
 		)R
 		WHERE rnum BETWEEN #{startNo} AND #{endNo}
   	</select>
+  	
+  	<select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  	<select id="selectProject" resultType="Project" parameterType="Project">
+  		 SELECT * FROM project WHERE p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectRequirement" resultType="Requirement" parameterType="Project">
+  		SELECT * FROM Requirement where p_no = #{pNo}
+  	</select>
+  	<select id="selectRequirementFile" resultType="RequirementFile" parameterType="Requirement">
+  		SELECT* FROM Requirement_file WHERE r_no =#{rNo}
+  	</select>
+  	<select id="selectInformation" resultType="Information" parameterType="Project">
+  		SELECT * FROM information where p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectStory" resultType="Story" parameterType="Project" >
+  		SELECT * FROM Story where p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectStoryFile" resultType="StoryFile" parameterType="Story">
+  		SELECT * FROM Story_file where s_no = #{sNo}
+  	</select>
+  	
+  	<select id="selectAllReward" resultType="Reward" parameterType="Project">
+  		SELECT * FROM reward where p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectMaker" resultType="Maker" parameterType="Project">
+  		SELECT * FROM maker where p_no = #{pNo}
+  	</select>
   
   </mapper>

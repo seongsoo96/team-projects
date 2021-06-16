@@ -10,17 +10,19 @@ public interface ProjectService {
 	/**
 	 * 페이징 데이터 반환
 	 * @param inData - 페이징 객체
-	 * @param mNo 
+	 * @param mNo - 회원 번호
+	 * @param type - 조회 타입
 	 * @return - 페이징 생성
 	 */
-	public Paging getPaging(Paging inData, int mNo);
+	public Paging getPaging(Paging inData, int mNo, String type);
 	/**
 	 * 페이징 데이터
 	 * @param paging - 페이징 객체
-	 * @param mNo 
+	 * @param mNo -회원 번호
+	 * @param type - 조회 타입
 	 * @return - 페이징을 활용한 리스트
 	 */
-	public List<Information> selectAllProject(Paging paging, int mNo);
+	public List<Information> selectAllProject(Paging paging, int mNo, String type);
 	
 	/**
 	 * 프로젝트 소유자 이름 반환
