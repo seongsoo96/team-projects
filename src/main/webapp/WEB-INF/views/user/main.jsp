@@ -8,6 +8,7 @@
 <script type="text/javascript">
 function pagingSelect(pagingNumber) {
 	$.ajax({
+		
 		type: "get"
 		, url: "/main/ajax"
 		, dataType: "html"

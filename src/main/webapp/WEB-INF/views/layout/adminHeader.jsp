@@ -53,7 +53,7 @@ $(document).ready(function(){
 	      <li><a href="/admin/notice/list">공지사항 관리</a></li>
 	      <li><a href="/admin/board/list">게시판 관리</a></li>
 	      <li><a href="/admin/project/list">프로젝트 관리</a></li>
-	      <li><a href="#">신고 관리</a></li>
+	      <li><a href="/admin/report/list">신고 관리</a></li>
 	    </ul>
 	</nav>
 	<div style="width:200px;">
@@ -75,7 +75,6 @@ $(document).ready(function(){
 					<a href="#" style="color:black;" class="fa fa-user fa-3x"></a>
 					<ul>
 						<li><a href="/user/member/loginForm">로그인</a></li>
-						<li><a href="#">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>
 			</ul>	
@@ -86,7 +85,6 @@ $(document).ready(function(){
 					<a href="#" class="fa fa-user fa-3x"></a>
 					<ul>
 						<li><a href="/user/member/logout">로그아웃</a></li>
-						<li><a href="#">프로젝트 펀딩하기</a></li>
 					</ul>
 				</li>
 			</ul>
