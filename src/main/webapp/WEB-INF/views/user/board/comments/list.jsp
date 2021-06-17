@@ -19,7 +19,7 @@ function registerss( element ){
 // 	console.log("@@@@@@",c_No)
 	
 	$.ajax({
-		type:"post"
+		type:"POST"
 		,url:"/user/board/commentss/insert"
 		,data : {
 			cNo : c_No
