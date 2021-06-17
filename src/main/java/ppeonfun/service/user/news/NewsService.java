@@ -68,6 +68,8 @@ public interface NewsService {
 	 */
 	public boolean favorite(Favorite favorite);
 
+	public int communityCnt(News news);
+
 	/**
 	 * 게시글 목록을 위한 페이징 객체
 	 * 

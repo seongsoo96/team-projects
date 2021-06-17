@@ -11,13 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ppeonfun.dto.Community;
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.CommunityJoin;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.Project;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 import ppeonfun.service.user.community.CommunityService;
@@ -33,7 +36,7 @@ public class CommunityController {
 	@RequestMapping(value = "/community", method = RequestMethod.GET)
 	public String community(
 			Model model, Information info, Supporter supporter, SupporterJoin suJoin, 
-			News news, HttpSession session, CommunityJoin communityJoin ) {
+			News news, HttpSession session, CommunityJoin communityJoin, Project project ) {
 		
 		//해당 프로젝트의 제목, 카테고리, 목표금액
 		info = communityService.projectInfo(info);
@@ -50,12 +53,16 @@ public class CommunityController {
 		//새소식 개수
 		int newsCount = communityService.newsCount(news);
 		
+		//커뮤니티 질문 개수
+		int communityCnt = communityService.communityCnt(news);
+		
 		//회원의 찜 상태 조회
 		Favorite favorite = new Favorite();
 		favorite.setpNo(news.getpNo()); //프로젝트 번호
 		
 		//로그인 되어있을 경우
 		if(session.getAttribute("mNo") != null) {
+			int mNo = ((Integer)session.getAttribute("mNo")).intValue();
 		
 			favorite.setmNo(((Integer)session.getAttribute("mNo")).intValue()); //회원번호
 			
@@ -64,6 +71,7 @@ public class CommunityController {
 //			logger.info("찜 상태 확인 {}", isFav);
 			
 			model.addAttribute("isFav", isFav); //회원의 찜 상태 전달
+			model.addAttribute("mNo", mNo); //로그인 한 회원의 회원번호 전달
 			
 		} else {  //로그인 안되어있을 경우
 			model.addAttribute("isFav", false); //회원의 찜 상태 전달
@@ -74,6 +82,7 @@ public class CommunityController {
 		model.addAttribute("remainDay", remaining_day);
 		model.addAttribute("totalAmount", total_amount);
 		model.addAttribute("newsCnt", newsCount);
+		model.addAttribute("communityCnt", communityCnt);
 
 		model.addAttribute("cntFav", communityService.getTotalCntFavorite(favorite)); //총 좋아요 횟수
 		
@@ -83,9 +92,26 @@ public class CommunityController {
 		
 		//커뮤니티 질문,답변 리스트
 		List<CommunityJoin> list = communityService.commuList(communityJoin);
-		logger.info("커뮤니티 질문 리스트 {}", list);
+//		logger.info("커뮤니티 질문 리스트 {}", list);
 		
 		model.addAttribute("list", list);
+
+		
+		//로그인 여부 전달
+		if(session.getAttribute("mNo") == null) { //비로그인 상태
+			model.addAttribute("nullmNo", "null");
+			
+		} else { //로그인 상태
+			model.addAttribute("nullmNo", "yes");
+		}
+		
+		//----------------------------------------------------------------------------------------
+		
+		//프로젝트의 메이커 정보
+		project = communityService.getMakerMno(project);
+		int makerNo = project.getmNo();
+		
+		model.addAttribute("makerMno", makerNo);
 		
 		return "/user/project/community";
 	}
@@ -120,6 +146,21 @@ public class CommunityController {
 		mav.setViewName("jsonView");
 		
 		return mav;
+	}
+	
+	
+	@RequestMapping(value = "/community/answer", method = RequestMethod.POST)
+	public String answer(CommunityAnswer communityAnswer, HttpSession session,
+			@RequestParam int pNo) {
+		
+		communityAnswer.setmNo(((Integer)session.getAttribute("mNo")).intValue());
+//		logger.info("커뮤니티 답변 확인 {}", communityAnswer);
+		
+		//답변 삽입
+		communityService.writeAnswer(communityAnswer);
+		
+		
+		return "redirect:/community?pNo=" + pNo;
 	}
 	
 

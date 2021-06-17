@@ -16,11 +16,11 @@ public interface NewsDao {
 
 	public Information selectInfo(Information info);
 
-	public int selectCntSupporter(Supporter supporter);
+	public String selectCntSupporter(Supporter supporter);
 
 	public int selectRemainDay(SupporterJoin suJoin);
 
-	public int selectTotalAmount(SupporterJoin suJoin);
+	public String selectTotalAmount(SupporterJoin suJoin);
 
 	/**
 	 * 새소식 리스트 검색
@@ -76,12 +76,14 @@ public interface NewsDao {
 	 */
 	public void insertFavorite(Favorite favorite);
 
+	public String selectCntCommunity(News news);
+
 	/**
 	 * 전체 게시글 수
 	 * 
 	 * @param inDate
 	 * @return
 	 */
-	public int selectCntNews(ProjectPaging inDate);
+//	public int selectCntNews(ProjectPaging inDate);
 
 }

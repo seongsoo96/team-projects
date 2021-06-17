@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.Project;
+import ppeonfun.dto.Report;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
@@ -25,7 +27,7 @@ public interface StoryDao {
 	 * @param supporter
 	 * @return
 	 */
-	public int selectCntSupporter(Supporter supporter);
+	public String selectCntSupporter(Supporter supporter);
 
 	/**
 	 * 프로젝트 남은 일수 계산
@@ -41,7 +43,7 @@ public interface StoryDao {
 	 * @param suJoin
 	 * @return
 	 */
-	public int selectTotalAmount(SupporterJoin suJoin);
+	public String selectTotalAmount(SupporterJoin suJoin);
 
 	public int selectCntNews(News news);
 
@@ -58,5 +60,22 @@ public interface StoryDao {
 	public void insertFavorite(Favorite favorite);
 
 	public int getTotalCntFavorite(Favorite favorite);
+
+	public String selectCntCommunity(News news);
+
+	/**
+	 * pno로 개설자 번호 검색
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public Project selectMfounderNoByPno(Project project);
+
+	/**
+	 * 신고내역 삽입
+	 * 
+	 * @param report
+	 */
+	public void insertReport(Report report);
 
 }

@@ -3,6 +3,8 @@ package ppeonfun.service.user.story;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.Project;
+import ppeonfun.dto.Report;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
@@ -65,5 +67,22 @@ public interface StoryService {
 	 * @return
 	 */
 	public boolean favorite(Favorite favorite);
+
+	public int communityCnt(News news);
+
+	/**
+	 * 프로젝트 개설자 회원번호 검색
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public Project getFounderNo(Project project);
+
+	/**
+	 * 신고 내역 삽입
+	 * 
+	 * @param report
+	 */
+	public void report(Report report);
 
 }
