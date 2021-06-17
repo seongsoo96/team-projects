@@ -3,10 +3,12 @@ package ppeonfun.service.user.community;
 import java.util.List;
 
 import ppeonfun.dto.Community;
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.CommunityJoin;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.Project;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
@@ -43,6 +45,29 @@ public interface CommunityService {
 	 * @return
 	 */
 	public void writeCommunity(Community community);
+
+	/**
+	 * 커뮤니티 질문 총 개수
+	 * 
+	 * @param news
+	 * @return
+	 */
+	public int communityCnt(News news);
+
+	/**
+	 * 해당 프로젝트의 메이커 mNo 정보
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public Project getMakerMno(Project project);
+
+	/**
+	 * 답변 삽입
+	 * 
+	 * @param communityAnswer
+	 */
+	public void writeAnswer(CommunityAnswer communityAnswer);
 
 
 }

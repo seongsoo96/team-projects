@@ -6,6 +6,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	if(${isFav }) { //해당 아이디로 프로젝트 좋아요 누른 상태
 		$("#heart")
 			.css("color", "red");
@@ -42,6 +43,15 @@ $(document).ready(function() {
 			}
 		})
 	}) //$(".btn_heart").click(function() end
+			
+	if(${nullmNo} == null || "".equals(${nullmNo})) {
+		
+		$(".btn_declare").click(function() {
+				alert("로그인 후 신고할 수 있습니다.");
+				location.href = "/user/member/loginForm";
+			});
+		
+	} //if end	
 			
 });
 </script>
@@ -290,7 +300,7 @@ hr {
 	<ul>
 		<li class="active"><a class="menuLink" href="/story?pNo=${info.pNo }">스토리</a></li>
 		<li><a class="menuLink" href="/news?pNo=${info.pNo }">새소식<span class="count">${newsCnt }</span></a></li>
-		<li><a class="menuLink" href="/community?pNo=${info.pNo }">커뮤니티<span class="count">2</span></a></li>
+		<li><a class="menuLink" href="/community?pNo=${info.pNo }">커뮤니티<span class="count">${communityCnt }</span></a></li>
 		<li><a class="menuLink" href="/supporter?pNo=${info.pNo }">서포터<span class="count">${totalCnt }</span></a></li>
 	</ul>
 </nav><!-- #topMenu end -->
@@ -298,6 +308,8 @@ hr {
 
 
 <div id="left">
+
+	<c:if test="${totalCnt ne 0 }">
 	<span class="ment">현재 이 프로젝트에<br>
 		<strong style="color: #4EE2EC;">${totalCnt }명</strong>의 참여가 이루어졌습니다.
 	</span>
@@ -320,6 +332,14 @@ hr {
 			<button class="moreBtn">더보기</button>
 		</div><!-- .listMoreBtn end -->
 	</div><!-- .supporterContainer end -->
+	</c:if>
+	
+	<c:if test="${totalCnt eq 0 }">
+	<span class="ment">현재 이 프로젝트에<br>
+		참여한 서포터가 <strong>없습니다.</strong>
+	</span>
+	</c:if>
+	
 </div><!-- #left end -->
 
 
@@ -353,12 +373,40 @@ hr {
 			</button>
 		</div>
 		<div class="declare">
-			<button class="btn_declare">
+			<button class="btn_declare" data-toggle="modal" data-target="#reportModal">
 				신고하기
 			</button>
 		</div>
 	</div>
 </div><!-- #right end --> 
+
+<!-- 신고하기 Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">게시물 신고하기</h4>
+      </div><br>
+      <div class="modal-body">
+      
+      	<div>
+      		<p style="font-size: 18px; margin-bottom: -7px;">신고 내용:</p>
+      	</div>
+      
+		<form action="/project/report?pNo=${info.pNo }" method="post" id="report">
+	      	<label for="repContent" class="control-label"></label>
+          	<textarea class="form-control" id="repContent" name="repContent" style="height: 300px;"></textarea>
+	    </form>
+	    
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn" form="report"
+        	style="background-color: #4EE2EC; width: 90px; height: 40px;">신고하기</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <div style="clear: both;"></div>

@@ -58,4 +58,6 @@ public interface SupporterService {
 
 	public boolean favorite(Favorite favorite);
 
+	public int communityCnt(News news);
+
 }

@@ -19,7 +19,6 @@ import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 import ppeonfun.service.user.news.NewsService;
-import ppeonfun.util.Paging;
 import ppeonfun.util.ProjectPaging;
 
 @Controller("user.NewsController")
@@ -51,6 +50,9 @@ public class NewsController {
 		//새소식 개수
 		int newsCount = newsService.newsCount(news);
 		
+		//커뮤니티 질문 개수
+		int communityCnt = newsService.communityCnt(news);
+		
 		//찜 상태 조회
 		Favorite favorite = new Favorite();
 		favorite.setpNo(news.getpNo()); //프로젝트 번호
@@ -79,6 +81,7 @@ public class NewsController {
 		model.addAttribute("remainDay", remaining_day);
 		model.addAttribute("totalAmount", total_amount);
 		model.addAttribute("newsCnt", newsCount);
+		model.addAttribute("communityCnt", communityCnt);
 		
 		model.addAttribute("cntFav", newsService.getTotalCntFavorite(favorite)); //총 좋아요 횟수
 		
@@ -89,13 +92,22 @@ public class NewsController {
 		//새소식 모델값 전달
 		model.addAttribute("newsList", newsList);
 		
+		//로그인 여부 전달
+		if(session.getAttribute("mNo") == null) {
+			model.addAttribute("nullmNo", "null");
+		} else {
+			model.addAttribute("nullmNo", "yes");
+		}
+		
 		
 		//페이징 계산
 //		ProjectPaging inDate = new ProjectPaging();
 //		inDate.setCurPage(curPage);
 //		inDate.setpNo(news.getpNo());
-//		
+//		logger.info("페이징 데이터 확인 {}", inDate);
+		
 //		ProjectPaging paging = newsService.getPaging(inDate);
+//		paging.setpNo(news.getpNo());
 //		logger.info("더보기를 위한 paging값 확인 {}", paging);
 		
 		return "/user/project/news";
@@ -121,6 +133,9 @@ public class NewsController {
 		
 		//새소식 개수
 		int newsCount = newsService.newsCount(news);
+		
+		//커뮤니티 질문 개수
+		int communityCnt = newsService.communityCnt(news);
 		
 		//찜 상태 조회
 		Favorite favorite = new Favorite();
@@ -150,6 +165,7 @@ public class NewsController {
 		model.addAttribute("remainDay", remaining_day);
 		model.addAttribute("totalAmount", total_amount);
 		model.addAttribute("newsCnt", newsCount);
+		model.addAttribute("communityCnt", communityCnt);
 		
 		model.addAttribute("cntFav", newsService.getTotalCntFavorite(favorite)); //총 좋아요 횟수
 		

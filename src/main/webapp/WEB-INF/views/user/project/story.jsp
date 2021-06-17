@@ -43,6 +43,16 @@ $(document).ready(function() {
 		})
 	}) //$(".btn_heart").click(function() end
 			
+			
+	if(${nullmNo} == null || "".equals(${nullmNo})) {
+		
+		$(".btn_declare").click(function() {
+				alert("로그인 후 신고할 수 있습니다.");
+				location.href = "/user/member/loginForm";
+			});
+		
+	} //if end		
+			
 });
 </script>
 
@@ -229,7 +239,7 @@ hr {
 	<ul>
 		<li class="active"><a class="menuLink" href="/story?pNo=${info.pNo }">스토리</a></li>
 		<li><a class="menuLink" href="/news?pNo=${info.pNo }">새소식<span class="count">${newsCnt }</span></a></li>
-		<li><a class="menuLink" href="/community?pNo=${info.pNo }">커뮤니티<span class="count">2</span></a></li>
+		<li><a class="menuLink" href="/community?pNo=${info.pNo }">커뮤니티<span class="count">${communityCnt }</span></a></li>
 		<li><a class="menuLink" href="/supporter?pNo=${info.pNo }">서포터<span class="count">${totalCnt }</span></a></li>
 		<!-- 74 나중에 프로젝트번호로 바꾸기 -->
 	</ul>
@@ -272,12 +282,40 @@ hr {
 			</button>
 		</div>
 		<div class="declare">
-			<button class="btn_declare">
+			<button class="btn_declare" data-toggle="modal" data-target="#reportModal">
 				신고하기
 			</button>
 		</div>
 	</div>
 </div><!-- #right end --> 
+
+<!-- 신고하기 Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">게시물 신고하기</h4>
+      </div><br>
+      <div class="modal-body">
+      
+      	<div>
+      		<p style="font-size: 18px; margin-bottom: -7px;">신고 내용:</p>
+      	</div>
+      
+		<form action="/project/report?pNo=${info.pNo }" method="post" id="report">
+	      	<label for="repContent" class="control-label"></label>
+          	<textarea class="form-control" id="repContent" name="repContent" style="height: 300px;"></textarea>
+	    </form>
+	    
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn" form="report"
+        	style="background-color: #4EE2EC; width: 90px; height: 40px;">신고하기</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <div style="clear: both;"></div>

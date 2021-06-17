@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import ppeonfun.dto.Community;
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.CommunityJoin;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.Project;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
@@ -17,11 +19,11 @@ public interface CommunityDao {
 
 	public Information selectInfo(Information info);
 
-	public int selectCntSupporter(Supporter supporter);
+	public String selectCntSupporter(Supporter supporter);
 
 	public int selectRemainDay(SupporterJoin suJoin);
 
-	public int selectTotalAmount(SupporterJoin suJoin);
+	public String selectTotalAmount(SupporterJoin suJoin);
 
 	public int selectCntNews(News news);
 
@@ -48,5 +50,28 @@ public interface CommunityDao {
 	public void insertCommunity(Community community);
 
 	public int getTotalCntFavorite(Favorite favorite);
+
+	/**
+	 * 커뮤니티 질문 총 개수 구하기
+	 * 
+	 * @param news
+	 * @return
+	 */
+	public String selectCntCommunity(News news);
+
+	/**
+	 * pNo로 메이커의 mNo 가져오기
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public Project getMnoByPno(Project project);
+
+	/**
+	 * 커뮤니티 질문에 답변 삽입
+	 * 
+	 * @param communityAnswer
+	 */
+	public void insertAnswer(CommunityAnswer communityAnswer);
 
 }
