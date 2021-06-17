@@ -233,11 +233,14 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public Paging getFundCommPaging(int curPage, int mNo) {
-		int totalCount = mypageDao.selectCntFundComm(mNo);
+	public Paging getFundCommPaging(int curPage, int mNo, String category) {
+		int totalCount = mypageDao.selectCntFundComm(mNo, category);
 		
 		if(totalCount > 0 ) {
-			return new Paging(totalCount, curPage, 5);
+			Paging paging = new Paging(totalCount, curPage, 5);
+			paging.setCategory(category);
+			
+			return paging;
 		} else {
 			return null;
 		}
@@ -309,6 +312,25 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public List<HashMap<String, Object>> getDetailMsg(int crNo) {
 		return mypageDao.selectAllMessageContent(crNo);
+	}
+
+	@Override
+	public Paging getMyOpenpjPaging(int curPage, int mNo, String category) {
+		int totalCount = mypageDao.selectCntMyOpenProject(mNo, category);
+		
+		if(totalCount > 0 ) {
+			Paging paging = new Paging(totalCount, curPage, 6);
+			paging.setCategory(category);
+			
+			return paging;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getMyOpenpjList(Paging paging, int mNo) {
+		return mypageDao.selectAllMyOpenProject(paging, mNo);
 	}
 
 
