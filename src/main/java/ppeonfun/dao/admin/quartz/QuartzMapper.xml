@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ppeonfun.dao.admin.quartz.QuartzDao">
+	<select id="selectStartProejct" resultType="Project">
+		select*from project P inner join information I ON P.p_no = I.p_no  where i_start_date = to_date(sysdate) AND p_progress_state = 'W' AND p_state='Y'
+	</select>
+	
+	<update id="updateStart" parameterType="Project">
+		update project set p_progress_state='Y' where p_no = #{pNo}
+	</update>
+	
+	<select id="selectEndProejct" resultType="Project">
+		select*from project P inner join information I ON P.p_no = I.p_no  where i_end_date = to_date(sysdate) AND p_progress_state = 'Y' AND p_state='Y'
+	</select>
+	
+	<update id="updateEnd"  parameterType="Project">
+		update project set p_progress_state='N' where p_no = #{pNo}
+	</update>
+
+</mapper>
