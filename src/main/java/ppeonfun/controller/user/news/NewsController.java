@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.NewsSort;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 import ppeonfun.service.user.news.NewsService;
@@ -33,7 +35,8 @@ public class NewsController {
 	public String news(
 			Model model, Information info, Supporter supporter, SupporterJoin suJoin,
 			News news, HttpSession session,
-			@RequestParam(value = "curPage", defaultValue = "0") int curPage) {
+			@RequestParam(value = "curPage", defaultValue = "0") int curPage,
+			NewsSort newsSort) {
 		
 		//해당 프로젝트의 제목, 카테고리, 목표금액
 		info = newsService.projectInfo(info);
@@ -88,7 +91,11 @@ public class NewsController {
 		//------------------------------------------------------
 		
 		//새소식 리스트
-		List<News> newsList = newsService.getList(news);
+//		List<News> newsList = newsService.getList(news);
+		
+		//분류 포함 새소식 리스트
+		List<NewsSort> newsList = newsService.getList(newsSort);
+		
 		//새소식 모델값 전달
 		model.addAttribute("newsList", newsList);
 		
@@ -105,10 +112,11 @@ public class NewsController {
 //		inDate.setCurPage(curPage);
 //		inDate.setpNo(news.getpNo());
 //		logger.info("페이징 데이터 확인 {}", inDate);
-		
+//		
 //		ProjectPaging paging = newsService.getPaging(inDate);
 //		paging.setpNo(news.getpNo());
 //		logger.info("더보기를 위한 paging값 확인 {}", paging);
+//		model.addAttribute("paging", paging);
 		
 		return "/user/project/news";
 	}

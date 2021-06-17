@@ -59,11 +59,30 @@
 		WHERE s.re_no = r.re_no and s.p_no = #{pNo }		
 	</select>
 	
-	<select id="selectList" parameterType="ppeonfun.dto.News" resultMap="News">
+<!-- 	<select id="selectList" parameterType="ppeonfun.dto.News" resultMap="News"> -->
+<!-- 		SELECT * FROM news -->
+<!-- 		WHERE p_no = #{pNo } -->
+<!-- 		ORDER BY n_no desc -->
+<!-- 	</select> -->
+	
+	<select id="selectList" parameterType="ppeonfun.dto.NewsSort" resultType="ppeonfun.dto.NewsSort">
 		SELECT * FROM news
 		WHERE p_no = #{pNo }
-		ORDER BY n_no desc
+		<if test='categorySort != null and !categorySort.equals("") and !categorySort.equals("전체")'>
+			AND n_category = #{categorySort }
+		</if>
+<!-- 		<if test='categorySort.equals("전체")'> -->
+<!-- 			AND p_no = #{pNo } -->
+<!-- 		</if> -->
+		ORDER BY
+		<if test='timeSort == null or timeSort.equals("") or timeSort.equals("최신순")'>
+			n_no desc
+		</if>
+		<if test='timeSort != null and !timeSort.equals("") and !timeSort.equals("최신순")'>
+			n_no asc
+		</if>
 	</select>
+
 	
 	<select id="selectByNno" parameterType="ppeonfun.dto.News" resultMap="News">
 		SELECT * FROM news
@@ -106,7 +125,7 @@
 		where p_no = #{pNo }
 	</select>
 	
-<!-- 	<select id="selectCntNews" resultType="int" parameterType="ProjectPaging"> -->
+<!-- 	<select id="selectCntNewspaging" resultType="int" parameterType="ppeonfun.util.ProjectPaging"> -->
 <!-- 		SELECT COUNT(*)  -->
 <!-- 		FROM news -->
 <!-- 		WHERE p_no = #{pNo } -->
