@@ -15,11 +15,11 @@
 	<hr>
 	
 	<c:import url="/WEB-INF/views/layout/myCategoryBtn.jsp"/>
-	<c:if test="${empty openpjList } ">
+	<c:if test="${empty openpjList }">
 		<div class="text-center" style="height:210px; margin-top:100px;">
 			<h3>오픈한 프로젝트가 없습니다.</h3>
 			<h4>
-				<a href="/user/project/list">
+				<a href="/user/maker/project/list">
 				프로젝트 개설하기
 				<img src="/resources/img/arrow.svg" class="arrow-img">
 				</a>
