@@ -1,5 +1,6 @@
 package ppeonfun.dao.user.news;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.NewsSort;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 import ppeonfun.util.ProjectPaging;
@@ -28,7 +30,7 @@ public interface NewsDao {
 	 * @param new - pNo를 가지고 있는 새소식 객체
 	 * @return
 	 */
-	public List<News> selectList(News news);
+//	public List<News> selectList(News news);
 
 	/**
 	 * 게시물 상세보기
@@ -78,12 +80,14 @@ public interface NewsDao {
 
 	public String selectCntCommunity(News news);
 
+	public List<NewsSort> selectList(NewsSort newsSort);
+
 	/**
 	 * 전체 게시글 수
 	 * 
 	 * @param inDate
 	 * @return
 	 */
-//	public int selectCntNews(ProjectPaging inDate);
+//	public int selectCntNewspaging(ProjectPaging inDate);
 
 }

@@ -1,5 +1,6 @@
 package ppeonfun.service.user.news;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import ppeonfun.dao.user.news.NewsDao;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.NewsSort;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 import ppeonfun.util.ProjectPaging;
@@ -65,9 +67,14 @@ public class NewsServiceImpl implements NewsService {
 		}
 	}
 	
+//	@Override
+//	public List<News> getList(News news) {
+//		return newsDao.selectList(news);
+//	}
+	
 	@Override
-	public List<News> getList(News news) {
-		return newsDao.selectList(news);
+	public List<NewsSort> getList(NewsSort newsSort) {
+		return newsDao.selectList(newsSort);
 	}
 	
 	@Override
@@ -132,7 +139,7 @@ public class NewsServiceImpl implements NewsService {
 //	public ProjectPaging getPaging(ProjectPaging inDate) {
 //		
 //		//총 게시글 수 조회
-//		int totalCount = newsDao.selectCntNews(inDate);
+//		int totalCount = newsDao.selectCntNewspaging(inDate);
 //		
 //		//페이징 계산
 //		ProjectPaging paging = new ProjectPaging(totalCount, inDate.getCurPage());
