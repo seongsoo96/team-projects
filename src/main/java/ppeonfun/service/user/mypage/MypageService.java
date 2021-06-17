@@ -258,6 +258,14 @@ public interface MypageService {
 	public List<HashMap<String, Object>> getMyOpenpjList(Paging paging, int mNo);
 
 
+	/**
+	 * 전송된 메시지를 DB에 저장한다.
+	 * @param mNo		회원번호
+	 * @param inData	메시지 정보 (대화방 번호 & 메시지 내용)
+	 */
+	public void insertMessage(int mNo, Message inData);
+
+
 	
 
 

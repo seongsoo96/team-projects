@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
+import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.service.user.member.MemberService;
 import ppeonfun.service.user.mypage.MypageService;
@@ -433,6 +434,27 @@ public class MypageController {
 		
 		model.addAttribute("detailMsg", detailMsg);
 		return "/user/mypage/detailMsg";
+	}
+	
+	@RequestMapping(value="/message/send", method=RequestMethod.POST)
+	public String viewDetailMessage(int crNo, String msgContent, HttpSession session, Model model) {
+		logger.info("***** /user/mypage/message [POST] START *****");
+		logger.info("대화방번호:{}", crNo);
+		logger.info("메시지내용:{}", msgContent);
+		
+		//crNo, msgContent -> Message DTO
+		Message inData = new Message();
+		if(crNo > 0 && msgContent != null) {
+			inData.setCrNo(crNo);
+			inData.setMsgContent(msgContent);
+		}
+		
+		//메시지를 DB에 저장한다.
+		int mNo = (int) session.getAttribute("mNo");
+		mypageService.insertMessage(mNo, inData);
+		
+		model.addAttribute("isSended", true);
+		return "jsonView";
 	}
 	
 	
