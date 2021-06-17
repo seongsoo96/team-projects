@@ -163,7 +163,6 @@
  		<if test="category != null and !''.equals(category)">
 			AND I.i_category = #{category} 
 		</if>
- 	ORDER BY F.fav_no DESC
  	</select>
  	
  	<select id="selectAllMyFavoriteList" parameterType="hashmap" resultType="hashmap">
@@ -200,7 +199,6 @@
  		<if test="category != null and !''.equals(category)">
 			AND I.i_category = #{category} 
 		</if>
- 	ORDER BY com_no DESC
  	</select>
  	
  	<select id="selectAllMyFundCommList" parameterType="hashmap" resultType="hashmap">
@@ -325,6 +323,40 @@
     WHERE MSG.cr_no = #{crNo}
     ORDER BY MSG.msg_no
  	</select>
+ 	
+ 	<select id="selectCntMyOpenProject" parameterType="hashmap" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM project P
+ 		<if test="category != null and !''.equals(category)">
+		INNER JOIN information I
+				ON P.p_no = I.p_no
+		</if>
+ 	WHERE P.m_no = #{mNo}
+ 		<if test="category != null and !''.equals(category)">
+			AND I.i_category = #{category} 
+		</if>
+ 	</select>
+ 	
+ 	<select id="selectAllMyOpenProject" parameterType="hashmap" resultType="hashmap">
+ 	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	        	P.p_no, P.p_name, P.p_progress_state
+	            , I.i_money, I.i_category, I.i_stored_name, I.i_end_date
+	        FROM (
+	        	project P
+			        INNER JOIN information I
+		            	ON P.p_no = I.p_no
+		    )
+	        WHERE P.m_no = #{mNo} AND P.p_progress_state IN ('Y', 'N')
+	        	<if test="paging.category != null and !''.equals(paging.category)">
+				AND I.i_category = #{paging.category} 
+				</if>
+	        ORDER BY P.p_no DESC
+	    ) RES
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
+ 	
  </mapper>  
     
   

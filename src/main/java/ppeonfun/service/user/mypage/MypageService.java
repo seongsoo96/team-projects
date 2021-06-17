@@ -239,6 +239,25 @@ public interface MypageService {
 	public List<HashMap<String, Object>> getDetailMsg(int crNo);
 
 
+	/**
+	 * 오픈 프로젝트 목록의 페이징을 생성한다.
+	 * @param curPage	현재 페이지
+	 * @param mNo		회원번호
+	 * @param category	카테고리
+	 * @return			페이징 정보 객체
+	 */
+	public Paging getMyOpenpjPaging(int curPage, int mNo, String category);
+
+
+	/**
+	 * 오픈 프로젝트의 목록을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			회원이 메이커인 프로젝트 목록
+	 */
+	public List<HashMap<String, Object>> getMyOpenpjList(Paging paging, int mNo);
+
+
 	
 
 

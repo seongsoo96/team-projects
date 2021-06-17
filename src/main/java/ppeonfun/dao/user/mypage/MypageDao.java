@@ -259,5 +259,25 @@ public interface MypageDao {
 	 */
 	public List<HashMap<String, Object>> selectAllMessageContent(int crNo);
 
+	
+	/**
+	 * project, information 테이블을 조인하여
+	 * 회원이 오픈한 프로젝트 수를 조회한다.
+	 * @param mNo		회원번호
+	 * @param category	카테고리
+	 * @return			오픈한 프로젝트 수
+	 */
+	public int selectCntMyOpenProject(@Param("mNo")int mNo, @Param("category")String category);
+
+
+	/**
+	 * 테이블을 조인하여
+	 * 회원이 오픈한 프로젝트 목록을 조회한다.
+	 * @param paging	페이징 정보 객체
+	 * @param mNo		회원번호
+	 * @return			오픈 프로젝트 목록
+	 */
+	public List<HashMap<String, Object>> selectAllMyOpenProject(@Param("paging")Paging paging, @Param("mNo")int mNo);
+
 
 }

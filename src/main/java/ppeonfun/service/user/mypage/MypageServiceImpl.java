@@ -314,5 +314,24 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.selectAllMessageContent(crNo);
 	}
 
+	@Override
+	public Paging getMyOpenpjPaging(int curPage, int mNo, String category) {
+		int totalCount = mypageDao.selectCntMyOpenProject(mNo, category);
+		
+		if(totalCount > 0 ) {
+			Paging paging = new Paging(totalCount, curPage, 6);
+			paging.setCategory(category);
+			
+			return paging;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getMyOpenpjList(Paging paging, int mNo) {
+		return mypageDao.selectAllMyOpenProject(paging, mNo);
+	}
+
 
 }
