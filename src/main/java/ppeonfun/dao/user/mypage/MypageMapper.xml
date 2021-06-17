@@ -205,25 +205,29 @@
  	
  	<select id="selectAllMyFundCommList" parameterType="hashmap" resultType="hashmap">
 	SELECT * FROM (
-	    SELECT rownum rnum, RES.* FROM (
-	        SELECT 
-	        	C.com_no, C.com_content, C.com_date
-	        	, PJ.p_name, PJ.p_progress_state
-	        FROM (
-	        	community C
-		        INNER JOIN project PJ
-		            ON C.p_no = PJ.p_no
-		        <if test="paging.category != null and !''.equals(paging.category)">
-		        INNER JOIN information I
-		        	ON C.p_no = I.p_no
-		        </if>
-		    )
-	        WHERE C.m_no = #{mNo}
-	        	<if test="paging.category != null and !''.equals(paging.category)">
-				AND I.i_category = #{paging.category} 
-				</if>
-			ORDER BY C.com_no DESC
-	    ) RES
+	    SELECT rownum rnum, RES2.* FROM (
+	    	SELECT RES.*
+	    		, (SELECT COUNT(*) FROM community_answer CA 
+	    			WHERE CA.com_no = RES.com_no ) AS ANS_CNT
+	    	FROM (
+		        SELECT 
+		        	C.com_no, C.com_content, C.com_date
+		        	, PJ.p_name, PJ.p_progress_state
+		        FROM (
+		        	community C
+			        INNER JOIN project PJ
+			            ON C.p_no = PJ.p_no
+			        <if test="paging.category != null and !''.equals(paging.category)">
+			        INNER JOIN information I
+			        	ON C.p_no = I.p_no
+			        </if>
+			    )
+		        WHERE C.m_no = #{mNo}
+		        	<if test="paging.category != null and !''.equals(paging.category)">
+					AND I.i_category = #{paging.category} 
+					</if>
+				ORDER BY C.com_no DESC
+		    ) RES ) RES2
 		ORDER BY rnum
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
  	</select>

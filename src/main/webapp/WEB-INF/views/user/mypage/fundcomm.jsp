@@ -40,12 +40,17 @@ td[colspan='3'] div {width:35%; border-radius:5px; position:relative; margin-bot
 				<th style="width:10%">#</th>
 				<th style="width:50%">프로젝트명</th>
 				<th style="width:10%">작성일</th>
+				<th style="width:10%">답변</th>
 			</tr>
 			<c:forEach var="fcList" items="${fundCommList }">
 			<tr>
 				<td>${fcList.RNUM }</td>
 				<td><button type="button" id="btnPjName" onclick="getContent(${fcList.RNUM }, ${fcList.COM_NO})">${fcList.P_NAME }</button></td>
 				<td><fmt:formatDate value="${fcList.COM_DATE }" pattern="yyyy-MM-dd"/></td>
+				<td>
+					<c:if test="${fcList.ANS_CNT > 0}"><span style="color:#4EE2EC;font-weight:700;">Y</span></c:if>
+					<c:if test="${fcList.ANS_CNT eq 0}">N</c:if>
+				</td>
 			</tr>
 			<tr>
 				<td id="td${fcList.RNUM }" colspan="3">
