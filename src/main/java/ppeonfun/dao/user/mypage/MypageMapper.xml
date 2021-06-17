@@ -357,6 +357,13 @@
 	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
  	</select>
  	
+	<insert id="insertMessage" parameterType="hashmap">
+		<selectKey resultType="int" keyProperty="cpNo" order="BEFORE">
+ 		SELECT cp_no FROM chat_participant WHERE cr_no = #{msg.crNo} AND m_no = #{mNo}
+ 		</selectKey>
+ 		INSERT INTO message(msg_no, msg_content, cp_no, cr_no)
+ 		VALUES (message_seq.nextval, #{msg.msgContent}, #{cpNo}, #{msg.crNo})
+	</insert> 	
  </mapper>  
     
   
