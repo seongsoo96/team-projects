@@ -55,10 +55,20 @@ $(document).ready(function() {
 });
 
 function category() {
-	var c = $("#category option:selected").val();
-// 	var cname = $("select[name=category]").val();
-	console.log(c);
+	var categorySort = $("#category option:selected").val();
+	var timeSort = $("#time option:selected").val();
+
+// 	console.log(categorySort);
+// 	console.log(timeSort);
+	
+	location.href = "/news?pNo=" + ${info.pNo } + "&categorySort=" + categorySort + "&timeSort=" + timeSort;
+
 }
+
+
+// function viewMore(cp) {
+// 	console.log("cp : " + cp);
+// }
 	
 </script>
 
@@ -457,12 +467,14 @@ hr {
 						onchange="category()">
 						<option value="전체">전체</option>
 						<option value="이벤트">이벤트</option>
-						<option value="리워드">리워드</option>
+						<option value="리워드">리워드 안내</option>
+						<option value="리워드">결제</option>
 					</select>
 					<i></i> <!-- 아이콘 -->
 				</label>
 				<label class="selectLabel">
-					<select class="option time" id="time" name="time">
+					<select class="option time" id="time" name="time"
+						onchange="category()">
 						<option value="최신순">최신순</option>
 						<option value="과거순">과거순</option>
 					</select>
@@ -489,12 +501,24 @@ hr {
 		</div>
 		
 		<!-- 더보기 버튼 -->
-		<button id="btnViewMore" type="button" class="view_more button less" onclick="viewMore(${paging.curPage})">
-			더보기
-			<em class="listCount">9</em>
-<%-- 			<em>/${paging.totalCount }</em> --%>
-			<i class="icon expand_more"></i>
-		</button>
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test="${paging.totalCount < 9 }"> --%>
+<%-- 				<button id="btnViewMore" type="button" disabled="disabled" class="view_more button less" onclick="viewMore(${paging.curPage})"> --%>
+<!-- 					더보기 -->
+<%-- 					<em>${paging.totalCount }/${paging.totalCount }</em> --%>
+<!-- 					<i class="icon expand_more"></i> -->
+<!-- 				</button> -->
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<%-- 				<button id="btnViewMore" type="button" class="view_more button less" onclick="viewMore(${paging.curPage})"> --%>
+<!-- 					더보기 -->
+<!-- 					<em class="listCount">9</em> -->
+<!-- 					<em>/</em> -->
+<%-- 					<em class="totalCount">${paging.totalCount }</em> --%>
+<!-- 					<i class="icon expand_more"></i> -->
+<!-- 				</button> -->
+<%-- 			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
 		
 		
 	</div><!-- .newsDiv end -->

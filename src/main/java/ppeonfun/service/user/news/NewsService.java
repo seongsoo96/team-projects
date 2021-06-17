@@ -1,10 +1,12 @@
 package ppeonfun.service.user.news;
 
+import java.util.HashMap;
 import java.util.List;
 
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.NewsSort;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 import ppeonfun.util.Paging;
@@ -26,7 +28,7 @@ public interface NewsService {
 	 * @param news
 	 * @return
 	 */
-	public List<News> getList(News news);
+//	public List<News> getList(News news);
 
 	/**
 	 * 새소식 상세보기, 자세한 정보
@@ -69,6 +71,15 @@ public interface NewsService {
 	public boolean favorite(Favorite favorite);
 
 	public int communityCnt(News news);
+
+	/**
+	 * 분류에 따른 게시글 조회
+	 * 
+	 * @param news
+	 * @param map
+	 * @return
+	 */
+	public List<NewsSort> getList(NewsSort newsSort);
 
 	/**
 	 * 게시글 목록을 위한 페이징 객체

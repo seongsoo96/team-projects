@@ -271,13 +271,21 @@ public interface MypageDao {
 
 
 	/**
-	 * 테이블을 조인하여
+	 * project, information 테이블을 조인하여
 	 * 회원이 오픈한 프로젝트 목록을 조회한다.
 	 * @param paging	페이징 정보 객체
 	 * @param mNo		회원번호
 	 * @return			오픈 프로젝트 목록
 	 */
 	public List<HashMap<String, Object>> selectAllMyOpenProject(@Param("paging")Paging paging, @Param("mNo")int mNo);
+
+
+	/**
+	 * message 테이블에 새 메시지를 INSERT 한다.
+	 * @param mNo		회원번호
+	 * @param inData	메시지 정보 객체
+	 */
+	public void insertMessage(@Param("mNo")int mNo, @Param("msg")Message inData);
 
 
 }
