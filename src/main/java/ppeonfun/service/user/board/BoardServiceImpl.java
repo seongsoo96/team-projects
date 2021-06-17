@@ -62,6 +62,7 @@ public class BoardServiceImpl implements BoardService {
 	public BoardFile viewfile(Board board) {
 		return boardDao.selectviewfile(board);
 	}
+	
 	@Override
 	public void insertfile(Board board, MultipartFile fileupload) {
 		
@@ -121,6 +122,7 @@ public class BoardServiceImpl implements BoardService {
 		   boardDao.insertFile(filelist);
 		   
 	}
+	
 	@Override
 	public BoardFile getFile(BoardFile boardfile) {
 		return boardDao.selectByFileno(boardfile);
@@ -195,6 +197,7 @@ public class BoardServiceImpl implements BoardService {
 		   
 		   boardDao.insertfile(filelist);
 	}
+	
 	@Override
 	public void delete(Board board) {
 		boardDao.delete(board);
@@ -222,7 +225,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectTotalCntRecommend(recommend);
 	}
 
-	@Override
+   @Override
 	public boolean recommend(Recommend recommend) {
 		if(isrecommend(recommend)) {//추천한 상태
 			boardDao.deleteRecommend(recommend);
@@ -276,15 +279,11 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectupdatecommentlist(comments);
 	}
 
-//	@Override
-//	public List<HashMap<String, Object>> getCommentssList(Board board) {
-//		return boardDao.selectCommentsslist(board);
-//	}
-
 	@Override
 	public List<Integer> getCommentssList(Board board) {
 		return boardDao.selectCommentsslist(board);
 	}
+	
 	@Override
 	public List<HashMap<String, Object>> getcommentNolist(List<Integer> commentsslistbno) {
 		

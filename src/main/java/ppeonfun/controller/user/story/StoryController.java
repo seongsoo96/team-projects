@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.Project;
+import ppeonfun.dto.Report;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 import ppeonfun.service.user.story.StoryService;
@@ -44,6 +47,9 @@ public class StoryController {
 		//새소식 개수
 		int newsCount = storyService.newsCount(news);
 		
+		//커뮤니티 질문 개수
+		int communityCnt = storyService.communityCnt(news);
+		
 		//찜 상태 조회
 		Favorite favorite = new Favorite();
 		favorite.setpNo(news.getpNo()); //프로젝트 번호
@@ -72,8 +78,16 @@ public class StoryController {
 		model.addAttribute("remainDay", remaining_day);
 		model.addAttribute("totalAmount", total_amount);
 		model.addAttribute("newsCnt", newsCount);
+		model.addAttribute("communityCnt", communityCnt);
 		
 		model.addAttribute("cntFav", storyService.getTotalCntFavorite(favorite)); //총 좋아요 횟수
+		
+		//로그인 여부 전달
+		if(session.getAttribute("mNo") == null) {
+			model.addAttribute("nullmNo", "null");
+		} else {
+			model.addAttribute("nullmNo", "yes");
+		}
 		
 		return "/user/project/story";
 	}
@@ -94,6 +108,28 @@ public class StoryController {
 		mav.setViewName("jsonView");
 		
 		return mav;
+	}
+	
+	
+	//신고하기
+	@RequestMapping(value = "/project/report", method = RequestMethod.POST)
+	public String report(Report report, Project project, HttpSession session) {
+		
+		int pno = report.getpNo();
+		
+		//신고자 회원번호
+		report.setmReporterNo(((Integer)session.getAttribute("mNo")).intValue()); //회원번호
+		
+		//개설자 회원번호 가져오기
+		project = storyService.getFounderNo(project);
+		report.setmFounderNo(project.getmNo());
+		
+		//신고 테이블에 삽입
+		storyService.report(report);
+		
+		logger.info("신고하기 내역 확인용 {}", report);
+	
+		return "redirect:/story?pNo=" + pno;
 	}
 	
 }

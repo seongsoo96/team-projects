@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import ppeonfun.dao.user.community.CommunityDao;
 import ppeonfun.dto.Community;
+import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.CommunityJoin;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.Project;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
@@ -31,7 +33,18 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	@Override
 	public int totalCount(Supporter supporter) {
-		return communityDao.selectCntSupporter(supporter);
+		
+		String count = communityDao.selectCntSupporter(supporter);
+		int totalcnt = 0;
+		
+		if(count == null || count.equals("")) {
+			return totalcnt;
+			
+		} else {
+			totalcnt = Integer.parseInt(count);
+			
+			return totalcnt;
+		}
 	}
 	
 	@Override
@@ -41,7 +54,18 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	@Override
 	public int amount(SupporterJoin suJoin) {
-		return communityDao.selectTotalAmount(suJoin);
+		
+		String money = communityDao.selectTotalAmount(suJoin);
+		int amount = 0;
+		
+		if(money == null || money.equals("")) {
+			return amount;
+			
+		} else {
+			amount = Integer.parseInt(money);
+			
+			return amount;
+		}
 	}
 	
 	@Override
@@ -92,6 +116,33 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 		
 		communityDao.insertCommunity(community);
+	}
+	
+	@Override
+	public int communityCnt(News news) {
+		
+		String comCnt = communityDao.selectCntCommunity(news);
+		int comCount = 0;
+		
+		if(comCnt == null || comCnt.equals("")) {
+			return comCount;
+			
+		} else {
+			comCount = Integer.parseInt(comCnt);
+			
+			return comCount;
+		}
+	}
+	
+	
+	@Override
+	public Project getMakerMno(Project project) {
+		return communityDao.getMnoByPno(project);
+	}
+	
+	@Override
+	public void writeAnswer(CommunityAnswer communityAnswer) {
+		communityDao.insertAnswer(communityAnswer);
 	}
 	
 }

@@ -28,7 +28,7 @@
 		where p_no = #{pNo }	
 	</select>
 	
-	<select id="selectCntSupporter" parameterType="ppeonfun.dto.Supporter" resultType="int">
+	<select id="selectCntSupporter" parameterType="ppeonfun.dto.Supporter" resultType="String">
 		SELECT count(*)
 		FROM supporter
 		WHERE p_no = #{pNo }
@@ -41,7 +41,7 @@
 		where p_no = #{pNo }
 	</select>
 	
-	<select id="selectTotalAmount" parameterType="ppeonfun.dto.SupporterJoin" resultType="int">
+	<select id="selectTotalAmount" parameterType="ppeonfun.dto.SupporterJoin" resultType="String">
 		SELECT sum(re_money + su_add_money)
 		FROM reward r, supporter s
 		WHERE s.re_no = r.re_no and s.p_no = #{pNo }		
@@ -75,6 +75,24 @@
 	<insert id="insertFavorite" parameterType="ppeonfun.dto.Favorite">
 		INSERT INTO favorite (fav_no, p_no, m_no)
 		VALUES (favorite_seq.nextval, #{pNo }, #{mNo })
+	</insert>
+	
+	<select id="selectCntCommunity" parameterType="ppeonfun.dto.News" resultType="String">
+		SELECT count(*) 
+		FROM community
+		where p_no = #{pNo }
+	</select>
+	
+	<select id="selectMfounderNoByPno" parameterType="ppeonfun.dto.Project" resultType="ppeonfun.dto.Project">
+		SELECT m_no
+		FROM project
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<insert id="insertReport" parameterType="ppeonfun.dto.Report">
+		INSERT INTO 
+			report (rep_no, p_no, m_reporter_no, m_founder_no, rep_content, rep_manager_content, rep_state)
+		VALUES (REPORT_SEQ.nextval, #{pNo}, #{mReporterNo }, #{mFounderNo }, #{repContent }, '관리자 의견 없음', 'W')
 	</insert>
 	
 </mapper>

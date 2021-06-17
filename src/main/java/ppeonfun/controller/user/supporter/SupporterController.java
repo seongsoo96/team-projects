@@ -35,21 +35,15 @@ public class SupporterController {
 		
 		//해당 프로젝트의 제목, 카테고리, 목표금액
 		info = supporterService.projectInfo(info);
-//		logger.info("제목, 카테고리, 목표금액 {}", info);
 		
 		//해당 프로젝트의 총 서포터 수 구하기
 		int totalCount = supporterService.totalCount(supporter);
-//		logger.info("총 서포터 수 {}명", totalCount);
 		
 		//해당 프로젝트 서포터 리스트
 		List<SupporterJoin> list = supporterService.supporterList(suJoin);
-//		logger.info("서포터 리스트 {}", list);
 		
 		//프로젝트 남은 일수 구하기
 		int remaining_day = supporterService.remainDay(suJoin);
-//		logger.info("남은 날짜 {}", remaining_day);
-		
-//		int achievement_rate = supporterService.achievementRate
 		
 		//프로젝트의 총 펀딩 액
 		int total_amount = supporterService.amount(suJoin);
@@ -57,6 +51,9 @@ public class SupporterController {
 		
 		//새소식 개수
 		int newsCount = supporterService.newsCount(news);
+		
+		//커뮤니티 질문 개수
+		int communityCnt = supporterService.communityCnt(news);		
 		
 		//찜 상태 조회
 		Favorite favorite = new Favorite();
@@ -87,8 +84,16 @@ public class SupporterController {
 		model.addAttribute("totalAmount", total_amount);
 		model.addAttribute("info", info);
 		model.addAttribute("newsCnt", newsCount);
+		model.addAttribute("communityCnt", communityCnt);
 		
 		model.addAttribute("cntFav", supporterService.getTotalCntFavorite(favorite)); //총 좋아요 횟수
+		
+		//로그인 여부 전달
+		if(session.getAttribute("mNo") == null) {
+			model.addAttribute("nullmNo", "null");
+		} else {
+			model.addAttribute("nullmNo", "yes");
+		}
 		
 		return "/user/project/supporter";
 		

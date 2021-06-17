@@ -9,6 +9,8 @@ import ppeonfun.dao.user.story.StoryDao;
 import ppeonfun.dto.Favorite;
 import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
+import ppeonfun.dto.Project;
+import ppeonfun.dto.Report;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
 
@@ -28,7 +30,19 @@ public class StoryServiceImpl implements StoryService {
 	
 	@Override
 	public int totalCount(Supporter supporter) {
-		return storyDao.selectCntSupporter(supporter);
+		
+		String count = storyDao.selectCntSupporter(supporter);
+		int totalcnt = 0;
+		
+		if(count == null || count.equals("")) {
+			return totalcnt;
+			
+		} else {
+			totalcnt = Integer.parseInt(count);
+			
+			return totalcnt;
+		}
+		
 	}
 	
 	
@@ -40,7 +54,18 @@ public class StoryServiceImpl implements StoryService {
 	
 	@Override
 	public int amount(SupporterJoin suJoin) {
-		return storyDao.selectTotalAmount(suJoin);
+		
+		String money = storyDao.selectTotalAmount(suJoin);
+		int amount = 0;
+		
+		if(money == null || money.equals("")) {
+			return amount;
+			
+		} else {
+			amount = Integer.parseInt(money);
+			
+			return amount;
+		}
 	}
 	
 	@Override
@@ -78,5 +103,31 @@ public class StoryServiceImpl implements StoryService {
 	@Override
 	public int getTotalCntFavorite(Favorite favorite) {
 		return storyDao.getTotalCntFavorite(favorite);
+	}
+	
+	@Override
+	public int communityCnt(News news) {
+		
+		String comCnt = storyDao.selectCntCommunity(news);
+		int comCount = 0;
+		
+		if(comCnt == null || comCnt.equals("")) {
+			return comCount;
+			
+		} else {
+			comCount = Integer.parseInt(comCnt);
+			
+			return comCount;
+		}
+	}
+	
+	@Override
+	public Project getFounderNo(Project project) {
+		return storyDao.selectMfounderNoByPno(project);
+	}
+	
+	@Override
+	public void report(Report report) {
+		storyDao.insertReport(report);
 	}
 }

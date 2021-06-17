@@ -30,7 +30,7 @@
 		where p_no = #{pNo }	
 	</select>
 	
-	<select id="selectCntSupporter" parameterType="ppeonfun.dto.Supporter" resultType="int">
+	<select id="selectCntSupporter" parameterType="ppeonfun.dto.Supporter" resultType="String">
 		SELECT count(*)
 		FROM supporter
 		WHERE p_no = #{pNo }
@@ -43,7 +43,7 @@
 		where p_no = #{pNo }
 	</select>
 	
-	<select id="selectTotalAmount" parameterType="ppeonfun.dto.SupporterJoin" resultType="int">
+	<select id="selectTotalAmount" parameterType="ppeonfun.dto.SupporterJoin" resultType="String">
 		SELECT sum(re_money + su_add_money)
 		FROM reward r, supporter s
 		WHERE s.re_no = r.re_no and s.p_no = #{pNo }		
@@ -100,6 +100,23 @@
 	<insert id="insertCommunity" parameterType="ppeonfun.dto.Community">
 		INSERT INTO community (com_no, p_no, m_no, com_content)
 		VALUES (COMMUNITY_SEQ.nextval, #{pNo }, #{mNo }, #{comContent })
+	</insert>
+	
+	<select id="selectCntCommunity" parameterType="ppeonfun.dto.News" resultType="String">
+		SELECT count(*) 
+		FROM community
+		where p_no = #{pNo }
+	</select>
+	
+	<select id="getMnoByPno" parameterType="ppeonfun.dto.Project" resultType="ppeonfun.dto.Project">
+		SELECT *
+		FROM project
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<insert id="insertAnswer" parameterType="ppeonfun.dto.CommunityAnswer">
+		INSERT INTO community_answer(ca_no, com_no, m_no, ca_content)
+		VALUES(COMMUNITY_ANSWER_SEQ.nextval, #{comNo }, #{mNo }, #{caContent })
 	</insert>
 
 </mapper>

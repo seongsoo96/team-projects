@@ -213,7 +213,7 @@ a span svg {margin-right:10px;}
 						</a>
 					</div>
 					<div class="myprepj">
-						<a href="/user/maker/project/open">
+						<a href="/user/maker/project/list">
 							<span class="span-menu-name">
 								<i class="fas fa-map"></i>
 								<span>오픈예정 프로젝트</span>

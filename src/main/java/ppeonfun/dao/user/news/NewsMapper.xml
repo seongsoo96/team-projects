@@ -40,7 +40,7 @@
 		where p_no = #{pNo }	
 	</select>
 	
-	<select id="selectCntSupporter" parameterType="ppeonfun.dto.Supporter" resultType="int">
+	<select id="selectCntSupporter" parameterType="ppeonfun.dto.Supporter" resultType="String">
 		SELECT count(*)
 		FROM supporter
 		WHERE p_no = #{pNo }
@@ -53,7 +53,7 @@
 		where p_no = #{pNo }
 	</select>
 	
-	<select id="selectTotalAmount" parameterType="ppeonfun.dto.SupporterJoin" resultType="int">
+	<select id="selectTotalAmount" parameterType="ppeonfun.dto.SupporterJoin" resultType="String">
 		SELECT sum(re_money + su_add_money)
 		FROM reward r, supporter s
 		WHERE s.re_no = r.re_no and s.p_no = #{pNo }		
@@ -99,6 +99,12 @@
 		INSERT INTO favorite (fav_no, p_no, m_no)
 		VALUES (favorite_seq.nextval, #{pNo }, #{mNo })
 	</insert>
+	
+	<select id="selectCntCommunity" parameterType="ppeonfun.dto.News" resultType="String">
+		SELECT count(*) 
+		FROM community
+		where p_no = #{pNo }
+	</select>
 	
 <!-- 	<select id="selectCntNews" resultType="int" parameterType="ProjectPaging"> -->
 <!-- 		SELECT COUNT(*)  -->

@@ -25,7 +25,19 @@ public class SupporterServiceImpl implements SupporterService {
 	
 	@Override
 	public int totalCount(Supporter supporter) {
-		return supporterDao.selectCntSupporter(supporter);
+		
+		String count = supporterDao.selectCntSupporter(supporter);
+		int totalcnt = 0;
+		
+		if(count == null || count.equals("")) {
+			return totalcnt;
+			
+		} else {
+			totalcnt = Integer.parseInt(count);
+			
+			return totalcnt;
+		}
+		
 	}
 	
 	@Override
@@ -40,7 +52,19 @@ public class SupporterServiceImpl implements SupporterService {
 	
 	@Override
 	public int amount(SupporterJoin suJoin) {
-		return supporterDao.selectTotalAmount(suJoin);
+		
+		String money = supporterDao.selectTotalAmount(suJoin);
+		int amount = 0;
+		
+		if(money == null || money.equals("")) {
+			return amount;
+			
+		} else {
+			amount = Integer.parseInt(money);
+			
+			return amount;
+		}
+		
 	}
 	
 	@Override
@@ -82,6 +106,22 @@ public class SupporterServiceImpl implements SupporterService {
 	@Override
 	public int getTotalCntFavorite(Favorite favorite) {
 		return supporterDao.getTotalCntFavorite(favorite);
+	}
+	
+	@Override
+	public int communityCnt(News news) {
+		
+		String comCnt = supporterDao.selectCntCommunity(news);
+		int comCount = 0;
+		
+		if(comCnt == null || comCnt.equals("")) {
+			return comCount;
+			
+		} else {
+			comCount = Integer.parseInt(comCnt);
+			
+			return comCount;
+		}
 	}
 
 }
