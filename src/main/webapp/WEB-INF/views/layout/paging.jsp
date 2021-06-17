@@ -11,7 +11,6 @@
 </c:if>
 
 
-
 <div class="paging text-center">
 	<ul class="pagination">
 

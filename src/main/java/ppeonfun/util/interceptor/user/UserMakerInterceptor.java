@@ -25,7 +25,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserMakerIntercepto
 		if(session.getAttribute("mNo")==null) {
 			logger.info(">>접속 불가: 비 로그인 상태");
 			
-			response.sendRedirect("/main");
+			response.sendRedirect("/user/member/loginForm");
 			
 			return false;
 		}

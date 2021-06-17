@@ -132,7 +132,7 @@ function deletecomment(cNo){
 		} 
 	 })<!--end  $.ajax-->
 }<!--end function deletecomment(cNo)-->
-//댓글 수정전 textarea를 포함한 원본내용 보여주기
+//댓글 수정하기
  function updatecomment(c_no){
 	
 	$.ajax({
@@ -140,12 +140,9 @@ function deletecomment(cNo){
        ,url:"/user/board/comments/update"		
 	   ,data : {
 		    cNo : c_no
-
-		    ,bNo : ${detail.B_NO}
 			,cContent:$("[data-commentNo='"+c_no+"'] .comment-txt textarea").val()
-		    ,mNick : m_nick
 	   }	
-	   ,dataType: "html"	
+	   ,dataType: "json"	
 	   ,success:function(res){
 		   listComment();
 	   }
@@ -197,8 +194,12 @@ hegiht:300px;
 
 </table>
 
+<c:if test="${not empty viewfile}">
 <img src="/resources/upload/${viewfile.bfStoredName}" class="imgfile"><br><br>
 <a href="/user/board/download?bfFileno=${viewfile.bfFileno }">${viewfile.bfOriginName }</a>
+</c:if>
+<c:if test="${empty viewfile}">
+</c:if>
 
 
 <div class="text-center">
@@ -209,13 +210,18 @@ hegiht:300px;
  </c:if>
 </div><hr><br>	
 
+<c:if test="${not empty mNick }">
 <table id="registerComment">
 <tr>
- <td width="150">${detail.M_NICK }</td>
+ <td width="150">${mNick }</td>
  <td width="550"><textarea id="content" name="content" rows="4" cols="70" placeholder="내용을 작성하세요"></textarea></td>
  <td><button id="register">등록하기</button></td>
 </tr>
 </table><br><br>
+</c:if>	
+<c:if test="${empty mNick }">
+<a href="/user/member/loginForm"><div>로그인 후 댓글 달기가 가능합니다</div></a>
+</c:if><br><br>
 
 <button class="btn btn-primary" id="fold" >댓글 펼치기</button> <br><br>
 

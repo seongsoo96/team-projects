@@ -5,6 +5,17 @@
 
 <style type="text/css">
 div.form-group {height:90px; margin:0;}
+
+/* 취소, 확인 버튼 */
+#btnComplete, #btnCancle {background:#fff; border:1px solid #e0e0e0; font-weight:600; margin:0 3px;}
+#btnComplete{color:#4EE2EC;}
+#btnCancle{color:#ff8080;}
+
+#btnComplete:hover, #btnCancle:hover {border:none; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);}
+#btnComplete:hover {background:#4EE2EC; color:#fff}
+#btnCancle:hover {background:#ff8080; color:#fff}
+
+#btnComplete:focus, #btnCancle:focus {outline:none;}
 </style>
 
 <div class="container">
@@ -42,8 +53,8 @@ div.form-group {height:90px; margin:0;}
     </form>
     
     <div class="text-center">
-    	<button type="button" id="btnCancle" class="btn btn-danger">취소</button>
-    	<button type="button" id="btnComplete" class="btn btn-default">확인</button>
+    	<button type="button" id="btnCancle" class="btn">취소</button>
+    	<button type="button" id="btnComplete" class="btn">확인</button>
     </div>
 </div><!-- div.container -->
 

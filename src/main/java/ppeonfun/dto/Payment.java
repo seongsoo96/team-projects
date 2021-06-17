@@ -14,12 +14,15 @@ public class Payment {
 	private String paymImpUid;
 	private String paymMerchantUid;
 	private String paymState;
+	private int suGroup;
+	
+	
 	@Override
 	public String toString() {
 		return "Payment [paymNo=" + paymNo + ", mNo=" + mNo + ", pNo=" + pNo + ", reNo=" + reNo + ", paymName="
 				+ paymName + ", paymDate=" + paymDate + ", paymAmount=" + paymAmount + ", paymApplyNum=" + paymApplyNum
 				+ ", paymImpUid=" + paymImpUid + ", paymMerchantUid=" + paymMerchantUid + ", paymState=" + paymState
-				+ "]";
+				+ ", suGroup=" + suGroup + "]";
 	}
 	public int getPaymNo() {
 		return paymNo;
@@ -87,6 +90,13 @@ public class Payment {
 	public void setPaymState(String paymState) {
 		this.paymState = paymState;
 	}
+	public int getSuGroup() {
+		return suGroup;
+	}
+	public void setSuGroup(int suGroup) {
+		this.suGroup = suGroup;
+	}
+	
 	
 	
 	

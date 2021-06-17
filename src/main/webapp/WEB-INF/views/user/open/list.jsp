@@ -115,7 +115,7 @@
 	  <div class="col-sm-6 col-md-4">
 	    <div class="thumbnail">
 	      <c:choose>
-	      	<c:when test = "${fn:contains(info.iStoredName, 'test')}">
+	      	<c:when test = "${fn:contains(info.iStoredName, 'test') or fn:contains(info.iStoredName, 'search')}">
 	      		<a href="#"><img src="/resources/img/subLogo.png" style="width:200px; height:150px;"></a>
 	      	</c:when>
 	      	<c:otherwise>

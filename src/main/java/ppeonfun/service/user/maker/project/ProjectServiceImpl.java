@@ -20,12 +20,13 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired private ProjectDao projectDao;
 	
 	@Override
-	public Paging getPaging(Paging inData, int mNo) {
+	public Paging getPaging(Paging inData, int mNo, String type) {
 		//전체 개수
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("category", inData.getCategory());
 		map.put("search", inData.getSearch());
 		map.put("mNo", mNo);
+		map.put(type, type);
 		
 		int totalCount = projectDao.selectCntAll(map);
 		logger.info("totalCount: {}", totalCount);
@@ -39,14 +40,14 @@ public class ProjectServiceImpl implements ProjectService {
 		return paging;
 	}
 	@Override
-	public List<Information> selectAllProject(Paging paging, int mNo) {
+	public List<Information> selectAllProject(Paging paging, int mNo, String type) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("category", paging.getCategory());
 		map.put("search", paging.getSearch());
 		map.put("mNo", mNo);
 		map.put("startNo", paging.getStartNo());
 		map.put("endNo", paging.getEndNo());
-		
+		map.put(type, type);
 		return projectDao.selectAll(map);
 	}
 	@Override

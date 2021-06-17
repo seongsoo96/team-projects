@@ -2,25 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 
-<style type="text/css">
-/* 프로젝트 없는 경우 스타일*/
-.arrow-img {width:20px; height:20px; vertical-align:bottom;}
-h4 a:hover{text-decoration:none;}
-
-/* 상단 메뉴 */
-.divFundMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px;}
-.fa-house-user {font-size:30px; position:relative; left:550px;}
-
-/* 프로젝트 있는 경우 스타일 */
-.selectMyFund {text-align-last:center; font-size:17px; width:150px; height:35px; margin:0 45% 15px;}
-.thumbnail a img {width:80%; height:200px; border:1px solid coral;}
-.dday span {display:inline-block; width:100px; margin:10px 0;}
-.pjname {font-weight:600; font-size:16px;}
-</style>
-
-<div class="container">
+<div class="container" style="margin-bottom:50px;">
 	<h2>펀딩하기</h2>
 	<div class="divFundMenu">
 		<span><a href="/user/mypage/myfunding">나의 펀딩</a></span>
@@ -29,6 +14,7 @@ h4 a:hover{text-decoration:none;}
 	</div>
 	<hr>
 	
+	<c:import url="/WEB-INF/views/layout/myCategoryBtn.jsp"/>
 	<c:if test="${empty totalList }">
 		<div class="text-center" style="height:210px; margin-top:100px;">
 			<h3>펀딩 프로젝트에 참여한 이력이 없습니다.</h3>
@@ -42,10 +28,6 @@ h4 a:hover{text-decoration:none;}
 	</c:if>
 	
 	<c:if test="${not empty totalList }">
-		<select class="selectMyFund">
-			<option selected>카테고리 전체</option>
-		</select>
-	
 		<%-- 현재 날짜 --%>
 		<jsp:useBean id="now" class="java.util.Date"/>
 		<fmt:formatDate value="${now }" var="nowFormat" pattern="yyyy-MM-dd"/>
@@ -71,8 +53,15 @@ h4 a:hover{text-decoration:none;}
 							</c:if>
 						</div>
 						
-						<a href="/user/project?pNo=${tlist.P_NO }">
-							<img alt="프로젝트 대표 사진" src="/upload/imformation/${tlist.I_STORED_NAME }">
+						<a href="/story?pNo=${tlist.P_NO }">
+						<c:choose>
+							<c:when test="${fn:contains(tlist.I_STORED_NAME, 'test') }">
+								<img src="/resources/img/${tlist.I_STORED_NAME }">
+							</c:when>
+							<c:otherwise>
+								<img src="/upload/imformation/${tlist.I_STORED_NAME }">
+							</c:otherwise>
+						</c:choose>
 						</a>
 						<div class="caption">
 							<div class="pjname">${tlist.P_NAME }</div>
@@ -82,7 +71,9 @@ h4 a:hover{text-decoration:none;}
 				</div>
 			</c:forEach>
 		</div>
+		<c:if test="${paging.totalPage > 1 }">
 			<c:import url="/WEB-INF/views/layout/paging.jsp"/>
-	</c:if>
+		</c:if>
+</c:if>
 </div><!-- div.container -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

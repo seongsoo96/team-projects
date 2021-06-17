@@ -94,6 +94,7 @@ public class StoryController {
 	
 	@RequestMapping(value = "/story/favorite")
 	public ModelAndView favorite(Favorite favorite, ModelAndView mav, HttpSession session) {
+		logger.info(null);
 		
 		//찜(하트)
 		favorite.setmNo(((Integer)session.getAttribute("mNo")).intValue());

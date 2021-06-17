@@ -6,6 +6,16 @@
 <style type="text/css">
 .form-group div {margin-bottom:30px;}
 .pre-nick, .pre-email, .email-auth, .pre-phone {display:inline-block; width:50%; margin-bottom:15px; }
+
+/* 취소, 확인 버튼 */
+#btnComplete, #btnCancle {background:#fff; border:1px solid #e0e0e0; font-weight:600; margin:0 3px;}
+#btnComplete{color:#4EE2EC;}
+#btnCancle{color:#ff8080;}
+#btnComplete:hover, #btnCancle:hover {border:none; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);}
+#btnComplete:hover {background:#4EE2EC; color:#fff}
+#btnCancle:hover {background:#ff8080; color:#fff}
+#btnComplete:focus, #btnCancle:focus {outline:none;}
+
 </style>
     
 <div class="container">
@@ -151,8 +161,8 @@
 </div><!-- div.container -->
 
 	<div class="text-center">
-		<button type="button" class="btn btn-danger" id="btnCancle">취소</button>
-		<button type="button" class="btn btn-default" id="btnComplete">확인</button>
+		<button type="button" class="btn" id="btnCancle">취소</button>
+		<button type="button" class="btn" id="btnComplete">확인</button>
 	</div>
 
 <script type="text/javascript">

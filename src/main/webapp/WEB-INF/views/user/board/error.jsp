@@ -19,6 +19,14 @@ $(document).ready(function() {
 })
 </script>
 
+<style type="text/css">
+.container{
+ text-align : center;
+ 
+}
+
+</style>
+
 <div class="container">
 
 <h1 style="color: red;">게시판 에러</h1>
@@ -27,6 +35,6 @@ $(document).ready(function() {
 
 <span id="time">3</span>초후 메인화면으로 이동합니다...
 
-</div><!-- .container -->
+</div><!-- .container --><br><br>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

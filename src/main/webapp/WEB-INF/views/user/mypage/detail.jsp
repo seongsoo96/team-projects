@@ -5,12 +5,26 @@
 
 <style type="text/css">
 /* 상단 메뉴 - 홈 아이콘 */
-.fa-house-user {font-size:30px; position:relative; left:650px;}
+.fa-house-user {font-size:30px; position:relative; left:650px; color:black;}
+.fa-house-user:hover {color:#4EE2EC;}
+
 
 /* 기본 정보 수정, 비민번호 변경 버튼*/
 .text-center div {font-size:18px; margin:50px 0;}
 .text-center div button {background:none; border:1px solid rgba(0,0,0, 0.2); border-radius:5px; width:180px; height:40px;}
-.text-center div button:hover {color:#4EE2EC;}
+.text-center div #default-info:hover, #changepw:hover {color:#4EE2EC; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1); border:none;}
+.text-center div #btnUnsub:hover {color:#ff8080;}
+
+/* 비밀번호 확인(모달) 버튼 */
+#btnPwComplete, #btnPwCancle {background:#fff; border:1px solid #e0e0e0; font-weight:600; margin:0 3px;}
+#btnPwComplete{color:#4EE2EC;}
+#btnPwCancle{color:#ff8080;}
+
+#btnPwComplete:hover, #btnPwCancle:hover {border:none; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);}
+#btnPwComplete:hover {background:#4EE2EC; color:#fff}
+#btnPwCancle:hover {background:#ff8080; color:#fff}
+
+#btnPwComplete:focus, #btnPwCancle:focus {outline:none;}
 </style>
 
 <div class="container">
@@ -29,8 +43,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="btnPwComplete">확인</button>
+					<button type="button" class="btn" id="btnPwCancle" data-dismiss="modal">취소</button>
+					<button type="button" class="btn" id="btnPwComplete">확인</button>
 				</div>
 			</div>
 		</div>

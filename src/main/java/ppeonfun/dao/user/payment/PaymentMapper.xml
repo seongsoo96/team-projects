@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="ppeonfun.dao.user.payment.PaymentDao">
+ 	<select id="selectProject" parameterType="Project" resultType="Project">
+ 		SELECT * FROM project WHERE p_no = #{pNo}
+ 	</select>
+ 	
+ 	<select id="selectMember" parameterType="int" resultType="Member">
+ 		SELECT * FROM member where m_no = #{mNo}
+ 	</select>
+ 	
+ 	<select id="selectReward" parameterType="int" resultType="Reward">
+ 		SELECT * FROM reward where re_no = #{reNo}
+ 	</select>
+ 	
+ 	<select id="selectByAmount" parameterType="int" resultType="int">
+ 		SELECT re_money FROM reward where re_no = #{reNo}
+ 	</select>
+ 	
+ 	<insert id="insertPayment" parameterType="Payment">
+ 		<selectKey order="BEFORE" resultType="int" keyProperty="paymNo">
+ 			SELECT payment_SEQ.nextval from dual
+ 		</selectKey>
+ 		insert into payment(paym_no,m_no,p_no,re_no,paym_name,paym_amount,paym_apply_num,paym_imp_uid,paym_merchant_uid,paym_state, su_group) 
+ 		values(#{paymNo}, #{mNo}, #{pNo}, #{reNo}, #{paymName},#{paymAmount}, #{paymApplyNum}, #{paymImpUid}, #{paymMerchantUid}, #{paymState}, #{suGroup})
+ 	</insert>
+ 	
+ 	<insert id="insertSupporter" parameterType="Supporter">
+ 		<selectKey order="BEFORE" resultType="int" keyProperty="suNo">
+ 			SELECT supporter_SEQ.nextval from dual
+ 		</selectKey>
+ 		insert into supporter(su_no,p_no,m_no,re_no,su_add_money, su_group) 
+ 		values(#{suNo}, #{pNo}, #{mNo}, #{reNo}, #{suAddMoney}, #{suGroup})
+ 	</insert>
+ 	<select id="selectBySuGroup" resultType="int">
+ 		SELECT su_group_sequence.NEXTVAL FROM DUAL
+ 	</select>
+ 	
+ </mapper>

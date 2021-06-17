@@ -32,8 +32,8 @@
 				<label class="comment_nick">${c.M_NICK }</label><br>
 				<textarea id="comment_updateContent" cols="175" rows="3">${c.C_CONTENT }</textarea><br>
 				<div>
-					<button class="okbtn-after-cmtupdate pull-right" onclick="updateCmt(${c.C_NO}, ${c.B_NO })">등록</button>
-					<button class="cnbtn-after-cmtupdate pull-right" onclick="updateCmtCancel(${c.C_NO})">취소</button>
+					<button class="okbtn-after-cmtupdate" onclick="updateCmt(${c.C_NO}, ${c.B_NO })">등록</button>
+					<button class="cnbtn-after-cmtupdate" onclick="updateCmtCancel(${c.C_NO})">취소</button>
 				</div>
 			</div>
 		</c:if>
@@ -57,7 +57,7 @@
 						<div class="comment-pop-container">
 							<div class="comment-pop-conts">
 								<c:if test="${cc.M_NO eq sessionScope.mNo }">
-									<label class="pop-btn" onclick="CmtCmtUpdateForm(${cc.CS_NO}, ${c.B_NO })">수정</label><br>
+									<label class="pop-btn" onclick="CmtCmtUpdateForm(${cc.CS_NO}, '${cc.M_NICK }', '${cc.CS_CONTENT }')">수정</label><br>
 									<label class="pop-btn" onclick="CmtCmtdelete(${cc.CS_NO}, ${c.B_NO })">삭제</label>
 								</c:if>
 								<c:if test="${cc.M_NO ne sessionScope.mNo }">

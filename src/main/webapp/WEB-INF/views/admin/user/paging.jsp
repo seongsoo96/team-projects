@@ -10,8 +10,6 @@
 	<c:set var="categoryParam" value="&category=${paging.category }" />
 </c:if>
 
-
-
 <div class="paging text-center">
 	<ul class="pagination">
 

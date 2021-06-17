@@ -333,5 +333,12 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.selectCommentsListForArray(map);
 	}
 
+	@Override
+	public int getCntCommentss(int bNo) {
+		int CntCmts = boardDao.selectCntCmts(bNo);
+		int CntCmtss = boardDao.selectCntCmtssBybNo(bNo);
+		return CntCmts + CntCmtss;
+	}
+
 
 }

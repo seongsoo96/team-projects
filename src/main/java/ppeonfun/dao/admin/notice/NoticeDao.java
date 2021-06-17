@@ -290,5 +290,20 @@ public interface NoticeDao {
 	 */
 	public List<HashMap<String, Object>> selectCommentssListForArray(HashMap<String, Object> map);
 
+	/**
+	 * 해당 글이 갖고있는 모든 댓글의 수를 조회한다
+	 * 
+	 * @param bNo - 조회할 기준이 될 글 번호
+	 * @return 글 번호에 해당하는 모든 댓글의 수
+	 */
+	public int selectCntCmts(int bNo);
+
+	/**
+	 * 해당 글이 갖고있는 모든 대댓글의 수를 조회한다
+	 * 
+	 * @param bNo - 조회할 기준이 될 글 번호
+	 * @return 글 번호에 해당하는 모든 대댓글의 수
+	 */
+	public int selectCntCmtssBybNo(int bNo);
 
 }

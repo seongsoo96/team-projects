@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 
 import ppeonfun.dto.CommunityAnswer;
 import ppeonfun.dto.Member;
-import ppeonfun.dto.Message;
 import ppeonfun.dto.MyPage;
 import ppeonfun.service.user.member.MemberService;
 import ppeonfun.service.user.mypage.MypageService;
@@ -45,17 +44,9 @@ public class MypageController {
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public void getMypage(HttpSession session, Model model) {
 		logger.info("***** /user/mypage/home START *****");
-		MyPage profileimg = mypageService.getProfileImg((int) session.getAttribute("mNo"));
-		String storedName = profileimg.getMyStoredName();
 		
-		//저장된 프로필 사진이 기본 이미지인 경우
-		if("member.png".equals(storedName)) {
-			model.addAttribute("isDefaultImg", true);
-		} else {//업로드된 파일인 경우
-			model.addAttribute("isDefaultImg", false);
-		}
-		
-		model.addAttribute("profile", profileimg);
+		MyPage profile = mypageService.getProfileImg((int) session.getAttribute("mNo"));
+		model.addAttribute("profile", profile);
 	}
 	
 	
@@ -64,16 +55,8 @@ public class MypageController {
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public void editMyProfile(HttpSession session, Model model) {
 		logger.info("***** /user/mypage/profile [GET] START *****");
+		
 		MyPage profile = mypageService.getProfileImg((int) session.getAttribute("mNo"));
-		String storedName =  profile.getMyStoredName();
-		
-		//저장된 프로필 사진이 기본 이미지인 경우
-		if("member.png".equals(storedName)) {
-			model.addAttribute("isDefaultImg", true);
-		} else {//업로드된 파일인 경우
-			model.addAttribute("isDefaultImg", false);
-		}
-		
 		model.addAttribute("profile", profile);
 	}
 	
@@ -83,7 +66,7 @@ public class MypageController {
 		logger.info("소개:{}", introduce);
 		
 		mypageService.updateMyIntroByNo(introduce, (int) session.getAttribute("mNo"));
-		return "redirect:/user/mypage/profile";
+		return "redirect:/user/mypage/home";
 	}
 	
 	@RequestMapping(value="/profile/ajax", method=RequestMethod.POST)
@@ -239,14 +222,20 @@ public class MypageController {
 		return "jsonView";
 	}
 	
-	//마이페이지 나의프로젝트--------------------------------------------------------------------
+	//마이페이지 나의펀딩/펀딩내역--------------------------------------------------------------------
 	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
-	public void viewMyFunding(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMyFunding(HttpSession session, Model model, @RequestParam(defaultValue="전체")String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/myfunding [GET] START *****");
+		logger.info("category:{}", category);
+
+		//category가 전체일 때 null로 값 변경
+		if("전체".equals(category)) { category = null; }
 		
+		//회원번호 mNo
 		int mNo = (int) session.getAttribute("mNo");
 		
-		Paging paging = mypageService.getPaymPaging(curPage, mNo);
+		//페이징 생성
+		Paging paging = mypageService.getPaymPaging(curPage, mNo, category);
 		logger.info("페이징:{}", paging);
 		
 		//전체 펀딩 내역 조회
@@ -257,8 +246,8 @@ public class MypageController {
 		}
 		logger.info("totalList: {}", totalList);
 		
-		model.addAttribute("paging", paging);
 		model.addAttribute("totalList", totalList);
+		model.addAttribute("paging", paging);
 	}
 	
 	@RequestMapping(value="/fundingchart", method=RequestMethod.GET)
@@ -304,40 +293,49 @@ public class MypageController {
 	}
 	
 	
-	/* 서포터 */
-	
 	//마이페이지 좋아요--------------------------------------------------------------------
 	@RequestMapping(value="/favorite", method=RequestMethod.GET)
-	public void viewMyFavorite(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMyFavorite(HttpSession session, Model model, @RequestParam(defaultValue="전체")String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/favorite [GET] START *****");
+		logger.info("category:{}", category);
 		
+		//category가 전체일 때 null로 값 변경
+		if("전체".equals(category)) { category = null; }
+
+		//회원번호 mNo
 		int mNo = (int) session.getAttribute("mNo");
 		
-		Paging paging = mypageService.getFavoritePaging(curPage, mNo);
+		//페이징 생성
+		Paging paging = mypageService.getFavoritePaging(curPage, mNo, category);
 		logger.info("페이징:{}", paging);
 		
 		//회원이 좋아요한 프로젝트 목록을 조회한다.
 		List<HashMap<String, Object>> favoriteList = null;
-
+		
 		if(paging != null) {
 			favoriteList = mypageService.getMyFavoriteList(paging, mNo);
 		}
-		
 		logger.info("좋아요 목록 {}", favoriteList);
+		
 		model.addAttribute("favoriteList", favoriteList);
 		model.addAttribute("paging", paging);
 	}
 	
 	
 	//마이페이지 내가 쓴 글--------------------------------------------------------------------
-	
 	@RequestMapping(value="/fundcomm", method=RequestMethod.GET)
-	public void viewMyFundComm(HttpSession session, Model model, @RequestParam(defaultValue="1")int curPage) {
+	public void viewMyFundComm(HttpSession session, Model model, @RequestParam(defaultValue="전체")String category, @RequestParam(defaultValue="1")int curPage) {
 		logger.info("***** /user/mypage/fundcomm [GET] START *****");
+		logger.info("category:{}", category);
+
+		//category가 전체일 때 null로 값 변경
+		if("전체".equals(category)) { category = null; }
 		
+		//회원번호 mNo
 		int mNo = (int) session.getAttribute("mNo");
 		
-		Paging paging = mypageService.getFundCommPaging(curPage, mNo);
+		//페이징 생성
+		Paging paging = mypageService.getFundCommPaging(curPage, mNo, category);
 		logger.info("페이징:{}", paging);
 		
 		//회원이 프로젝트 커뮤니티에 작성한 글을 조회한다.
@@ -346,8 +344,8 @@ public class MypageController {
 		if(paging != null) {
 			fundCommList = mypageService.getMyFundCommList(paging, mNo);
 		}
-		
 		logger.info("펀딩 커뮤니티에 작성한 글 목록 {}", fundCommList);
+		
 		model.addAttribute("fundCommList", fundCommList);
 		model.addAttribute("paging", paging);
 	}
@@ -437,6 +435,35 @@ public class MypageController {
 		return "/user/mypage/detailMsg";
 	}
 	
+	
+	//마이페이지 오픈/오픈예정 프로젝트--------------------------------------------------------------------
+	@RequestMapping(value = "/openpj")
+	public void viewMyOpenProject(HttpSession session, Model model, @RequestParam(defaultValue="전체")String category, @RequestParam(defaultValue="1")int curPage) {
+		logger.info("***** /user/mypage/openpj START *****");
+		logger.info("category:{}", category);
+		
+		//category가 전체일 때 null로 값 변경
+		if("전체".equals(category)) { category = null; }
+
+		//회원번호 mNo
+		int mNo = (int) session.getAttribute("mNo");
+		
+		
+		//페이징 생성
+		Paging paging = mypageService.getMyOpenpjPaging(curPage, mNo, category);
+		logger.info("페이징:{}", paging);
+
+		//회원이 프로젝트 커뮤니티에 작성한 글을 조회한다.
+		List<HashMap<String, Object>> openpjList = null;
+		
+		if(paging != null) {
+			openpjList = mypageService.getMyOpenpjList(paging, mNo);
+		}
+		logger.info("오픈한 프로젝트 목록 {}", openpjList);
+		
+		model.addAttribute("openpjList", openpjList);
+		model.addAttribute("paging", paging);
+	}
 	
 	//마이페이지 오류--------------------------------------------------------------------
 	@RequestMapping(value = "/error")
