@@ -1,7 +1,5 @@
 package ppeonfun.util;
 
-import com.fasterxml.jackson.annotation.JacksonInject;
-
 public class ProjectPaging {
 	private int curPage; //현재 페이지의 번호
 
@@ -16,11 +14,10 @@ public class ProjectPaging {
 	private int startNo; //화면에 보이는 게시글의 시작 번호	
 	private int endNo; //화면에 보이는 게시글의 끝 번호
 	
-	@JacksonInject(value = "")
-	private String search; //검색 내용
-	private String category; //카테고리
+//	@JacksonInject(value = "")
+//	private String search; //검색 내용
+//	private String category; //카테고리
 	
-	@JacksonInject
 	private int pNo; //프로젝트 번호
 	
 	public ProjectPaging() {
@@ -94,15 +91,12 @@ public class ProjectPaging {
 	}
 	
 	
-	
-	
 
 	@Override
 	public String toString() {
 		return "ProjectPaging [curPage=" + curPage + ", totalCount=" + totalCount + ", listCount=" + listCount
 				+ ", totalPage=" + totalPage + ", pageCount=" + pageCount + ", startPage=" + startPage + ", endPage="
-				+ endPage + ", startNo=" + startNo + ", endNo=" + endNo + ", search=" + search + ", category="
-				+ category + ", pNo=" + pNo + "]";
+				+ endPage + ", startNo=" + startNo + ", endNo=" + endNo + ", pNo=" + pNo + "]";
 	}
 
 	public int getCurPage() {
@@ -158,22 +152,6 @@ public class ProjectPaging {
 	}
 	public void setEndNo(int endNo) {
 		this.endNo = endNo;
-	}
-
-	public String getSearch() {
-		return search;
-	}
-
-	public void setSearch(String search) {
-		this.search = search;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
 	}
 
 	public int getpNo() {

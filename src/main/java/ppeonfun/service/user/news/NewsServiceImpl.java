@@ -13,7 +13,6 @@ import ppeonfun.dto.Information;
 import ppeonfun.dto.News;
 import ppeonfun.dto.Supporter;
 import ppeonfun.dto.SupporterJoin;
-import ppeonfun.util.Paging;
 import ppeonfun.util.ProjectPaging;
 
 @Service("user.NewsService")
@@ -31,7 +30,18 @@ public class NewsServiceImpl implements NewsService {
 	
 	@Override
 	public int totalCount(Supporter supporter) {
-		return newsDao.selectCntSupporter(supporter);
+		
+		String count = newsDao.selectCntSupporter(supporter);
+		int totalcnt = 0;
+		
+		if(count == null || count.equals("")) {
+			return totalcnt;
+			
+		} else {
+			totalcnt = Integer.parseInt(count);
+			
+			return totalcnt;
+		}
 	}
 	
 	@Override
@@ -41,7 +51,18 @@ public class NewsServiceImpl implements NewsService {
 	
 	@Override
 	public int amount(SupporterJoin suJoin) {
-		return newsDao.selectTotalAmount(suJoin);
+		
+		String money = newsDao.selectTotalAmount(suJoin);
+		int amount = 0;
+		
+		if(money == null || money.equals("")) {
+			return amount;
+			
+		} else {
+			amount = Integer.parseInt(money);
+			
+			return amount;
+		}
 	}
 	
 	@Override
@@ -83,6 +104,22 @@ public class NewsServiceImpl implements NewsService {
 			newsDao.insertFavorite(favorite);
 			
 			return true;
+		}
+	}
+	
+	@Override
+	public int communityCnt(News news) {
+		
+		String comCnt = newsDao.selectCntCommunity(news);
+		int comCount = 0;
+		
+		if(comCnt == null || comCnt.equals("")) {
+			return comCount;
+			
+		} else {
+			comCount = Integer.parseInt(comCnt);
+			
+			return comCount;
 		}
 	}
 	

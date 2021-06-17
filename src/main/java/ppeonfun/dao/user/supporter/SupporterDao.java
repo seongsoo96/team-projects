@@ -19,7 +19,7 @@ public interface SupporterDao {
 	 * @param supporter
 	 * @return
 	 */
-	public int selectCntSupporter(Supporter supporter);
+	public String selectCntSupporter(Supporter supporter);
 
 	/**
 	 * 서포터 리스트 검색
@@ -43,7 +43,7 @@ public interface SupporterDao {
 	 * @param suJoin
 	 * @return
 	 */
-	public int selectTotalAmount(SupporterJoin suJoin);
+	public String selectTotalAmount(SupporterJoin suJoin);
 
 	/**
 	 * 프로젝트 정보 검색
@@ -62,5 +62,7 @@ public interface SupporterDao {
 	public void insertFavorite(Favorite favorite);
 
 	public int getTotalCntFavorite(Favorite favorite);
+
+	public String selectCntCommunity(News news);
 
 }

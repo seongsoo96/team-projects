@@ -5,6 +5,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	if(${isFav }) { //해당 아이디로 프로젝트 좋아요 누른 상태
 		$("#heart")
 			.css("color", "red");
@@ -13,6 +14,7 @@ $(document).ready(function() {
 	}
 	
 	
+	/* 좋아요 버튼 */
 	$(".btn_heart").click(function() {
 		
 		$.ajax({
@@ -39,8 +41,45 @@ $(document).ready(function() {
 			, error: function() {
 				console.log("실패");
 			}
-		});
-	}); //$(".btn_heart").click(function() end		
+		})
+	}); //$(".btn_heart").click(function() end
+			
+			
+	if(${nullmNo} == null || "".equals(${nullmNo})) {
+		
+		$(".writeCom").click(function() {
+				alert("로그인 후 사용하세요");
+				location.href = "/user/member/loginForm";
+			});
+		
+	} //if end
+	
+	/* 신고 버튼 */
+// 	if(${nullmNo} == null) || "".equals("${nullmNo}")) {
+	if(${nullmNo} == null) {
+		
+		$(".btn_declare").click(function() {
+				alert("로그인 후 신고할 수 있습니다.");
+				location.href = "/user/member/loginForm";
+			});
+		
+	} //if end	
+	
+	
+	/* 답글 버튼 */
+// 	$(".answerBtn").click(function() {
+		
+// 		if(${nullmNo} == null || "".equals(${nullmNo})) {//로그인 안되어있을 경우
+// 			alert("로그인 후 사용 가능. 메이커만 답변 가능합니다.");	
+			
+// 		} else if ("${nullmNo}".equals("yes") && "${mNo}".equals("${makerMno}")) { //로그인 되어있고 메이커인 경우
+			
+// 		} else { //로그인 되어있고 메이커가 아닌 경우
+// 			alert("메이커만 답변 가능합니다.")
+// 		}
+		
+// 	});
+	
 });
 </script>
 
@@ -526,7 +565,7 @@ hr {
 	<ul>
 		<li class="active"><a class="menuLink" href="/story?pNo=${info.pNo }">스토리</a></li>
 		<li><a class="menuLink" href="/news?pNo=${info.pNo }">새소식<span class="count">${newsCnt }</span></a></li>
-		<li><a class="menuLink" href="/community?pNo=${info.pNo }">커뮤니티<span class="count">2</span></a></li>
+		<li><a class="menuLink" href="/community?pNo=${info.pNo }">커뮤니티<span class="count">${communityCnt }</span></a></li>
 		<li><a class="menuLink" href="/supporter?pNo=${info.pNo }">서포터<span class="count">${totalCnt }</span></a></li>
 	</ul>
 </nav><!-- #topMenu end -->
@@ -547,7 +586,7 @@ hr {
 		<div class="comTitle">
 			<div class="commuTitle">
 				<p>응원 · 질문 · 체험리뷰
-					<em>86</em>
+					<em>${communityCnt }</em>
 				</p>
 			</div>
 			<p class="explain">펀딩 종료전에 남긴 글입니다.</p>
@@ -562,7 +601,7 @@ hr {
 		
 		
 		
-		<!-- Modal -->
+		<!-- 커뮤니티 글 남기기 Modal -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
@@ -574,34 +613,34 @@ hr {
 		      </div> <br>
 		      <div class="modal-body">
 		      
-		      <p style="margin-bottom: 10px; line-height: 1.33; font-size: 15px; font-weight: 400;">
-		     	 응원∙질문∙체험리뷰를 남겨주세요. <br>	
-		     	 메이커에게 답변을 받을 수 있습니다.
-		      </p>
-		      
-		      <form action="/community?pNo=${info.pNo }" method="post" id="write_community">
-		      	<label for="comContent" class="control-label"></label>
-            	<textarea class="form-control" id="comContent" name="comContent" style="height: 300px;"></textarea>
-		      </form>
-		      
-		      <!-- 경고 메시지 -->
-		      <div class="warning">
-		      	<p>최근 메이커 또는 제3자에 대한 허위사실 유포, 비방 목적의 댓글로 인해 당사자간 법적분쟁이 발생한 사례가 증가하고 있습니다. 악의적 댓글 작성자는 명예훼손, 모욕 등으로 법적 책임을 부담하게 될 수 있다는 점을 유의하여 주시기 바랍니다.</p>
-		      </div>
-		      
-		      <!-- 이용 안내 -->
-		      <div class="riskMessage">
-		      	<div class="risk_inner">
-		      		<article>
-		      			<h1>게시물 이용안내</h1>
-		      			<ol>
-		      				<li>본 프로젝트와 무관한 글, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 삭제 등 조치가 취해질 수 있으며, 해당 내용으로 인해 메이커, 서포터, 제3자에게 피해가 발생되지 않도록 유의하시기 바랍니다.</li>
-		      				<li>서포터님의 연락처, 성명, 이메일 등의 소중한 개인정보는 절대 남기지 마세요.</li>
-		      				<li>체험 리뷰는 반드시 펀딩을 위해 진행된 오프라인 전시(체험)에 참여한 후 작성하세요.</li>
-		      			</ol>
-		      		</article>
-		      	</div>
-		      </div>
+			      <p style="margin-bottom: 10px; line-height: 1.33; font-size: 15px; font-weight: 400;">
+			     	 응원∙질문∙체험리뷰를 남겨주세요. <br>	
+			     	 메이커에게 답변을 받을 수 있습니다.
+			      </p>
+			      
+			      <form action="/community?pNo=${info.pNo }" method="post" id="write_community">
+			      	<label for="comContent" class="control-label"></label>
+	            	<textarea class="form-control" id="comContent" name="comContent" style="height: 300px;"></textarea>
+			      </form>
+			      
+			      <!-- 경고 메시지 -->
+			      <div class="warning">
+			      	<p>최근 메이커 또는 제3자에 대한 허위사실 유포, 비방 목적의 댓글로 인해 당사자간 법적분쟁이 발생한 사례가 증가하고 있습니다. 악의적 댓글 작성자는 명예훼손, 모욕 등으로 법적 책임을 부담하게 될 수 있다는 점을 유의하여 주시기 바랍니다.</p>
+			      </div>
+			      
+			      <!-- 이용 안내 -->
+			      <div class="riskMessage">
+			      	<div class="risk_inner">
+			      		<article>
+			      			<h1>게시물 이용안내</h1>
+			      			<ol>
+			      				<li>본 프로젝트와 무관한 글, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 삭제 등 조치가 취해질 수 있으며, 해당 내용으로 인해 메이커, 서포터, 제3자에게 피해가 발생되지 않도록 유의하시기 바랍니다.</li>
+			      				<li>서포터님의 연락처, 성명, 이메일 등의 소중한 개인정보는 절대 남기지 마세요.</li>
+			      				<li>체험 리뷰는 반드시 펀딩을 위해 진행된 오프라인 전시(체험)에 참여한 후 작성하세요.</li>
+			      			</ol>
+			      		</article>
+			      	</div>
+			      </div>
 		      
 		      </div>
 		      <div class="modal-footer">
@@ -652,8 +691,43 @@ hr {
 							
 							<!-- 답글 버튼 -->
 							<div class="answer">
-								<button class="answerBtn">답글</button>
+								<c:if test="${mNo ne '' and mNo eq makerMno }">
+								<button class="answerBtn" data-toggle="modal" data-target="#answerModal">
+									답글
+								</button>
+								</c:if>
 							</div>
+							
+							
+							<!-- 답글 Modal -->
+							<div class="modal fade" id="answerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+							      </div>
+							      <div class="modal-body">
+							      
+							      	<div>
+							      		<p style="font-size: 18px; margin-bottom: -7px;">메이커 답변 내용:</p>
+							      	</div>
+							      
+							      	<form action="/community/answer?pNo=${info.pNo }&comNo=${list.comNo }" method="post" id="community_answer">
+<%-- 							      	<form action="/community/answer?pNo=${info.pNo }" method="post" id="report"> --%>
+								      	<label for="caContent" class="control-label"></label>
+							          	<textarea class="form-control" id="caContent" name="caContent" style="height: 300px;"></textarea>
+								    </form>
+								    
+							      </div>
+							      <div class="modal-footer">
+							        <button type="submit" class="btn" form="community_answer"
+							        	style="background-color: #4EE2EC; width: 90px; height: 40px;">답글 달기</button>
+							      </div>
+							    </div>
+							  </div>
+							</div><!-- 답글 Modal end -->
+							
 							
 						</div>
 						
@@ -738,12 +812,40 @@ hr {
 			</button>
 		</div>
 		<div class="declare">
-			<button class="btn_declare">
+			<button class="btn_declare" data-toggle="modal" data-target="#reportModal">
 				신고하기
 			</button>
 		</div>
 	</div>
 </div><!-- #right end --> 
+
+<!-- 신고하기 Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">게시물 신고하기</h4>
+      </div><br>
+      <div class="modal-body">
+      
+      	<div>
+      		<p style="font-size: 18px; margin-bottom: -7px;">신고 내용:</p>
+      	</div>
+      
+		<form action="/project/report?pNo=${info.pNo }" method="post" id="report">
+	      	<label for="repContent" class="control-label"></label>
+          	<textarea class="form-control" id="repContent" name="repContent" style="height: 300px;"></textarea>
+	    </form>
+	    
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn" form="report"
+        	style="background-color: #4EE2EC; width: 90px; height: 40px;">신고하기</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <div style="clear: both;"></div>
