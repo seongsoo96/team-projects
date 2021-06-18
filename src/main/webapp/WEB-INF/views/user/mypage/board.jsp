@@ -17,7 +17,6 @@ table th, td {text-align:center;}
 	<div class="divFundMenu">
 		<span><a href="/user/mypage/fundcomm">펀딩 커뮤니티</a></span>
 		<span><a href="/user/mypage/board">게시판</a></span>
-		<span><a href="/user/mypage/home"><i class="fas fa-house-user"></i></a></span>
 	</div>
 	<hr>
 	
