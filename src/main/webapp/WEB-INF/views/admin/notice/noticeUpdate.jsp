@@ -51,12 +51,12 @@ $(document).ready(function() {
 <div class="nTitle"><input type="text" name="bTitle" class="bTitle" value="${board.bTitle }" required /></div><br>
 <div class="nContent"><textarea cols="140" rows="15" id="bContent" name="bContent" required>${board.bContent }</textarea></div><br><br>
 
-<div class="picture">
+<div id="picture" class="picture">
 <c:forEach var="f" items="${flist }">
 	<img src="/resources/upload/${f.bfStoredName }" <%--  onclick="deleteFile(${f.bfFileno})" --%> style="height: 200px; width: 300px;">
 </c:forEach>
 </div>
-<input multiple="multiple" type="file" name="file" />
+<input multiple="multiple" type="file" name="file" onchange="setThumbnail(event);" />
 
 
 <input type="hidden" name="bNo" value="${board.bNo }" />
@@ -77,6 +77,28 @@ nhn.husky.EZCreator.createInIFrame({
 	sSkinURI: "/resources/se2/SmartEditor2Skin.html",
 	fCreator: "createSEditor2"
 })
+</script>
+
+<script>
+function setThumbnail(event) { 
+	$("#picture").html('');
+	console.log("이미지 업로드 시작");
+	
+	for (var image of event.target.files) { 
+		var reader = new FileReader(); 
+		
+		reader.onload = function(event) {
+			var img = document.createElement("img"); 
+			img.setAttribute("src", event.target.result);
+			img.setAttribute("style", "width: 300px; height: 200px; margin: 10px;");
+			document.querySelector("div#picture").appendChild(img); 
+		}; 
+		
+		console.log(image); 
+		reader.readAsDataURL(image); 
+	}
+	console.log("이미지 업로드 끝");
+}
 </script>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp" />
