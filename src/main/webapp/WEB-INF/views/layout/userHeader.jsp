@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src='https://developers.kakao.com/sdk/js/kakao.min.js'></script>
-<link rel="stylesheet" href="/resources/css/header.css">
+<link rel="stylesheet" href="/resources/css/userHeader.css" type="text/css">
 
 <!-- bootstrap icon 적용 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -243,11 +244,10 @@ function searchEnter(){
 	}
 }
 </script>
-
-
 </head>
 <body>
 <header>
+	
 	<!-- 로고 -->
 	<div>
 		<a href = "/"><img src="/resources/img/logo.png" style="border-radius: 50%;" width="50" height="50" alt="PpeonFun"  title="PpeonFun"> </a>
@@ -301,42 +301,32 @@ function searchEnter(){
 	
 	
 	<!-- 로그인 -->
+	<div class="divHeaderLoginMenu"
+		<c:if test="${empty mNo }">style="margin:5px 0 0 30px;"</c:if>
+	>
 	<c:choose>
 		<c:when test="${!empty accessToken }">
-		<ul class="hdropdown right">
-				<li>
-					<a href="#" style="color:black;" class="fa fa-user fa-3x"></a>
-					<ul>
-						<li><a href="/user/member/kakao/logout">카카오 로그아웃</a></li>
-						<li><a href="/user/mypage/home">마이페이지</a></li>
-						<li><a href="/user/project/list">프로젝트 펀딩하기</a></li>
-					</ul>
-				</li>
-			</ul>
+			<a href="/user/member/kakao/logout">카카오 로그아웃</a>
+			<a href="/user/mypage/home">마이페이지</a>
 		</c:when>
 		<c:when test="${empty mNo }">
-			<ul class="hdropdown right">
-				<li>
-					<a href="#" style="color:black;" class="fa fa-user fa-3x"></a>
-					<ul>
-						<li><a href="/user/member/loginForm">로그인</a></li>
-						<li><a href="/user/member/joinSelect">회원가입</a></li>
-						<li><a href="/user/project/list">프로젝트 펀딩하기</a></li>
-					</ul>
-				</li>
-			</ul>	
+			<a href="/user/member/loginForm">로그인</a>
+			<a href="/user/member/joinSelect">회원가입</a>
 		</c:when>
 		<c:otherwise>
-			<ul class="hdropdown right">
-				<li>
-					<a href="#" class="fa fa-user fa-3x"></a>
-					<ul>
-						<li><a href="/user/member/logout">로그아웃</a></li>
-						<li><a href="/user/mypage/home">마이페이지</a></li>
-						<li><a href="/user/project/list">프로젝트 펀딩하기</a></li>
-					</ul>
-				</li>
-			</ul>
+			<a href="/user/member/logout" style="margin-left:57px;">로그아웃</a>
+			<a href="/user/mypage/home">
+			<c:choose>
+				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) }">
+					<img src="/resources/img/member.png">
+				</c:when>
+				<c:otherwise>
+					<img src="/upload/profile/${myStoredName }">
+				</c:otherwise>
+			</c:choose>
+			</a>
 		</c:otherwise>
 	</c:choose>
+	</div>
+	<div class="celarfix"></div>
 </header>
