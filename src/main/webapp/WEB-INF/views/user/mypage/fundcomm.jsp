@@ -62,7 +62,9 @@ td[colspan='3'] div {width:35%; border-radius:5px; position:relative; margin-bot
 			</tr>
 			</c:forEach>
 		</table>
-		<c:import url="/WEB-INF/views/layout/paging.jsp"/>
+		<c:if test="${paging.totalPage > 1 }">
+			<c:import url="/WEB-INF/views/layout/ppeonfunpaging.jsp"/>
+		</c:if>
 	</c:if>
 </div><!-- div.container -->
 
