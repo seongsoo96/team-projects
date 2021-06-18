@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ppeonfun.dto.Member;
+import ppeonfun.dto.MyPage;
 import ppeonfun.service.user.member.MemberService;
+import ppeonfun.service.user.mypage.MypageService;
 
 @Controller("user.MemberController")
 @RequestMapping("/user/member")
@@ -28,6 +30,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired private MemberService memberService;
+	@Autowired private MypageService mypageService;
 	
 	
 	@RequestMapping(value="/loginForm", method=RequestMethod.GET)
@@ -115,6 +118,9 @@ public class MemberController {
 		if(member!=null) {
 			session.setAttribute("mNo", member.getmNo());
 			session.setAttribute("mNick", member.getmNick());
+			
+			MyPage profile = mypageService.getProfileImg(member.getmNo());
+			session.setAttribute("myStoredName", profile.getMyStoredName());
 		}
 		
 		if(member!=null&&"M".equals(member.getmGrade())) {

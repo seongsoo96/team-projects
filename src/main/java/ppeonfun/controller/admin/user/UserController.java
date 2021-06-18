@@ -1,11 +1,13 @@
 package ppeonfun.controller.admin.user;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,10 +87,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String registerInfo(Member member) {
+	public String registerInfo(Member member, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth) {
 		logger.info("/admin/user/register [POST]");
 		logger.debug("Member : " + member);
-		
+		member.setmBirth(birth);
 		userService.userRegister(member);
 		
 		return "redirect:/admin/user/list";
