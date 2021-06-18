@@ -11,16 +11,38 @@
 <%-- 현재시간을 변환(yyyyMMdd)하여 변수에 저장 --%>
 <fmt:formatDate value="<%=new Date() %>" pattern="yyMMdd" var="nowStr" />
 
+
+<style type="text/css">
+hr{
+	margin-top:80px;
+}
+.fa-plus{
+	color:#4EE2EC;
+}
+#projectWrite{
+	cursor: pointer;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#projectWrite").click(function(){
+		$(location).attr('href', '/admin/notice/write')
+	})
+})
+</script>
+
 <div id="content">
-	<h1>공지사항 관리</h1>
+	<h1 class="pull-left">공지사항 관리 &nbsp;<a id="projectWrite"><i class="fas fa-plus"></i></a></h1>
 <hr>
 
 <div class="anbody1">
 
-<div class="write">
-	<button id="BtnWrite" class="BtnWrite" onclick="location.href='/admin/notice/write'">글쓰기</button>
-</div><br> <%-- write end --%>
+<!-- <div class="write"> -->
+<!-- 	<button id="BtnWrite" class="BtnWrite" onclick="location.href='/admin/notice/write'">글쓰기</button> -->
+<%-- </div><br> write end --%>
 
+<br>
 <table class="antable">
 <tr>
 	<th style="width: 5%"></th>

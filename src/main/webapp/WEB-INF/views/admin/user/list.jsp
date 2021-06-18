@@ -14,6 +14,53 @@ hr{
 	cursor: pointer;
 }
 
+/* 테이블 디자인 */
+.usertable {
+	margin-bottom: 20px;
+	max-width: 100%;
+	width: 100%;
+}
+
+tr {
+	border-radius: 10px;
+	height: 35px;
+}
+
+th, td {
+	border-bottom: 1px solid #f6f6f6;
+	text-align: center;
+}
+
+th {
+	background-color: #C4FFFF;
+}
+
+.anbody1 {
+	margin: 0 auto;
+	text-align: left !important;
+	width: 1070px;
+}
+
+/* 검색 디자인 */
+.search {
+	border-color: snow;
+	height: 30px;
+	width: 200px;
+}
+
+.searchBtn {
+	background-color: #C4FFFF;
+	border: none;
+	height: 30.5px;
+	margin-left: -4px;
+	width: 50px;
+}
+.dropbox {
+	border-color: ivory;
+	height: 30px;
+	margin: 0px 5px;
+	width: 100px;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -87,6 +134,8 @@ th {
 	<h1 class="pull-left">사용자 관리 &nbsp;<a id="userRegister"><i style="cursor: pointer;" class="fas fa-plus"></i></a></h1>
 	<hr>
 	
+	<div class="anbody1">
+	
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -107,16 +156,20 @@ th {
 	</div>
 	
 	<form action="/admin/user/list" class="pull-left">
-		<select name="category">
+	<div id="search">
+		<select name="category" class="dropbox">
 			<option value="m_name">이름</option>
 			<option value="m_id">아이디</option>
 			<option value="m_nick">닉네임</option>
 		</select>
 		
-		<input type="text" id="search" name="search">
-		<button>검색</button>
+		<input type="text" id="search" name="search" placeholder="검색어를 입력해주세요">
+		<button class="searchBtn">검색</button>
+	</div>
 	</form>
-	<table class="table table-striped table-hover table-condensed">
+	
+	<br><br>
+	<table class="usertable">
 		<thead>
 			<tr>
 				<th style="width: 10%">번호</th>
@@ -161,9 +214,11 @@ th {
 	<span class="pull-left">total : ${paging.totalCount }</span>
 	<div class="clearfix"></div>
 	
-	<%-- 페이징 JSP --%>
-<%-- 	<jsp:include page="/WEB-INF/views/admin/user/paging.jsp" /> --%>
-	<c:import url="/WEB-INF/views/admin/user/paging.jsp"></c:import>    
+	</div>
+	
+<c:if test="${paging.totalPage > 1 }">
+	<c:import url="/WEB-INF/views/admin/user/ppeonfunpaging.jsp" />   
+</c:if>     
 	
 </div><!-- #content -->
 <!-- </div> -->
