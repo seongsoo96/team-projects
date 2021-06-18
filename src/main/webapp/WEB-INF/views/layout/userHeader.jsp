@@ -274,7 +274,7 @@ function searchEnter(){
 <!-- 	</div> -->
 	
 	<!--메인 검색창  -->
-	<div class="searchInput">
+	<div class="searchInput" style="margin-left:25px;">
 		<input type="text" id="keyword" onkeypress="if( event.keyCode == 13 ) searchEnter();"
 			placeholder="어떤 프로젝트를 찾고 계신가요"/>
 		<button id="btnSearch"><i class="fas fa-search"></i></button>
@@ -323,7 +323,7 @@ function searchEnter(){
 			<a href="/user/member/joinSelect">회원가입</a>
 		</c:when>
 		<c:otherwise>
-			<a href="/user/member/logout" style="margin-left:50px; font-size:16px;">로그아웃</a>
+			<a href="/user/member/logout" style="margin-left:30px; font-size:16px;">로그아웃</a>
 			<a href="/user/mypage/home">
 			<c:choose>
 				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) }">
