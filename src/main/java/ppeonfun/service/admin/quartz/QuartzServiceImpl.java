@@ -30,4 +30,9 @@ public class QuartzServiceImpl implements QuartzService {
 		}
 	}
 	
+	@Override
+	public void testLogger() {
+		logger.info("Quartz Test!!");
+		
+	}
 }

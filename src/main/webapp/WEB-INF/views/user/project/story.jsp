@@ -44,8 +44,7 @@ $(document).ready(function() {
 
 			
 			
-	if(${nullmNo} == null || "".equals(${nullmNo})) {
-		
+	if(${empty mNo}) {
 		$(".btn_declare").click(function() {
 				alert("로그인 후 신고할 수 있습니다.");
 				location.href = "/user/member/loginForm";

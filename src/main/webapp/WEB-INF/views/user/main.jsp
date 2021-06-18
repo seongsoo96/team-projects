@@ -5,15 +5,59 @@
 
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 <script type="text/javascript" src="/resources/js/mainPage.js"></script>
-<style type="text/css">
-#realTimeRanking{
 
-
-}
-</style>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	var $div=$("#realTimeRanking").children("ol");
+	
+	console.log($div);
+	$div.empty();
+	
+	$.ajax({
+		type: "get"
+		, url: "/user/rank/realtime"
+		, dataType: "json"
+		, data: {}
+		, success: function(res){
+			console.log("success")
+			console.log(res);
+			console.log(res.list[0].pNo);
+			console.log(res.list.length);
+			
+			console.log("SUCCESS : ", $div);
+			var $div=$("#realTimeRanking").children("ol");
+			$div.empty();
+			
+			for (var i = res.list.length-1; 0 <= i; i--) {
+				var $li=$("<li>", {css:{ 
+					hegiht:"80px"},
+					});
+				var $a=$("<a>");
+				$a.text(res.list[i].iTitle);
+				var $p=$("<p>")
+				$p.text(res.list[i].rate*100+"%")
+				$a.attr("href","story?pNo="+res.list[i].pNo);
+				
+				$li.append($a);
+				$li.append($p);
+				
+				
+				/* $li.animate({
+					"padding-top" : "20px",
+	 				  }, 1500 ); */
+	 			
+				$div.append($li);
+				
+			}
+			$( "#mover" ).slideToggle( "slow");
+			$( "#mover" ).slideToggle( "slow");
+		}
+		, error: function() {
+			console.log("error");
+		}
+	});
+	
 	setInterval(function() {
 		$.ajax({
 			type: "get"
@@ -24,33 +68,47 @@ $(document).ready(function() {
 				console.log("success")
 				console.log(res);
 				console.log(res.list[0].pNo);
-
-				$("#rank1").attr("href","story?pNo="+res.list[0].pNo);
-				$("#rank2").attr("href","story?pNo="+res.list[1].pNo);
-				$("#rank3").attr("href","story?pNo="+res.list[2].pNo);
-				$("#rank4").attr("href","story?pNo="+res.list[3].pNo);
-				$("#rank5").attr("href","story?pNo="+res.list[4].pNo);
-				$('#rank1').text(res.list[0].iTitle);
-				$('#rank2').text(res.list[1].iTitle);
-				$('#rank3').text(res.list[2].iTitle);
-				$('#rank4').text(res.list[3].iTitle);
-				$('#rank5').text(res.list[4].iTitle);
-				$("#rank1").next().text(res.list[0].rate*100+"%")
-				$("#rank2").next().text(res.list[1].rate*100+"%")
-				$("#rank3").next().text(res.list[2].rate*100+"%")
-				$("#rank4").next().text(res.list[3].rate*100+"%")
-				$("#rank5").next().text(res.list[4].rate*100+"%")
+				console.log(res.list.length);
 				
+				console.log("SUCCESS : ", $div);
+				var $div=$("#realTimeRanking").children("ol");
+				$div.empty();
+				
+				for (var i = res.list.length-1; 0 <= i; i--) {
+					var $li=$("<li>", {css:{ 
+						hegiht:"80px"},
+						});
+					var $a=$("<a>");
+					$a.text(res.list[i].iTitle);
+					var $p=$("<p>")
+					$p.text(res.list[i].rate*100+"%")
+					$a.attr("href","story?pNo="+res.list[i].pNo);
+					
+					$li.append($a);
+					$li.append($p);
+					
+					
+					/* $li.animate({
+						"padding-top" : "20px",
+		 				  }, 1500 ); */
+		 			
+					$div.append($li);
+					
+				}
+				$( "#mover" ).slideToggle( "slow");
+				$( "#mover" ).slideToggle( "slow");
 			}
 			, error: function() {
 				console.log("error");
 			}
 		});
-	}, 5000)
-	
+	}, 60000)
 	
 })
 </script>
+
+
+
 <script type="text/javascript">
 function pagingSelect(pagingNumber) {
 	$.ajax({
@@ -140,7 +198,7 @@ function pagingSelect(pagingNumber) {
 </div>
 <div id="realTimeRanking" class="right">
 	<h3>실시간 랭킹</h3>
-	<ol>
+	<ol id="mover">
 		<li><a id="rank1" href="https://www.google.com/">랭킹 1</a><p>4231% 푸드</p></li>
 		<li><a id="rank2" href="https://www.google.com/">랭킹 2</a><p>1231% 가전</p></li>
 		<li><a id="rank3" href="https://www.google.com/">랭킹 3</a><p>331% 전기</p></li>
