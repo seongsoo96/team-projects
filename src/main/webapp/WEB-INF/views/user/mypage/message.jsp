@@ -114,8 +114,8 @@
 			<span><button type="button" id="btnSendMsg"><i class="far fa-paper-plane"></i></button></span>
 		</div>
 		
-		<c:if test="${paging.endPage > 1 }">
-			<c:import url="/WEB-INF/views/layout/paging.jsp"/>
+		<c:if test="${paging.totalPage > 1 }">
+			<c:import url="/WEB-INF/views/layout/ppeonfunpaging.jsp"/>
 		</c:if>
 	</c:if>
 </div>

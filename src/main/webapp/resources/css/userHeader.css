@@ -19,7 +19,8 @@ header{
  	text-align: center;
  	width: 980px;
  	margin: 0 auto;
- 	padding: 15px;
+ 	height: 100px;
+ 	padding: 20px 15px;
  	/* border: 1px solid #ccc; */
  	
 }
@@ -30,8 +31,7 @@ header > div{
 }
 .container{
 	width: 980px;
-	margin-top:150px;
-	
+	margin-top:50px;
 }
 
 .hdropdown{
@@ -55,7 +55,7 @@ header > div{
 	/* 테두리를 이용한 메뉴 항목 구분선 만들기 */
 	/* border-right: 1px solid #FFFFFF; */
 	/* 서브메뉴(absolute)의 위치 기준점 설정 */
-	margin-left: 20px;
+	margin-left: 10px;
 	position: relative;
 	text-align: left;
 }
@@ -109,7 +109,7 @@ header > div{
 	height: 0;
 	font-size: 0;
 	line-height:0;
-	
+	display:inline-block;
 }
 .hdropdown > li > ul > li > a{
 	/* 배경색 지정 */
@@ -131,8 +131,6 @@ header > div{
 	color: #4EE2EC;
 	/* 배경색 변경 */
 	background: #FFFFFF;
-
-
 }
 
 /* 검색창, 최근검색어 css */
@@ -224,7 +222,7 @@ header > div{
 }
 
 .searchInput_module {
-	width: 295px;
+	  width: 295px;
     height: 414px;
     box-sizing: border-box;
     box-shadow: 0 32px 40px -2px rgb(10 22 70 / 12%), 0 0 5px 0 rgb(10 22 70 / 6%);
@@ -303,12 +301,39 @@ header > div{
 	margin-top: 2px;
 }
 
+.divHeaderLoginMenu a{
+	background: #FFFFFF;
+	text-decoration:none;
+	color:#1E2227;
+	font-size:20px;
+	margin-right:10px;
+}
 
+.divHeaderLoginMenu a:hover{
+	color:#4EE2EC;
+}
+
+.divHeaderLoginMenu a img {
+	width:50px;
+	height:50px;
+	border:1px solid black;
+	border-radius:50%;
+}
+
+#btnSearch {
+	background:none;
+	border:none;
+	padding: 0;
+	margin-right:20px;
+}
 
 
 input[id="keyword"]{
-	width: 400px;
-	margin: 10px;
+	width:339px;
+	margin:10px;
+	border:1px solid #ccc;
+	border-radius:3px;
+	height:24px;
 }
 #wrapper-section{
   width:980px;
@@ -364,7 +389,7 @@ input[id="keyword"]{
   height: 100%;
   position:relative;
   overflow:hidden;
-  margin: 140px auto;
+  margin: 50px auto;
 }
 
 #slider-wrap ul#slider{

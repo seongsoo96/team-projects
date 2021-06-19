@@ -8,18 +8,38 @@
 
 <link rel="stylesheet" href="/resources/css/adminNotice.css">
 
+<style type="text/css">
+hr{
+	margin-top:80px;
+}
+.fa-plus{
+	color:#4EE2EC;
+}
+#projectWrite{
+	cursor: pointer;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#projectWrite").click(function(){
+		$(location).attr('href', '/admin/board/write')
+	})
+})
+</script>
+
 <%-- 현재시간을 변환(yyyyMMdd)하여 변수에 저장 --%>
 <fmt:formatDate value="<%=new Date() %>" pattern="yyMMdd" var="nowStr" />
 
 <div id="content">
-	<h1>게시판 관리</h1>
+	<h1 class="pull-left">게시판 관리 &nbsp;<a id="projectWrite"><i class="fas fa-plus"></i></a></h1>
 <hr>
 
 <div class="anbody1">
 
-<div class="write">
-	<button id="BtnWrite" class="BtnWrite" onclick="location.href='/admin/board/write'">글쓰기</button>
-</div><br> <%-- write end --%>
+<!-- <div class="write"> -->
+<!-- 	<button id="BtnWrite" class="BtnWrite" onclick="location.href='/admin/board/write'">글쓰기</button> -->
+<%-- </div><br> write end --%>
 
 <table class="antable">
 <tr>
