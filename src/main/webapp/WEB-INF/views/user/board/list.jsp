@@ -115,8 +115,7 @@ td:nth-child(2) {
 </div>
 
 <%-- 페이징 JSP --%> 
-<jsp:include page="/WEB-INF/views/layout/ppeonfunpaging.jsp" />
-
+<c:import url="/WEB-INF/views/layout/ppeonfunpaging.jsp"/>
 <div id="searchForm">
    <form>
    <div id="searchcategory">

@@ -206,7 +206,7 @@ function searchEnter(){
 	
 	<!-- 로그인 -->
 	<div class="divHeaderLoginMenu"
-		<c:if test="${empty mNo }">style="margin:5px 0 0 30px;"</c:if>
+		<c:if test="${empty mNo }">style="margin:5px 0 0 80px;"</c:if>
 	>
 	<c:choose>
 		<c:when test="${!empty accessToken }">

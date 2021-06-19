@@ -109,7 +109,7 @@ header > div{
 	height: 0;
 	font-size: 0;
 	line-height:0;
-	display:inline-block;
+	
 }
 .hdropdown > li > ul > li > a{
 	/* 배경색 지정 */
@@ -141,16 +141,11 @@ header > div{
 .searchInput {
 	position: relative;
 	display: inline-block;
-/*     padding-top: 8px; */
-/*     padding-right: 16px; */
     min-width: 295px;
-    display: block;
-    position: relative;
     background: #f0f2f5;
     border-radius: 20px;
     height: 40px;
-    position: absolute;
-    left: 50%;
+    left: 5%;
 }
 
 .searchInput #btnSearch {
