@@ -3,6 +3,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:import url="/WEB-INF/views/layout/adminHeader.jsp"></c:import>
+
+<style type="text/css">
+.selectsort {
+	border-color: snow;
+	height: 30px;
+	width: 200px;
+}
+
+.dropbox {
+	border-color: #2ed5d5;
+	height: 30px;
+	margin: 0px 5px;
+/* 	width: 100px; */
+}
+</style>
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 google.charts.load('current', {'packages':['corechart']});
@@ -85,7 +101,8 @@ function drawChartDonut() {
 </script>
 <div id="content">
 	
-	<select class="pull-right"  onchange="if(this.value) location.href=(this.value);">
+	<div id="selectsort">
+	<select class="pull-right dropbox"  onchange="if(this.value) location.href=(this.value);">
 		<option value="" disabled="disabled">선택</option>
 		
 		<option value="/admin/main?category=payment" <c:if test="${category eq 'payment'}">selected="selected"</c:if>>결제</option>
@@ -93,6 +110,7 @@ function drawChartDonut() {
 		<option value="/admin/main?category=favorite" <c:if test="${category eq 'favorite'}">selected="selected"</c:if>>좋아요</option>
 		<option value="/admin/main?category=alarm" <c:if test="${category eq 'alarm'}">selected="selected"</c:if>>알림</option>
 	</select>
+	</div>
 	<div class="container">
 		<div id="chartTarget">
 			<div id="bar_chart">BarChart</div>
@@ -116,5 +134,11 @@ function drawChartDonut() {
 		</c:choose>
 	</div>
 </div>
-<c:import url="/WEB-INF/views/layout/paging.jsp"></c:import>
+
+<%-- <c:import url="/WEB-INF/views/layout/paging.jsp"></c:import> --%>
+
+<c:if test="${paging.totalPage > 1 }">
+	<c:import url="/WEB-INF/views/admin/user/ppeonfunpaging.jsp" />   
+</c:if>
+
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>

@@ -20,7 +20,7 @@ public interface MypageDao {
 	/**
 	 * 회원번호로 mypage 테이블을 조회한다.
 	 * @param mNo	회원번호
-	 * @return		프로필 정보가 담긴 DTO
+	 * @return		저장된 프로필 사진명
 	 */
 	public MyPage selectMypageBymNo(int mNo);
 

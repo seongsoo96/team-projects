@@ -44,7 +44,9 @@ table th, td {text-align:center;}
 			</tr>
 			</c:forEach>
 		</table>
-		<c:import url="/WEB-INF/views/layout/paging.jsp"/>
+		<c:if test="${paging.totalPage > 1 }">
+			<c:import url="/WEB-INF/views/layout/ppeonfunpaging.jsp"/>
+		</c:if>
 	</c:if>
 </div><!-- div.container -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

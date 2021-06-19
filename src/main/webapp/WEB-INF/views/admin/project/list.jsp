@@ -75,6 +75,32 @@ hr{
 	cursor: pointer;
 }
 
+/* 테이블 디자인 */
+.protable {
+	margin-bottom: 20px;
+	max-width: 100%;
+	width: 100%;
+}
+
+tr {
+	border-radius: 10px;
+	height: 35px;
+}
+
+th, td {
+	border-bottom: 1px solid #f6f6f6;
+	text-align: center;
+}
+
+th {
+	background-color: #C4FFFF;
+}
+
+.anbody1 {
+	margin: 0 auto;
+	text-align: left !important;
+	width: 1070px;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -93,7 +119,9 @@ $(document).ready(function(){
 <h1 class="pull-left">프로젝트 관리 &nbsp;<a id="projectWrite"><i class="fas fa-plus"></i></a></h1>
 <hr>
 
-<table class="table table-striped table-hover table-condensed">
+<div class="anbody1">
+
+<table class="protable">
 <thead>
 	<tr>
 		<th style="width: 20%; text-align:center;">프로젝트 이름</th>
@@ -178,6 +206,12 @@ $(document).ready(function(){
 
 <span class="pull-left">total : ${paging.totalCount }</span><br>
 
+</div>
+
+<c:if test="${paging.totalPage > 1 }">
+	<c:import url="/WEB-INF/views/admin/user/ppeonfunpaging.jsp" />   
+</c:if> 
+
 <form action="/admin/project/list" method="post">
 <div id="search">
 	<select class="dropbox" name="category">
@@ -188,7 +222,6 @@ $(document).ready(function(){
 </div>
 </form>
 
-<c:import url="/WEB-INF/views/admin/project/paging.jsp"></c:import>    
 </div>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>

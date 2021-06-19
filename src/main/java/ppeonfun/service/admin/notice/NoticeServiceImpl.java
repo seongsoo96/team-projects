@@ -181,6 +181,7 @@ public class NoticeServiceImpl implements NoticeService {
 	public void updateBoardAndFiles(Board board, List<MultipartFile> flist) {
 		//글 수정 메소드 호출
 		noticeDao.updateBoard(board);
+		noticeDao.deleteBoardFiles(board);
 		
 		String storedPath = context.getRealPath("resources/upload");
 		
@@ -195,7 +196,6 @@ public class NoticeServiceImpl implements NoticeService {
 				return;
 			}
 
-			noticeDao.deleteBoardFiles(board);
 				
 			String filename = file.getOriginalFilename();
 				
@@ -222,7 +222,7 @@ public class NoticeServiceImpl implements NoticeService {
 			
 			
 			noticeDao.insertBoardFiles( bf );
-		
+			
 		} // for문 end
 		
 	} // updateBoardAndFiles end

@@ -186,7 +186,7 @@ $(document).ready(function(){
 				</tr>
 				<tr>
 					<th>생년월일</th>
-					<td><input class="form-control" type="text" name="mBirth" placeholder="입력방식 YY/MM/DD"></td>
+					<td><input class="form-control" type="date" name="birth"></td>
 				</tr>
 				<tr>
 					<th>임시 닉네임</th>
@@ -204,7 +204,7 @@ $(document).ready(function(){
 					<th>성별</th>
 					<td>
 						<label class="radio-inline">
-							<input type="radio" name="mGender" value="M">남
+							<input type="radio" name="mGender" value="M" checked>남
 						</label>
 						<label class="radio-inline">
 							<input type="radio" name="mGender" value="F">여
@@ -218,7 +218,7 @@ $(document).ready(function(){
 							<input type="radio" name="mGrade" value="M">관리자
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="mGrade" value="U">사용자
+							<input type="radio" name="mGrade" value="U" checked>사용자
 						</label>
 					</td>
 				</tr>
@@ -252,7 +252,7 @@ $(document).ready(function(){
 						<a href="#" onClick="history.back()"><button type="button" class="btn">돌아가기</button></a>
 					</th>
 					<td>
-						<button class="btn pull-right">등록</button>
+						<button class="btn pull-right">등록</button>  
 					</td>
 				</tr>
 			</table>
