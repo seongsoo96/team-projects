@@ -113,7 +113,7 @@ public class StoryController {
 	
 	//신고하기
 	@RequestMapping(value = "/project/report", method = RequestMethod.POST)
-	public String report(Report report, Project project, HttpSession session) {
+	public String report(Report report, Project project, HttpSession session, String open) {
 		
 		int pno = report.getpNo();
 		
@@ -128,7 +128,11 @@ public class StoryController {
 		storyService.report(report);
 		
 		logger.info("신고하기 내역 확인용 {}", report);
-	
+		
+		if(open !=null && !"".equals(open)) {
+			return "redirect:/user/open/view?pNo="+pno;
+		}
+		
 		return "redirect:/story?pNo=" + pno;
 	}
 	

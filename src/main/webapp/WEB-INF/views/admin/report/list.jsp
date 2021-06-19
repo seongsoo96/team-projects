@@ -117,7 +117,7 @@ $(document).ready(function(){
 </div>
 
 <c:if test="${paging.totalPage > 1 }">
-	<c:import url="/WEB-INF/views/admin/user/ppeonfunpaging.jsp" />   
+	<c:import url="/WEB-INF/views/admin/project/paging.jsp" />   
 </c:if> 
 
 <form action="/admin/report/list" method="get">

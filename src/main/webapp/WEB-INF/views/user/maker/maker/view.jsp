@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"></c:import>
 <script type="text/javascript">
 var sel_file;
@@ -55,7 +56,16 @@ function handleImgFileSelect(e){
 			<div class="background-white form-group alert" role="alert">
 			    <label for="file">메이커 대표이미지</label>
 			    <p class="help-block">텍스트 로고 삽입 금지</p>
-			    <img id="img" src="/upload/maker/${maker.maStoredName }" class="imgclick" width="900px" height="400px">
+			    <c:choose>
+			    	<c:when test = "${fn:length(maker.maStoredName)<20}">
+			    		<img id="img" class="imgclick" src="/resources/img/${maker.maStoredName} " width="900px" height="400px">
+			    	</c:when>
+			    	<c:otherwise>
+			    		 <img id="img" src="/upload/maker/${maker.maStoredName }" class="imgclick" width="900px" height="400px">
+			    	</c:otherwise>
+			    </c:choose>
+			    
+			    
 			</div>
 			<div class="background-white form-group alert" role="alert">
 				<label for="maEmail">문의 이메일</label>

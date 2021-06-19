@@ -147,8 +147,8 @@ $(document).ready(function(){
 	  <div class="col-sm-6 col-md-4">
 	    <div class="thumbnail">
 	      <c:choose>
-	      	<c:when test = "${fn:contains(info.iStoredName, 'test') or empty info.iStoredName or fn:contains(info.iStoredName, 'search')}">
-	      		<img src="/resources/img/subLogo.png" style="width:200px; height:150px;">
+	      	<c:when test = "${fn:length(info.iStoredName)<20}">
+	      		<img src="/resources/img/${info.iStoredName }" style="width:200px; height:150px;">
 	      	</c:when>
 	      	<c:otherwise>
 	      		<img src="/upload/information/${info.iStoredName }" style=" width:200px; height:150px;">

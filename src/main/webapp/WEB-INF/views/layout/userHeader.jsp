@@ -210,7 +210,7 @@ function searchEnter(){
 	>
 	<c:choose>
 		<c:when test="${!empty accessToken }">
-			<a href="/user/member/kakao/logout">카카오 로그아웃</a>
+			<a href="/user/member/kakao/logout" style="margin-left:57px;">로그아웃</a>
 			<a href="/user/mypage/home">마이페이지</a>
 		</c:when>
 		<c:when test="${empty mNo }">

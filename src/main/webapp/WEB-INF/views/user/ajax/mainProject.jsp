@@ -6,8 +6,8 @@
 <c:forEach items="${list }" var="info">
 		<div>
 			<c:choose>
-				<c:when test = "${fn:contains(info.iStoredName, 'test') or fn:contains(info.iStoredName, 'search')}">
-					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/subLogo.png" width="200" height="150"/></a>
+				<c:when test = "${fn:length(info.iStoredName) < 20}">
+					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" width="200" height="150"/></a>
 				</c:when>
 				<c:otherwise>
 					<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }" width="200" height="150"/></a>

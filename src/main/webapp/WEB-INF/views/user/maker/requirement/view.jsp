@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"></c:import>
 <style type="text/css">
 .alert{
@@ -30,7 +31,16 @@
 			<div class="background-white form-group alert" role="alert">
 			    <label for="file">리워드 종류 및 제작 형태</label>
 			    <p class="help-block">리워드 종류 및 제작 형태를 선택한 후, 그에 따른 필수 서류를 업로드하세요. 제공할 모든 리워드의 종류를 반드시 추가하세요.</p>
-			    <img id="img" class="imgclick" src="/upload/${requirementFile.rfStoredName }" width="900px" height="400px">
+			    <c:choose>
+			    	<c:when test = "${fn:length(requirementFile.rfStoredName)<20}">
+			    		<img id="img" class="imgclick" src="/resources/img/${requirementFile.rfStoredName} " width="900px" height="400px">
+			    	</c:when>
+			    	<c:otherwise>
+			    		 <img id="img" class="imgclick" src="/upload/${requirementFile.rfStoredName }" width="900px" height="400px">
+			    	</c:otherwise>
+			    </c:choose>
+			    
+			    
 			</div>
 			<div class="background-white form-group">
                     <div class="col-lg-offset-2 col-lg-10">

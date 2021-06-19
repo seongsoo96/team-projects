@@ -53,7 +53,7 @@
 						
 						<a href="/story?pNo=${flist.P_NO }">
 						<c:choose>
-							<c:when test="${fn:contains(flist.I_STORED_NAME, 'test') }">
+							<c:when test = "${fn:length(flist.I_STORED_NAME)<20}">
 								<img class="profile-img" src="/resources/img/${flist.I_STORED_NAME }">
 							</c:when>
 							<c:otherwise>

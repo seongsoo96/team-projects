@@ -142,8 +142,8 @@ function pagingSelect(pagingNumber) {
                     <span>${info.iCategory }</span>
                 </div>  
 				<c:choose>
-				<c:when test = "${fn:contains(info.iStoredName, 'test') or fn:contains(info.iStoredName, 'search')}">
-					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/logo.png" style="width: 400px; height: 400px; margin: 0 auto;"></a>
+				<c:when test = "${fn:length(info.iStoredName) < 20}">
+					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" style="width: 460px; height: 350px; margin: 0 auto;"></a>
 				</c:when>
 				<c:otherwise>
 					<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }"/></a>
@@ -172,8 +172,8 @@ function pagingSelect(pagingNumber) {
 	<c:forEach items="${list }" var="info">
 		<div>
 			<c:choose>
-				<c:when test = "${fn:contains(info.iStoredName, 'test') or fn:contains(info.iStoredName, 'search')}">
-					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/subLogo.png" style="width:200px; height:150px;"/></a>
+				<c:when test = "${fn:length(info.iStoredName) < 20}">
+					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" style="width:200px; height:150px;"/></a>
 				</c:when>
 				<c:otherwise>
 					<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }" style="width:200px; height:150px;"/></a>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"></c:import>
 <style type="text/css">
 .alert{
@@ -33,7 +34,15 @@
 			<div class="background-white form-group alert" role="alert">
 			    <label for="file">대표이미지</label>
 			    <p class="help-block">텍스트 로고 삽입 금지</p>
-			    <img id="img" class="imgclick" src="/upload/information/${information.iStoredName} " width="900px" height="400px">
+			    <c:choose>
+			    	<c:when test = "${fn:length(information.iStoredName)<20}">
+			    		<img id="img" class="imgclick" src="/resources/img/${information.iStoredName} " width="900px" height="400px">
+			    	</c:when>
+			    	<c:otherwise>
+			    		 <img id="img" class="imgclick" src="/upload/information/${information.iStoredName} " width="900px" height="400px">
+			    	</c:otherwise>
+			    </c:choose>
+			   
 			</div>
 			<div class="background-white form-group alert" role="alert">
 				<label for="iCategory">카테고리</label>

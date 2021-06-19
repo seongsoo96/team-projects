@@ -59,13 +59,7 @@ $(document).ready(function(){
 	<div style="width:200px;">
 	<a href = "/admin/main"><img src="/resources/img/logo.png" style="border-radius: 50%;" width="50" height="50" alt="PpeonFun"  title="PpeonFun"> </a>
 	</div>
-	<!--메인 검색창  -->
-	<div>
-	<form action="/search" method="get" id ="form" >
-		<input type="text" id="keyword" name="keyword" placeholder="어떤 프로젝트를 찾고 계신가요"/>
-		<button><i class="fas fa-search"></i></button>
-	</form>
-	</div>
+	
 	
 	<!-- 로그인 -->
 	<c:choose>
