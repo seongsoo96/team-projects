@@ -252,7 +252,7 @@ $(document).ready(function(){
 						<a href="#" onClick="history.back()"><button type="button" class="btn">돌아가기</button></a>
 					</th>
 					<td>
-						<button class="btn pull-right">등록</button>
+						<button class="btn pull-right">등록</button>  
 					</td>
 				</tr>
 			</table>

@@ -134,8 +134,72 @@ header > div{
 }
 
 /* 검색창, 최근검색어 css */
+/* .searchInput { */
+/* 	position: relative; */
+/* } */
+
 .searchInput {
 	position: relative;
+	display: inline-block;
+/*     padding-top: 8px; */
+/*     padding-right: 16px; */
+    min-width: 295px;
+    display: block;
+    position: relative;
+    background: #f0f2f5;
+    border-radius: 20px;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+}
+
+.searchInput #btnSearch {
+	position: absolute;
+    top: 10px;
+    left: 22px;
+    font-size: 24px;
+/*     pointer-events: none; */
+    margin: 0;
+    border: 0;
+    padding: 0;
+    vertical-align: baseline;
+    font: inherit;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    vertical-align: baseline;
+    font: inherit;
+    box-sizing: border-box;
+/*     border: 1px solid #000; */
+}
+
+.searchInput i::before {
+    display: inline-block;
+    margin-top: -.2em;
+    vertical-align: middle;
+    text-transform: none;
+    line-height: 1;
+    font-family: wadizicon!important;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+}
+
+.searchInput .sinput {
+    appearance: none;
+    outline: none;
+    background: none;
+    margin: 0 0 0 50px;
+    padding-right: 9px;
+    padding-left: 10px;
+    width: 83%;
+    line-height: 24px;
+    font-size: 15px;
+    height: 40px;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    border: 0;
 }
 
 .searchInput_suggest{
@@ -151,16 +215,15 @@ header > div{
 	display: block;
     position: absolute;
     top: 100%;
-    left: 11px;
+    left: 0;
     background-color: #fff;
-/*     width: 100%; */
     width: max-content;
     z-index:100;
 }
 
 .searchInput_module {
-	width: 335px;
-    height: 470px;
+	  width: 295px;
+    height: 414px;
     box-sizing: border-box;
     box-shadow: 0 32px 40px -2px rgb(10 22 70 / 12%), 0 0 5px 0 rgb(10 22 70 / 6%);
     background-color: #fff;
@@ -179,7 +242,7 @@ header > div{
 
 .searchInput_module_content {
 	display: flex;
-    height: calc(100% - 84px);
+    height: calc(100% - 22px);
     padding: 12px 0;
     overflow: visible;
 }
