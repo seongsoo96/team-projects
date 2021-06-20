@@ -123,8 +123,12 @@ function deleteReward(reNo) {
 	padding: 10px 10px;
 
 }
+
+h1 {
+	margin-left: 360px;
+}
 </style>
-<div id="content">
+<div id="content" style="margin-bottom: 400px;">
 	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
 	<div class="container">
 		<h1>리워드 설계</h1>
@@ -189,7 +193,8 @@ function deleteReward(reNo) {
 						</div>
 						<div class="modal-footer">
 							<button class="btn" type="button" id="cancel" data-dismiss="modal">취소</button>
-							<button class="btn" type="button" id="inputAjax" data-dismiss="modal">등록</button>
+							<button class="btn" type="button" id="inputAjax" data-dismiss="modal"
+								 style="background-color:  #4EE2EC; color: white;">등록</button>
 						</div>
 					</div>
 				</div>
@@ -200,7 +205,8 @@ function deleteReward(reNo) {
 			<input type="hidden" id="pNo" name="pNo" value="${project.pNo }" />
 			<div class="background-white form-group alert" role="alert">
 				<label for="rContext">서포터에게 제공할 리워드 내용을 입력하세요. 서포터가 쉽게 펀딩할 수 있는 저렴한 리워드부터 서포터의 보다 빠른 펀딩을 유도할 수 있는 얼리버드 리워드까지 다양한 리워드를 구성하세요.</label>
-				<button type="button" id="modal" class="btn btn-default">추가하기</button>
+				<button type="button" id="modal" class="btn" 
+					style="background-color: white; border-color: #4EE2EC;">추가하기</button>
 			</div>
 			<div id="rewardList" class="form-group alert" role="alert">
 			<c:forEach items="${rewardList }" var="reward">
@@ -212,14 +218,14 @@ function deleteReward(reNo) {
 					<p style="text-align:left;">옵션: ${reward.reOption }</p>
 					<textarea style="text-align:left; font-weight: lighter; width:230px; height:60px;" readonly>${reward.reOptionContext }</textarea>
 					<p style="text-align:left;">배송비:${reward.reDeliveryMoney }원</p>
-					<button type="button" name="delete" style="float: right;" class="btn btn-danger" onclick="deleteReward(${reward.reNo})">삭제</button>
+					<button type="button" name="delete" style="float: right;" class="btn" onclick="deleteReward(${reward.reNo})">삭제</button>
 				</div>
 			</c:forEach>
 			</div>
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 180px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                    	<button class="btn btn-primary">저장하기</button>
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                    	<button class="btn" style="background-color:  #4EE2EC; color: white;">저장하기</button>
+                        <button type="button" class="btn" onclick="history.back()">돌아가기</button>
                     </div>
             </div>
 		</form>
