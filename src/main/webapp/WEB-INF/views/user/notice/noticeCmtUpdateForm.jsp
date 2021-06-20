@@ -28,7 +28,7 @@
 			</div>
 		</c:if>
 		<c:if test="${c.C_NO eq cmt.C_NO }">
-			<div id="comment${c.C_NO }" class="comment" style="border-bottom:none;">
+			<div id="comment${c.C_NO }" class="comment">
 				<div class="form-group">
 					<label class="comment_nick">${c.M_NICK }</label>
 					<textarea class="form-control" id="comment_updateContent" style="resize:none;">${c.C_CONTENT }</textarea>
@@ -38,7 +38,6 @@
 			    	</div>
 			    </div>
 			</div>
-			<hr style="margin:0;">
 		</c:if>
 	</c:if>
 	<c:if test="${c.C_DELETE_STATE eq 'N'}">
