@@ -48,7 +48,7 @@ public class PaybackController {
 		
 		paybackService.paybackProc(token,suGroup,mNo);
 		paybackService.removeSupporter(suGroup);
-		
+		model.addAttribute("project",project);
 	}
 	
 }

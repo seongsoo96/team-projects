@@ -16,7 +16,7 @@
 	font-size: 16px;
 	text-align:center;
 	line-height:200px;
-	margin: 0 8%;
+	margin: 0 16%;
 }
 .active{
 	background:#00d3d3;
@@ -56,7 +56,6 @@ input[name="suGroup"] {
 
 <div class="container">
 <div class="circle active">리워드 환불선택</div>
-<div class="circle">환불</div>
 <div class="circle">환불 완료</div>
 
 <h3>환불할 리워드 선택</h3>
