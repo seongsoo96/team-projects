@@ -4,11 +4,6 @@
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 
 <style type="text/css">
-/* 상단 메뉴 - 홈 아이콘 */
-.fa-house-user {font-size:30px; position:relative; left:650px; color:black;}
-.fa-house-user:hover {color:#4EE2EC;}
-
-
 /* 기본 정보 수정, 비민번호 변경 버튼*/
 .text-center div {font-size:18px; margin:50px 0;}
 .text-center div button {background:none; border:1px solid rgba(0,0,0, 0.2); border-radius:5px; width:180px; height:40px;}
@@ -67,7 +62,6 @@
 
 
 	<h2 style="display:inline-block">회원정보수정</h2>
-	<span><a href="/user/mypage/home"><i class="fas fa-house-user"></i></a></span>
 	<hr>
 	
 	<div class="text-center" style="height:250px;">
