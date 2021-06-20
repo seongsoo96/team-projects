@@ -65,7 +65,7 @@ hr{
 
 <span class="pull-left">total : ${paging.totalCount }</span><br>
 <c:import url="/WEB-INF/views/user/maker/open/openPaging.jsp"></c:import>
-<c:import url="/WEB-INF/views/user/maker/open/paging.jsp"></c:import>    
+<c:import url="/WEB-INF/views/admin/project/paging.jsp"></c:import>    
 </div>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>

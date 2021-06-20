@@ -35,6 +35,8 @@ $(document).ready(function() {
 
 #pagination-wrap2 ul {
   width:100%;
+  float: left;
+/*   margin-left: 20px; */
 }
 
 #pagination-wrap2 ul li{

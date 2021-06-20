@@ -15,9 +15,12 @@
 	font-size: 20px;
 	text-align: left;
 }
+h1 {
+	margin-left: 360px;
+}
 </style>
 <div id="content">
-	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
+	<c:import url="/WEB-INF/views/layout/userProjectSlide2.jsp"></c:import>
 	<div class="container">
 		<h1>기본요건</h1>
 		<form role="role">
@@ -53,9 +56,10 @@
 				<label for="endDate">프로젝트 종료일</label>
 				<input type="date" id="endDate" name="endDate" class="form-control" value="<fmt:formatDate value="${information.iEndDate }" pattern="yyyy-MM-dd" />" readonly/>
 			</div>
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 180px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="button" class="btn" onclick="history.back()"
+                         style="background-color:  #4EE2EC; color: white;">돌아가기</button>
                     </div>
             </div>
 		</form>

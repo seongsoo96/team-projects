@@ -13,11 +13,12 @@
 	font-size: 20px;
 	text-align: left;
 }
-
-
+h1 {
+	margin-left: 360px;
+}
 </style>
 <div id="content">
-	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
+	<c:import url="/WEB-INF/views/layout/userProjectSlide2.jsp"></c:import>
 	<div class="container">
 		<h1>기본요건</h1>
 		<form action="#" role="role">
@@ -33,8 +34,8 @@
 			    <label for="file">3.리워드 종류 및 제작 형태</label> 
 			    <img id="img" class="imgclick" src="/upload/${requirementFile.rfStoredName }" width="900px" height="400px">
 			</div>
-			
 		</form>
+		
 	<c:import url="/WEB-INF/views/user/maker/open/openPaging.jsp"></c:import>
 	</div>
 	

@@ -74,7 +74,7 @@ $(document).ready(function(){
 		<span><a href="/user/maker/project/open">오픈 예정 프로젝트</a></span>
 		
 		<form action="/user/maker/project/list" method="get" style="display:inline-block;">
-  		<div id="search" style="margin-left: 140px;">
+  		<div id="search" style="margin-left: 400px;">
 		<select class="dropbox" name="category">
 			<option value="${category }" selected>제목</option>
 		</select>
