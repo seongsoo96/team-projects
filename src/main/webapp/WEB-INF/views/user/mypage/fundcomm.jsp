@@ -23,7 +23,6 @@ td[colspan='3'] div {width:35%; border-radius:5px; position:relative; margin-bot
 	<div class="divFundMenu">
 		<span><a href="/user/mypage/fundcomm">펀딩 커뮤니티</a></span>
 		<span><a href="/user/mypage/board">게시판</a></span>
-		<span><a href="/user/mypage/home"><i class="fas fa-house-user"></i></a></span>
 	</div>
 	<hr>
 	

@@ -58,7 +58,6 @@
 
 	<div class="divFundMenu">
 		<h2 style="display:inline-block">메시지</h2>
-		<span><a href="/user/mypage/home"><i class="fas fa-house-user" style="left:505%"></i></a></span>
 	</div>
 	<hr>
 	

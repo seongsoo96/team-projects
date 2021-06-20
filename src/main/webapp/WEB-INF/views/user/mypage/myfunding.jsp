@@ -10,7 +10,6 @@
 	<div class="divFundMenu">
 		<span><a href="/user/mypage/myfunding">나의 펀딩</a></span>
 		<span><a href="/user/mypage/fundingchart">펀딩 내역</a></span>
-		<span><a href="/user/mypage/home"><i class="fas fa-house-user"></i></a></span>
 	</div>
 	<hr>
 	
