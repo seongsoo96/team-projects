@@ -174,7 +174,7 @@ label {
             </div>
 		</form>
 	</div>
-</div>
+</div><br><br>
 <script type="text/javascript">
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({

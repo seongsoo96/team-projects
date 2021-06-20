@@ -150,10 +150,12 @@ function handleImgFileSelect(e){
 	font-size: 20px;
 	text-align: left;
 }
-
+h1 {
+	margin-left: 360px;
+}
 </style>
 <div id="content">
-	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
+	<c:import url="/WEB-INF/views/layout/userProjectSlide2.jsp"></c:import>
 	<div class="container">
 		<h1>스토리작성</h1>
 
@@ -194,9 +196,10 @@ function handleImgFileSelect(e){
 				<textarea id="sStory" name="sStory" class="form-control" rows="3" disabled>${story.sStory }</textarea>
 			</div>
 			
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 180px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="button" class="btn" onclick="history.back()"
+                         style="background-color:  #4EE2EC; color: white;">돌아가기</button>
                     </div>
             </div>
 		</form>

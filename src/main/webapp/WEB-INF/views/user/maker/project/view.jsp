@@ -121,7 +121,7 @@ $(document).ready(function(){
 
 
 <div class="container">
-	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
+	<c:import url="/WEB-INF/views/layout/userProjectSlide2.jsp"></c:import>
 	<input type="hidden" name="pNo" value="${project.pNo}">
 	<div class="modal fade" id="defaultModal">
                 <div class="modal-dialog">

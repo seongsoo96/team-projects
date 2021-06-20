@@ -120,9 +120,12 @@ function deleteReward(reNo) {
 	padding: 10px 10px;
 
 }
+h1 {
+	margin-left: 360px;
+}
 </style>
 <div id="content">
-	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
+	<c:import url="/WEB-INF/views/layout/userProjectSlide2.jsp"></c:import>
 	<div class="container">
 		<h1>리워드 목록</h1>
 		

@@ -59,7 +59,7 @@ function handleImgFileSelect(e){
 
 </style>
 <div id="content">
-	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
+	<c:import url="/WEB-INF/views/layout/userProjectSlide2.jsp"></c:import>
 	<div class="container">
 		<h1>새소식</h1>
 		
