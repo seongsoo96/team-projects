@@ -52,6 +52,20 @@
 	margin: 0px 5px;
 	width: 100px;
 }
+.goal_bar {
+    height: 3px;
+    width: 100%;
+    margin-bottom: 4px;
+    background-color: #e6eaed;
+    overflow: hidden;
+}
+
+.goal_bar span {
+    height: 3px;
+    background-color: #00b2b2;
+    display: block;
+}
+
 </style>
 <div class="container">
 
@@ -119,15 +133,16 @@
 	    <div class="thumbnail">
 	      <c:choose>
 	      	<c:when test = "${fn:length(information.iStoredName)<20}">
-	      		<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" style="width:100%; height:60%;"></a>
+	      		<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" style="width:100%; height:250px;"></a>
 	      	</c:when>
 	      	<c:otherwise>
-	      		<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }" style="width:100%; height:60%;"></a>
+	      		<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }" style="width:100%; height:250px;"></a>
 	      	</c:otherwise>
 	      </c:choose>
 	      <div class="caption">
 	        <h3>${info.iTitle }</h3>
 	        <p>${info.iCategory }</p>
+	        <div class="goal_bar"><span style="width:11% "></span></div>
 	        <p><a href="/story?pNo=${info.pNo }" class="btn" style="background: #4EE2EC; color: #FFFFFF" role="button">펀딩하기</a> 
 	      </div>
 	    </div>

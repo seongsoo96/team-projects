@@ -145,10 +145,10 @@ $(document).ready(function(){
 	    <div class="thumbnail">
 	      <c:choose>
 	      	<c:when test = "${fn:length(info.iStoredName)<20}">
-	      		<img src="/resources/img/${info.iStoredName }" style="width:100%; height:60%;">
+	      		<img src="/resources/img/${info.iStoredName }" style="width:100%; height:250px;">
 	      	</c:when>
 	      	<c:otherwise>
-	      		<img src="/upload/information/${info.iStoredName }" style="width:100%; height:60%;">
+	      		<img src="/upload/information/${info.iStoredName }" style="width:100%; height:250px;">
 	      	</c:otherwise>
 	      </c:choose>
 	      <div class="caption">

@@ -55,10 +55,10 @@
 						<a href="/story?pNo=${tlist.P_NO }">
 						<c:choose>
 							<c:when test = "${fn:length(tlist.I_STORED_NAME)<20}">
-								<img style="width:100%; height:60%;" src="/resources/img/${tlist.I_STORED_NAME }">
+								<img style="width:100%; height:250px;" src="/resources/img/${tlist.I_STORED_NAME }">
 							</c:when>
 							<c:otherwise>
-								<img style="width:100%; height:60%;" src="/upload/imformation/${tlist.I_STORED_NAME }">
+								<img style="width:100%; height:250px;" src="/upload/imformation/${tlist.I_STORED_NAME }">
 							</c:otherwise>
 						</c:choose>
 						</a>

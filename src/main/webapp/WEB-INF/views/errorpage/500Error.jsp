@@ -21,7 +21,6 @@
 <hr>
 <img src="/resources/img/500.PNG" width="800" height="500"/><br>
 
-<span id="time">5초후 메인화면으로 이동합니다...</span>
 
 </div><!-- .container --><br><br>
 

@@ -16,7 +16,7 @@
 	font-size: 16px;
 	text-align:center;
 	line-height:200px;
-	margin: 0 50px;
+	margin: 0 8%;
 }
 .active{
 	background:#00d3d3;
