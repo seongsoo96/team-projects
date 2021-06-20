@@ -37,7 +37,16 @@ function handleImgFileSelect(e){
 	font-size: 20px;
 	text-align: left;
 }
+h1 {
+	margin-left: 360px;
+}
 
+label {
+	font-weight: 500;
+}
+.alert > p {
+	margin-bottom: 10px;
+}
 </style>
 <div id="content">
 	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
@@ -69,10 +78,10 @@ function handleImgFileSelect(e){
 			</div>
 			
 			
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 180px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="submit" class="btn btn-primary">저장하기</button>
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="submit" class="btn" style="background-color:  #4EE2EC; color: white;">저장하기</button>
+                        <button type="button" class="btn" onclick="history.back()">돌아가기</button>
                     </div>
             </div>
 		</form>

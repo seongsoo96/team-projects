@@ -111,6 +111,14 @@ function handleImgFileSelect(e){
 	text-align: left;
 }
 
+h1 {
+	margin-left: 360px;
+}
+
+label {
+	font-weight: 500;
+}
+
 </style>
 <div id="content">
 	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
@@ -136,14 +144,14 @@ function handleImgFileSelect(e){
 			    <label for="sUrl">소개 영상(유튜브 링크 등록)</label>
 			    
 			    <input type="text" id="sUrl" name="sUrl" class="form-control" style="display:inline-block; width:80%;" />
-			    <button type="button" id="btnUrl" class="btn btn-primary">저장하기</button>
-			    <button type="button" id="btnUrlRemove" class="btn btn-danger">삭제하기</button>
-			    <iframe src="" width="870px" height="400px" id="introductionUrlField"></iframe>
+			    <button type="button" id="btnUrl" class="btn" style="background-color:  #4EE2EC; color: white;">저장</button>
+			    <button type="button" id="btnUrlRemove" class="btn">삭제</button>
+			    <iframe src="" width="870px" height="400px" id="introductionUrlField"  style="margin-top: 10px;"></iframe>
 			</div>
 			
 			<div id="introductionImgDiv" class="background-white form-group alert" role="alert" style="display: none;">
 			    <label for="file">소개 사진</label>
-			    <p class="help-block">여러장 등록 가능</p>
+			    <p class="help-block" style="font-size: 18px;">여러장 등록 가능</p>
 			    <div id="img" class="background-white form-group alert" role="alert">
 			    </div>
 			    <input multiple="multiple" type="file" id="file" name="file" accept="image/*" onchange="handleImgFileSelect(event);">
@@ -158,10 +166,10 @@ function handleImgFileSelect(e){
 				<textarea id="sStory" name="sStory" class="form-control" rows="3" required="required"></textarea>
 			</div>
 			
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 180px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="button" id="btnWrite" class="btn btn-primary">저장하기</button>
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="button" id="btnWrite" class="btn" style="background-color:  #4EE2EC; color: white;">저장하기</button>
+                        <button type="button" class="btn" onclick="history.back()">돌아가기</button>
                     </div>
             </div>
 		</form>
