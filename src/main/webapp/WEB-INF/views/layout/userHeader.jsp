@@ -183,9 +183,7 @@ function searchEnter(){
 	
 	
 	<!--메인 검색창  -->
-	<div class="searchInput" style="margin-left:25px;">
-		<input type="text" id="keyword" onkeypress="if( event.keyCode == 13 ) searchEnter();"
-			placeholder="어떤 프로젝트를 찾고 계신가요"/>
+	<div class="searchInput" style="margin:0 3%;">
 		<button id="btnSearch"><i class="fas fa-search"></i></button>
 		<input class="sinput" type="text" id="keyword" onkeypress="if( event.keyCode == 13 ) searchEnter();"
 			placeholder="어떤 프로젝트를 찾고 계신가요"/>
@@ -208,7 +206,7 @@ function searchEnter(){
 	
 	<!-- 로그인 -->
 	<div class="divHeaderLoginMenu"
-		<c:if test="${empty mNo }">style="margin:5px 0 0 80px;"</c:if>
+		<c:if test="${empty mNo }">style="margin-right:3%;padding-top:6px;"</c:if>
 	>
 	<c:choose>
 		<c:when test="${!empty accessToken }">

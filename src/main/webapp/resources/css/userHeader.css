@@ -141,11 +141,10 @@ header > div{
 .searchInput {
 	position: relative;
 	display: inline-block;
-    min-width: 295px;
+    min-width: 335px;
     background: #f0f2f5;
     border-radius: 20px;
     height: 40px;
-    left: 5%;
 }
 
 .searchInput #btnSearch {
