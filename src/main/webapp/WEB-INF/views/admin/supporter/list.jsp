@@ -23,6 +23,25 @@
 	margin: 0px 5px;
 	width: 100px;
 }
+.newstable {
+	margin-bottom: 20px;
+	max-width: 100%;
+	width: 100%;
+}
+
+tr {
+	border-radius: 10px;
+	height: 35px;
+}
+
+th, td {
+	border-bottom: 1px solid #f6f6f6;
+	text-align: center;
+}
+
+th {
+	background-color: #C4FFFF;
+}
 </style>
 
 <style type="text/css">
@@ -41,8 +60,8 @@ hr{
 <div id="content"> 
 <h1 class="pull-left">서포터 정보 &nbsp;</h1>
 <hr>
-
-<table class="table table-striped table-hover table-condensed">
+<div class="anbody1">
+<table class="newstable">
 <thead>
 	<tr>
 		<th style="width: 10%; text-align:center;">서포터 번호</th>
@@ -69,9 +88,10 @@ hr{
 </c:forEach>
 </tbody>
 </table>
+</div>
 
 <span class="pull-left">total : ${paging.totalCount }</span><br>
-<c:import url="/WEB-INF/views/admin/open/paging.jsp"></c:import>    
+<c:import url="/WEB-INF/views/admin/project/paging.jsp"></c:import>    
 </div>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>

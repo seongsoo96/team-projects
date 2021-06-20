@@ -61,7 +61,7 @@ function handleImgFileSelect(e){
 <div id="content">
 	<c:import url="/WEB-INF/views/layout/userProjectSlide2.jsp"></c:import>
 	<div class="container">
-		<h1>새소식</h1>
+		<h1 style="margin-left:360px;">새소식</h1>
 		
 		<form role="role">
 			<input type="hidden" name="pNo" value="${project.pNo }" />
@@ -87,11 +87,12 @@ function handleImgFileSelect(e){
 			</div>
 			
 			
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 180px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button id="btnUpdate" type="button" class="btn btn-primary">수정하기</button>
+                        <button id="btnUpdate" type="button" class="btn" 
+style="background-color:  #4EE2EC; color: white;">수정하기</button>
                         <button id="btnDelete" type="button" class="btn btn-danger">삭제하기</button>
-                        <button type="button" class="btn btn-info" onclick="location.href='/user/maker/news/list?pNo=${project.pNo }'">목록으로</button>
+                        <button type="button" class="btn" onclick="location.href='/user/maker/news/list?pNo=${project.pNo }'">목록으로</button>
                     </div>
             </div>
 		</form>

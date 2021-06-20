@@ -26,5 +26,12 @@ public interface RankDao {
 	 * @return 서포터 인원수
 	 */
 	public int selectSupporterCount(Rank rank);
+	
+	/**
+	 * 저장된 이미지 이름 가져오기
+	 * @param rank - 프로젝트 번호
+	 * @return
+	 */
+	public String selectIStoredName(Rank rank);
 
 }

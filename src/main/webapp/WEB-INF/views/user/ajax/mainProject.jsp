@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h1>이 프로젝트 어떠신가요?</h1>
 <c:forEach items="${list }" var="info">
 		<div>
@@ -13,8 +14,10 @@
 					<a href="/story?pNo=${info.pNo }"><img src="/upload/${info.iStoredName }" width="200" height="150"/></a>
 				</c:otherwise>
 			</c:choose>
+			<fmt:parseNumber var= "rate" integerOnly= "true" value= "${info.amount/info.iMoney*100}" />
 			<p style="text-align:left;">${info.iTitle }</p>
-			<p style="text-align:left;"><span style="color:#4EE2EC;">111%</span><span>&nbsp;&nbsp;&nbsp;${info.iCategory }</span></p>
+			<div class="goal_bar"><span style="width:${rate}%; "></span></div>
+			<p style="text-align:left;"><span style="color:#4EE2EC;">${rate}%</span><span>&nbsp;&nbsp;&nbsp;${info.iCategory }</span></p>
 		</div>
 	</c:forEach>
 	

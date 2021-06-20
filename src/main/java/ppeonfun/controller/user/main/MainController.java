@@ -1,10 +1,7 @@
 package ppeonfun.controller.user.main;
 
+import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ppeonfun.dto.Information;
 import ppeonfun.service.user.main.MainService;
+import ppeonfun.service.user.project.ProjectService;
 import ppeonfun.util.Paging;
 
 /**
@@ -26,6 +24,7 @@ public class MainController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	@Autowired private MainService mainService;
+	@Autowired private ProjectService projectService;
 	
 	@RequestMapping(value ="/")
 	public String main() {
@@ -45,7 +44,10 @@ public class MainController {
 		for(int i=0; i<list.size(); i++) {
 			logger.info(list.get(i).toString());
 		}
-		model.addAttribute("list", list);
+		List<HashMap<String, Object>> amountList = projectService.amountList(list);
+		
+		
+		model.addAttribute("list", amountList);
 		model.addAttribute("list2", list2);
 		model.addAttribute("paging", paging);
 		return "/user/main";
@@ -56,10 +58,14 @@ public class MainController {
 		Paging paging=mainService.getPaging(inData);
 		//최신 데이터 개수
 		List<Information> list = mainService.selectAllLatery(paging);
-		model.addAttribute("list", list);
+		List<HashMap<String, Object>> amountList = projectService.amountList(list);
+		
+		
+		model.addAttribute("list", amountList);
 		model.addAttribute("paging", paging);
 		
-		logger.info("ajax list {}", list);
+		
+		logger.info("ajax list {}", amountList);
 		logger.info("ajax paging {}", paging);
 		
 		return "/user/ajax/mainProject";

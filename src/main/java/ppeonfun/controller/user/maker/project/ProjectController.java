@@ -1,5 +1,6 @@
 package ppeonfun.controller.user.maker.project;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -88,7 +89,6 @@ public class ProjectController {
 		for(int i=0; i<list.size(); i++) {
 			logger.info("value {}", list.get(i));
 		}
-		
 		
 		model.addAttribute("category",inData.getCategory());
 		model.addAttribute("list", list);

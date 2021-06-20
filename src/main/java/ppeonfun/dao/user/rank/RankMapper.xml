@@ -26,4 +26,8 @@
 		select count(distinct m_no)  from supporter where p_no= #{pNo}
 	</select>
 	
+	<select id="selectIStoredName" parameterType="Rank" resultType="String">
+		select i_stored_name from information where p_no=#{pNo}
+	</select>
+	
 </mapper> 

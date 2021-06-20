@@ -83,7 +83,7 @@ $(document).ready(function(){
 		var messageSubmit = $("#messageSubmit")
 		rejectDiv.css("display","block");
 		rejectDiv.attr("required", true);
-		messageSubmit.css("display","block");
+		messageSubmit.css("display","inline-block");
 		
 	})
 	$("#messageClose").click(function(){
@@ -156,8 +156,8 @@ $(document).ready(function(){
 							</div>
                         </div>
                         <div class="modal-footer">
-                        	<button id="messageSubmit" type="button" class="btn btn-default" data-dismiss="modal" style="display:none;">전송</button>
-                            <button id="messageClose" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                        	<button id="messageSubmit" type="button" class="btn" data-dismiss="modal" style="display:none; background-color:  #4EE2EC; color: white;">전송</button>
+                            <button id="messageClose" type="button" class="btn" data-dismiss="modal"">닫기</button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
@@ -188,8 +188,8 @@ $(document).ready(function(){
 			
 		</c:if>
 		<c:if test="${project.mNo ne mNo and project.pState eq 'S'}">
-			<button type="button" id="btnApprove" class="btn btn-default">승인</button>
-			<button type="button" id="btnReject" class="btn btn-default">거부</button>	
+			<button type="button" id="btnApprove" class="btn" style="background-color:  #4EE2EC; color: white;">승인</button>
+			<button type="button" id="btnReject" class="btn btn-danger" style="color: white;">거부</button>	
 		</c:if>
 		
 	</div>

@@ -24,6 +24,31 @@
 	margin: 0px 5px;
 	width: 100px;
 }
+.newstable {
+	margin-bottom: 20px;
+	max-width: 100%;
+	width: 100%;
+}
+
+tr {
+	border-radius: 10px;
+	height: 35px;
+}
+
+th, td {
+	border-bottom: 1px solid #f6f6f6;
+	text-align: center;
+}
+
+th {
+	background-color: #C4FFFF;
+}
+
+.anbody1 {
+	margin: 0 auto;
+	text-align: left !important;
+	width: 1070px;
+}
 </style>
 <c:if test="${not empty project.pRequirements }">
 	<c:choose>
@@ -88,7 +113,8 @@ $(document).ready(function(){
 <h1 class="pull-left">새소식 관리 &nbsp;<a href="/admin/news/write?pNo=${project.pNo }"><i class="fas fa-plus"></i></a></h1>
 <hr>
 
-<table class="table table-striped table-hover table-condensed">
+<div class="anbody1">
+<table class="newstable">
 <thead>
 	<tr>
 		<th style="width: 30%; text-align:center;">제목</th>
@@ -108,7 +134,7 @@ $(document).ready(function(){
 </c:forEach>
 </tbody>
 </table>
-
+</div>
 <span class="pull-left">total : ${paging.totalCount }</span><br>
 
 <form action="/admin/news/list" method="get">

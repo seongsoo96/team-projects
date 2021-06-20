@@ -2,10 +2,24 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 <script type="text/javascript" src="/resources/js/mainPage.js"></script>
+<style type="text/css">
+.goal_bar {
+    height: 3px;
+    width: 100%;
+    margin-bottom: 4px;
+    background-color: #e6eaed;
+    overflow: hidden;
+}
 
+.goal_bar span {
+    height: 3px;
+    background-color: #00b2b2;
+    display: block;
+}
+</style>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -33,14 +47,32 @@ $(document).ready(function() {
 				var $li=$("<li>", {css:{ 
 					hegiht:"80px"},
 					});
+				
 				var $a=$("<a>");
 				$a.text(res.list[i].iTitle);
-				var $p=$("<p>")
+				var $p=$("<span>")
+				var $br = $("<br>");
 				$p.text(res.list[i].rate*100+"%")
 				$a.attr("href","story?pNo="+res.list[i].pNo);
 				
+				$a.append($br);
+				$a.append($p);
 				$li.append($a);
-				$li.append($p);
+				
+				var $img = $("<img>", {css:{
+					width:"300px",
+					height:"100px"},
+				});
+				$img.css('vertical-align','text-top');
+				$img.css('right','0px');
+				$img.css('display','flex');
+				
+				if(res.list[i].iStroedName.length<20){
+					$img.attr("src", "/resources/img/"+res.list[i].iStroedName);
+				}else{
+					$img.attr("src", "/upload/information/"+res.list[i].iStroedName);
+				}
+				$li.append($img);
 				
 				
 				/* $li.animate({
@@ -78,14 +110,32 @@ $(document).ready(function() {
 					var $li=$("<li>", {css:{ 
 						hegiht:"80px"},
 						});
+					
 					var $a=$("<a>");
 					$a.text(res.list[i].iTitle);
-					var $p=$("<p>")
+					var $p=$("<span>")
+					var $br = $("<br>");
 					$p.text(res.list[i].rate*100+"%")
 					$a.attr("href","story?pNo="+res.list[i].pNo);
 					
+					$a.append($br);
+					$a.append($p);
 					$li.append($a);
-					$li.append($p);
+					
+					var $img = $("<img>", {css:{
+						width:"300px",
+						height:"100px"},
+					});
+					$img.css('vertical-align','text-top');
+					$img.css('right','0px');
+					$img.css('display','flex');
+					
+					if(res.list[i].iStroedName.length<20){
+						$img.attr("src", "/resources/img/"+res.list[i].iStroedName);
+					}else{
+						$img.attr("src", "/upload/information/"+res.list[i].iStroedName);
+					}
+					$li.append($img);
 					
 					
 					/* $li.animate({
@@ -131,6 +181,21 @@ function pagingSelect(pagingNumber) {
 	});
 }
 </script>
+<style type="text/css">
+.goal_bar {
+    height: 3px;
+    width: 100%;
+    margin-bottom: 4px;
+    background-color: #e6eaed;
+    overflow: hidden;
+}
+
+.goal_bar span {
+    height: 3px;
+    background-color: #00b2b2;
+    display: block;
+}
+</style>
 <div class="container">
 <section>
 <div id="wrapper-main">
@@ -181,8 +246,10 @@ function pagingSelect(pagingNumber) {
 					<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }" style="width:200px; height:150px;"/></a>
 				</c:otherwise>
 			</c:choose>
+			<fmt:parseNumber var= "rate" integerOnly= "true" value= "${info.amount/info.iMoney*100}" />
 			<p style="text-align:left;">${info.iTitle }</p>
-			<p style="text-align:left;"><span style="color:#4EE2EC;">111%</span><span>&nbsp;&nbsp;&nbsp;${info.iCategory }</span></p>
+			<div class="goal_bar"><span style="width:${rate}%; "></span></div>
+			<p style="text-align:left;"><span style="color:#4EE2EC;">${rate}%</span><span>&nbsp;&nbsp;&nbsp;${info.iCategory }</span></p>
 		</div>
 	</c:forEach>
 	

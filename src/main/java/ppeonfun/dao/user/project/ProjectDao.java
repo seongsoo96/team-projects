@@ -87,4 +87,11 @@ public interface ProjectDao {
 	 */
 	public Maker selectMaker(Project project);
 	
+	/**
+	 * 합산 금액
+	 * @param 
+	 * @return 합산금액 반환
+	 */
+	public String selectAmount(Information information);
+	
 }

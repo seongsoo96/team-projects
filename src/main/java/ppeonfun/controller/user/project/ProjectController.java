@@ -1,5 +1,6 @@
 package ppeonfun.controller.user.project;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -33,9 +34,15 @@ public class ProjectController {
 		logger.info("inData {}", inData);
 		Paging paging = projectService.getPaging(inData);
 		List<Information> list = projectService.selectAllProject(paging);
-
+		List<HashMap<String, Object>> amountList = projectService.amountList(list);
+		
+		for(int i=0; i<amountList.size(); i++) {
+			logger.info("amountLIst {}", amountList.get(i));
+		}
+		
+		
 		model.addAttribute("category",inData.getCategory());
-		model.addAttribute("list", list);
+		model.addAttribute("list", amountList);
 		model.addAttribute("paging", paging);
 	}
 	

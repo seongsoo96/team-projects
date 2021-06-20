@@ -166,7 +166,7 @@ function handleImgFileSelect(e){
 			<div id="introductionUrlDiv" class="background-white form-group alert" role="alert" style="display: none;">
 			    <label for="sUrl">소개 영상(유튜브 링크 등록)</label>
 			    
-			    <input type="text" id="sUrl" name="sUrl" class="form-control" style="display:inline-block; width:80%;" />
+			    <input type="text" id="sUrl" name="sUrl" class="form-control" style="display:inline-block; width:80%;" value="${story.sUrl }" />
 			    <button type="button" id="btnUrl" class="btn btn-primary">저장하기</button>
 			    <button type="button" id="btnUrlRemove" class="btn btn-danger">삭제하기</button>
 			    <iframe src="" width="870px" height="400px" id="introductionUrlField"></iframe>
@@ -189,10 +189,10 @@ function handleImgFileSelect(e){
 				<textarea id="sStory" name="sStory" class="form-control" rows="3" required="required">${story.sStory }</textarea>
 			</div>
 			
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 40px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="button" id="btnWrite" class="btn btn-primary">저장하기</button>
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="button" id="btnWrite" class="btn" style="background-color:  #4EE2EC; color: white;">저장하기</button>
+                        <button type="button" class="btn" onclick="history.back()">돌아가기</button>
                     </div>
             </div>
 		</form>

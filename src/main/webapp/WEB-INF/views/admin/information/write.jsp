@@ -82,10 +82,10 @@ function handleImgFileSelect(e){
 				<input type="date" id="endDate" name="endDate" class="form-control" required/>
 			</div>
 			
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 40px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="submit" class="btn btn-primary">저장하기</button>
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="submit" class="btn" style="background-color:  #4EE2EC; color: white;">저장하기</button>
+                        <button type="button" class="btn" onclick="history.back()">돌아가기</button>
                     </div>
             </div>
 		</form>

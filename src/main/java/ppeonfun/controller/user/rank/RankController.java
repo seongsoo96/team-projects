@@ -28,6 +28,7 @@ public class RankController {
 		}
 		list = rankService.getFavoirteScore(list);
 		list = rankService.getSupporter(list);
+		list = rankService.getStoredName(list);
 		Collections.sort(list);
 		
 		for(int i=list.size()-1; 4<i; i--) { //5위까지 삭제

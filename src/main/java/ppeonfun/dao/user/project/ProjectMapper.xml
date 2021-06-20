@@ -73,5 +73,10 @@
   	<select id="selectMaker" resultType="Maker" parameterType="Project">
   		SELECT * FROM maker where p_no = #{pNo}
   	</select>
+  	
+  	<select id="selectAmount" resultType="String" parameterType="Information">
+  		select sum(paym_amount) as amount from payment
+		where p_no = #{pNo}
+  	</select>
   
   </mapper>

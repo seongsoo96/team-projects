@@ -44,4 +44,15 @@ public class RankServiceImpl implements RankService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Rank> getStoredName(List<Rank> list) {
+		for(int i=0; i<list.size(); i++) {
+			
+			String iStoredName = rankDao.selectIStoredName(list.get(i));
+			list.get(i).setiStroedName(iStoredName);
+			
+		}
+		return list;
+	}
 }

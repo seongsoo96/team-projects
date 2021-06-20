@@ -193,9 +193,9 @@ function handleImgFileSelect(e){
 				<textarea id="sStory" name="sStory" class="form-control" rows="3" disabled>${story.sStory }</textarea>
 			</div>
 			
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 40px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="button" class="btn" style="background-color:  #4EE2EC; color: white;" onclick="history.back()">돌아가기</button>
                     </div>
             </div>
 		</form>

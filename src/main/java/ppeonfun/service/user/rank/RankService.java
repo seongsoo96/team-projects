@@ -23,5 +23,12 @@ public interface RankService {
 	 * @return
 	 */
 	public List<Rank> getSupporter(List<Rank> list);
+	
+	/**
+	 * information이미지 이름을 불러온다
+	 * @param list
+	 * @return
+	 */
+	public List<Rank> getStoredName(List<Rank> list);
 
 }

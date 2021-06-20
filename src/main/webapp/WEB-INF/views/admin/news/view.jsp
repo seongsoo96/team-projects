@@ -89,9 +89,9 @@ function handleImgFileSelect(e){
 			
 			<div class="background-white form-group">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button id="btnUpdate" type="button" class="btn btn-primary">수정하기</button>
+                        <button id="btnUpdate" type="button" class="btn" style="background-color:  #4EE2EC; color: white;">수정하기</button>
                         <button id="btnDelete" type="button" class="btn btn-danger">삭제하기</button>
-                        <button type="button" class="btn btn-info" onclick="location.href='/admin/news/list?pNo=${project.pNo }'">목록으로</button>
+                        <button type="button" class="btn" onclick="location.href='/admin/news/list?pNo=${project.pNo }'">목록으로</button>
                     </div>
             </div>
 		</form>

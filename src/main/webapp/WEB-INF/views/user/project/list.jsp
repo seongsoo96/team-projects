@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"/>
 <style type="text/css">
 .box {
@@ -142,7 +142,10 @@
 	      <div class="caption">
 	        <h3>${info.iTitle }</h3>
 	        <p>${info.iCategory }</p>
-	        <div class="goal_bar"><span style="width:11% "></span></div>
+	        
+	        <fmt:parseNumber var= "rate" integerOnly= "true" value= "${info.amount/info.iMoney*100}" />
+	       	<div class="goal_bar"><span style="width:${rate}%; "></span></div>
+	        <div><span style="color:#4EE2EC;">${rate }%</span>&nbsp;&nbsp;${info.amount}원<span></span></div>
 	        <p><a href="/story?pNo=${info.pNo }" class="btn" style="background: #4EE2EC; color: #FFFFFF" role="button">펀딩하기</a> 
 	      </div>
 	    </div>

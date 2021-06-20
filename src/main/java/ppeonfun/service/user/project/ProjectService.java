@@ -1,5 +1,6 @@
 package ppeonfun.service.user.project;
 
+import java.util.HashMap;
 import java.util.List;
 
 import ppeonfun.dto.Information;
@@ -94,5 +95,8 @@ public interface ProjectService {
 	 * @return 메이커 조회
 	 */
 	public Maker viewMaker(Project project);
+	
+	public List<HashMap<String, Object>> amountList(List<Information> list);
+	
 	
 }

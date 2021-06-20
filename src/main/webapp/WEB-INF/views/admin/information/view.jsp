@@ -39,7 +39,7 @@
 			    		<img id="img" class="imgclick" src="/resources/img/${information.iStoredName} " width="900px" height="400px">
 			    	</c:when>
 			    	<c:otherwise>
-			    		 <img id="img" class="imgclick" src="/upload/${information.iStoredName }" width="900px" height="400px">
+			    		 <img id="img" class="imgclick" src="/upload/information/${information.iStoredName }" width="900px" height="400px">
 			    	</c:otherwise>
 			    </c:choose>
 			</div>
@@ -52,9 +52,11 @@
 				<label for="endDate">프로젝트 종료일</label>
 				<input type="date" id="endDate" name="endDate" class="form-control" value="<fmt:formatDate value="${information.iEndDate }" pattern="yyyy-MM-dd" />" readonly/>
 			</div>
-			<div class="background-white form-group">
+			
+			<div class="background-white form-group"style="margin-left: 40px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="button" class="btn" 
+style="background-color:  #4EE2EC; color: white;" onclick="history.back()">돌아가기</button>
                     </div>
             </div>
 		</form>

@@ -1,5 +1,7 @@
 package ppeonfun.service.user.project;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -102,7 +104,30 @@ public class ProjectServiceImpl implements ProjectService {
 	public Maker viewMaker(Project project) {
 		return projectDao.selectMaker(project);
 	}
-	
+	@Override
+	public List<HashMap<String, Object>> amountList(List<Information> list) {
+		List<HashMap<String, Object>> amountList = new ArrayList<>();
+		
+		for(int i=0; i<list.size(); i++) {
+			HashMap<String, Object> map=new HashMap<>();
+			map.put("iCategory", list.get(i).getiCategory());
+			map.put("iTitle", list.get(i).getiTitle());
+			map.put("iStoredName", list.get(i).getiStoredName());
+			map.put("pNo", list.get(i).getpNo());
+			map.put("iMoney", list.get(i).getiMoney());
+			String amount=projectDao.selectAmount(list.get(i));
+			if(amount!=null && !"".equals(amount)) {
+				map.put("amount", Integer.parseInt(amount));
+			}else {
+				map.put("amount", 0);
+			}
+			
+			
+			amountList.add(map);
+		}
+		
+		return amountList;
+	}
 	
 	
 }
