@@ -75,7 +75,6 @@ $(document).ready(function(){
 </style>
 <div class="container">
 <c:import url="/WEB-INF/views/layout/myCategoryBtn.jsp"/>
-<<<<<<< HEAD
 <%-- <div class="category">
 	<div class="box">
 		<a href="/user/maker/project/list"><img class="img-circle" src="/resources/img/subLogo.png"></a>
