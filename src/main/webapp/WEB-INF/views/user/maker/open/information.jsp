@@ -14,9 +14,12 @@
 	font-size: 20px;
 	text-align: left;
 }
+h1 {
+	margin-left: 360px;
+}
 </style>
 <div id="content">
-	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
+	<c:import url="/WEB-INF/views/layout/userProjectSlide2.jsp"></c:import>
 	<div class="container">
 		<h1>기본정보</h1>
 		<form role="role">

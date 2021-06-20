@@ -107,13 +107,15 @@ function drawChartDonut() {
 	margin: 0 auto;
 	width: 300px;
 }
-
+h1 {
+	margin-left: 360px;
+}
 </style>
 <div id="content">
-	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
+	<c:import url="/WEB-INF/views/layout/userProjectSlide2.jsp"></c:import>
 	<div class="container">
 		<h1>펀딩현황</h1>
-		<div id="chartTarget">
+		<div id="chartTarget" style="margin-left: 260px;">
 			<div id="bar_chart">BarChart</div>
 			<div id="donut_chart">DonutChart</div>
 			<div id="column_chart">ColumnChart</div>
@@ -136,5 +138,5 @@ function drawChartDonut() {
 			
 		</form>
 	</div>
-</div>
+</div><br><br><br>
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>

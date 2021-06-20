@@ -169,10 +169,11 @@ hr {
 	/* 영역 확인용 */ 
 /*   	border: 1px solid green;   */
 	float: right;
-	width: 35%;
+	width: 32%;
 	margin-right: 15px;
 	padding-top: 15px;
 /*  	padding-left: 5px; */
+	padding-right: 30px;
 }
 
 #right .project_state_info p {

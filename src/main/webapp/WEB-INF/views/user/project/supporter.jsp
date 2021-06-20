@@ -105,7 +105,7 @@ hr {
 	float: left;
 	width: 60%;
 /* 	margin-left: 5px; */
-/* 	padding-left: 10px; */
+ 	padding-left: 30px; 
 }
 
 #left .ment {
@@ -157,9 +157,10 @@ hr {
 	/* 영역 확인용 */ 
 /*   	border: 1px solid green;   */
 	float: right;
-	width: 35%;
+	width: 32%;
 	margin-right: 15px;
 	padding-top: 15px;
+	padding-right: 30px;
 /*  	padding-left: 5px; */
 }
 
