@@ -66,11 +66,8 @@ $(document).ready(function(){
 }
 #projectWrite{
 	margin-left:45%; 
-	color:#1E2227;
+	color:#4EE2EC;
 	cursor: pointer;
-}
-#projectWrite:hover{
-	color:#C4FFFF;
 }
 </style>
 <div class="container">
@@ -172,8 +169,8 @@ $(document).ready(function(){
 	  </c:forEach>
 	  </c:otherwise>
 	  </c:choose>
+</div><!-- div.container -->
 <c:if test="${paging.totalPage > 1 }">
 	<c:import url="/WEB-INF/views/admin/project/paging.jsp"/>
 </c:if>
-</div><!-- div.container -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
