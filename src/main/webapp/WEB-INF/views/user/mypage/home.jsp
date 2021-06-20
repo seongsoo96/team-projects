@@ -88,7 +88,7 @@ a span svg {margin-right:10px;}
 			<!-- 2-1-1. 프로필 사진 -->
 			<a href="/user/mypage/profile">
 			<c:choose>
-				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) }">
+				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) or (empty myStoredName) }">
 					<img class="profile-img" src="/resources/img/member.png">
 				</c:when>
 				<c:otherwise>

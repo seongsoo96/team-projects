@@ -147,7 +147,7 @@ $(document).ready(function(){
 	    <div class="thumbnail">
 	      <c:choose>
 	      	<c:when test = "${empty info.iStoredName or fn:length(information.iStoredName)<20}">
-	      		<img src="/resources/img/subLogo.png" style="width:100%; height:250px;">
+	      		<img src="/resources/img/subLogo.png" style="width:100%; height:250px; ">
 	      	</c:when>
 	      	<c:otherwise>
 	      		<img src="/upload/information/${info.iStoredName }" style="width:100%; height:250px;">

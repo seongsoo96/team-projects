@@ -213,7 +213,7 @@ function searchEnter(){
 			<a href="/user/member/kakao/logout" style="font-size:16px;">카카오 로그아웃</a>
 			<a href="/user/mypage/home">
 			<c:choose>
-				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) }">
+				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) or (empty myStoredName) }">
 					<img src="/resources/img/member.png">
 				</c:when>
 				<c:otherwise>
@@ -230,7 +230,7 @@ function searchEnter(){
 			<a href="/user/member/logout" style="margin-left:30px; font-size:16px;">로그아웃</a>
 			<a href="/user/mypage/home">
 			<c:choose>
-				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) }">
+				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) or (empty myStoredName) }">
 					<img src="/resources/img/member.png">
 				</c:when>
 				<c:otherwise>
