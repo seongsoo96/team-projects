@@ -183,7 +183,7 @@ function searchEnter(){
 	
 	
 	<!--메인 검색창  -->
-	<div class="searchInput" style="margin:0 3%;">
+	<div class="searchInput" style="margin:0 11%;">
 		<button id="btnSearch"><i class="fas fa-search"></i></button>
 		<input class="sinput" style="text-align: center;" type="text" id="keyword" onkeypress="if( event.keyCode == 13 ) searchEnter();"
 			placeholder="어떤 프로젝트를 찾고 계신가요"/>

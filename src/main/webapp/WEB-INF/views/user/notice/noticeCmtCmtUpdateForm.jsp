@@ -58,12 +58,14 @@
 						</div>
 					</c:if>
 					<c:if test="${cc.CS_NO eq cmtss.csNo }">
-						<label class="comment_comment_nick">${mNick }</label><br>
-						<textarea id="comment_comment_updateContent" cols="167" rows="3">${cmtss.csContent }</textarea><br>
-						<div>
-							<button class="okbtn-after-cmtupdate" onclick="CmtCmtUpdate(${cmtss.csNo}, '${mNick }')">수정</button>
+					<div class="form-group">
+						<label class="comment_comment_nick">${mNick }</label>
+						<textarea  class="form-control" id="comment_comment_updateContent" style="resize:none;">${cmtss.csContent }</textarea>
+						<div class="clearfix" style="text-align:right;">
 							<button class="cnbtn-after-cmtupdate" onclick="CmtCmtUpdateCancel()">취소</button>
-						</div>
+							<button class="okbtn-after-cmtupdate" onclick="CmtCmtUpdate(${cmtss.csNo}, '${mNick }')">수정</button>
+				    	</div>
+			    	</div>
 					</c:if>
 				</div>
 			</c:if>

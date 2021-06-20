@@ -74,7 +74,7 @@ $(document).ready(function(){
 		<span><a href="/user/maker/project/open">오픈 예정 프로젝트</a></span>
 		
 		<form action="/user/maker/project/list" method="get" style="display:inline-block;">
-  		<div id="search" style="margin-left: 140px;">
+  		<div id="search" style="margin-left: 400px;">
 		<select class="dropbox" name="category">
 			<option value="${category }" selected>제목</option>
 		</select>
@@ -145,10 +145,10 @@ $(document).ready(function(){
 	    <div class="thumbnail">
 	      <c:choose>
 	      	<c:when test = "${fn:length(info.iStoredName)<20}">
-	      		<img src="/resources/img/${info.iStoredName }" style="width:200px; height:150px;">
+	      		<img src="/resources/img/${info.iStoredName }" style="width:100%; height:60%;">
 	      	</c:when>
 	      	<c:otherwise>
-	      		<img src="/upload/information/${info.iStoredName }" style=" width:200px; height:150px;">
+	      		<img src="/upload/information/${info.iStoredName }" style="width:100%; height:60%;">
 	      	</c:otherwise>
 	      </c:choose>
 	      <div class="caption">

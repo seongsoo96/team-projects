@@ -3,13 +3,13 @@
 
 /* 카테고리 버튼 */
 .divCategoryWrap {margin:15px 0;}
-.divCategoryBox button {border:1px solid #ccc; border-radius:50%; width:60px; height:60px; background:none; margin:0 8.5px;}
+.divCategoryBox button {border:1px solid #ccc; border-radius:50%; width:60px; height:60px; background:none; margin:0 23px;}
 .divCategoryBox button:hover {background-color:#4EE2EC; color:white;}
 .divCategoryBox button .spanIconWrap {width:100%; height:100%; font-size:37px;}
 .divCategoryBox button .spanIconWrap img {width:58px; position:relative; right:6px; bottom:3px;}
 
 .divCategoryLabel {margin:0 auto;}
-.divCategoryLabel label {width:77px; font-weight:400;}
+.divCategoryLabel label {width:106px; font-weight:400;}
 
 /* 상단 메뉴 */
 .divFundMenu span a {display:inline-block; width:150px; margin-top:10px; font-size:17px; color:black;}

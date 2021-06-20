@@ -29,12 +29,14 @@
 		</c:if>
 		<c:if test="${c.C_NO eq cmt.C_NO }">
 			<div id="comment${c.C_NO }" class="comment">
-				<label class="comment_nick">${c.M_NICK }</label><br>
-				<textarea id="comment_updateContent" cols="175" rows="3">${c.C_CONTENT }</textarea><br>
-				<div>
-					<button class="okbtn-after-cmtupdate pull-right" onclick="updateCmt(${c.C_NO}, ${c.B_NO })">등록</button>
-					<button class="cnbtn-after-cmtupdate pull-right" onclick="updateCmtCancel(${c.C_NO})">취소</button>
-				</div>
+				<div class="form-group">
+					<label class="comment_nick">${c.M_NICK }</label>
+					<textarea class="form-control" id="comment_updateContent" style="resize:none;">${c.C_CONTENT }</textarea>
+					<div class="clearfix">
+						<button class="okbtn-after-cmtupdate pull-right" onclick="updateCmt(${c.C_NO}, ${c.B_NO })">등록</button>
+						<button class="cnbtn-after-cmtupdate pull-right" onclick="updateCmtCancel(${c.C_NO})">취소</button>
+			    	</div>
+			    </div>
 			</div>
 		</c:if>
 	</c:if>

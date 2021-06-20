@@ -578,18 +578,22 @@ function refreshHeart(){
 		</div><br>
 		<div>
 			<c:if test="${not empty sessionScope.mNo }">
-				<label>${sessionScope.mNick }</label>
-				<textarea id="comment_make" cols="178" rows="3" placeholder="댓글을 입력하세요"></textarea>
-				<button id="comment_ok" onclick="comment_ok()">완료</button>
-			</c:if>
-			<c:if test="${empty sessionScope.mNo }">
-				<textarea id="comment_nologin" cols="178" rows="3" placeholder="로그인이 필요합니다"></textarea>
-				<button disabled>완료</button>
+			<div class="row">
+	  			<div class="col-lg-12">
+					<label for="comment_make">${sessionScope.mNick }</label>
+    				<div class="input-group">
+						<textarea class="form-control" id="comment_make" rows="2" placeholder="댓글을 입력하세요" style="resize:none;"></textarea>
+	      				<span class="input-group-btn" style="vertical-align:bottom;">
+							<button class="btn" id="comment_ok" onclick="comment_ok()">완료</button>
+	      				</span>
+		    		</div><!-- .input-group -->
+		  		</div><!-- .col-lg-12 -->
+		 	</div><!-- .row -->
 			</c:if>
 		</div>
 	</div>
 	
-	<div class="btnbox">
+	<div class="btnbox" style="margin:30px 0;">
 		<c:if test="${viewBoard.M_NO eq sessionScope.mNo}">
 			<button class="viewbtn" onclick="location.href='/admin/notice/update?bNo=${viewBoard.B_NO}'">수정</button>
 			<button class="viewbtn" onclick="deleteBoard()">삭제</button>
