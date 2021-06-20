@@ -183,7 +183,7 @@ function searchEnter(){
 	
 	
 	<!--메인 검색창  -->
-	<div class="searchInput">
+	<div class="searchInput" style="margin:0 3%;">
 		<button id="btnSearch"><i class="fas fa-search"></i></button>
 		<input class="sinput" type="text" id="keyword" onkeypress="if( event.keyCode == 13 ) searchEnter();"
 			placeholder="어떤 프로젝트를 찾고 계신가요"/>
@@ -206,19 +206,28 @@ function searchEnter(){
 	
 	<!-- 로그인 -->
 	<div class="divHeaderLoginMenu"
-		<c:if test="${empty mNo }">style="margin:5px 0 0 80px;"</c:if>
+		<c:if test="${empty mNo }">style="margin-right:3%;padding-top:6px;"</c:if>
 	>
 	<c:choose>
 		<c:when test="${!empty accessToken }">
-			<a href="/user/member/kakao/logout" style="margin-left:57px;">로그아웃</a>
-			<a href="/user/mypage/home">마이페이지</a>
+			<a href="/user/member/kakao/logout" style="font-size:16px;">카카오 로그아웃</a>
+			<a href="/user/mypage/home">
+			<c:choose>
+				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) }">
+					<img src="/resources/img/member.png">
+				</c:when>
+				<c:otherwise>
+					<img src="/upload/profile/${myStoredName }">
+				</c:otherwise>
+			</c:choose>
+			</a>
 		</c:when>
 		<c:when test="${empty mNo }">
 			<a href="/user/member/loginForm">로그인</a>
 			<a href="/user/member/joinSelect">회원가입</a>
 		</c:when>
 		<c:otherwise>
-			<a href="/user/member/logout" style="margin-left:57px;">로그아웃</a>
+			<a href="/user/member/logout" style="margin-left:30px; font-size:16px;">로그아웃</a>
 			<a href="/user/mypage/home">
 			<c:choose>
 				<c:when test="${fn:contains(myStoredName, 'test') or ('member.png' eq myStoredName) }">
