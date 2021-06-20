@@ -119,6 +119,7 @@ hr {
 <div id="right">
 	<div class="alarm">
 		<c:choose>
+			<c:when test="${empty mNo }"></c:when>
 			<c:when test="${check }"><a href="/user/open/alarm?pNo=${info.pNo }"><button class="btn_alarm">알림신청하기</button></a></c:when>
 			<c:otherwise><a href="/user/open/alarm?pNo=${info.pNo }"><button class="btn_alarm_cancel">알림취소하기</button></a></c:otherwise>
 		</c:choose>
@@ -130,12 +131,41 @@ hr {
 	</div>
 	
 	<div class="report">
-		<a href="/user/payback/view?pNo=${info.pNo }"><button class="btn_report">신고하기</button></a>
+		
+		<button class="btn_report" data-toggle="modal" data-target="#reportModal">신고하기</button>
 	</div>
 </div><!-- #right end --> 
 
 
 <div style="clear: both;"></div>
+<!-- 신고하기 Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">게시물 신고하기</h4>
+      </div><br>
+      <div class="modal-body">
+      
+      	<div>
+      		<p style="font-size: 18px; margin-bottom: -7px;">신고 내용:</p>
+      	</div>
+      
+		<form action="/project/report?pNo=${info.pNo }" method="post" id="report">
+	      	<input type="hidden" name="open" value="open">
+	      	<label for="repContent" class="control-label"></label>
+          	<textarea class="form-control" id="repContent" name="repContent" style="height: 300px;"></textarea>
+	    </form>
+	    
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn" form="report"
+        	style="background-color: #4EE2EC; width: 90px; height: 40px;">신고하기</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br>

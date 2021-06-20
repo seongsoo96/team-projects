@@ -92,7 +92,6 @@ function handleImgFileSelect(e){
                     <div class="col-lg-offset-2 col-lg-10">
                         <button type="submit" class="btn btn-primary">저장하기</button>
                         <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
-                        <button id="btnReset" type="reset" class="btn btn-danger">다시 입력하기</button>
                     </div>
             </div>
 		</form>

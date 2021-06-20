@@ -75,6 +75,7 @@ $(document).ready(function(){
 </style>
 <div class="container">
 <c:import url="/WEB-INF/views/layout/myCategoryBtn.jsp"/>
+<<<<<<< HEAD
 <%-- <div class="category">
 	<div class="box">
 		<a href="/user/maker/project/list"><img class="img-circle" src="/resources/img/subLogo.png"></a>
@@ -149,7 +150,7 @@ $(document).ready(function(){
 	  <div class="col-sm-6 col-md-4">
 	    <div class="thumbnail">
 	      <c:choose>
-	      	<c:when test = "${fn:contains(info.iStoredName, 'test') or empty info.iStoredName or fn:contains(info.iStoredName, 'search')}">
+	      	<c:when test = "${empty info.iStoredName or fn:length(information.iStoredName)<20}">
 	      		<img src="/resources/img/subLogo.png" style="width:200px; height:150px;">
 	      	</c:when>
 	      	<c:otherwise>
