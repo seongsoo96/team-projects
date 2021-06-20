@@ -54,7 +54,56 @@
 }
 </style>
 <div class="container">
+
+<!-- <div class="category"> -->
+<!-- 	<div class="box"> -->
+<!-- 		<a href="/user/open/list"><img class="img-circle" src="/resources/img/subLogo.png"></a> -->
+<!-- 		<p>전체보기</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box"> -->
+<!-- 		<a href="/user/open/list?category=테크/가전"><img class="img-circle" src="/resources/img/tech.svg"></a> -->
+<!-- 		<p>테크/가전</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box" > -->
+<!-- 		<a href="/user/open/list?category=반려동물"><img class="img-circle" src="/resources/img/paw.svg"></a> -->
+<!-- 		<p>반려동물</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box" > -->
+<!-- 		<a href="/user/open/list?category=출판"><img class="img-circle" src="/resources/img/book.svg"></a> -->
+<!-- 		<p>출판</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box" > -->
+<!-- 		<a href="/user/open/list?category=기부/후원"><img class="img-circle" src="/resources/img/hand-heart.svg"></a> -->
+<!-- 		<p>기부/후원</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box" > -->
+<!-- 		<a href="/user/open/list?category=푸드"><img class="img-circle" src="/resources/img/utensils.svg"></a> -->
+<!-- 		<p>푸드</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box" > -->
+<!-- 		<a href="/user/open/list?category=운동"><img class="img-circle" src="/resources/img/dumbbell.svg"></a> -->
+<!-- 		<p>운동</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box" > -->
+<!-- 		<a href="/user/open/list?category=여행"><img class="img-circle" src="/resources/img/car-side.svg"></a> -->
+<!-- 		<p>여행</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box" > -->
+<!-- 		<a href="/user/open/list?category=뷰티"><img class="img-circle" src="/resources/img/beauty.png"></a> -->
+<!-- 		<p>뷰티</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box" > -->
+<!-- 		<a href="/user/open/list?category=패션"><img class="img-circle" src="/resources/img/tshirt.svg"></a> -->
+<!-- 		<p>패션</p> -->
+<!-- 	</div> -->
+<!-- 	<div class="box" > -->
+<!-- 		<a href="/user/open/list?category=디자인소품"><img class="img-circle" src="/resources/img/pencil-ruler.svg"></a> -->
+<!-- 		<p>디자인소품</p> -->
+<!-- 	</div> -->
+<!-- </div> -->
+
 <c:import url="/WEB-INF/views/layout/myCategoryBtn.jsp"/>
+
 <div class="row">
 <form action="/user/open/list" method="get">
   <div id="search">
@@ -88,5 +137,5 @@
 </div>
 
 </div>
-<c:import url="/WEB-INF/views/layout/paging.jsp"/>
+<c:import url="/WEB-INF/views/layout/ppeonfunpaging.jsp"/>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
