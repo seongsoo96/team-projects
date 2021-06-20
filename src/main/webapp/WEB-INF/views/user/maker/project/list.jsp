@@ -173,7 +173,7 @@ $(document).ready(function(){
 	  </c:otherwise>
 	  </c:choose>
 <c:if test="${paging.totalPage > 1 }">
-	<c:import url="/WEB-INF/views/layout/ppeonfunpaging.jsp"/>
+	<c:import url="/WEB-INF/views/admin/project/paging.jsp"/>
 </c:if>
 </div><!-- div.container -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
