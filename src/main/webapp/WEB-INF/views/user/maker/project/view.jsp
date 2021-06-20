@@ -87,7 +87,13 @@ $(document).ready(function(){
 }
 .btn-group{
 	margin-left:220px;
+	float: right;
+	width: 1000px;
 
+}
+
+.btn-group > .btn {
+	margin-left: 100px;
 }
 
 .background-white{
@@ -134,7 +140,8 @@ $(document).ready(function(){
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->	
-	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본요건&nbsp;<span class="state">${pRequirements}</span></span><a href="/user/maker/requirement/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
+                
+	<div class="alert background-white alert-info" role="alert" style="margin-top: 30px;"><span class="pull-left">기본요건&nbsp;<span class="state">${pRequirements}</span></span><a href="/user/maker/requirement/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">기본정보&nbsp;<span class="state">${pInformation}</span></span><a href="/user/maker/information/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">스토리&nbsp;<span class="state">${pStory}</span></span><a href="/user/maker/story/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
 	<div class="alert background-white alert-info" role="alert"><span class="pull-left">리워드&nbsp;<span class="state">${pReward}</span></span><a href="/user/maker/reward/view?pNo=${project.pNo }"><i class="far fa-plus-square pull-right"></i></a></div>
@@ -144,17 +151,21 @@ $(document).ready(function(){
 		<c:if test="${project.mNo eq mNo}">
 			<c:choose>
 				<c:when test="${project.pState eq 'S' }">
-					<button type="button" id="projectSubmit" class="btn btn-default" disabled>승인 대기중</button>
+					<button type="button" id="projectSubmit" class="btn" disabled
+						style="margin-left: 100px; background-color:  #4EE2EC; color: white;">승인 대기중</button>
 				</c:when>
 				<c:when test="${project.pState eq 'Y' }">
-					<button type="button" id="projectSubmit" class="btn btn-default" disabled>승인 완료</button>
+					<button type="button" id="projectSubmit" class="btn" disabled
+						style="margin-left: 100px; background-color:  #4EE2EC; color: white;">승인 완료</button>
 				</c:when>
 				<c:when test="${project.pState eq 'W' }">
-					<button type="button" id="projectSubmit" class="btn btn-default">제출</button>
+					<button type="button" id="projectSubmit" class="btn"
+						style="margin-left: 100px; background-color:  #4EE2EC; color: white;">제출</button>
 				</c:when>
 			</c:choose>
 			
 		</c:if>
 	</div>
-</div>
+	
+</div><br><br><br><br>
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>

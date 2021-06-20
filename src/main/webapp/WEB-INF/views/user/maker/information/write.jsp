@@ -31,6 +31,7 @@ function handleImgFileSelect(e){
 	width: 900px;
 	float: right;
 }
+
 .background-white{
 	background: #FFFFFF;
 	color: #1E2227;
@@ -38,6 +39,17 @@ function handleImgFileSelect(e){
 	text-align: left;
 }
 
+h1 {
+	margin-left: 360px;
+}
+
+label {
+	font-weight: 500;
+}
+
+.alert > p {
+	margin-bottom: 10px;
+}
 </style>
 <div id="content">
 	<c:import url="/WEB-INF/views/layout/userProjectSlide.jsp"></c:import>
@@ -56,7 +68,7 @@ function handleImgFileSelect(e){
 			</div>
 			
 			<div class="background-white form-group alert" role="alert">
-			    <label for="file">대표이미지</label>
+			    <label for="file" style="font-size: 18px;">대표이미지</label>
 			    <p class="help-block">텍스트 로고 삽입 금지</p>
 			    <img id="img" class="imgclick" width="900px" height="400px">
 			    <input type="file" id="file" name="file" accept="image/*" required>
@@ -82,10 +94,10 @@ function handleImgFileSelect(e){
 				<input type="date" id="endDate" name="endDate" class="form-control" required/>
 			</div>
 			
-			<div class="background-white form-group">
+			<div class="background-white form-group" style="margin-left: 180px;">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="submit" class="btn btn-primary">저장하기</button>
-                        <button type="button" class="btn btn-info" onclick="history.back()">돌아가기</button>
+                        <button type="submit" class="btn" style="background-color:  #4EE2EC; color: white;">저장하기</button>
+                        <button type="button" class="btn" onclick="history.back()">돌아가기</button>
                     </div>
             </div>
 		</form>

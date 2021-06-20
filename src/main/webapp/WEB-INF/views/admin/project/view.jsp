@@ -110,8 +110,8 @@ $(document).ready(function(){
 	float: right;
 }
 .btn-group{
-	margin-left:220px;
-
+	margin-left:240px;
+	float: left;
 }
 
 .background-white{
@@ -173,13 +173,16 @@ $(document).ready(function(){
 		<c:if test="${project.mNo eq mNo}">
 			<c:choose>
 				<c:when test="${project.pState eq 'S' }">
-					<button type="button" id="projectSubmit" class="btn btn-default" disabled>승인 대기중</button>
+					<button type="button" id="projectSubmit" class="btn" disabled
+						style="background-color:  #4EE2EC; color: white;">승인 대기중</button>
 				</c:when>
 				<c:when test="${project.pState eq 'Y' }">
-					<button type="button" id="projectSubmit" class="btn btn-default" disabled>승인 완료</button>
+					<button type="button" id="projectSubmit" class="btn" disabled
+						style="background-color:  #4EE2EC; color: white;">승인 완료</button>
 				</c:when>
 				<c:when test="${project.pState eq 'W' }">
-					<button type="button" id="projectSubmit" class="btn btn-default">제출</button>
+					<button type="button" id="projectSubmit" class="btn"
+						style="background-color:  #4EE2EC; color: white;">제출</button>
 				</c:when>
 			</c:choose>
 			
