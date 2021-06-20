@@ -590,7 +590,7 @@ function refreshHeart(){
 		</c:if>
 	</div>
 	
-	<div class="btnbox">
+	<div class="btnbox" style="margin:30px 0;">
 		<c:if test="${viewBoard.M_NO eq sessionScope.mNo}">
 			<button class="viewbtn" onclick="location.href='/user/notice/update?bNo=${viewBoard.B_NO}'">수정</button>
 			<button class="viewbtn" onclick="deleteBoard()">삭제</button>
