@@ -36,7 +36,7 @@
 		<%-- 대댓글 시작 --%>
 		<c:forEach var="cc" items="${cclist }">
 			<c:if test="${c.C_NO eq cc.C_NO }">
-				<div id="comment_comment${cc.CS_NO }" class="comment_comment" style="margin-left: 50px; border-bottom:none;">
+				<div id="comment_comment${cc.CS_NO }" class="comment_comment" style="margin-left: 50px;">
 					<c:if test="${cc.CS_NO ne cmtss.csNo }">
 						<label class="comment_comment_nick">${cc.M_NICK }</label><br>
 						<label class="comment_comment_content">${cc.CS_CONTENT }</label><br>
@@ -66,7 +66,6 @@
 							<button class="okbtn-after-cmtupdate" onclick="CmtCmtUpdate(${cmtss.csNo}, '${mNick }')">수정</button>
 				    	</div>
 			    	</div>
-					<hr style="margin:0;">
 					</c:if>
 				</div>
 			</c:if>
