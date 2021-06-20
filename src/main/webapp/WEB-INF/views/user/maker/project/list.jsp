@@ -66,16 +66,12 @@ $(document).ready(function(){
 }
 #projectWrite{
 	margin-left:45%; 
-	color:#1E2227;
+	color:#4EE2EC;
 	cursor: pointer;
-}
-#projectWrite:hover{
-	color:#C4FFFF;
 }
 </style>
 <div class="container">
 <c:import url="/WEB-INF/views/layout/myCategoryBtn.jsp"/>
-<<<<<<< HEAD
 <%-- <div class="category">
 	<div class="box">
 		<a href="/user/maker/project/list"><img class="img-circle" src="/resources/img/subLogo.png"></a>
@@ -173,8 +169,8 @@ $(document).ready(function(){
 	  </c:forEach>
 	  </c:otherwise>
 	  </c:choose>
-<c:if test="${paging.totalPage > 1 }">
-	<c:import url="/WEB-INF/views/layout/ppeonfunpaging.jsp"/>
-</c:if>
 </div><!-- div.container -->
+<c:if test="${paging.totalPage > 1 }">
+	<c:import url="/WEB-INF/views/admin/project/paging.jsp"/>
+</c:if>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
