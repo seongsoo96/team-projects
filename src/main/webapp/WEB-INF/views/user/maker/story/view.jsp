@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/WEB-INF/views/layout/userHeader.jsp"></c:import>
 <script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
@@ -34,7 +35,15 @@ $(document).ready(function(){
 			$("#introductionImg").attr('checked', true);
 			
 			<c:forEach items="${storyFile}" var="info">
-				divImg.append("<img src='/upload/${info.sfStoredName}' width='300px' height='300px'/>")
+				 <c:choose>
+			    	<c:when test = "${fn:length(info.sfStoredName)<20}">
+			    		divImg.append("<img src='/resources/img/${info.sfStoredName}' width='300px' height='300px'/>")
+			    	</c:when>
+			    	<c:otherwise>
+			    		divImg.append("<img src='/upload/${info.sfStoredName}' width='300px' height='300px'/>")
+			    	</c:otherwise>
+			    </c:choose>
+				
 			</c:forEach>
 			
 		</c:otherwise>

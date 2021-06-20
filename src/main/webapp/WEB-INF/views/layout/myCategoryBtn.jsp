@@ -3,7 +3,7 @@
 
 <div class="divCategoryWrap">
 	<div class="divCategoryBox text-center">
-		<button onclick="location.href='${contextPath}?category=전체'" id="default">
+		<button onclick="location.href='${contextPath}?category'" id="default">
 			<span class="spanIconWrap"><img src="/resources/img/subLogo.png"></span>
 		</button>
 		<button onclick="location.href='${contextPath}?category=테크/가전'" id="tech">

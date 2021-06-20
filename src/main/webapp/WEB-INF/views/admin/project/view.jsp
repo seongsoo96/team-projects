@@ -80,9 +80,10 @@ $(document).ready(function(){
 	$("#btnReject").click(function(){
 		modal.modal('show');
 		var rejectDiv = $("#rejectDiv");
+		var messageSubmit = $("#messageSubmit")
 		rejectDiv.css("display","block");
 		rejectDiv.attr("required", true);
-		
+		messageSubmit.css("display","block");
 		
 	})
 	$("#messageClose").click(function(){
@@ -155,7 +156,7 @@ $(document).ready(function(){
 							</div>
                         </div>
                         <div class="modal-footer">
-                        	<button id="messageSubmit" type="button" class="btn btn-default" data-dismiss="modal">전송</button>
+                        	<button id="messageSubmit" type="button" class="btn btn-default" data-dismiss="modal" style="display:none;">전송</button>
                             <button id="messageClose" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                         </div>
                     </div><!-- /.modal-content -->

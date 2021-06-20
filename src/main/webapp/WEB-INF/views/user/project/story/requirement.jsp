@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style type="text/css">
 .alert{
 	width: 100%;
@@ -27,8 +28,12 @@
 				<textarea id="rRewardPlan" name="rRewardPlan" class="form-control" rows="3" readonly>${requirement.rRewardPlan }</textarea>
 			</div>
 			<div class="background-white form-group alert" role="alert">
-			    <label for="file">3.리워드 종류 및 제작 형태</label> 
-			    <img id="img" class="imgclick" src="/upload/${requirementFile.rfStoredName }" width="100%" height="400px">
+			    <label for="file">3.리워드 종류 및 제작 형태</label>
+			     <c:choose>
+			    	<c:when test="${fn:length(requirementFile.rfStoredName) < 20}"> <img id="img" class="imgclick" src="/resources/img/${requirementFile.rfStoredName} " width="100%" height="400px"></c:when>
+			    	<c:otherwise>  <img id="img" class="imgclick" src="/upload/${requirementFile.rfStoredName }" width="100%" height="400px"></c:otherwise>
+			    </c:choose>
+			   
 			</div>
 			
 		</form>

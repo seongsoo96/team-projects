@@ -44,13 +44,11 @@ $(document).ready(function(){
 	border-color: snow;
 	height: 30px;
 	width: 200px;
-	margin-top: 10px;
-	margin-bottom: 30px; 
-	
+/* 	margin-top: 10px;
+	margin-bottom: 30px;  */
 }
 
 .searchBtn {
-	
 	background-color: #C4FFFF;
 	border: none;
 	height: 30.5px;
@@ -58,18 +56,40 @@ $(document).ready(function(){
 	width: 50px;
 }
 .dropbox {
-	
 	border-color: ivory;
 	height: 30px;
 	margin: 0px 5px;
 	width: 100px;
 }
 #projectWrite{
+	margin-left:45px; 
+	color:#1E2227;
 	cursor: pointer;
+}
+#projectWrite:hover{
+	color:#C4FFFF;
 }
 </style>
 <div class="container">
-<div class="category">
+<h2>나의 프로젝트</h2>
+	<div class="divFundMenu">
+		<span><a href="/user/maker/project/start">오픈 프로젝트</a></span>
+		<span><a href="/user/maker/project/open">오픈 예정 프로젝트</a></span>
+		
+		<form action="/user/maker/project/list" method="get" style="display:inline-block;">
+  		<div id="search" style="margin-left: 140px;">
+		<select class="dropbox" name="category">
+			<option value="${category }" selected>제목</option>
+		</select>
+		<input type="text" id="search" class="search" name="search" placeholder="검색어를 입력해주세요"  />
+		<button class="searchBtn">검색</button>
+		<a id="projectWrite"><i class="fas fa-plus fa-4x"></i></a>
+  		</div>
+		</form>
+	</div><!-- div.divFundMenu -->
+	<hr>
+<c:import url="/WEB-INF/views/layout/myCategoryBtn.jsp"/>
+<%-- <div class="category">
 	<div class="box">
 		<a href="/user/maker/project/list"><img class="img-circle" src="/resources/img/subLogo.png"></a>
 		<p>전체보기</p>
@@ -114,26 +134,21 @@ $(document).ready(function(){
 		<a href="/user/maker/project/list?category=디자인소품"><img class="img-circle" src="/resources/img/pencil-ruler.svg"></a>
 		<p>디자인소품</p>
 	</div>
-</div>
+</div> --%>
 <div class="row">
-<form action="/user/maker/project/list" method="get">
-  <div id="search">
-	<select class="dropbox" name="category">
-		<option value="${category }" selected>제목</option>
-	</select>
-	<input type="text" id="search" class="search" name="search" placeholder="검색어를 입력해주세요"  />
-	<button class="searchBtn">검색</button>
-	<a id="projectWrite" style="float:right;"><i class="fas fa-plus fa-4x"></i></a>
-  </div>
-  
-  </form>
-  
+  <c:choose>
+  <c:when test="${empty list }"> 
+ 	 <div class="text-center" style="height:210px; margin-top:100px;">
+		<h3>오픈 예정인 프로젝트가 없습니다.</h3>
+	</div>
+  </c:when>
+  <c:otherwise>
   <c:forEach items="${list }" var="info">
 	  <div class="col-sm-6 col-md-4">
 	    <div class="thumbnail">
 	      <c:choose>
-	      	<c:when test = "${fn:contains(info.iStoredName, 'test') or empty info.iStoredName or fn:contains(info.iStoredName, 'search')}">
-	      		<img src="/resources/img/subLogo.png" style="width:200px; height:150px;">
+	      	<c:when test = "${fn:length(info.iStoredName)<20}">
+	      		<img src="/resources/img/${info.iStoredName }" style="width:200px; height:150px;">
 	      	</c:when>
 	      	<c:otherwise>
 	      		<img src="/upload/information/${info.iStoredName }" style=" width:200px; height:150px;">
@@ -153,8 +168,12 @@ $(document).ready(function(){
 	    </div>
 	  </div>
   </c:forEach>
+  </c:otherwise>
+  </c:choose>
 </div>
 
 </div>
-<c:import url="/WEB-INF/views/layout/paging.jsp"/>
+<c:if test="${paging.totalPage > 1 }">
+	<c:import url="/WEB-INF/views/layout/ppeonfunpaging.jsp"/>
+</c:if>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 
@@ -22,9 +23,9 @@ $(document).ready(function(){
  			$("#sUrl").attr('readonly', true);
  			$("#introductionUrl").attr('checked', true);
  			
-		</c:when>
-		<c:otherwise>
-			console.log("img");
+ 			</c:when>
+ 			<c:otherwise>
+ 				console.log("img");
 			divUrl.css('display', 'none');
 			divImg.css('display', 'block');
 			$("#sUrl").attr('required', false);
@@ -33,7 +34,14 @@ $(document).ready(function(){
 			$("#introductionImg").attr('checked', true);
 			
 			<c:forEach items="${storyFile}" var="info">
-				divImg.append("<img src='/upload/${info.sfStoredName}' width='98%' height='300px' margin='10px auto'/>")
+				<c:choose>
+					<c:when test = "${fn:length(info.sfStoredName) < 20}">
+						divImg.append("<img src='/resources/img/${info.sfStoredName}' width='98%' height='300px' margin='10px auto'/>")
+					</c:when>
+					<c:otherwise>
+						divImg.append("<img src='/upload/${info.sfStoredName}' width='98%' height='300px' margin='10px auto'/>")
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 			
 		</c:otherwise>

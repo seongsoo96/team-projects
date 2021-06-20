@@ -71,7 +71,6 @@ $(document).ready(function(){
 			
 			<div class="background-white form-group">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button id="btnDelete" type="button" class="btn btn-danger">삭제하기</button>
                         <button type="button" class="btn btn-info" onclick="location.href='/admin/supporter/list?pNo=${supporter.P_NO }'">목록으로</button>
                     </div>
             </div>

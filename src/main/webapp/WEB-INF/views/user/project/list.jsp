@@ -54,6 +54,7 @@
 }
 </style>
 <div class="container">
+
 <!-- <div class="category"> -->
 <!-- 	<div class="box"> -->
 <!-- 		<a href="/user/project/list"><img class="img-circle" src="/resources/img/subLogo.png"></a> -->
@@ -102,7 +103,6 @@
 <!-- </div> -->
 
 <c:import url="/WEB-INF/views/layout/myCategoryBtn.jsp"/>
-
 <div class="row">
 <form action="/user/project/list" method="get">
   <div id="search">
@@ -118,8 +118,8 @@
 	  <div class="col-sm-6 col-md-4">
 	    <div class="thumbnail">
 	      <c:choose>
-	      	<c:when test = "${fn:contains(info.iStoredName, 'test') or fn:contains(info.iStoredName, 'search')}">
-	      		<a href="/story?pNo=${info.pNo }"><img src="/resources/img/subLogo.png" style="width:200px; height:150px;"></a>
+	      	<c:when test = "${fn:length(information.iStoredName)<20}">
+	      		<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" style="width:200px; height:150px;"></a>
 	      	</c:when>
 	      	<c:otherwise>
 	      		<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }" style="width:200px; height:150px;"></a>

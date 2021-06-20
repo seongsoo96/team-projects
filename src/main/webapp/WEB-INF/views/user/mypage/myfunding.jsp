@@ -55,7 +55,7 @@
 						
 						<a href="/story?pNo=${tlist.P_NO }">
 						<c:choose>
-							<c:when test="${fn:contains(tlist.I_STORED_NAME, 'test') }">
+							<c:when test = "${fn:length(tlist.I_STORED_NAME)<20}">
 								<img src="/resources/img/${tlist.I_STORED_NAME }">
 							</c:when>
 							<c:otherwise>
@@ -72,7 +72,7 @@
 			</c:forEach>
 		</div>
 		<c:if test="${paging.totalPage > 1 }">
-			<c:import url="/WEB-INF/views/layout/paging.jsp"/>
+			<c:import url="/WEB-INF/views/layout/ppeonfunpaging.jsp"/>
 		</c:if>
 </c:if>
 </div><!-- div.container -->

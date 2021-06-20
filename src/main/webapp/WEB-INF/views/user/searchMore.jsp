@@ -20,7 +20,7 @@ $(document).ready(function() {
 	<div class="SearchList_result_project">
 		<a href="/story?pNo=${list.P_NO }">
 			<c:choose>
-				<c:when test = "${fn:contains(list.I_STORED_NAME, 'search') or fn:contains(list.I_STORED_NAME, 'test')}">
+				<c:when test = "${fn:length(list.I_STORED_NAME) < 20}">
 					<img class="project_img" alt="테스트" src="/resources/img/${list.I_STORED_NAME }">
 				</c:when>
 				<c:otherwise>

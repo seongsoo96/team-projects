@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-public class UserPaybackInterceptor implements HandlerInterceptor{
+public class UserLoginInterceptor implements HandlerInterceptor{
 
 private static final Logger logger = LoggerFactory.getLogger(UserMakerInterceptor.class);
 

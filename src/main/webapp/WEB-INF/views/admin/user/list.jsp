@@ -155,19 +155,6 @@ th {
 	  </div>
 	</div>
 	
-	<form action="/admin/user/list" class="pull-left">
-	<div id="search">
-		<select name="category" class="dropbox">
-			<option value="m_name">이름</option>
-			<option value="m_id">아이디</option>
-			<option value="m_nick">닉네임</option>
-		</select>
-		
-		<input type="text" id="search" name="search" placeholder="검색어를 입력해주세요">
-		<button class="searchBtn">검색</button>
-	</div>
-	</form>
-	
 	<br><br>
 	<table class="usertable">
 		<thead>
@@ -215,11 +202,25 @@ th {
 	<div class="clearfix"></div>
 	
 	</div>
+
 	
 <c:if test="${paging.totalPage > 1 }">
-	<c:import url="/WEB-INF/views/admin/user/ppeonfunpaging.jsp" />   
+	<c:import url="/WEB-INF/views/admin/project/paging.jsp" />   
 </c:if>     
-	
+
+<form action="/admin/user/list">
+	<div id="search">
+		<select name="category" class="dropbox">
+			<option value="m_name">이름</option>
+			<option value="m_id">아이디</option>
+			<option value="m_nick">닉네임</option>
+		</select>
+		
+		<input type="text" id="search" name="search" placeholder="검색어를 입력해주세요" style="text-align: left;">
+		<button class="searchBtn">검색</button>
+</div>
+	</form>
+
 </div><!-- #content -->
 <!-- </div> -->
 
