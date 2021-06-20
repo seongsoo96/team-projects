@@ -53,10 +53,10 @@
 						<a href="/story?pNo=${flist.P_NO }">
 						<c:choose>
 							<c:when test = "${fn:length(flist.I_STORED_NAME)<20}">
-								<img class="profile-img" src="/resources/img/${flist.I_STORED_NAME }">
+								<img class="profile-img" style="width:100%; height:60%;" src="/resources/img/${flist.I_STORED_NAME }">
 							</c:when>
 							<c:otherwise>
-								<img class="profile-img" src="/upload/imformation/${flist.I_STORED_NAME }">
+								<img class="profile-img" style="width:100%; height:60%;" src="/upload/imformation/${flist.I_STORED_NAME }">
 							</c:otherwise>
 						</c:choose>
 						</a>

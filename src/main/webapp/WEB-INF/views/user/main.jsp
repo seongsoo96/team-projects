@@ -131,6 +131,7 @@ function pagingSelect(pagingNumber) {
 	});
 }
 </script>
+<div class="container">
 <section>
 <div id="wrapper-main">
       <div id="slider-wrap">
@@ -138,12 +139,12 @@ function pagingSelect(pagingNumber) {
           	 <c:forEach items="${list2 }" var="info">
           	 <li class="text-center">
                 <div>
-                    <h3>${info.iTitle }</h3>
-                    <span>${info.iCategory }</span>
+                    <h3 style="color:#4EE2EC;">${info.iTitle }</h3>
+                    <span style="color:#4EE2EC;">${info.iCategory }</span>
                 </div>  
 				<c:choose>
 				<c:when test = "${fn:length(info.iStoredName) < 20}">
-					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" style="width: 460px; height: 350px; margin: 0 auto;"></a>
+					<a href="/story?pNo=${info.pNo }"><img src="/resources/img/${info.iStoredName }" style="width: 100%; height: 350px; margin: 0 auto;"></a>
 				</c:when>
 				<c:otherwise>
 					<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }"/></a>
@@ -154,11 +155,11 @@ function pagingSelect(pagingNumber) {
           </ul>
           
            <!--controls-->
-          <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
-          <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
+          <div class="btns" id="next"><i style="color: #4EE2EC" class="fa fa-arrow-right fa-2x"></i></div>
+          <div class="btns" id="previous"><i style="color: #4EE2EC" class="fa fa-arrow-left fa-2x"></i></div>
           <div id="counter"></div>
           
-          <span id="moveProject" class="moveProject"><i class="fas fa-info-circle fa-2x"></i></span>
+          <span id="moveProject" class="moveProject"><i class="fas fa-info-circle fa-2x" style="color: #4EE2EC;"></i></span>
           
           <div id="pagination-wrap">
             <ul>
@@ -169,6 +170,7 @@ function pagingSelect(pagingNumber) {
 </section>
 <section id="wrapper-section">
 <div id="targetAjax" class="left">
+	<h1>이 프로젝트 어떠신가요?</h1>
 	<c:forEach items="${list }" var="info">
 		<div>
 			<c:choose>
@@ -179,7 +181,8 @@ function pagingSelect(pagingNumber) {
 					<a href="/story?pNo=${info.pNo }"><img src="/upload/information/${info.iStoredName }" style="width:200px; height:150px;"/></a>
 				</c:otherwise>
 			</c:choose>
-			<p>${info.iTitle }</p>
+			<p style="text-align:left;">${info.iTitle }</p>
+			<p style="text-align:left;"><span style="color:#4EE2EC;">111%</span><span>&nbsp;&nbsp;&nbsp;${info.iCategory }</span></p>
 		</div>
 	</c:forEach>
 	
@@ -197,7 +200,7 @@ function pagingSelect(pagingNumber) {
     </div>
 </div>
 <div id="realTimeRanking" class="right">
-	<h3>실시간 랭킹</h3>
+	<h1>실시간 랭킹</h1>
 	<ol id="mover">
 		<li><a id="rank1" href="https://www.google.com/">랭킹 1</a><p>4231% 푸드</p></li>
 		<li><a id="rank2" href="https://www.google.com/">랭킹 2</a><p>1231% 가전</p></li>
@@ -209,3 +212,4 @@ function pagingSelect(pagingNumber) {
 	
 </section>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
+</div>

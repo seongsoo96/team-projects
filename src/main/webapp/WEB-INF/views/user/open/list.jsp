@@ -120,10 +120,10 @@
 	    <div class="thumbnail">
 	      <c:choose>
 	      	<c:when test = "${fn:length(info.iStoredName)<20}">
-	      		<a href="#"><img src="/resources/img/${info.iStoredName }" style="width:200px; height:150px;"></a>
+	      		<a href="#"><img src="/resources/img/${info.iStoredName }" style="width:100%; height:60%;"></a>
 	      	</c:when>
 	      	<c:otherwise>
-	      		<a href="#"><img src="/upload/information/${info.iStoredName }" style="width:200px; height:150px;"></a>
+	      		<a href="#"><img src="/upload/information/${info.iStoredName }" style="width:100%; height:60%;"></a>
 	      	</c:otherwise>
 	      </c:choose>
 	      <div class="caption">
