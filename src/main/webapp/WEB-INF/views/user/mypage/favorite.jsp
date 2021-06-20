@@ -8,7 +8,6 @@
 <div class="container" style="margin-bottom:50px;">
 	<div class="divFundMenu">
 		<h2 style="display:inline-block;"><a href="/user/mypage/favorite" style="color:black;">좋아요</a></h2>
-		<span><a href="/user/mypage/home"><i class="fas fa-house-user" style="left:505%"></i></a></span>
 	</div>
 	<hr>
 	
