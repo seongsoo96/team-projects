@@ -58,7 +58,6 @@ $(document).ready(function() {
 });
 </script>
 
-
 <style type="text/css">
 /* 전체 영역 */
 .container {
@@ -220,6 +219,10 @@ hr {
 	background: #fff;
 	border: 1px solid #dadce0;
 	border-radius: 2px;
+}
+
+.active{
+	border-bottom: 3px solid #4EE2EC;
 }
 
 </style>
