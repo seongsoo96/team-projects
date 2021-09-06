@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ppeonfun.dao.user.open.OpenDao">
+  
+  <sql id=""></sql>
+  
+  <select id="selectCntAll" resultType="int" parameterType="Paging">
+  	SELECT count(*) FROM project P
+		inner join information I
+		on P.p_no = I.p_no
+	 WHERE P_STATE='Y' AND P_PROGRESS_STATE='W'
+	 <if test='category !=null and !"".equals(category)'>
+ 			AND i_category=#{category}
+ 	</if>
+ 	<if test='search !=null and !"".equals(search)'>
+ 			AND i_title like'%'||#{search}||'%'
+ 	</if>
+  </select>
+  <select id="selectAll" resultType="Information" parameterType="Paging">
+  	SELECT*FROM(
+				SELECT rownum rnum, I.* FROM(
+				        SELECT *
+		            FROM project P
+		            inner join information I
+		            on P.p_no = I.p_no
+		            WHERE P_STATE='Y' AND P_PROGRESS_STATE='W'
+		            <if test='category !=null and !"".equals(category)'>
+				 			AND i_category=#{category}
+				 	</if>
+				 	<if test='search !=null and !"".equals(search)'>
+				 			AND i_title like '%'||#{search}||'%'
+				 	</if>
+		            order by P.p_no desc
+		    ) I
+		)R
+		WHERE rnum BETWEEN #{startNo} AND #{endNo}
+  	</select>
+  	
+  	<select id="selectInformation" resultType="Information" parameterType="Project">
+  		SELECT * FROM information WHERE p_no = #{pNo}
+  	</select>
+  	
+  	<select id="selectCheckAlarm" resultType="int" parameterType="Project">
+  		SELECT count(*) FROM alarm WHERE p_no = #{pNo} AND m_no = #{mNo}
+  	</select>
+  	
+  	<insert id="insertAlarm" parameterType="Alarm">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="aNo">
+  			SELECT alarm_SEQ.nextval FROM dual
+  		</selectKey>
+  		insert into alarm(a_no,p_no,m_no) values(#{aNo}, #{pNo}, #{mNo})
+  	</insert>
+  	
+  	<delete id="deleteAlarm" parameterType="Alarm">
+  		DELETE FROM alarm WHERE p_no = #{pNo} AND m_no = #{mNo}
+  	</delete>
+  	
+  </mapper>

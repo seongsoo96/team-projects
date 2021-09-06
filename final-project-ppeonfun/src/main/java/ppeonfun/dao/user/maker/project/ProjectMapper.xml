@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ppeonfun.dao.user.maker.project.ProjectDao">
+  
+  <sql id=""></sql>
+  
+  <select id="selectCntAll" resultType="int" parameterType="hashmap">
+  	SELECT count(*) FROM project P
+		left outer join information I
+		on P.p_no = I.p_no
+	 WHERE m_no = #{mNo}
+	 <if test='category !=null and !"".equals(category)'>
+ 			AND i_category=#{category}
+ 			
+ 	</if>
+ 	<if test='search !=null and !"".equals(search)'>
+ 			AND i_title like'%'||#{search}||'%'
+ 	</if>
+ 	<if test='open !=null and !"".equals(open)'>
+ 			AND P.p_state = 'Y' AND P.p_progress_state = 'W'
+ 	</if>
+ 	<if test='list !=null and !"".equals(list)'>
+ 			AND P.p_state = 'W'
+ 	</if>
+ 	<if test='start !=null and !"".equals(start)'>
+ 			AND P.p_state = 'Y' AND P.p_progress_state = 'Y'
+ 	</if>
+ 	
+  </select>
+  <select id="selectAll" resultType="Information" parameterType="hashmap">
+  	SELECT*FROM(
+				SELECT rownum rnum, I.* FROM(
+				        SELECT *
+		            FROM project P
+		            left outer join information I
+		            on P.p_no = I.p_no
+		            WHERE m_no = #{mNo}
+		            <if test='category !=null and !"".equals(category)'>
+				 			AND i_category=#{category}
+				 	</if>
+				 	<if test='search !=null and !"".equals(search)'>
+				 			AND i_title like '%'||#{search}||'%'
+				 	</if>
+				 	<if test='open !=null and !"".equals(open)'>
+				 			AND P.p_state = 'Y' AND P.p_progress_state = 'W'
+				 	</if>
+				 	<if test='list !=null and !"".equals(list)'>
+				 			AND P.p_state = 'W'
+				 	</if>
+				 	<if test='start !=null and !"".equals(start)'>
+				 			AND P.p_state = 'Y' AND P.p_progress_state = 'Y'
+				 	</if>
+		            order by P.p_no desc
+		    ) I
+		)R
+		WHERE rnum BETWEEN #{startNo} AND #{endNo}
+  	</select>
+  	
+  	<select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  	
+  	<select id="selectProject" resultType="Project" parameterType="Project">
+  		SELECT * FROM project WHERE p_no=#{pNo}
+  	</select>
+  	
+  	<insert id="insertProject" parameterType="Project">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="pNo">
+  			SELECT project_SEQ.nextval FROM dual
+  		</selectKey>
+  		INSERT INTO project(p_no,m_no,p_name) VALUES(#{pNo}, #{mNo}, '프로젝트이름'||#{pNo})
+  	</insert>
+  	
+  	<update id="updateSubmit" parameterType="Project">
+  		UPDATE PROJECT SET p_state = #{pState} WHERE p_no =#{pNo}
+  	</update>
+  
+  </mapper>

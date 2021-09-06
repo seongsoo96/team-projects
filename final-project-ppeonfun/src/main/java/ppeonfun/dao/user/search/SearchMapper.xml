@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ppeonfun.dao.user.search.SearchDao">
+	<select id="selectCntAllByKeyword" parameterType="String" resultType="int">
+		select count(*) from project
+		where p_name like '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="selectSearchList" parameterType="hashmap" resultType="hashmap">
+		select * from (
+		    select rownum rnum, S.* from (	
+		        select 
+		            (select sum(paym_amount) from payment where p_no = p.p_no) funded_money
+		            , i.i_money
+		            , (select round( ( (select sum(paym_amount) from payment where p_no = p.p_no ) / i.i_money ) * 100, 2 )  from dual) funded_percent
+		            , i.i_stored_name, i.i_category, i.i_start_date, i.i_end_date, p.*
+		        from project p, information i
+		        where p.p_name like '%' || #{keyword} || '%'
+		        and p.p_no = i.p_no(+)
+		        order by p.p_no desc
+		    ) S
+		) R
+		where rnum between #{paging.startNo} and #{paging.endNo}
+	</select>
+	
+	
+	<select id="selectCntAllByFilter" parameterType="hashmap" resultType="int">
+		SELECT count(*) FROM (
+            SELECT
+                ( SELECT round( sum(paym_amount) / i_money * 100, 2 ) FROM payment  WHERE p_no = p.p_no  ) funded_percent
+                , ( SELECT sum(paym_amount) FROM payment WHERE p_no = p.p_no) funded_money
+                , p.p_no, p.m_no, p_name
+                , i_category, i_money, i_start_date, i_end_date
+            FROM project P, information I
+            WHERE p.p_no = i.p_no
+        ) PI
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <if test="sf.keyword != null and !''.equals(sf.keyword)">
+            AND p_name like '%' || #{sf.keyword} || '%'
+        </if>
+        <if test="sf.step != null">
+        <trim prefix="AND (" prefixOverrides="OR" suffix=")">
+        	<foreach collection="sf.step" item="ele" >
+            <choose>
+            <when test='ele.equals("a")'>
+            OR i_start_date > sysdate
+            </when>
+            <when test='ele.equals("b")'>
+            OR sysdate BETWEEN i_start_date AND i_end_date
+            </when>
+            <when test='ele.equals("c")'>
+            OR i_end_date <![CDATA[<]]> sysdate
+            </when>
+            </choose>
+        	</foreach>
+        </trim>
+        </if>
+        <if test="sf.category != null and !''.equals(sf.category)">
+            AND i_category in ( ${sf.category} )
+        </if>
+        <if test="sf.s1min != null and sf.s1max != null">
+            AND funded_percent BETWEEN #{sf.s1min} AND #{sf.s1max}
+        </if>
+        <if test="sf.s2min != null and sf.s2max != null">
+            AND funded_money BETWEEN #{sf.s2min} AND #{sf.s2max}
+        </if>
+        </trim>
+	</select>
+	
+	<select id="selectSearchListByFilter" parameterType="hashmap" resultType="hashmap">
+		SELECT * FROM (
+		    SELECT rownum rnum, RES.* FROM (
+		        SELECT * FROM (
+		            SELECT
+		                ( SELECT round( sum(paym_amount) / i_money * 100, 2 ) FROM payment  WHERE p_no = p.p_no  ) funded_percent
+		                , ( SELECT sum(paym_amount) FROM payment WHERE p_no = p.p_no) funded_money
+		                , p.p_no, p.m_no, p_name
+		                , i_category, i_money, i_start_date, i_end_date, i_stored_name
+		            FROM project P, information I
+		            WHERE p.p_no = i.p_no
+		        ) PI
+		        <trim prefix="WHERE" prefixOverrides="AND|OR">
+		        <if test="sf.keyword != null and !''.equals(sf.keyword)">
+		            AND p_name like '%' || #{sf.keyword} || '%'
+		        </if>
+		        <if test="sf.step != null">
+		        <trim prefix="AND (" prefixOverrides="OR" suffix=")">
+		        	<foreach collection="sf.step" item="ele" >
+		            <choose>
+		            <when test='ele.equals("a")'>
+		            OR i_start_date > sysdate
+		            </when>
+		            <when test='ele.equals("b")'>
+		            OR sysdate BETWEEN i_start_date AND i_end_date
+		            </when>
+		            <when test='ele.equals("c")'>
+		            OR i_end_date <![CDATA[<]]> sysdate
+		            </when>
+		            </choose>
+		        	</foreach>
+		        </trim>
+		        </if>
+		        <if test="sf.category != null and !''.equals(sf.category)">
+		            AND i_category in ( ${sf.category} )
+		        </if>
+		        <if test="sf.s1min != null and sf.s1max != null">
+		            AND funded_percent BETWEEN #{sf.s1min} AND #{sf.s1max}
+		        </if>
+		        <if test="sf.s2min != null and sf.s2max != null">
+		            AND funded_money BETWEEN #{sf.s2min} AND #{sf.s2max}
+		        </if>
+		        </trim>
+		        ORDER BY p_no DESC
+		    ) RES
+		)R
+		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+	</select>
+	
+</mapper>
+

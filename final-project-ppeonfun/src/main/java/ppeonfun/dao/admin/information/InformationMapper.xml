@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ppeonfun.dao.admin.information.InformationDao">
+  <select id="selectByState" resultType="Project" parameterType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
+  
+  <select id="selectIsInformation" resultType="int" parameterType="Project">
+SELECT count(*) FROM information where p_no = #{pNo}
+  </select>
+  
+  <select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  <select id="selectInformation" resultType="Information" parameterType="Project">
+  SELECT * FROM information where p_no = #{pNo}
+  </select>
+  <insert id="insertInformation" parameterType="Information">
+  	<selectKey order="BEFORE" keyProperty="iNo" resultType="int">
+  		SELECT information_SEQ.nextval FROM dual
+  	</selectKey>
+  	INSERT INTO information(i_no,p_no,i_title,i_money,i_origin_name,i_stored_name,i_category,i_end_date,i_state,i_size,i_content_type) 
+  	values(#{iNo}, #{pNo}, #{iTitle}, #{iMoney}, #{iOriginName}, #{iStoredName}, #{iCategory}, #{iEndDate}, #{iState}, #{iSize}, #{iContentType})
+  </insert>
+  <update id="updateProjectState" parameterType="Information">
+  	update project set p_information = (select i_state FROM information where p_no=#{pNo}) where p_no=#{pNo}
+  </update>
+  
+  <update id="updateInformation" parameterType="Information">
+  UPDATE information SET i_title=#{iTitle},i_money=#{iMoney}, i_origin_name=#{iOriginName},i_stored_name=#{iStoredName},i_category=#{iCategory},i_end_date=#{iEndDate},i_state=#{iState},i_size=#{iSize},i_content_type=#{iContentType}  
+  WHERE i_no = #{iNo}
+  </update>
+  <select id="selectProject" parameterType="Project" resultType="Project">
+  SELECT * FROM project WHERE p_no = #{pNo}
+  </select>
+  
+  </mapper>

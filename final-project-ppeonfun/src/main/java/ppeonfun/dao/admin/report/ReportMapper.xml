@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ppeonfun.dao.admin.report.ReportDao">
+	<select id="selectCntAll" resultType="int" parameterType="Paging">
+		select count(*) from report R
+		inner join project P
+		on P.p_no = R.p_no
+		inner join Member M
+		ON R.m_reporter_no = M.m_no
+		WHERE 1=1
+  		<if test="'title'.equals(category)">
+			AND P.p_name like '%'||#{search}||'%'
+		</if>
+		<if test="'content'.equals(category)">
+			AND R.rep_content like '%'||#{search}||'%'
+		</if>
+		<if test="'mix'.equals(category)">
+			AND P.p_name like '%'||#{search}||'%' OR R.rep_content like '%'||#{search}||'%'
+		</if>
+		
+	</select>
+	<select id="selectAll" resultType="hashmap" parameterType="Paging">
+		SELECT*FROM(
+			SELECT rownum rnum, P.* FROM(
+			       select * from report R
+					inner join project P
+					on P.p_no = R.p_no
+					inner join Member M
+					ON R.m_reporter_no = M.m_no
+					WHERE 1=1
+	            <if test="'title'.equals(category)">
+					AND P.p_name like '%'||#{search}||'%'
+				</if>
+				<if test="'content'.equals(category)">
+					AND R.rep_content like '%'||#{search}||'%'
+				</if>
+				<if test="'mix'.equals(category)">
+					AND P.p_name like '%'||#{search}||'%' OR R.rep_content like '%'||#{search}||'%'
+				</if>
+	            order by R.rep_no desc
+	    	) P
+		)R
+		WHERE rnum BETWEEN #{startNo} AND #{endNo}
+	</select>
+	<select id="selectReport" parameterType="Report" resultType="hashmap">
+		select * from report R
+		inner join project P
+		on P.p_no = R.p_no
+		inner join Member M
+		ON R.m_reporter_no = M.m_no
+		WHERE R.rep_no = #{repNo}
+	</select>
+	
+	<update id="updateReport" parameterType="Report">
+		UPDATE report SET rep_state = #{repState}, rep_manager_content=#{repManagerContent} WHERE rep_no = #{repNo}
+	</update>
+	
+	<update id="updateProject" parameterType="Report">
+		UPDATE project SET p_caution = p_caution+1 WHERE p_no = #{pNo}
+	</update>
+	
+	<update id="updateMember" parameterType="Report">
+		UPDATE member SET m_caution = m_caution+1 WHERE m_no = #{mFounderNo}
+	</update>
+	
+	<delete id="deleteReport" parameterType="Report">
+		DELETE FROM report WHERE rep_no = #{repNo}
+	</delete>
+	
+	<select id="selectCntAllProject" resultType="int" parameterType="Paging">
+		select count(*) from Project P
+		inner join member M
+		on P.m_no = M.m_no
+		WHERE 1=1
+  		<if test="'title'.equals(category)">
+			AND P.p_name like '%'||#{search}||'%'
+		</if>
+		<if test="'name'.equals(category)">
+			AND M.m_name like '%'||#{search}||'%'
+		</if>
+		<if test="'nick'.equals(category)">
+			AND M.m_nick like '%'||#{search}||'%'
+		</if>
+		
+	</select>
+	
+	<select id="selectAllProject" resultType="hashmap" parameterType="Paging">
+		SELECT*FROM(
+			SELECT rownum rnum, P.* FROM(
+			       select * from Project P
+					inner join member M
+					on P.m_no = M.m_no
+					WHERE 1=1
+	            <if test="'title'.equals(category)">
+					AND P.p_name like '%'||#{search}||'%'
+				</if>
+				<if test="'name'.equals(category)">
+					AND M.m_name like '%'||#{search}||'%'
+				</if>
+				<if test="'nick'.equals(category)">
+					AND M.m_nick like '%'||#{search}||'%'
+				</if>
+	            order by P.p_no desc
+	    	) P
+		)R
+		WHERE rnum BETWEEN #{startNo} AND #{endNo}
+	</select>
+	
+	<select id="selectProject" resultType="hashmap" parameterType="Project">
+		select * from Project P
+		inner join member M
+		on P.m_no = M.m_no
+		WHERE P.p_no = #{pNo}
+	</select>
+	
+	<insert id="insertReport" parameterType="Report">
+		<selectKey order="BEFORE" resultType="int" keyProperty="repNo">
+			SELECT report_SEQ.nextval FROM dual
+		</selectKey>
+		insert into report(rep_no,p_no,m_reporter_no,m_founder_no,rep_content,rep_manager_content,rep_state) 
+		values(#{repNo}, #{pNo}, #{mReporterNo}, #{mFounderNo}, #{repContent},#{repManagerContent}, #{repState})
+	</insert>
+	
+</mapper>

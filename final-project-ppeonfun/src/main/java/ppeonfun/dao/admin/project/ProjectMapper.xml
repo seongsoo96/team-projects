@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ppeonfun.dao.admin.project.ProjectDao">
+  	<resultMap type="ppeonfun.dto.Project" id="Project">
+  		<result column="p_no" property="pNo"/>
+		<result column="m_no" property="mNo" />
+		<result column="p_name" property="pName" />
+		<result column="p_requirements" property="pRequirements" />
+		<result column="p_information" property="pInformation" />
+		<result column="p_story" property="pStory" />
+		<result column="p_reward" property="pReward" />
+		<result column="p_maker" property="pMaker" />
+		<result column="p_state" property="pState" />
+		<result column="p_progress_state" property="pProgressState" />
+		<result column="p_caution" property="pCaution" />
+		<result column="p_like" property="pLike" />
+		<result column="p_create_date" property="pCreateDate" />
+  	</resultMap>
+  	
+  	<select id="selectAll" resultMap="Project" parameterType="ppeonfun.util.Paging">
+  	SELECT*FROM(
+		SELECT rownum rnum, P.* FROM(
+		        SELECT *
+            FROM project
+            WHERE 1=1
+            <if test="'title'.equals(category)">
+            	AND p_name like '%'||#{search}||'%'
+            </if>
+            order by p_no desc
+    	) P
+	)R
+	WHERE rnum BETWEEN #{startNo} AND #{endNo}	
+  	</select>
+  	
+  	<select id="selectCntAll" resultType="int" parameterType="Paging">
+  		SELECT count(*) FROM project WHERE
+  		1=1
+  		<if test="'title'.equals(category)">
+			AND p_name like '%'||#{search}||'%'
+		</if>
+  	</select>
+  	
+  	<select id="selectByName" resultType="String" parameterType="Project">
+  		SELECT m_name FROM member
+			inner join project
+			on member.m_no = project.m_no
+			where p_no=#{pNo}
+  	</select>
+  	
+  	<select id="selectProject" resultType="Project" parameterType="Project">
+  		SELECT * FROM project WHERE p_no=#{pNo}
+  	</select>
+  	
+  	<insert id="insertProject" parameterType="Project">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="pNo">
+  			SELECT project_SEQ.nextval FROM dual
+  		</selectKey>
+  		INSERT INTO project(p_no,m_no,p_name) VALUES(#{pNo}, #{mNo}, '프로젝트이름'||#{pNo})
+  	</insert>
+  	
+  	<update id="updateSubmit" parameterType="Project">
+  		UPDATE PROJECT SET p_state = #{pState} WHERE p_no =#{pNo}
+  	</update>
+  	
+  	<insert id="insertChatRoom" parameterType="ChatRoom">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="crNo">
+  			SELECT chat_room_SEQ.nextval FROM dual
+  		</selectKey>
+  		INSERT INTO chat_room (cr_no,cr_name,cr_create_date) values(#{crNo}, #{crName}, sysdate)
+  	</insert>
+  	
+  	<insert id="insertChatParticipant" parameterType="ChatParticipant">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="cpNo">
+  			SELECT chat_participant_SEQ.nextval FROM dual
+  		</selectKey>
+  		insert into chat_participant(cp_no,cr_no,m_no,cp_create_date) values(#{cpNo}, #{crNo}, #{mNo}, sysdate)
+  	</insert>
+  	
+  	<insert id="insertMessage" parameterType="Message">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="msgNo">
+  			SELECT message_SEQ.nextval FROM dual
+  		</selectKey>
+  		insert into message(msg_no,msg_content,cr_no,cp_no,msg_time) values(#{msgNo}, #{msgContent}, #{crNo}, #{cpNo}, sysdate)
+  	</insert>
+  	
+  	<select id="selectInformation" parameterType="Project" resultType="Information">
+  		SELECT * FROM information WHERE p_no = #{pNo}
+  	</select>
+  	<update id="updateInformation" parameterType="information">
+  		UPDATE information SET i_start_date = #{iStartDate} WHERE i_no = #{iNo}
+  	</update>
+  	
+  </mapper>

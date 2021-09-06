@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  
+<mapper namespace="ppeonfun.dao.user.news.NewsDao">
+
+	<resultMap type="ppeonfun.dto.Information" id="Information">
+		<result column="i_no" property="iNo"/>
+		<result column="p_no" property="pNo"/>
+		<result column="i_title" property="iTitle"/>
+		<result column="i_money" property="iMoney"/>
+		<result column="i_origin_name" property="iOriginName"/>
+		<result column="i_stored_name" property="iStoredName"/>
+		<result column="i_category" property="iCategory"/>
+		<result column="i_start_date" property="iStartDate"/>
+		<result column="i_end_date" property="iEndDate"/>
+		<result column="i_create_date" property="iCreateDate"/>
+		<result column="i_state" property="iState"/>
+		<result column="i_size" property="iSize"/>
+		<result column="i_content_type" property="iContentType"/>
+	</resultMap>
+	
+	<resultMap type="ppeonfun.dto.News" id="News">
+		<result column="n_no" property="nNo"/>
+		<result column="p_no" property="pNo"/>
+		<result column="n_title" property="nTitle"/>
+		<result column="n_context" property="nContext"/>
+		<result column="n_category" property="nCategory"/>
+		<result column="n_open_date" property="nOpenDate"/>
+		<result column="n_create_date" property="nCreateDate"/>
+	</resultMap>
+	
+	<select id="selectInfo" parameterType="ppeonfun.dto.Information" resultMap="Information">
+		select i_category, i_title, i_money, p_no
+		from information
+		where p_no = #{pNo }	
+	</select>
+	
+	<select id="selectCntSupporter" parameterType="ppeonfun.dto.Supporter" resultType="String">
+		SELECT count(*)
+		FROM supporter
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<select id="selectRemainDay" parameterType="ppeonfun.dto.SupporterJoin" resultType="int">
+		select 
+		    to_date(to_char(i_end_date, 'YYYYMMDD')) - to_date(to_char(sysdate, 'YYYYMMDD'))
+		from information
+		where p_no = #{pNo }
+	</select>
+	
+	<select id="selectTotalAmount" parameterType="ppeonfun.dto.SupporterJoin" resultType="String">
+		SELECT sum(re_money + su_add_money)
+		FROM reward r, supporter s
+		WHERE s.re_no = r.re_no and s.p_no = #{pNo }		
+	</select>
+	
+<!-- 	<select id="selectList" parameterType="ppeonfun.dto.News" resultMap="News"> -->
+<!-- 		SELECT * FROM news -->
+<!-- 		WHERE p_no = #{pNo } -->
+<!-- 		ORDER BY n_no desc -->
+<!-- 	</select> -->
+	
+	<select id="selectList" parameterType="ppeonfun.dto.NewsSort" resultType="ppeonfun.dto.NewsSort">
+		SELECT * FROM news
+		WHERE p_no = #{pNo }
+		<if test='categorySort != null and !categorySort.equals("") and !categorySort.equals("전체")'>
+			AND n_category = #{categorySort }
+		</if>
+<!-- 		<if test='categorySort.equals("전체")'> -->
+<!-- 			AND p_no = #{pNo } -->
+<!-- 		</if> -->
+		ORDER BY
+		<if test='timeSort == null or timeSort.equals("") or timeSort.equals("최신순")'>
+			n_no desc
+		</if>
+		<if test='timeSort != null and !timeSort.equals("") and !timeSort.equals("최신순")'>
+			n_no asc
+		</if>
+	</select>
+
+	
+	<select id="selectByNno" parameterType="ppeonfun.dto.News" resultMap="News">
+		SELECT * FROM news
+		WHERE n_no = #{nNo }
+	</select>
+	
+	<select id="selectCntNews" parameterType="ppeonfun.dto.News" resultType="int">
+		SELECT count(*)
+		FROM news
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<select id="selectCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE p_no = #{pNo }
+			AND m_no = #{mNo }
+	</select>
+	
+	<select id="getTotalCntFavorite" parameterType="ppeonfun.dto.Favorite" resultType="int">
+		SELECT count(*)
+		FROM favorite
+		WHERE p_no = #{pNo }
+	</select>
+	
+	<delete id="deleteFavorite" parameterType="ppeonfun.dto.Favorite">
+		DELETE favorite
+		WHERE m_no = #{mNo }
+			AND p_no = #{pNo }
+	</delete>
+	
+	<insert id="insertFavorite" parameterType="ppeonfun.dto.Favorite">
+		INSERT INTO favorite (fav_no, p_no, m_no)
+		VALUES (favorite_seq.nextval, #{pNo }, #{mNo })
+	</insert>
+	
+	<select id="selectCntCommunity" parameterType="ppeonfun.dto.News" resultType="String">
+		SELECT count(*) 
+		FROM community
+		where p_no = #{pNo }
+	</select>
+	
+<!-- 	<select id="selectCntNewspaging" resultType="int" parameterType="ppeonfun.util.ProjectPaging"> -->
+<!-- 		SELECT COUNT(*)  -->
+<!-- 		FROM news -->
+<!-- 		WHERE p_no = #{pNo } -->
+<!-- 	</select> -->
+
+</mapper>

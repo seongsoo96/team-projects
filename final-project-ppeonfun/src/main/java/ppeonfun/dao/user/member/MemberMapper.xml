@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="ppeonfun.dao.user.member.MemberDao">
+ 	<resultMap type="ppeonfun.dto.Member" id="Member">
+  		<result column="m_no" property="mNo"/>
+		<result column="m_id" property="mId"/>
+		<result column="m_password" property="mPassword"/>
+		<result column="m_name" property="mName"/>
+		<result column="m_phone" property="mPhone"/>
+		<result column="m_email" property="mEmail"/>
+		<result column="m_nick" property="mNick"/>
+		<result column="m_gender" property="mGender"/>
+		<result column="m_birth" property="mBirth"/>
+		<result column="m_signup" property="mSignup"/>
+		<result column="m_bank" property="mBank"/>
+		<result column="m_account" property="mAccount"/>
+		<result column="m_caution" property="mCaution"/>
+		<result column="m_grade" property="mGrade"/>
+		<result column="m_post" property="mPost"/>
+		<result column="m_address" property="mAddress"/>
+		<result column="m_detail_address" property="mDetailAddress"/>
+		<result column="m_delete_state" property="mDeleteState"/>
+		<result column="m_social" property="mSocial"/>
+  	</resultMap>
+  	
+  	
+ 	
+ 	<select id="selectLogin" resultType="Member" parameterType="ppeonfun.dto.Member">
+ 	SELECT m_no, m_nick, m_id, m_grade FROM member
+ 	WHERE m_id=#{mId} AND m_password=#{mPassword} AND m_social = '사이트'
+ 	</select>
+ 	
+ 	<select id="selectIdCheck" resultType="int" parameterType="Member">
+ 	SELECT count(*) FROM member WHERE m_id=#{mId} AND m_social = '사이트'
+ 	</select>
+ 	
+ 	<select id="selectNickCheck" resultType="int" parameterType="Member">
+ 	SELECT count(*) FROM member WHERE m_nick=#{mNick} AND m_social = '사이트'
+ 	</select>
+ 	
+ 	<insert id="insertMember" parameterType="Member">
+ 	<selectKey order="BEFORE" resultType="int" keyProperty="mNo">
+			SELECT member_seq.nextval FROM dual
+	</selectKey>
+	
+		insert into member(m_no,m_id, m_password,m_name,m_phone,m_email,m_nick,m_gender,m_birth,m_bank,m_account,m_grade,m_post,m_address,m_detail_address,m_delete_state,m_social) 
+		values(#{mNo}, #{mId},#{mPassword},#{mName},#{mPhone}, #{mEmail},#{mNick},#{mGender}, #{mBirth},#{mBank},#{mAccount},#{mGrade},#{mPost},#{mAddress}, #{mDetailAddress}, #{mDeleteState}, #{mSocial})
+	
+ 	</insert>
+ 	<insert id="insertKakaMember" parameterType="Member">
+ 	<selectKey order="BEFORE" resultType="int" keyProperty="mNo">
+			SELECT member_seq.nextval FROM dual
+	</selectKey>
+ 	insert into member(m_no,m_id,m_name,m_email,m_nick,m_gender,m_grade,m_delete_state,m_social) 
+	values(#{mNo}, #{mId},#{mName}, #{mEmail},#{mNick},#{mGender},#{mGrade}, #{mDeleteState}, #{mSocial})
+ 	</insert>
+ 	
+ 	<select id="selectKaKaoIdCheck" parameterType="String" resultType="int">
+ 		SELECT count(*) FROM member WHERE m_id=#{email} AND m_social = 'kakao'
+ 	</select>
+ 	
+ 	<select id="selectKakaoMno" parameterType="String" resultType="int">
+ 		SELECT m_no FROM member WHERE m_id=#{email} AND m_social = 'kakao'
+ 	</select>
+ 	
+ 	<select id="selectId" parameterType="String" resultType="String">
+ 		SELECT m_id FROM member WHERE m_email=#{email} AND m_social = '사이트'
+ 	</select>
+ 	
+ 	<select id="selectEmailCheck" parameterType="String" resultType="int">
+ 		SELECT count(*) FROM member WHERE m_email=#{email} AND m_social = '사이트'
+ 	</select>
+ 	
+ 	<update id="updatePassword" parameterType="Member">
+ 		update member set m_password=#{mPassword} where m_id = #{mId}
+ 	</update>
+ 	<select id="selectEmail" resultType="Member" parameterType="Member">
+ 		SELECT m_email, m_id FROM member WHERE m_id = #{mId}
+ 	</select>
+ 	
+ 	<select id="selectKakaoNick" resultType="String" parameterType="int">
+ 		SELECT m_nick FROM member WHERE m_no = #{mNo}
+ 	</select>
+ 	
+ 	<insert id="insertMyPage" parameterType="MyPage">
+ 		insert into mypage(my_no,my_origin_name,my_stored_name,my_introduce,my_size,my_content_type) 
+ 		VALUES(#{myNo},#{myOriginName},#{myStoredName}, #{myIntroduce}, #{mySize}, #{myContentType})
+ 	</insert>
+ 	
+ </mapper>  
+    
+  

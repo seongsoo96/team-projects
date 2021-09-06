@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="ppeonfun.dao.user.mypage.MypageDao">
+ 	<resultMap type="ppeonfun.dto.MyPage" id="MyPage">
+		<result column="my_no" property="myNo"/>
+		<result column="my_origin_name" property="myOriginName"/>
+		<result column="my_stored_name" property="myStoredName"/>
+		<result column="my_introduce" property="myIntroduce"/>
+		<result column="my_size" property="mySize"/>
+		<result column="my_content_type" property="myContentType"/>
+  	</resultMap>
+  	
+ 	
+ 	<select id="selectMypageBymNo" resultMap="MyPage" parameterType="int">
+ 	SELECT my_no, my_origin_name, my_stored_name
+ 			, my_introduce, my_size, my_content_type
+ 	FROM mypage
+ 	WHERE my_no= #{mNo}
+ 	</select>
+ 	
+ 	<update id="updateMypage" parameterType="MyPage">
+ 	UPDATE mypage
+ 	SET my_origin_name = #{myOriginName}, my_stored_name = #{myStoredName}
+ 		, my_size = #{mySize}, my_content_type = #{myContentType}
+ 	WHERE my_no = #{myNo}
+ 	</update>
+ 	
+ 	<update id="updateMypageIntro" parameterType="MyPage">
+ 	UPDATE mypage
+ 	SET my_introduce = #{myIntroduce}
+ 	WHERE my_no = #{myNo}
+ 	</update>
+ 	
+ 	<select id="selectMemberByNo" parameterType="int" resultType="Member">
+ 	SELECT m_phone, m_email, m_bank, m_account, m_post, m_address, m_detail_address
+ 	FROM member
+ 	WHERE m_no = #{mNo}
+ 	</select>
+
+ 	<update id="updateMemberInfo" parameterType="Member">
+ 	UPDATE member
+ 	SET m_nick = #{mNick}, m_email = #{mEmail}, m_phone = #{mPhone}
+ 		, m_bank = #{mBank}, m_account = #{mAccount}, m_post = #{mPost}
+ 		, m_address = #{mAddress}, m_detail_address = #{mDetailAddress}
+ 	WHERE m_no = #{mNo}
+ 	</update>
+ 	
+ 	<select id="selectMsocialByNo" parameterType="int" resultType="String">
+ 	SELECT m_social
+ 	FROM member
+ 	WHERE m_no = #{mNo}
+ 	</select>
+ 	
+ 	<select id="selectCntmPw" parameterType="Member" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM member
+ 	WHERE m_no = #{mNo} AND m_password = #{mPassword}
+ 	</select>
+ 	
+ 	<update id="updatePwByNo" parameterType="Member">
+ 	UPDATE member
+ 	SET m_password = #{mPassword}
+ 	WHERE m_no = #{mNo}
+ 	</update>
+ 	
+ 	<select id="selectmEmailBymNo" parameterType="int" resultType="String">
+ 	SELECT m_email
+ 	FROM member
+ 	WHERE m_no = #{mNo}
+ 	</select>
+ 	
+ 	<select id="selectCntProjectBySupport" parameterType="int" resultType="int">
+	SELECT COUNT(*)
+	FROM (payment PM
+    	INNER JOIN project PJ
+        	ON PM.p_no = PJ.p_no
+	)
+	WHERE PM.m_no = #{mNo}
+    	AND PM.paym_state = 'Y'
+   		AND PJ.p_progress_state = 'Y'
+ 	</select>
+ 	
+ 	<select id="selectCntProjectByMaker" parameterType="int" resultType="int">
+	SELECT COUNT(*)
+	FROM project
+	WHERE m_no = #{mNo}
+    	AND p_progress_state = 'Y'
+ 	</select>
+ 	
+ 	<update id="updateDeleteStateBymNo" parameterType="int">
+ 	UPDATE member
+ 	SET m_delete_state = 'Y'
+ 	WHERE m_no = #{mNo}
+ 	</update>
+ 	
+ 	<select id="selectCntPayment" parameterType="hashmap" resultType="int">
+	SELECT COUNT(*) 
+	FROM payment P
+		<if test="category != null and !''.equals(category)">
+		INNER JOIN information I
+				ON P.p_no = I.p_no
+		</if>
+	WHERE P.m_no = #{mNo} AND P.paym_state = 'Y'
+		<if test="category != null and !''.equals(category)">
+			AND I.i_category = #{category} 
+		</if>
+ 	</select>
+ 	
+ 	<select id="selectMyFundingListAll" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	            PM.paym_amount
+	            , PJ.p_no, PJ.p_name, PJ.p_progress_state
+	            , I.i_category, I.i_stored_name, I.i_end_date
+	        FROM (
+	        	payment PM
+		        INNER JOIN project PJ
+		            ON PM.p_no = PJ.p_no
+		        INNER JOIN information I
+		            ON PM.p_no = I.p_no
+		    )
+	        WHERE PM.m_no = #{mNo} AND PM.paym_state = 'Y'
+		        <if test="paging.category != null and !''.equals(paging.category)">
+				AND I.i_category = #{paging.category} 
+				</if>
+	        ORDER BY PM.paym_no DESC
+	    ) RES
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
+ 	
+ 	<select id="selectPaymSumByNo" parameterType="int" resultType="hashmap">
+	SELECT i_category as category, sum(paym_amount) as count 
+	FROM (payment 
+    	INNER JOIN information
+		ON information.p_no = payment.p_no)
+	WHERE m_no = #{mNo}
+	GROUP BY i_category
+ 	</select>
+ 	
+ 	<select id="selectPaybSumByNo" parameterType="int" resultType="hashmap">
+	SELECT i_category as category, sum(paym_amount) as count 
+	FROM (payment 
+    	INNER JOIN information
+		ON information.p_no = payment.p_no
+    	INNER JOIN payback
+		ON payback.paym_no = payment.paym_no)
+	WHERE m_no = #{mNo}
+	GROUP BY i_category
+ 	</select>
+ 	
+ 	<select id="selectCntFavorite" parameterType="hashmap" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM favorite F
+ 		<if test="category != null and !''.equals(category)">
+		INNER JOIN information I
+				ON F.p_no = I.p_no
+		</if>
+ 	WHERE F.m_no = #{mNo}
+ 		<if test="category != null and !''.equals(category)">
+			AND I.i_category = #{category} 
+		</if>
+ 	</select>
+ 	
+ 	<select id="selectAllMyFavoriteList" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	        	F.p_no
+	        	, PJ.p_name, PJ.p_progress_state
+	            , I.i_category, I.i_stored_name, I.i_end_date
+	        FROM (
+	        	favorite F
+		        INNER JOIN project PJ
+		            ON F.p_no = PJ.p_no
+		        INNER JOIN information I
+		            ON F.p_no = I.p_no
+		    )
+	        WHERE F.m_no = #{mNo}
+	        	<if test="paging.category != null and !''.equals(paging.category)">
+				AND I.i_category = #{paging.category} 
+				</if>
+	        ORDER BY F.fav_no DESC
+	    ) RES
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
+ 	
+ 	<select id="selectCntFundComm" parameterType="hashmap" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM community C
+ 		<if test="category != null and !''.equals(category)">
+		INNER JOIN information I
+				ON C.p_no = I.p_no
+		</if>
+ 	WHERE m_no = #{mNo}
+ 		<if test="category != null and !''.equals(category)">
+			AND I.i_category = #{category} 
+		</if>
+ 	</select>
+ 	
+ 	<select id="selectAllMyFundCommList" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	    SELECT rownum rnum, RES2.* FROM (
+	    	SELECT RES.*
+	    		, (SELECT COUNT(*) FROM community_answer CA 
+	    			WHERE CA.com_no = RES.com_no ) AS ANS_CNT
+	    	FROM (
+		        SELECT 
+		        	C.com_no, C.com_content, C.com_date
+		        	, PJ.p_name, PJ.p_progress_state
+		        FROM (
+		        	community C
+			        INNER JOIN project PJ
+			            ON C.p_no = PJ.p_no
+			        <if test="paging.category != null and !''.equals(paging.category)">
+			        INNER JOIN information I
+			        	ON C.p_no = I.p_no
+			        </if>
+			    )
+		        WHERE C.m_no = #{mNo}
+		        	<if test="paging.category != null and !''.equals(paging.category)">
+					AND I.i_category = #{paging.category} 
+					</if>
+				ORDER BY C.com_no DESC
+		    ) RES ) RES2
+		ORDER BY rnum
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
+ 	</select>
+ 	
+ 	<select id="selectCommAnsBycomNo" parameterType="hashmap" resultType="CommunityAnswer">
+    SELECT 
+		C.com_no, C.com_content, C.com_date
+		, CA.ca_content, CA.ca_date
+	FROM (community C
+			INNER JOIN community_answer CA
+				ON C.com_no = CA.com_no
+        )
+    WHERE C.m_no = #{mNo} AND C.com_no = #{comNo}
+ 	</select>
+ 	
+ 	<select id="selectCntMyBoard" parameterType="int" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM board
+ 	WHERE m_no = #{mNo}
+ 	</select>
+ 	
+ 	<select id="selectAllBoardBymNo" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	        	b_no, b_title, b_create_date, b_hit, b_grade
+	        FROM board
+	        WHERE m_no = #{mNo}
+	    ) RES
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo} 	
+	ORDER BY rnum DESC 	
+ 	</select>
+ 	
+ 	<select id="selectCntChatBymNo" parameterType="int" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM chat_participant
+ 	WHERE m_no = #{mNo}
+ 	</select>
+ 	
+ 	<select id="selectChatNoBymNo" parameterType="int" resultType="int">
+ 	SELECT cr_no
+ 	FROM chat_participant
+ 	WHERE m_no = #{mNo}
+ 	ORDER BY cp_no
+ 	</select>
+ 	
+ 	<select id="selectAllMyChatList" parameterType="hashmap" resultType="hashmap">
+	SELECT * FROM (
+	        SELECT rownum rnum, RES.* FROM (
+	            SELECT 
+	                CP.m_no, CR.cr_no, CR.cr_name, M.m_nick, MY.my_stored_name
+	            FROM
+	                chat_participant CP
+	                    INNER JOIN chat_room CR
+	                        ON CP.cr_no = CR.cr_no
+	                    INNER JOIN mypage MY
+	                        ON CP.m_no = MY.my_no
+	                    INNER JOIN member M
+	                        ON CP.m_no = M.m_no
+	            WHERE 1=1
+					<if test="chatNoList != null">
+					AND CP.cr_no IN
+					<foreach collection="chatNoList" item="chatNo" open="(" separator="," close=")">
+		            #{chatNo} 
+					</foreach>
+                   	AND CP.m_no != #{mNo}
+					</if>
+				ORDER BY CP.cr_no DESC
+	        ) RES
+	    )WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
+ 	
+ 	<select id="selectMessageBycrNo" parameterType="int" resultType="hashmap">
+ 	SELECT MSG.msg_no, MSG.msg_content, MSG.msg_time, MSG.cr_no, CP.m_no, M.m_nick
+    FROM ( message MSG
+        INNER JOIN chat_participant CP
+            ON MSG.cp_no = CP.cp_no
+        INNER JOIN member M
+            ON CP.m_no = M.m_no
+        )
+    WHERE MSG.cr_no = #{crNo} AND rownum = 1
+    ORDER BY MSG.msg_no DESC
+ 	</select>
+ 	
+ 	<select id="selectAllMessageContent" parameterType="int" resultType="hashmap">
+ 	SELECT MSG.msg_no, MSG.msg_content, MSG.msg_time, MSG.cr_no, CP.cp_no, CP.m_no, M.m_nick, CR.cr_name
+    FROM ( message MSG
+        INNER JOIN chat_participant CP
+            ON MSG.cp_no = CP.cp_no
+        INNER JOIN member M
+            ON CP.m_no = M.m_no
+        INNER JOIN chat_room CR
+            ON CP.cr_no = CR.cr_no
+        )
+    WHERE MSG.cr_no = #{crNo}
+    ORDER BY MSG.msg_no
+ 	</select>
+ 	
+ 	<select id="selectCntMyOpenProject" parameterType="hashmap" resultType="int">
+ 	SELECT COUNT(*)
+ 	FROM project P
+ 		<if test="category != null and !''.equals(category)">
+		INNER JOIN information I
+				ON P.p_no = I.p_no
+		</if>
+ 	WHERE P.m_no = #{mNo}
+ 		<if test="category != null and !''.equals(category)">
+			AND I.i_category = #{category} 
+		</if>
+ 	</select>
+ 	
+ 	<select id="selectAllMyOpenProject" parameterType="hashmap" resultType="hashmap">
+ 	SELECT * FROM (
+	    SELECT rownum rnum, RES.* FROM (
+	        SELECT 
+	        	P.p_no, P.p_name, P.p_progress_state
+	            , I.i_money, I.i_category, I.i_stored_name, I.i_end_date
+	        FROM (
+	        	project P
+			        INNER JOIN information I
+		            	ON P.p_no = I.p_no
+		    )
+	        WHERE P.m_no = #{mNo} AND P.p_progress_state IN ('Y', 'N')
+	        	<if test="paging.category != null and !''.equals(paging.category)">
+				AND I.i_category = #{paging.category} 
+				</if>
+	        ORDER BY P.p_no DESC
+	    ) RES
+	) WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+ 	</select>
+ 	
+	<insert id="insertMessage" parameterType="hashmap">
+		<selectKey resultType="int" keyProperty="cpNo" order="BEFORE">
+ 		SELECT cp_no FROM chat_participant WHERE cr_no = #{msg.crNo} AND m_no = #{mNo}
+ 		</selectKey>
+ 		INSERT INTO message(msg_no, msg_content, cp_no, cr_no)
+ 		VALUES (message_seq.nextval, #{msg.msgContent}, #{cpNo}, #{msg.crNo})
+	</insert> 	
+ </mapper>  
+    
+  
