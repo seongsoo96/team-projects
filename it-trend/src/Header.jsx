@@ -5,7 +5,7 @@ const Header = () => {
 	return (
 		<AppBar position="static">
 			<Toolbar>
-				<Typography>IT-TREND</Typography>
+				<Typography>My Blog</Typography>
 			</Toolbar>
 		</AppBar>
 	);
